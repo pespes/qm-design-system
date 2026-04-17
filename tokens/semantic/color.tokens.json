@@ -1,0 +1,346 @@
+{
+  "color":{
+    "surface": {
+      "$description": "Background colors for layered UI surfaces",
+
+      "page": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Page/body background"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Default card/container background"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.grey.050}",
+        "$description": "Raised surface (nested cards, table headers, sidebar bg)"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.grey.100}",
+        "$description": "Recessed surface (input wells, code blocks)"
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.grey.900}",
+        "$description": "Backdrop behind modals/drawers. Pair with opacity.400 for scrim."
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.grey.950}",
+        "$description": "Inverted surface (tooltips, toasts)"
+      }
+    },
+
+    "foreground": {
+      "$description": "Foreground / text colors",
+
+      "default": {
+        "$type": "color",
+        "$value": "{color.grey.900}",
+        "$description": "Primary body text"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.grey.500}",
+        "$description": "Secondary text, labels, captions"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.grey.400}",
+        "$description": "Placeholder text, disabled labels"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Text on inverse/dark surfaces"
+      }
+    },
+
+    "border": {
+      "$description": "Border and divider colors",
+
+      "default": {
+        "$type": "color",
+        "$value": "{color.grey.200}",
+        "$description": "Standard structural borders (cards, dividers, table rows)"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.grey.400}",
+        "$description": "Higher-contrast borders (hovered inputs, emphasized dividers)"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.grey.100}",
+        "$description": "Low-contrast separators (within cards, between list items)"
+      }
+    },
+    "primary": {
+      "$description": "Default interactive color — grey. Used for standard buttons, toggles, active states.",
+
+      "background": {
+        "$type": "color",
+        "$value": "{color.grey.900}",
+        "$description": "Primary solid fill (default buttons). Use state.hover-on-dark / pressed-on-dark for states."
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Text on primary.background"
+      },
+      "background-subtle": {
+        "$type": "color",
+        "$value": "{color.grey.100}",
+        "$description": "Subtle primary surface (toggle bg, selected table row)"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.grey.900}",
+        "$description": "Primary-hued text/icons on light surfaces (active states, emphasis)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.grey.300}",
+        "$description": "Primary-weight border (outlined buttons at rest)"
+      },
+      "border-strong": {
+        "$type": "color",
+        "$value": "{color.grey.900}",
+        "$description": "Primary-weight border (outlined buttons at rest)"
+      }
+    },
+    "brand": {
+      "$description": "Brand accent — Homeowner (green). Links, active states, brand moments.",
+
+      "background": {
+        "$type": "color",
+        "$value": "{color.green.600}",
+        "$description": "Brand solid fill. Use state.hover-on-dark / pressed-on-dark for states."
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Text on brand.background"
+      },
+      "background-subtle": {
+        "$type": "color",
+        "$value": "{color.green.050}",
+        "$description": "Brand tinted surface (active sidebar item, selected chip)"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.green.700}",
+        "$description": "Brand-hued text and icons on light surfaces (links, active breadcrumbs)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.green.200}",
+        "$description": "Brand-tinted border (selected cards, active inputs)"
+      },
+      "border-strong": {
+        "$type": "color",
+        "$value": "{color.green.600}",
+        "$description": "Strong brand border"
+      }
+    },
+    "accent": {
+      "$description": "Accent — violet. Tags, badges, actions, feature callouts.",
+
+      "background": {
+        "$type": "color",
+        "$value": "{color.violet.600}",
+        "$description": "Accent solid fill. Use state.hover-on-dark / pressed-on-dark for states."
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Text on accent.background"
+      },
+      "background-subtle": {
+        "$type": "color",
+        "$value": "{color.violet.050}",
+        "$description": "Accent tinted surface"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.violet.700}",
+        "$description": "Accent-hued text and icons on light surfaces (tags, badges)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.violet.200}",
+        "$description": "Accent-tinted border"
+      }
+    },
+    "status": {
+      "$description": "Semantic status colors. All pairings verified for WCAG AA.",
+
+      "danger": {
+        "background": {
+          "$type": "color",
+          "$value": "{color.red.050}",
+          "$description": "Danger background (banners, inline alerts)"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{color.red.700}",
+          "$description": "Danger text and icons (7.65:1 on red.050)"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.red.200}",
+          "$description": "Danger border"
+        },
+        "background-strong": {
+          "$type": "color",
+          "$value": "{color.red.600}",
+          "$description": "Danger solid fill (destructive buttons)"
+        },
+        "foreground-strong": {
+          "$type": "color",
+          "$value": "{color.white}",
+          "$description": "Text on danger.background-strong (6.85:1)"
+        }
+      },
+
+      "warning": {
+        "background": {
+          "$type": "color",
+          "$value": "{color.yellow.050}",
+          "$description": "Warning background"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{color.yellow.700}",
+          "$description": "Warning text and icons (7.34:1 on yellow.050)"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.yellow.200}",
+          "$description": "Warning border"
+        },
+        "background-strong": {
+          "$type": "color",
+          "$value": "{color.yellow.500}",
+          "$description": "Warning solid fill"
+        },
+        "foreground-strong": {
+          "$type": "color",
+          "$value": "{color.black}",
+          "$description": "Dark text on warning.background-strong (4.52:1). Yellow is the only status that uses dark text on its solid fill."
+        }
+      },
+
+      "success": {
+        "background": {
+          "$type": "color",
+          "$value": "{color.green.050}",
+          "$description": "Success background"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{color.green.700}",
+          "$description": "Success text and icons (6.74:1 on green.050)"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.green.200}",
+          "$description": "Success border"
+        },
+        "background-strong": {
+          "$type": "color",
+          "$value": "{color.green.400}",
+          "$description": "Success solid fill — lighter than brand.background to differentiate in Homeowner theme"
+        },
+        "foreground-strong": {
+          "$type": "color",
+          "$value": "{color.black}",
+          "$description": "Dark text on success.background-strong (6.68:1)"
+        }
+      },
+
+      "info": {
+        "background": {
+          "$type": "color",
+          "$value": "{color.blue.050}",
+          "$description": "Info background"
+        },
+        "foreground": {
+          "$type": "color",
+          "$value": "{color.blue.700}",
+          "$description": "Info text and icons (7.42:1 on blue.050)"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.blue.200}",
+          "$description": "Info border"
+        },
+        "background-strong": {
+          "$type": "color",
+          "$value": "{color.blue.600}",
+          "$description": "Info solid fill"
+        },
+        "foreground-strong": {
+          "$type": "color",
+          "$value": "{color.white}",
+          "$description": "Text on info.background-strong (6.47:1)"
+        }
+      }
+    },
+    "state": {
+      "$description": "Semi-transparent overlays for interactive states. Applied via pseudo-elements.",
+      "hover-on-light": {
+        "$type": "color",
+        "$value": "oklch(0% 0 0 / 0.08)",
+        "$description": "Hover overlay for light surfaces"
+      },
+      "pressed-on-light": {
+        "$type": "color",
+        "$value": "oklch(0% 0 0 / 0.16)",
+        "$description": "Pressed/active overlay for light surfaces"
+      },
+      "hover-on-dark": {
+        "$type": "color",
+        "$value": "oklch(100% 0 0 / 0.12)",
+        "$description": "Hover overlay for dark surfaces"
+      },
+      "pressed-on-dark": {
+        "$type": "color",
+        "$value": "oklch(100% 0 0 / 0.24)",
+        "$description": "Pressed/active overlay for dark surfaces"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "oklch(0% 0 0 / 0.38)",
+        "$description": "Applied to dark content to indicate disabled"
+      },
+      "disabled-subtle": {
+        "$type": "color",
+        "$value": "oklch(0% 0 0 / 0.6)",
+        "$description": "Applied to light content to indicate disabled"
+      },
+      "dragged": {
+        "$type": "color",
+        "$value": "oklch(0% 0 0 / 0.12)",
+        "$description": "Drag state overlay"
+      }
+    },
+    "focus": {
+      "$description": "Focus ring and offset colors",
+      "ring": {
+        "$type": "color",
+        "$value": "{color.primary.border-strong}",
+        "$description": "Focus ring color."
+      },
+      "offset": {
+        "$type": "color",
+        "$value": "{color.border.subtle}",
+        "$description": "Gap between element and focus ring for contrast separation"
+      }
+    }
+  }
+}

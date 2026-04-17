@@ -1,0 +1,15 @@
+{
+  "radius": {
+    "$description": "Primitive border radius scale using the 100-scale naming convention",
+    "$type": "number",
+    "none": { "$value": 0 },
+    "100": { "$value": 2, "$description": "Matches Tailwind 'sm'" },
+    "200": { "$value": 4, "$description": "Matches Tailwind 'base'" },
+    "300": { "$value": 6, "$description": "Matches Tailwind 'md'" },
+    "400": { "$value": 8, "$description": "Matches Tailwind 'lg'" },
+    "500": { "$value": 12, "$description": "Matches Tailwind 'xl'" },
+    "600": { "$value": 16, "$description": "Matches Tailwind '2xl'" },
+    "700": { "$value": 24, "$description": "Matches Tailwind '3xl'" },
+    "full": { "$value": 9999, "$description": "Fully rounded for pills and circles" }
+  }
+}

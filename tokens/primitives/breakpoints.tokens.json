@@ -1,0 +1,11 @@
+{
+  "breakpoint": {
+    "$description": "Viewport breakpoints based on Tailwind v4, stored as raw pixel equivalents",
+    "$type": "number",
+    "sm": { "$value": 640, "$description": "Mobile landscape and up" },
+    "md": { "$value": 768, "$description": "Tablet portrait and up" },
+    "lg": { "$value": 1024, "$description": "Tablet landscape and small desktops" },
+    "xl": { "$value": 1280, "$description": "Standard desktops" },
+    "2xl": { "$value": 1536, "$description": "Large monitors and ultra-wides" }
+  }
+}

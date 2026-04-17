@@ -1,0 +1,38 @@
+{
+  "color": {
+    "brand": {
+      "$description": "Brand accent — Pro (blue). Links, active states, brand moments.",
+
+      "background": {
+        "$type": "color",
+        "$value": "{color.blue.600}",
+        "$description": "Brand solid fill. Use state.hover-on-dark / pressed-on-dark for states."
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Text on brand.background"
+      },
+      "background-subtle": {
+        "$type": "color",
+        "$value": "{color.blue.050}",
+        "$description": "Brand tinted surface (active sidebar item, selected chip)"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.blue.700}",
+        "$description": "Brand-hued text and icons on light surfaces (links, active breadcrumbs)"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.blue.200}",
+        "$description": "Brand-tinted border (selected cards, active inputs)"
+      },
+      "border-strong": {
+        "$type": "color",
+        "$value": "{color.blue.600}",
+        "$description": "Strong brand border"
+      }
+    }
+  }
+}
