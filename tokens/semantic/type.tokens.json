@@ -9,8 +9,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.800}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "display2": {
@@ -19,8 +19,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.600}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "display3": {
@@ -29,8 +29,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.500}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "h1": {
@@ -39,8 +39,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.400}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "h2": {
@@ -49,8 +49,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.300}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "h3": {
@@ -59,8 +59,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.100}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "h4": {
@@ -69,8 +69,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.075}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "caption": {
@@ -80,8 +80,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.050}",
           "fontWeight": "{fontWeight.700}",
-          "lineHeight": "{lineHeight.125}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       }
     },
@@ -93,8 +93,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.100}",
           "fontWeight": "{fontWeight.400}",
-          "lineHeight": "{lineHeight.150}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.150}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "default": {
@@ -104,7 +104,7 @@
           "fontSize": "{fontSize.075}",
           "fontWeight": "{fontWeight.400}",
           "lineHeight": "{lineHeight.150}",
-          // "letterSpacing": "{letterSpacing.000}"
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "caption": {
@@ -113,8 +113,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.050}",
           "fontWeight": "{fontWeight.400}",
-          "lineHeight": "{lineHeight.150}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.150}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       }
     },
@@ -126,8 +126,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.100}",
           "fontWeight": "{fontWeight.500}",
-          "lineHeight": "{lineHeight.150}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.150}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       },
       "default": {
@@ -159,8 +159,8 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.075}",
           "fontWeight": "{fontWeight.600}",
-          "lineHeight": "{lineHeight.150}"
-          // "letterSpacing": "{letterSpacing.000}"
+          "lineHeight": "{lineHeight.150}",
+          "letterSpacing": "{letterSpacing.000}"
         }
       }
     }

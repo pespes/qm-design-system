@@ -1,5 +1,9 @@
 import type { Config } from 'jest';
 
+const esmLibs = [
+  'style-dictionary'
+]
+
 const config: Config = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
@@ -7,15 +11,11 @@ const config: Config = {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  extensionsToTreatAsEsm: ['.ts'],
-  transformIgnorePatterns: [],
+  transformIgnorePatterns: [
+    `<rootDir>/node_modules/.pnpm/(?!(${esmLibs.join('|')})@)`,
+  ],
   transform: {
-    '^.+\\.tsx?$': [
-      'ts-jest',
-      {
-        useESM: true,
-      },
-    ],
+    '^.+\\.(t|j)sx?$': '@swc/jest',
   },
 };
 

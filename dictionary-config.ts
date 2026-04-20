@@ -101,4 +101,3 @@ const buildDictionary = async () => {
   await Promise.all(buildMode);
 }
 buildDictionary();
-
