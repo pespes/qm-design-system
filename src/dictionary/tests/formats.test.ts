@@ -43,7 +43,11 @@ describe('formats', () => {
 
   describe('tailwindTheme', () => {
     it('should format source tokens into Tailwind @theme blocks', () => {
-      const dictionary = { allTokens: mockTokens } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: mockTokens,
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} }) as string;
       const themeBlocks = result.match(/@theme {/g) || [];
       expect(themeBlocks.length).toBe(2); //one for clearing existing variables, one for tokens
@@ -51,21 +55,33 @@ describe('formats', () => {
     });
 
     it('should render tokens in tailwind format', () => {
-      const dictionary = { allTokens: mockTokens } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: mockTokens,
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} });
       expect(result).toContain('--color-primary: #00ba3b;');
       expect(result).toContain('--text-body-default: bold 16px/1.25 "DM Sans"')
     });
 
     it('should filter out undefined values and objects where transforms could have been corrupted', () => {
-      const dictionary = { allTokens: mockTokens } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: mockTokens,
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} });
       expect(result).not.toContain('--color-corrupted');
       expect(result).not.toContain('--color-undefined');
     });
 
     it('renders a "No tokens found" if no matching tokens', () => {
-      const dictionary = { allTokens: [mockTokens[1]] } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: [mockTokens[1]] as TransformedToken[],
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {destination: 'tokens.css'} });
       expect(result).toContain('No tokens found for tokens.css')
     })
@@ -73,21 +89,33 @@ describe('formats', () => {
 
   describe('cssOverride', () => {
     it('should render variables under provided selector', () => {
-      const dictionary = { allTokens: mockTokens } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: mockTokens,
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = cssOverride.format({ dictionary, options: { selector: '[data-theme="pro"]' }, platform: {}, file: {} });
       expect(result).toContain('[data-theme="pro"] {');
       expect(result).toContain('--color-primary: #00ba3b;');
     });
 
     it('should render variables under default :root when selector not provided', () => {
-      const dictionary = { allTokens: mockTokens } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: mockTokens,
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = cssOverride.format({ dictionary, options: {}, platform: {}, file: {} });
       expect(result).toContain(':root {');
       expect(result).toContain('--color-primary: #00ba3b;');
     });
 
     it('renders a "No tokens found" if no matching tokens', () => {
-      const dictionary = { allTokens: [mockTokens[1]] } as Dictionary;
+      const dictionary: Dictionary = {
+        allTokens: [mockTokens[1]] as TransformedToken[],
+        tokens: {},
+        tokenMap: new Map()
+      };
       const result = cssOverride.format({ dictionary, platform: {}, options: {}, file: {destination: 'tokens.css'} });
       expect(result).toContain('No tokens found for tokens.css')
     })

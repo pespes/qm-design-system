@@ -1,8 +1,9 @@
 import StyleDictionary from 'style-dictionary';
-import { type Action } from 'style-dictionary/types';
+// import { type Action } from 'style-dictionary/types';
 import transforms from './src/dictionary/transforms';
 import { cssTransformGroup } from './src/dictionary/transformGroups';
 import formats from './src/dictionary/formats';
+import { validateTokens } from './src/dictionary/actions'
 
 const HIDDEN_PRIMITIVES = ['tokens/primitives/color.tokens.json', 'tokens/primitives/type.tokens.json'];
 const PRIMITIVES = [
@@ -15,21 +16,6 @@ const PRIMITIVES = [
   'tokens/primitives/zIndex.tokens.json'
 ];
 const SEMANTICS = ['tokens/semantic/**/*.tokens.json'];
-
-// Scan for undefined or null values after transforms have been applied
-const validateTokens: Action = {
-  name: 'validate_tokens',
-  do: (dictionary) => {
-    const invalidTokens = dictionary.allTokens.filter((token) => {
-      const val = token.$value ?? token.value;
-      return val === undefined || val === null;
-    });
-
-    if (invalidTokens.length > 0) {
-      throw new Error('Build failed: undefined token values found.');
-    }
-  },
-};
 
 const buildDictionary = async () => {
 

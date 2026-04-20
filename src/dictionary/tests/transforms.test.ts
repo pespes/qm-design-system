@@ -37,19 +37,24 @@ describe('Custom Transforms', () => {
         const updatedToken = { ...token, $value: 20, original: { ...token.original, $value: 20 }};
         expect(spacingToRem.transform(updatedToken, {}, {})).toBe('1.25rem');
       });
+      
+      it('should handle unitless string numbers correctly', () => {
+        const updatedToken = { ...token, $value: '32', original: { ...token.original, $value: '32' }};
+        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('2rem');
+      });
 
       it('should handle a zero value correctly', () => {
         const updatedToken = { ...token, $value: 0, original: { ...token.original, $value: 0 }};
         expect(spacingToRem.transform(updatedToken, {}, {})).toBe('0rem');
       });
 
-      it('should return the original value if it is not a number', () => {
-        const updatedToken = { ...token, $value: '2rem', original: { ...token.original, $value: '2rem' }};
-        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('2rem');
+      it('should return the original value if it is not a unitless number', () => {
+        const updatedToken = { ...token, $value: '2px', original: { ...token.original, $value: '2px' }};
+        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('2px');
       });
 
-      // the filtering out of any invalid css will happen in the Format, just ensure it doesn't break
-      it('should return undefined if the value is missing', () => {
+      // the filtering out of any invalid css will happen in the Format, ensure it doesn't throw any errors
+      it('should return the value as is if it is missing (to be caught by validation/formatter)', () => {
         const { $value, ...otherTokenProps } = token
         expect(spacingToRem.transform(otherTokenProps, {}, {})).toBe(undefined);
       });
@@ -91,7 +96,17 @@ describe('Custom Transforms', () => {
         expect(spacingToEm.transform(updatedToken, {}, {})).toBe('-0.025em');
       });
 
-      it('should return undefined if the value is missing', () => {
+      it('should handle unitless string numbers correctly', () => {
+        const updatedToken = { ...token, $value: '100', original: { ...token.original, $value: '100' }};
+        expect(spacingToEm.transform(updatedToken, {}, {})).toBe('0.1em');
+      });
+
+      it('should return original value for unit strings like 2px', () => {
+        const updatedToken = { ...token, $value: '2px', original: { ...token.original, $value: '2px' }};
+        expect(spacingToEm.transform(updatedToken, {}, {})).toBe('2px');
+      });
+
+      it('should return the value as is if it is missing (to be caught by validation/formatter)', () => {
         const { $value, ...otherTokenProps } = token;
         expect(spacingToEm.transform(otherTokenProps, {}, {})).toBe(undefined);
       });
@@ -153,7 +168,7 @@ describe('Custom Transforms', () => {
         expect(result).not.toHaveProperty('letterSpacing');
       })
 
-      it('should return undefined if the value is missing', () => {
+      it('should return undefined if value is missing (to be caught by validation/formatter)', () => {
         const { $value, ...otherTokenProps } = token;
         expect(typeConversion.transform(otherTokenProps, {}, {})).toBe(undefined);
       });
