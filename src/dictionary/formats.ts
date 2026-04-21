@@ -17,6 +17,7 @@ export const tailwindTheme: Format = {
       if (val === undefined || val === null || typeof val === 'object') {
         return acc;
       }
+      // remove trailing ';' if accidentally included in the transform process
       if (typeof val === 'string' && val[val.length - 1] === ';') {
         val = val.slice(0, -1);
       }
