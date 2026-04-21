@@ -38,6 +38,15 @@ describe('formats', () => {
       path: ['text', 'body', 'default'],
       filePath: 'fake/filePath.json',
       original: {},
+    },
+    {
+      name: 'text-heading-h1',
+      $type: 'spacing',
+      value: '0em',
+      isSource: true,
+      path: ['text', 'heading', 'h1'],
+      filePath: 'fake/filePath.json',
+      original: {},
     }
   ];
 
@@ -62,7 +71,8 @@ describe('formats', () => {
       };
       const result = await tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} });
       expect(result).toContain('--color-primary: #00ba3b;');
-      expect(result).toContain('--text-body-default: bold 16px/1.25 "DM Sans"')
+      expect(result).toContain('--text-body-default: bold 16px/1.25 "DM Sans"');
+      expect(result).toContain('--tracking-heading-h1: 0em');
     });
 
     it('should filter out undefined values and objects where transforms could have been corrupted', async () => {

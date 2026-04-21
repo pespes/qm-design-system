@@ -7,8 +7,9 @@ const tokenTypes = ['border-width', 'color', 'breakpoint', 'opacity', 'radius', 
 export const tailwindTheme: Format = {
   name: 'css/tailwind-theme',
   format: async ({ dictionary, file }: FormatFnArguments) => {
+
     const defaults = tokenTypes.reduce((acc, type, idx) => {
-      const renderLineBreak  = idx < tokenTypes.length - 1 ? '\n' : '';
+      const renderLineBreak  = idx < tokenTypes.length - 1 ? '\n' : ''; //prevent extra line before closing bracket
       return acc + `  --${type}-*: initial;${renderLineBreak}`
     }, '');
     
@@ -17,16 +18,22 @@ export const tailwindTheme: Format = {
       if (val === undefined || val === null || typeof val === 'object') {
         return acc;
       }
-      // remove trailing ';' if accidentally included in the transform process
-      if (typeof val === 'string' && val[val.length - 1] === ';') {
-        val = val.slice(0, -1);
-      }
+
       const renderLineBreak = idx < dictionary.allTokens.length - 1 ? '\n' : '';
-      return acc + `  --${token.name}: ${val};${renderLineBreak}`;
+      let name = token.name;
+
+      // Style Dictionary interally calculates names from their path. Since the split letter spacing
+      // token's path mirrors that of the original typography token, rename it to start with 'tracking'
+      // instead of 'text
+      if (token.$type === 'spacing' || token.type === 'spacing') {
+        name = `${name.replace('text', 'tracking').replace('-tracking', '')}`
+      }
+
+      return acc + `  --${name}: ${val};${renderLineBreak}`;
     }, '');
 
     if (!vars.trim()) {
-      return `/* No tokens found for ${file.destination} */`
+      return `/* No tokens found for ${file.destination} */`;
     }
 
     return [

@@ -51,7 +51,7 @@ describe('validateTokens action', () => {
       if (typeof validateTokens.do === 'function') {
         validateTokens.do(mockDictionary, {}, {}, {});
       }
-    }).toThrow('Build failed: undefined token values found.');
+    }).toThrow('Build failed: invalid token values found.');
   })
 
   it ('should throw an error if a token has an undefined value', () => {
@@ -77,6 +77,6 @@ describe('validateTokens action', () => {
       if (typeof validateTokens.do === 'function') {
         validateTokens.do(mockDictionary, {}, {}, {});
       }
-    }).toThrow('Build failed: undefined token values found.');
+    }).toThrow('Build failed: invalid token values found.');
   })
 })
