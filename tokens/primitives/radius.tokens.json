@@ -1,9 +1,9 @@
 {
   "radius": {
     "$description": "Primitive border radius scale using the 100-scale naming convention",
-    "$type": "number",
+    "$type": "dimension",
     "none": { "$value": 0 },
-    "100": { "$value": 2, "$description": "Matches Tailwind 'sm'" },
+    "100": { "$value": 2, "$description": "Matches Tailwind 'xs'" },
     "200": { "$value": 4, "$description": "Matches Tailwind 'base'" },
     "300": { "$value": 6, "$description": "Matches Tailwind 'md'" },
     "400": { "$value": 8, "$description": "Matches Tailwind 'lg'" },

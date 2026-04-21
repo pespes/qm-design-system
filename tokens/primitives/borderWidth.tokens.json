@@ -1,7 +1,7 @@
 {
   "borderWidth": {
     "$description": "Primitive border/stroke width scale using raw numbers",
-    "$type": "number",
+    "$type": "dimension",
     "none": { "$value": 0, "$description": "No border" },
     "1": { "$value": 1, "$description": "Default structural border (cards, dividers)" },
     "2": { "$value": 2, "$description": "Active states and medium emphasis" },
@@ -9,4 +9,3 @@
     "8": { "$value": 8, "$description": "Extra heavy structural accents" }
   }
 }
-

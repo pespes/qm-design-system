@@ -1,4 +1,4 @@
-import { type Transform, type TransformedToken } from 'style-dictionary/types';
+import type { Transform, TransformedToken } from 'style-dictionary/types';
 
 // Check if a token is a number or unitless string that can be treated as a number.
 const isNumericToken = (token: TransformedToken) => {
@@ -13,30 +13,6 @@ function isTypographyToken(token: TransformedToken) {
   const val = token.$value ?? token.value;
   return typeof val === 'object' && val !== null && val !== undefined && !Array.isArray(val);
 }
-
-const dimensions = [
-  'spacing',
-  'radius',
-  'borderWidth',
-  'fontSize',
-  'breakpoint',
-];
-
-// unitless integer px → rem string (CSS / Tailwind output)
-export const spacingToRem: Transform = {
-  name: 'spacing/rem',
-  type: 'value',
-  filter: (token) => dimensions.includes(token.path[0] ?? ''),
-  transform: (token) => {
-    if (!isNumericToken(token)) {
-      console.warn(`spacing/rem: Token ${token.name} is not a unitless number: ${token.$value ?? token.value}`);
-      return token.$value ?? token.value;
-    }
-    const val = token.$value ?? token.value;
-    const num = typeof val === 'string' ? parseFloat(val) : (val as number);
-    return `${num / 16}rem`;
-  },
-};
 
 // unitless integer em → em string (CSS / Tailwind output)
 export const spacingToEm: Transform = {
@@ -70,8 +46,8 @@ export const typeConversion: Transform = {
     const { letterSpacing, ...fontConfig } = val;
     return fontConfig;
   }
-}
+};
 
-const transforms = [spacingToRem, spacingToEm, typeConversion];
+const transforms = [spacingToEm, typeConversion];
 
 export default transforms;

@@ -1,6 +1,6 @@
 import { describe, it, expect } from '@jest/globals';
 import { type TransformedToken } from 'style-dictionary/types';
-import { spacingToRem, spacingToEm, typeConversion } from '../transforms.js';
+import { spacingToEm, typeConversion } from '../transforms.js';
 
 type TypographyType = {
   fontFamily: string;
@@ -11,68 +11,6 @@ type TypographyType = {
 }
 
 describe('Custom Transforms', () => {
-  
-  describe('spacingToRem', () => {
-    const token: TransformedToken = {
-      name: 'spacing-100',
-      path: ['spacing', '100'],
-      original: {
-          $value: 16,
-          $type: 'dimension',
-      },
-      $value: 16,
-      $type: 'dimension',
-      isSource: true,
-      filePath: 'fake/filepath.json'
-    };
-
-    describe('transforming tokens', () => {
-      it('should convert unitless numbers to rem string', () => {
-        // Transform takes arguments: token, options, platform
-        const result = spacingToRem.transform(token, {}, {});
-        expect(result).toBe('1rem');
-      });
-
-      it('should handle decimal values correctly', () => {
-        const updatedToken = { ...token, $value: 20, original: { ...token.original, $value: 20 }};
-        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('1.25rem');
-      });
-      
-      it('should handle unitless string numbers correctly', () => {
-        const updatedToken = { ...token, $value: '32', original: { ...token.original, $value: '32' }};
-        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('2rem');
-      });
-
-      it('should handle a zero value correctly', () => {
-        const updatedToken = { ...token, $value: 0, original: { ...token.original, $value: 0 }};
-        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('0rem');
-      });
-
-      it('should return the original value if it is not a unitless number', () => {
-        const updatedToken = { ...token, $value: '2px', original: { ...token.original, $value: '2px' }};
-        expect(spacingToRem.transform(updatedToken, {}, {})).toBe('2px');
-      });
-
-      // the filtering out of any invalid css will happen in the Format, ensure it doesn't throw any errors
-      it('should return the value as is if it is missing (to be caught by validation/formatter)', () => {
-        const { $value, ...otherTokenProps } = token
-        expect(spacingToRem.transform(otherTokenProps, {}, {})).toBe(undefined);
-      });
-    })
-
-    describe('filtering tokens', () => {
-      it('should filter any tokens that shold be converted', () => {
-        // Filter takes arguments: token, options
-        expect(spacingToRem.filter?.(token, {})).toBe(true);
-      })
-
-      it('should filter out any tokens that should not be converted', () => {
-        const updatedToken = { ...token, path: [ 'color', 'white' ]};
-        expect(spacingToRem.filter?.(updatedToken, {})).toBe(false);
-      });
-    })
-  });
-
   describe('spacingToEm', () => {
     const token: TransformedToken = {
       name: 'letterSpacing-050',
