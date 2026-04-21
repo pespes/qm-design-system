@@ -1,7 +1,8 @@
 import type { Config } from 'jest';
 
 const esmLibs = [
-  'style-dictionary'
+  'style-dictionary',
+  'is-plain-obj' 
 ]
 
 const config: Config = {

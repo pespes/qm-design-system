@@ -20,8 +20,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
-    "build:tokens": "tsx dictionary-config.ts",
-    "build": "pnpm run clean && pnpm run build:tokens && tsc",
+    "build:tokens": "tsc && node build/dictionary-config.js",
+    "build": "pnpm run clean && pnpm run build:tokens",
     "test": "TZ=UTC jest --passWithNoTests"
   },
   "dependencies": {
