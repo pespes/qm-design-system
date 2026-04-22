@@ -7,6 +7,7 @@
     "url": "https://quartermaster.house"
   },
   "type": "module",
+  "private": true,
   "keywords": [
     "quartermaster",
     "typescript",
@@ -14,7 +15,7 @@
   ],
   "license": "UNLICENSED",
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
