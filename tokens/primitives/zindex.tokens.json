@@ -1,0 +1,12 @@
+{
+  "zIndex": {
+    "$description": "Z-index layering scale aligned to Tailwind v4 defaults",
+    "$type": "number",
+    "0": { "$value": 0, "$description": "Base document flow" },
+    "100": { "$value": 10, "$description": "Raised elements (sticky columns, floating labels)" },
+    "200": { "$value": 20, "$description": "Dropdowns, popovers" },
+    "300": { "$value": 30, "$description": "Sticky headers, fixed navbars" },
+    "400": { "$value": 40, "$description": "Modal backdrops and dialogs" },
+    "500": { "$value": 50, "$description": "Toasts, notifications, top-level overlays" }
+  }
+}

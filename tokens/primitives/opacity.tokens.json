@@ -1,0 +1,30 @@
+{
+  "opacity": {
+    "$description": "Opacity scale for functional UI states (ordinal naming)",
+    "$type": "number",
+    "0": {
+      "$value": 0,
+      "$description": "Fully transparent"
+    },
+    "100": {
+      "$value": 0.1,
+      "$description": "Subtle backgrounds, soft dividers"
+    },
+    "200": {
+      "$value": 0.38,
+      "$description": "Disabled content (WCAG-informed)"
+    },
+    "300": {
+      "$value": 0.5,
+      "$description": "Placeholders, inactive overlays"
+    },
+    "400": {
+      "$value": 0.72,
+      "$description": "Modal backdrops, scrims"
+    },
+    "full": {
+      "$value": 1,
+      "$description": "Fully opaque"
+    }
+  }
+}

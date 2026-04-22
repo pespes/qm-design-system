@@ -1,0 +1,44 @@
+{
+  "name": "@quartermaster/ui-tokens",
+  "version": "0.0.1",
+  "description": "Quartermaster design tokens — DTCG source, CSS custom properties, and React Native TwTheme objects",
+  "author": {
+    "name": "Quartermaster",
+    "url": "https://quartermaster.house"
+  },
+  "type": "module",
+  "private": true,
+  "keywords": [
+    "quartermaster",
+    "typescript",
+    "ui"
+  ],
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">= 22"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:tokens": "tsc && node build/dictionary-config.js",
+    "build": "pnpm run clean && pnpm run build:tokens",
+    "test": "TZ=UTC jest --passWithNoTests"
+  },
+  "dependencies": {
+    "style-dictionary": "^5.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@jest/globals": "^30.3.0",
+    "@swc/core": "^1.15.30",
+    "@swc/jest": "^0.2.39",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.3.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "ts-jest": "^29.4.9",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "color": {
+    "white": { "$type": "color", "$value": "#FFFFFF" },
+    "black": { "$type": "color", "$value": "#000000" },
+    "grey": {
+      "$description": "Warm neutral palette (slight taupe cast) — default neutral ramp for surfaces, borders, and text",
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0019 82.55)", "$extensions": { "hex-fallback": "#eeeeec" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0036 82.30)", "$extensions": { "hex-fallback": "#dedddb" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.0064 81.80)", "$extensions": { "hex-fallback": "#c1bfbb" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.0084 81.30)", "$extensions": { "hex-fallback": "#a7a49e" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.0096 80.80)", "$extensions": { "hex-fallback": "#8f8b86" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.0100 80.30)", "$extensions": { "hex-fallback": "#79756f" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.0096 79.80)", "$extensions": { "hex-fallback": "#64615b" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.0084 79.30)", "$extensions": { "hex-fallback": "#504d48" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.0064 78.80)", "$extensions": { "hex-fallback": "#3c3a36" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0036 78.30)", "$extensions": { "hex-fallback": "#262423" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0019 78.05)", "$extensions": { "hex-fallback": "#171716" } }
+    },
+    "green": {
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0374 148.60)", "$extensions": { "hex-fallback": "#def5e0" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0674 148.35)", "$extensions": { "hex-fallback": "#c0eac5" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.1166 147.85)", "$extensions": { "hex-fallback": "#8ad494" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.1518 147.35)", "$extensions": { "hex-fallback": "#59bd6a" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.1730 146.85)", "$extensions": { "hex-fallback": "#2aa646" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.1800 146.35)", "$extensions": { "hex-fallback": "#009028" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.1730 145.85)", "$extensions": { "hex-fallback": "#00780e" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.1518 145.35)", "$extensions": { "hex-fallback": "#006102" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.1166 144.85)", "$extensions": { "hex-fallback": "#004808" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0674 144.35)", "$extensions": { "hex-fallback": "#0b2d0d" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0374 144.10)", "$extensions": { "hex-fallback": "#0b1b0c" } }
+    },
+    "blue": {
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0412 266.02)", "$extensions": { "hex-fallback": "#e1eeff" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0746 265.77)", "$extensions": { "hex-fallback": "#c6ddff" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.1294 265.27)", "$extensions": { "hex-fallback": "#97bdff" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.1686 264.77)", "$extensions": { "hex-fallback": "#6f9fff" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.1922 264.27)", "$extensions": { "hex-fallback": "#4f83ff" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.2000 263.77)", "$extensions": { "hex-fallback": "#356be9" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.1922 263.27)", "$extensions": { "hex-fallback": "#2255cc" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.1686 262.77)", "$extensions": { "hex-fallback": "#1543a8" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.1294 262.27)", "$extensions": { "hex-fallback": "#10347c" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0746 261.77)", "$extensions": { "hex-fallback": "#0f2348" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0412 261.52)", "$extensions": { "hex-fallback": "#0c172a" } }
+    },
+    "violet": {
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0412 307.05)", "$extensions": { "hex-fallback": "#f5e7ff" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0746 306.80)", "$extensions": { "hex-fallback": "#ead1ff" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.1294 306.30)", "$extensions": { "hex-fallback": "#d4a9ff" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.1686 305.80)", "$extensions": { "hex-fallback": "#be85f7" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.1922 305.30)", "$extensions": { "hex-fallback": "#a866e7" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.2000 304.80)", "$extensions": { "hex-fallback": "#924cd2" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.1922 304.30)", "$extensions": { "hex-fallback": "#7a37b7" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.1686 303.80)", "$extensions": { "hex-fallback": "#622a96" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.1294 303.30)", "$extensions": { "hex-fallback": "#492270" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0746 302.80)", "$extensions": { "hex-fallback": "#2c1a42" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0412 302.55)", "$extensions": { "hex-fallback": "#1b1226" } }
+    },
+    "red": {
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0380 30.19)", "$extensions": { "hex-fallback": "#ffe5df" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0720 29.94)", "$extensions": { "hex-fallback": "#ffccc2" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.1280 29.44)", "$extensions": { "hex-fallback": "#ff9e8e" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.1680 28.94)", "$extensions": { "hex-fallback": "#fc7565" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.1920 28.44)", "$extensions": { "hex-fallback": "#e95043" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.2000 27.94)", "$extensions": { "hex-fallback": "#d22e28" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.1920 27.44)", "$extensions": { "hex-fallback": "#b51317" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.1680 26.94)", "$extensions": { "hex-fallback": "#940710" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.1280 26.44)", "$extensions": { "hex-fallback": "#6e0f11" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0720 25.94)", "$extensions": { "hex-fallback": "#411311" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0380 25.69)", "$extensions": { "hex-fallback": "#260f0e" } }
+    },
+    "yellow": {
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0499 82.98)", "$extensions": { "hex-fallback": "#feecc9" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0856 82.73)", "$extensions": { "hex-fallback": "#f9d99c" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.1444 82.23)", "$extensions": { "hex-fallback": "#edb53f" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.1864 81.73)", "$extensions": { "hex-fallback": "#dd9400" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.2116 81.23)", "$extensions": { "hex-fallback": "#cb7700" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.2200 80.73)", "$extensions": { "hex-fallback": "#b55d00" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.2116 80.23)", "$extensions": { "hex-fallback": "#9c4700" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.1864 79.73)", "$extensions": { "hex-fallback": "#803700" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.1444 79.23)", "$extensions": { "hex-fallback": "#602a00" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0856 78.73)", "$extensions": { "hex-fallback": "#3a1d00" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0499 78.48)", "$extensions": { "hex-fallback": "#231300" } }
+    },
+    "neutral": {
+      "$description": "Pure achromatic grey — fallback ramp for contexts requiring zero color bias",
+      "050": { "$type": "color", "$value": "oklch(94.80% 0.0000 0)", "$extensions": { "hex-fallback": "#eeeeee" } },
+      "100": { "$type": "color", "$value": "oklch(89.82% 0.0000 0)", "$extensions": { "hex-fallback": "#dddddd" } },
+      "200": { "$type": "color", "$value": "oklch(80.50% 0.0000 0)", "$extensions": { "hex-fallback": "#bfbfbf" } },
+      "300": { "$type": "color", "$value": "oklch(71.91% 0.0000 0)", "$extensions": { "hex-fallback": "#a4a4a4" } },
+      "400": { "$type": "color", "$value": "oklch(63.93% 0.0000 0)", "$extensions": { "hex-fallback": "#8c8c8c" } },
+      "500": { "$type": "color", "$value": "oklch(56.43% 0.0000 0)", "$extensions": { "hex-fallback": "#767676" } },
+      "600": { "$type": "color", "$value": "oklch(49.25% 0.0000 0)", "$extensions": { "hex-fallback": "#616161" } },
+      "700": { "$type": "color", "$value": "oklch(42.18% 0.0000 0)", "$extensions": { "hex-fallback": "#4d4d4d" } },
+      "800": { "$type": "color", "$value": "oklch(34.83% 0.0000 0)", "$extensions": { "hex-fallback": "#3a3a3a" } },
+      "900": { "$type": "color", "$value": "oklch(26.24% 0.0000 0)", "$extensions": { "hex-fallback": "#252525" } },
+      "950": { "$type": "color", "$value": "oklch(20.39% 0.0000 0)", "$extensions": { "hex-fallback": "#171717" } }
+    }
+  }
+}
