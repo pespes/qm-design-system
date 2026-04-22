@@ -48,6 +48,73 @@ export const typeConversion: Transform = {
   }
 };
 
-const transforms = [spacingToEm, typeConversion];
+export const rgbaFallback: Transform = {
+  name: 'hex-fallback',
+  type: 'value',
+  filter: (token) => token.$type === 'color' || token.type === 'color',
+  transform: (token) => {
+    const fallback = token.original.$extensions?.['hex-fallback'];
+    return fallback ?? token.$value ?? token.value;
+  }
+}
+
+// Tailwind RN does not keep fontFamily with the obj, remove
+export const typeConversionRN: Transform = {
+  name: 'typography/convert',
+  type: 'value',
+  transitive: true,
+  filter: (token) => token.$type === 'typography' || token.type === 'typography',
+  transform: (token) => {
+    const value = token.$value ?? token.value;
+    const { fontSize, fontWeight, lineHeight, letterSpacing } = value;
+    
+    if (!fontSize) {
+      console.warn(`Token "${token.name}" is missing mandatory "fontSize". Skipping transform.`);
+      return undefined;
+    }
+
+    const config = {} as any;
+    if (fontWeight !== undefined || fontWeight !== null) {
+      config.fontWeight = `${fontWeight}`;
+    }
+    if (letterSpacing !== undefined || letterSpacing !== null) {
+      const numSpacing = typeof letterSpacing === 'string' ? parseFloat(letterSpacing) : letterSpacing;
+      if (!isNaN(numSpacing)) {
+        config.letterSpacing = `${(numSpacing / 1000) * parseInt(fontSize)}`;
+      }
+    }
+    if (lineHeight !== undefined || lineHeight !== null) {
+      config.lineHeight = `${lineHeight}`;
+    }
+
+    return [`${fontSize}`, config];
+  }
+}
+
+export const shadowConversionRN: Transform = {
+  name: 'shadow/clean',
+  type: 'value',
+  filter: (token) => token.$type === 'shadow' || token.type === 'shadow',
+  transform: (token) => {
+    const value = token.$value ?? token.value;
+    const { offsetX, offsetY, blur, color } = value[0];
+    console.log(parseInt(offsetY), offsetY)
+     const config = {} as any;
+    if (offsetX !== undefined || offsetX !== null || offsetY !== undefined || offsetY !== null) {
+      config.shadowOffset = { width: parseInt(offsetX), height: parseInt(offsetY)};
+      config.elevation = parseInt(offsetY);
+    }
+    if (blur !== undefined || blur !== null) {
+      config.shadowRadius = parseInt(blur);
+    }
+    if (color !== undefined || color !== null) {
+      config.shadowColor = color;
+    }
+
+    return config;
+  }
+}
+
+const transforms = [spacingToEm, typeConversion, rgbaFallback, typeConversionRN, shadowConversionRN];
 
 export default transforms;

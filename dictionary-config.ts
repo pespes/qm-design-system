@@ -31,8 +31,9 @@ const buildDictionary = async () => {
     }
   }
 
-  // Pass 1: Base tokens → CSS + ReactNative base theme
-  const sdDefault = new StyleDictionary({
+  // Base token build for CSS - include typography parser to surface letterSpacing variables
+  const sdDefaultCss = new StyleDictionary({
+    log: { verbosity: 'verbose'},
     usesDtcg: true,
     hooks,
     parsers: ['typography-split'],
@@ -44,7 +45,7 @@ const buildDictionary = async () => {
       css: {
         transformGroup: 'css/tokens',
         buildPath: 'dist/css/',
-        actions: ['validate_tokens'],
+        actions: ['validate-tokens'],
         files: [
           {
             destination: 'tokens.css',
@@ -59,8 +60,37 @@ const buildDictionary = async () => {
     },
   });
 
-  await sdDefault.buildAllPlatforms();
+  // Base token build for React Native - no parser needed
+  const sdDefaultNative = new StyleDictionary({
+    log: { verbosity: 'verbose'},
+    usesDtcg: true,
+    hooks,
+    include: HIDDEN_PRIMITIVES,
+    source: [...PRIMITIVES, ...SEMANTICS],
+    platforms: {
+      // Object to be used in tailwind.config
+      native: {
+        transformGroup: 'json/tokens',
+        buildPath: 'dist/native',
+        actions: ['validate-tokens'],
+        files: [
+          {
+            destination: 'native.ts',
+            filter: token => token.isSource,
+            format: 'js/tw-react-native',
+            options: {
+              exportName: 'baseTheme',
+              fileHeader: 'qm-header',
+            }
+          }
+        ]
+      }
+    },
+  });
 
+  await Promise.all([sdDefaultCss.buildAllPlatforms(), sdDefaultNative.buildAllPlatforms()]);
+
+  // MODES BUILD
   const modes = [
     {
       name: 'pro',
@@ -69,36 +99,64 @@ const buildDictionary = async () => {
     },
   ]
 
-  const buildMode = modes.map(async (mode) => {
-    const sdMode = new StyleDictionary({
+  const modeBuilds = modes.map(async (mode) => {
+    // CSS override modes only need the override values to define under the given selector
+    const cssMode = new StyleDictionary({
+      log: {verbosity : 'verbose'},
       usesDtcg: true,
       hooks,
       parsers: ['typography-split'],
       include: [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS],
-      // Only the mode file is "source" — only these tokens are emitted
       source: [`tokens/modes/${mode.name}.tokens.json`],
       platforms: {
         css: {
           transformGroup: 'css/tokens',
           buildPath: 'dist/css/',
-          actions: ['validate_tokens'],
+          actions: ['validate-tokens'],
           files: [
             {
               destination: `tokens.${mode.name}.css`,
-              format: 'css/variables',
-              filter: (token) => token.isSource,
-              options: { 
-                selector: mode.cssSelector,
-                fileHeader: 'qm-header'
+                format: 'css/variables',
+                filter: (token) => token.isSource,
+                options: { 
+                  selector: mode.cssSelector,
+                  fileHeader: 'qm-header'
+                },
               },
-            },
-          ],
-        },
+            ],
+          },
       },
-    });
-    return sdMode.buildAllPlatforms();
-  })
+    }).buildAllPlatforms();
 
-  await Promise.all(buildMode);
+    // Native override modes need the entire theme object, and therefoer surface default values
+    // and the mode variables
+    const nativeMode = new StyleDictionary({
+      usesDtcg: true,
+      hooks,
+      include: [...HIDDEN_PRIMITIVES],
+      source: [ ...PRIMITIVES, ...SEMANTICS, `tokens/modes/${mode.name}.tokens.json`],
+      platforms: {
+        native: {
+          transformGroup: 'json/tokens',
+          buildPath: 'dist/native',
+          actions: ['validate-tokens'],
+          files: [
+            {
+              destination: `native.${mode.name}.ts`,
+              filter: token => token.isSource,
+              format: 'js/tw-react-native',
+              options: {
+                exportName: `${mode.name}Theme`,
+                fileHeader: 'qm-header',
+              }
+            }
+          ]
+        }
+      },
+    }).buildAllPlatforms();
+
+    return Promise.all([cssMode, nativeMode])
+  });
+  await Promise.all(modeBuilds);
 }
 buildDictionary();
