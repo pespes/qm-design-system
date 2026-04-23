@@ -63,13 +63,15 @@ const buildDictionary = async () => {
 
   // Base token build for React Native - no parser needed
   const sdDefaultNative = new StyleDictionary({
+    // Style dictionary complains about too many tokens ending in 'foreground' with similar values.
+    // As this is a design choice, silence the warnings
     log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
     include: HIDDEN_PRIMITIVES,
     source: [...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW],
     platforms: {
-      // Object to be used in tailwind.config
+      // Object to be used in TWRNC create()
       native: {
         transformGroup: 'json/tokens',
         buildPath: 'dist/native',
@@ -131,6 +133,8 @@ const buildDictionary = async () => {
     // Native override modes need the entire theme object, and therefoer surface default values
     // and the mode variables
     const nativeMode = new StyleDictionary({
+      // Style dictionary complains about styles being overridden. As this is intentional to 
+      // override the brand color values, silence the complaints
       log: { verbosity : 'silent' },
       usesDtcg: true,
       hooks,

@@ -65,15 +65,16 @@ export const nativeColorFallback: Transform = {
   }
 }
 
-// Tailwind RN does not keep fontFamily with the obj, remove
+// clean typography token to remove fontFamily, which TWRNC does not use in fontSize config:
+// https://github.com/jaredh159/tailwind-react-native-classnames/blob/6b7a0903b8ced433760e61dc118c4989a1802db4/src/tw-config.ts
 export const typeConversionRN: Transform = {
   name: 'typography/convert',
   type: 'value',
   transitive: true,
   filter: (token) => token.$type === 'typography' || token.type === 'typography',
   transform: (token) => {
-    // fontSize is a mandatory value for TWRNC fontSize property, so return undefined if the
-    // value is invalid, OR if value.fontSize is invalid - to be caught in formatter & action
+    // fontSize is a mandatory value, so return undefined if the value is invalid,
+    // OR if value.fontSize is invalid - to be caught in formatter & action
     if (!isTypographyToken(token, ['fontSize'])) {
       console.warn(`Token "${token.name}" is not a valid "fontSize" object.`);
       return undefined;
