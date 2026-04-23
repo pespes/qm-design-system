@@ -11,11 +11,12 @@ const PRIMITIVES = [
   'tokens/primitives/breakpoints.tokens.json',
   'tokens/primitives/opacity.tokens.json',
   'tokens/primitives/radius.tokens.json',
-  'tokens/primitives/shadow.tokens.json',
   'tokens/primitives/spacing.tokens.json',
   'tokens/primitives/zIndex.tokens.json'
 ];
 const SEMANTICS = ['tokens/semantic/**/*.tokens.json'];
+const CSS_SHADOW = 'tokens/primitives/shadow.tokens.json';
+const NATIVE_SHADOW = 'tokens/primitives/shadowNative.tokens.json'
 
 const buildDictionary = async () => {
   const hooks = {
@@ -33,13 +34,13 @@ const buildDictionary = async () => {
 
   // Base token build for CSS - include typography parser to surface letterSpacing variables
   const sdDefaultCss = new StyleDictionary({
-    log: { verbosity: 'verbose'},
+    log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
     parsers: ['typography-split'],
     // Primitive type and colour tokens are in 'include' for reference, not emitted
     include: HIDDEN_PRIMITIVES,
-    source: [...PRIMITIVES, ...SEMANTICS],
+    source: [...PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
     platforms: {
       // CSS: Tailwind @theme block
       css: {
@@ -62,11 +63,11 @@ const buildDictionary = async () => {
 
   // Base token build for React Native - no parser needed
   const sdDefaultNative = new StyleDictionary({
-    log: { verbosity: 'verbose'},
+    log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
     include: HIDDEN_PRIMITIVES,
-    source: [...PRIMITIVES, ...SEMANTICS],
+    source: [...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW],
     platforms: {
       // Object to be used in tailwind.config
       native: {
@@ -101,11 +102,11 @@ const buildDictionary = async () => {
   const modeBuilds = modes.map(async (mode) => {
     // CSS override modes only need the override values to define under the given selector
     const cssMode = new StyleDictionary({
-      log: {verbosity : 'verbose'},
+      log: { verbosity : 'silent' },
       usesDtcg: true,
       hooks,
       parsers: ['typography-split'],
-      include: [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS],
+      include: [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
       source: [`tokens/modes/${mode.name}.tokens.json`],
       platforms: {
         css: {
@@ -130,10 +131,11 @@ const buildDictionary = async () => {
     // Native override modes need the entire theme object, and therefoer surface default values
     // and the mode variables
     const nativeMode = new StyleDictionary({
+      log: { verbosity : 'silent' },
       usesDtcg: true,
       hooks,
       include: [...HIDDEN_PRIMITIVES],
-      source: [ ...PRIMITIVES, ...SEMANTICS, `tokens/modes/${mode.name}.tokens.json`],
+      source: [ ...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW, `tokens/modes/${mode.name}.tokens.json`],
       platforms: {
         native: {
           transformGroup: 'json/tokens',
