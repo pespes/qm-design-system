@@ -79,7 +79,6 @@ const buildDictionary = async () => {
             filter: token => token.isSource,
             format: 'js/tw-react-native',
             options: {
-              exportName: 'baseTheme',
               fileHeader: 'qm-header',
             }
           }
@@ -146,7 +145,6 @@ const buildDictionary = async () => {
               filter: token => token.isSource,
               format: 'js/tw-react-native',
               options: {
-                exportName: `${mode.name}Theme`,
                 fileHeader: 'qm-header',
               }
             }

@@ -9,9 +9,15 @@ const isNumericToken = (token: TransformedToken) => {
   return val !== null && val !== '' && !isNaN(num);
 }
 
-function isTypographyToken(token: TransformedToken) {
+function isTypographyToken(token: TransformedToken, requiredFields: string[]) {
   const val = token.$value ?? token.value;
-  return typeof val === 'object' && val !== null && val !== undefined && !Array.isArray(val);
+  if (typeof val !== 'object' || val === null || val === undefined || Array.isArray(val)) {
+    return false;
+  }
+  //Also check for required fields that web / native need to build typography token
+  return requiredFields.every((f) => {
+    return val[f] !== undefined && val[f] !== null && val[f] !== '';
+  })
 }
 
 // unitless integer em → em string (CSS / Tailwind output)
@@ -38,9 +44,9 @@ export const typeConversion: Transform = {
   transitive: true,
   filter: (token) => token.$type === 'typography' || token.type === 'typography',
   transform: (token) => {
-    if (!isTypographyToken(token)) {
+    if (!isTypographyToken(token, ['fontFamily', 'fontSize'])) {
       console.warn(`typography/clean: Token ${token.name} is not a valid typography object: ${token.$value ?? token.value}`);
-      return token.$value ?? token.value;
+      return undefined;
     }
     const val = token.$value ?? token.value;
     const { letterSpacing, ...fontConfig } = val;
@@ -48,13 +54,14 @@ export const typeConversion: Transform = {
   }
 };
 
-export const rgbaFallback: Transform = {
-  name: 'hex-fallback',
+// switch to hex / rgba fallbacks for RN
+export const nativeColorFallback: Transform = {
+  name: 'native-color-fallback',
   type: 'value',
   filter: (token) => token.$type === 'color' || token.type === 'color',
   transform: (token) => {
-    const fallback = token.original.$extensions?.['hex-fallback'];
-    return fallback ?? token.$value ?? token.value;
+    const fallback = token.$extensions?.['hex-fallback'] ?? token.$extensions?.['rgba-fallback'];
+    return fallback;
   }
 }
 
@@ -65,56 +72,36 @@ export const typeConversionRN: Transform = {
   transitive: true,
   filter: (token) => token.$type === 'typography' || token.type === 'typography',
   transform: (token) => {
-    const value = token.$value ?? token.value;
-    const { fontSize, fontWeight, lineHeight, letterSpacing } = value;
-    
-    if (!fontSize) {
-      console.warn(`Token "${token.name}" is missing mandatory "fontSize". Skipping transform.`);
+    // fontSize is a mandatory value for TWRNC fontSize property, so return undefined if the
+    // value is invalid, OR if value.fontSize is invalid - to be caught in formatter & action
+    if (!isTypographyToken(token, ['fontSize'])) {
+      console.warn(`Token "${token.name}" is not a valid "fontSize" object.`);
       return undefined;
     }
 
-    const config = {} as any;
+    const value = token.$value ?? token.value;
+    const { fontSize, fontWeight, lineHeight, letterSpacing } = value;
+    const config: Record<string, string> = {};
+
     if (fontWeight !== undefined || fontWeight !== null) {
-      config.fontWeight = `${fontWeight}`;
+      config.fontWeight = fontWeight.toString();
     }
+
+    if (lineHeight !== undefined || lineHeight !== null) {
+      config.lineHeight = (lineHeight * fontSize).toString();
+    }
+
     if (letterSpacing !== undefined || letterSpacing !== null) {
       const numSpacing = typeof letterSpacing === 'string' ? parseFloat(letterSpacing) : letterSpacing;
       if (!isNaN(numSpacing)) {
-        config.letterSpacing = `${(numSpacing / 1000) * parseInt(fontSize)}`;
+        config.letterSpacing = ((numSpacing / 1000) * parseInt(fontSize)).toString();
       }
-    }
-    if (lineHeight !== undefined || lineHeight !== null) {
-      config.lineHeight = `${lineHeight}`;
     }
 
     return [`${fontSize}`, config];
   }
 }
 
-export const shadowConversionRN: Transform = {
-  name: 'shadow/clean',
-  type: 'value',
-  filter: (token) => token.$type === 'shadow' || token.type === 'shadow',
-  transform: (token) => {
-    const value = token.$value ?? token.value;
-    const { offsetX, offsetY, blur, color } = value[0];
-    console.log(parseInt(offsetY), offsetY)
-     const config = {} as any;
-    if (offsetX !== undefined || offsetX !== null || offsetY !== undefined || offsetY !== null) {
-      config.shadowOffset = { width: parseInt(offsetX), height: parseInt(offsetY)};
-      config.elevation = parseInt(offsetY);
-    }
-    if (blur !== undefined || blur !== null) {
-      config.shadowRadius = parseInt(blur);
-    }
-    if (color !== undefined || color !== null) {
-      config.shadowColor = color;
-    }
-
-    return config;
-  }
-}
-
-const transforms = [spacingToEm, typeConversion, rgbaFallback, typeConversionRN, shadowConversionRN];
+const transforms = [spacingToEm, typeConversion, nativeColorFallback, typeConversionRN];
 
 export default transforms;

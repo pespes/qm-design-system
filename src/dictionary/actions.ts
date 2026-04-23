@@ -1,20 +1,22 @@
 import type { Action } from 'style-dictionary/types';
+import { hasInvalidLeaf } from '../utilities/recursion.js';
 
 // Scan for undefined, null or incorrectly typed values after transforms have been applied
 export const validateTokens: Action = {
   name: 'validate-tokens',
-  do: (dictionary, _, options) => {
+  do: (dictionary, test, options) => {
     const platform = options.platforms;
 
-    // If validating CSS tokens, values must not be type object, but for Native, token values
-    // such as fontSize are expected to be arrays
+    // If validating CSS tokens, values must not be type object, null or undefined
+    // For Native, no null / undefined, but also check for nested undefined / null values
+    // in objects (ie. fontSize)
     const invalidTokens = dictionary.allTokens.filter((token) => {
       const val = token.$value ?? token.value;
       if (platform && platform.css) {
         return val === undefined || val === null || typeof val === 'object';
       }
       else {
-        return val === undefined || val === null;
+        return hasInvalidLeaf(val);
       }
     });
 

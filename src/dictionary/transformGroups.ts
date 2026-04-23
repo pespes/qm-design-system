@@ -25,9 +25,8 @@ export const nativeTransformGroup = {
     'attribute/cti',
     'name/kebab',
     'size/px',
-    'hex-fallback',
+    'native-color-fallback',
     'typography/convert',
-    'shadow/clean'
   ]
 }
 const groups = [cssTransformGroup, nativeTransformGroup];
