@@ -1,4 +1,5 @@
 import StyleDictionary from 'style-dictionary';
+import type { TransformedToken } from 'style-dictionary/types';
 import { typographySplitParser } from './src/dictionary/parser.js'
 import transforms from './src/dictionary/transforms.js';
 import groups from './src/dictionary/transformGroups.js';
@@ -32,67 +33,70 @@ const buildDictionary = async () => {
     }
   }
 
-  // Base token build for CSS - include typography parser to surface letterSpacing variables
-  const sdDefaultCss = new StyleDictionary({
-    log: { verbosity: 'silent' },
+  // Token build for CSS
+  const getCssConfig = (mode?: any) => ({
+    log: { verbosity: 'silent' as const },
     usesDtcg: true,
     hooks,
-    parsers: ['typography-split'],
-    // Primitive type and colour tokens are in 'include' for reference, not emitted
-    include: HIDDEN_PRIMITIVES,
-    source: [...PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
+    parsers: ['typography-split'], // includes parser to surface letterSpacing variables
+    // Include tokens are for reference, not emitted
+    include: mode
+      ? [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS, CSS_SHADOW]
+      : HIDDEN_PRIMITIVES,
+    // For override mode, only needs to surface override values for selector
+    // Default @theme block renders all variables
+    source: mode
+      ? [`tokens/modes/${mode.name}.tokens.json`]
+      : [...PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
     platforms: {
-      // CSS: Tailwind @theme block
       css: {
         transformGroup: 'css/tokens',
         buildPath: 'dist/css/',
         actions: ['validate-tokens'],
         files: [
           {
-            destination: 'tokens.css',
-            filter: token => token.isSource,
-            format: 'css/tailwind-theme',
-            options: {
-              fileHeader: 'qm-header'
-            }
-          },
-        ],
-      },
-    },
-  });
-
-  // Base token build for React Native - no parser needed
-  const sdDefaultNative = new StyleDictionary({
-    // Style dictionary complains about too many tokens ending in 'foreground' with similar values.
-    // As this is a design choice, silence the warnings
-    log: { verbosity: 'silent' },
-    usesDtcg: true,
-    hooks,
-    include: HIDDEN_PRIMITIVES,
-    source: [...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW],
-    platforms: {
-      // Object to be used in TWRNC create()
-      native: {
-        transformGroup: 'json/tokens',
-        buildPath: 'dist/native',
-        actions: ['validate-tokens'],
-        files: [
-          {
-            destination: 'native.ts',
-            filter: token => token.isSource,
-            format: 'js/tw-react-native',
+            destination: `tokens.${mode ? mode.name + '.' : ''}.css`,
+            format: mode ? 'css/variables' : 'css/tailwind-theme',
+            filter: (token: TransformedToken) => token.isSource,
             options: {
               fileHeader: 'qm-header',
+              selector: mode?.cssSelector
             }
           }
         ]
       }
-    },
+    }
   });
 
-  await Promise.all([sdDefaultCss.buildAllPlatforms(), sdDefaultNative.buildAllPlatforms()]);
+  // Token build for RN
+  const getNativeConfig = (mode?: any) => ({
+    // Style Dictionary complains about too many tokens ending in 'foreground', or variables
+    // being overridden by the pro mode. As these are design choices, silence the warnings.
+    log: { verbosity: 'silent' as const },
+    usesDtcg: true,
+    hooks,
+    include: HIDDEN_PRIMITIVES,
+    source: [ ...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW, (mode ? `tokens/modes/${mode.name}.tokens.json` : '')],
+    platforms: {
+      // Object to be used in TWRNC create()
+      native: {
+        transformGroup: 'json/tokens',
+        buildPath: 'dist/native/',
+        actions: ['validate-tokens'],
+        files: [
+          {
+            destination: `native.${mode ? mode.name + '.' : ''}.ts`,
+            format: 'js/tw-react-native',
+            filter: (token: TransformedToken) => token.isSource,
+            options: {
+              fileHeader: 'qm-header'
+            }
+          }
+        ]
+      }
+    }
+  })
 
-  // MODES BUILD
   const modes = [
     {
       name: 'pro',
@@ -101,66 +105,16 @@ const buildDictionary = async () => {
     },
   ]
 
-  const modeBuilds = modes.map(async (mode) => {
-    // CSS override modes only need the override values to define under the given selector
-    const cssMode = new StyleDictionary({
-      log: { verbosity : 'silent' },
-      usesDtcg: true,
-      hooks,
-      parsers: ['typography-split'],
-      include: [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
-      source: [`tokens/modes/${mode.name}.tokens.json`],
-      platforms: {
-        css: {
-          transformGroup: 'css/tokens',
-          buildPath: 'dist/css/',
-          actions: ['validate-tokens'],
-          files: [
-            {
-              destination: `tokens.${mode.name}.css`,
-                format: 'css/variables',
-                filter: (token) => token.isSource,
-                options: { 
-                  selector: mode.cssSelector,
-                  fileHeader: 'qm-header'
-                },
-              },
-            ],
-          },
-      },
-    }).buildAllPlatforms();
+  const builds = [
+    // base builds
+    getCssConfig(),
+    getNativeConfig(),
 
-    // Native override modes need the entire theme object, and therefoer surface default values
-    // and the mode variables
-    const nativeMode = new StyleDictionary({
-      // Style dictionary complains about styles being overridden. As this is intentional to 
-      // override the brand color values, silence the complaints
-      log: { verbosity : 'silent' },
-      usesDtcg: true,
-      hooks,
-      include: [...HIDDEN_PRIMITIVES],
-      source: [ ...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW, `tokens/modes/${mode.name}.tokens.json`],
-      platforms: {
-        native: {
-          transformGroup: 'json/tokens',
-          buildPath: 'dist/native',
-          actions: ['validate-tokens'],
-          files: [
-            {
-              destination: `native.${mode.name}.ts`,
-              filter: token => token.isSource,
-              format: 'js/tw-react-native',
-              options: {
-                fileHeader: 'qm-header',
-              }
-            }
-          ]
-        }
-      },
-    }).buildAllPlatforms();
+    // mode overrides
+    ...modes.map((mode => getCssConfig(mode))),
+    ...modes.map((mode) => getNativeConfig(mode))
+  ];
 
-    return Promise.all([cssMode, nativeMode])
-  });
-  await Promise.all(modeBuilds);
+  await Promise.all(builds.map((config) => new StyleDictionary(config).buildAllPlatforms()));
 }
 buildDictionary();
