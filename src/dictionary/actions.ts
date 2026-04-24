@@ -1,5 +1,6 @@
 import type { Action } from 'style-dictionary/types';
-import { hasInvalidLeaf } from '../utilities/recursion.js';
+import { hasInvalidLeaf } from '../utilities/validation.js';
+import { findTokenValue } from '../utilities/token-helpers.js'
 
 // Scan for undefined, null or incorrectly typed values after transforms have been applied
 export const validateTokens: Action = {
@@ -11,7 +12,7 @@ export const validateTokens: Action = {
     // For Native, no null / undefined, but also check for nested undefined / null values
     // in objects (ie. fontSize)
     const invalidTokens = dictionary.allTokens.filter((token) => {
-      const val = token.$value ?? token.value;
+      const val = findTokenValue(token);
       if (platform && platform.css) {
         return val === undefined || val === null || typeof val === 'object';
       }

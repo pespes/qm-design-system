@@ -1,16 +1,15 @@
 import type { Transform, TransformedToken } from 'style-dictionary/types';
+import { findTokenValue } from '../utilities/token-helpers.js'
 
 // Check if a token is a number or unitless string that can be treated as a number.
-const isNumericToken = (token: TransformedToken) => {
-  const val = token.$value ?? token.value;
+const isNumericToken = (val: any) => {
   const num = Number(val);
   // null & empty string return 0 for Number(), and '2px' & undefined for Number() return undefined'
   // confirm val is none of these
   return val !== null && val !== '' && !isNaN(num);
 }
 
-function isTypographyToken(token: TransformedToken, requiredFields: string[]) {
-  const val = token.$value ?? token.value;
+function isTypographyToken(val: any, requiredFields: string[]) {
   if (typeof val !== 'object' || val === null || val === undefined || Array.isArray(val)) {
     return false;
   }
@@ -26,11 +25,11 @@ export const spacingToEm: Transform = {
   type: 'value',
   filter: (token) => token.path[0] === 'letterSpacing',
   transform: (token) => {
-    if (!isNumericToken(token)) {
-      console.warn(`spacing/em: Token ${token.name} is not a unitless number: ${token.$value ?? token.value}`);
-      return token.$value ?? token.value;
+    const val = findTokenValue(token)
+    if (!isNumericToken(val)) {
+      console.warn(`spacing/em: Token ${token.name} is not a unitless number: ${val}`);
+      return val;
     }
-    const val = token.$value ?? token.value;
     const num = typeof val === 'string' ? parseFloat(val) : (val as number);
     return `${num / 1000}em`;
   },
@@ -44,11 +43,11 @@ export const typeConversion: Transform = {
   transitive: true,
   filter: (token) => token.$type === 'typography' || token.type === 'typography',
   transform: (token) => {
-    if (!isTypographyToken(token, ['fontFamily', 'fontSize'])) {
-      console.warn(`typography/clean: Token ${token.name} is not a valid typography object: ${token.$value ?? token.value}`);
+    const val = findTokenValue(token);
+    if (!isTypographyToken(val, ['fontFamily', 'fontSize'])) {
+      console.warn(`typography/clean: Token ${token.name} is not a valid typography object: ${val}`);
       return undefined;
     }
-    const val = token.$value ?? token.value;
     const { letterSpacing, ...fontConfig } = val;
     return fontConfig;
   }
@@ -73,14 +72,14 @@ export const typeConversionRN: Transform = {
   transitive: true,
   filter: (token) => token.$type === 'typography' || token.type === 'typography',
   transform: (token) => {
+    const value = findTokenValue(token);
     // fontSize is a mandatory value, so return undefined if the value is invalid,
     // OR if value.fontSize is invalid - to be caught in formatter & action
-    if (!isTypographyToken(token, ['fontSize'])) {
+    if (!isTypographyToken(value, ['fontSize'])) {
       console.warn(`Token "${token.name}" is not a valid "fontSize" object.`);
       return undefined;
     }
 
-    const value = token.$value ?? token.value;
     const { fontSize, fontWeight, lineHeight, letterSpacing } = value;
     const config: Record<string, string> = {};
 

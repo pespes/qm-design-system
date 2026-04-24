@@ -1,7 +1,9 @@
 import type { TransformedToken } from 'style-dictionary';
 import type { Format, FormatFnArguments } from 'style-dictionary/types';
 import { fileHeader, getReferences } from 'style-dictionary/utils';
-import { hasInvalidLeaf, setNestedValue } from '../utilities/recursion.js';
+import { set } from 'lodash-es';
+import { hasInvalidLeaf } from '../utilities/validation.js';
+import { findTokenValue } from '../utilities/token-helpers.js'
 
 const tokenTypes = ['border-width', 'color', 'breakpoint', 'opacity', 'radius', 'spacing', 'text', 'z-index'];
 
@@ -29,7 +31,7 @@ export const tailwindTheme: Format = {
     }, '');
     
     const vars = dictionary.allTokens.reduce((acc, token, idx) => {
-      let val = token.$value ?? token.value;
+      let val = findTokenValue(token);
       if (val === undefined || val === null || typeof val === 'object') {
         return acc;
       }
@@ -68,7 +70,7 @@ export const nativeTheme: Format = {
   name: 'js/tw-react-native',
   format: async ({ dictionary, file }: FormatFnArguments) => {
     const theme = dictionary.allTokens.reduce((acc: Record<string, any>, token: TransformedToken) => {
-      const value = token.$value ?? token.value;
+      const value = findTokenValue(token);
 
       // filter out any undefined / null values, or empty objects
       if (hasInvalidLeaf(value) || (typeof value === 'object' && Object.keys(value).length === 0)) {
@@ -103,7 +105,7 @@ export const nativeTheme: Format = {
         // tailwind-react-native-classnames takes a nested object for colors, otherwise flat map
         // https://github.com/jaredh159/tailwind-react-native-classnames/blob/master/src/tw-config.ts
         // Use reduce utility function to set nested values
-        setNestedValue(root[categoryKey], remainingPath, value);
+        set(root[categoryKey], remainingPath, value);
       } else {
         const flattenedKey = remainingPath.join('-');
         root[categoryKey][flattenedKey] = value;
