@@ -1,4 +1,5 @@
 import type { Transform, TransformedToken } from 'style-dictionary/types';
+import BigNumber from 'bignumber.js';
 import { findTokenValue } from '../utilities/token-helpers.js'
 
 // Check if a token is a number or unitless string that can be treated as a number.
@@ -30,8 +31,8 @@ export const spacingToEm: Transform = {
       console.warn(`spacing/em: Token ${token.name} is not a unitless number: ${val}`);
       return val;
     }
-    const num = typeof val === 'string' ? parseFloat(val) : (val as number);
-    return `${num / 1000}em`;
+    const num = new BigNumber(val);
+    return `${num.dividedBy(1000).dp(3).toString()}em`;
   },
 };
 
@@ -45,7 +46,7 @@ export const typeConversion: Transform = {
   transform: (token) => {
     const val = findTokenValue(token);
     if (!isTypographyToken(val, ['fontFamily', 'fontSize'])) {
-      console.warn(`typography/clean: Token ${token.name} is not a valid typography object: ${val}`);
+      console.error(`typography/clean: Token ${token.name} is not a valid typography object: ${val}`);
       return undefined;
     }
     const { letterSpacing, ...fontConfig } = val;
@@ -76,26 +77,29 @@ export const typeConversionRN: Transform = {
     // fontSize is a mandatory value, so return undefined if the value is invalid,
     // OR if value.fontSize is invalid - to be caught in formatter & action
     if (!isTypographyToken(value, ['fontSize'])) {
-      console.warn(`Token "${token.name}" is not a valid "fontSize" object.`);
+      console.error(`Token "${token.name}" is not a valid "fontSize" object.`);
       return undefined;
     }
 
     const { fontSize, fontWeight, lineHeight, letterSpacing } = value;
     const config: Record<string, string> = {};
+    const size = new BigNumber(fontSize);
 
     if (fontWeight !== undefined || fontWeight !== null) {
       config.fontWeight = fontWeight.toString();
     }
 
-    if (lineHeight !== undefined || lineHeight !== null) {
-      config.lineHeight = (lineHeight * fontSize).toString();
+    if (isNumericToken(lineHeight)) {
+      config.lineHeight = size.multipliedBy(lineHeight).dp(2).toString();
     }
 
-    if (letterSpacing !== undefined || letterSpacing !== null) {
-      const numSpacing = typeof letterSpacing === 'string' ? parseFloat(letterSpacing) : letterSpacing;
-      if (!isNaN(numSpacing)) {
-        config.letterSpacing = ((numSpacing / 1000) * parseInt(fontSize)).toString();
-      }
+    if (isNumericToken(letterSpacing)) {
+      const spacing = new BigNumber(letterSpacing);
+      config.letterSpacing = spacing
+        .dividedBy(1000)
+        .multipliedBy(size)
+        .dp(3)
+        .toString();
     }
 
     return [`${fontSize}`, config];
