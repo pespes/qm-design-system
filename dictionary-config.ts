@@ -1,4 +1,5 @@
 import StyleDictionary from 'style-dictionary';
+import type { TransformedToken } from 'style-dictionary/types';
 import { typographySplitParser } from './src/dictionary/parser.js'
 import transforms from './src/dictionary/transforms.js';
 import groups from './src/dictionary/transformGroups.js';
@@ -11,11 +12,12 @@ const PRIMITIVES = [
   'tokens/primitives/breakpoints.tokens.json',
   'tokens/primitives/opacity.tokens.json',
   'tokens/primitives/radius.tokens.json',
-  'tokens/primitives/shadow.tokens.json',
   'tokens/primitives/spacing.tokens.json',
   'tokens/primitives/zIndex.tokens.json'
 ];
 const SEMANTICS = ['tokens/semantic/**/*.tokens.json'];
+const CSS_SHADOW = 'tokens/primitives/shadow.tokens.json';
+const NATIVE_SHADOW = 'tokens/primitives/shadowNative.tokens.json'
 
 const buildDictionary = async () => {
   const hooks = {
@@ -31,35 +33,69 @@ const buildDictionary = async () => {
     }
   }
 
-  // Pass 1: Base tokens → CSS + ReactNative base theme
-  const sdDefault = new StyleDictionary({
+  // Token build for CSS
+  const getCssConfig = (mode?: any) => ({
+    log: { verbosity: 'silent' as const },
     usesDtcg: true,
     hooks,
-    parsers: ['typography-split'],
-    // Primitive type and colour tokens are in 'include' for reference, not emitted
-    include: HIDDEN_PRIMITIVES,
-    source: [...PRIMITIVES, ...SEMANTICS],
+    parsers: ['typography-split'], // includes parser to surface letterSpacing variables
+    // Include tokens are for reference, not emitted
+    include: mode
+      ? [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS, CSS_SHADOW]
+      : HIDDEN_PRIMITIVES,
+    // For override mode, only needs to surface override values for selector
+    // Default @theme block renders all variables
+    source: mode
+      ? [`tokens/modes/${mode.name}.tokens.json`]
+      : [...PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
     platforms: {
-      // CSS: Tailwind @theme block
       css: {
         transformGroup: 'css/tokens',
         buildPath: 'dist/css/',
-        actions: ['validate_tokens'],
+        actions: ['validate-tokens'],
         files: [
           {
-            destination: 'tokens.css',
-            filter: token => token.isSource,
-            format: 'css/tailwind-theme',
+            destination: `tokens.${mode ? mode.name + '.' : ''}css`,
+            format: mode ? 'css/variables' : 'css/tailwind-theme',
+            filter: (token: TransformedToken) => token.isSource,
+            options: {
+              fileHeader: 'qm-header',
+              selector: mode?.cssSelector
+            }
+          }
+        ]
+      }
+    }
+  });
+
+  // Token build for RN
+  const getNativeConfig = (mode?: any) => ({
+    // Style Dictionary complains about too many tokens ending in 'foreground', or variables
+    // being overridden by the pro mode. As these are design choices, silence the warnings.
+    log: { verbosity: 'silent' as const },
+    usesDtcg: true,
+    hooks,
+    include: HIDDEN_PRIMITIVES,
+    source: [ ...PRIMITIVES, ...SEMANTICS, NATIVE_SHADOW, (mode ? `tokens/modes/${mode.name}.tokens.json` : '')],
+    platforms: {
+      // Object to be used in TWRNC create()
+      native: {
+        transformGroup: 'json/tokens',
+        buildPath: 'dist/native/',
+        actions: ['validate-tokens'],
+        files: [
+          {
+            destination: `native.${mode ? mode.name + '.' : ''}ts`,
+            format: 'js/tw-react-native',
+            filter: (token: TransformedToken) => token.isSource,
             options: {
               fileHeader: 'qm-header'
             }
-          },
-        ],
-      },
-    },
-  });
-
-  await sdDefault.buildAllPlatforms();
+          }
+        ]
+      }
+    }
+  })
 
   const modes = [
     {
@@ -69,36 +105,16 @@ const buildDictionary = async () => {
     },
   ]
 
-  const buildMode = modes.map(async (mode) => {
-    const sdMode = new StyleDictionary({
-      usesDtcg: true,
-      hooks,
-      parsers: ['typography-split'],
-      include: [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS],
-      // Only the mode file is "source" — only these tokens are emitted
-      source: [`tokens/modes/${mode.name}.tokens.json`],
-      platforms: {
-        css: {
-          transformGroup: 'css/tokens',
-          buildPath: 'dist/css/',
-          actions: ['validate_tokens'],
-          files: [
-            {
-              destination: `tokens.${mode.name}.css`,
-              format: 'css/variables',
-              filter: (token) => token.isSource,
-              options: { 
-                selector: mode.cssSelector,
-                fileHeader: 'qm-header'
-              },
-            },
-          ],
-        },
-      },
-    });
-    return sdMode.buildAllPlatforms();
-  })
+  const builds = [
+    // base builds
+    getCssConfig(),
+    getNativeConfig(),
 
-  await Promise.all(buildMode);
+    // mode overrides
+    ...modes.map((mode => getCssConfig(mode))),
+    ...modes.map((mode) => getNativeConfig(mode))
+  ];
+
+  await Promise.all(builds.map((config) => new StyleDictionary(config).buildAllPlatforms()));
 }
 buildDictionary();

@@ -18,5 +18,16 @@ export const cssTransformGroup = {
   ]
 };
 
-const groups = [cssTransformGroup];
+
+export const nativeTransformGroup = {
+  name: 'json/tokens',
+  transforms: [
+    'attribute/cti',
+    'name/kebab',
+    'size/px',
+    'native-color-fallback',
+    'typography/convert',
+  ]
+}
+const groups = [cssTransformGroup, nativeTransformGroup];
 export default groups;

@@ -36,6 +36,40 @@ const typographyToken: DesignToken = {
     });
   });
 
+  it('should create 2 nested separate tokens when taking in a nested semantic typography token', () => {
+    const nestedToken: DesignToken = {
+      text: {
+        header: {
+          primary: {
+            $type: 'typography',
+            $value: { fontSize: 16, letterSpacing: 10, fontFamily: 'sans serif' }
+          }
+        }
+      }
+    };
+
+    const contents = JSON.stringify(nestedToken);
+    const result = typographySplitParser.parser({ contents });
+    expect(result).toEqual({
+      text: {
+        header: {
+          primary: {
+            $type: 'typography',
+            $value: {
+              fontSize: 16,
+              fontFamily: 'sans serif',
+              letterSpacing: 10,
+            },
+          },
+          'primary-tracking': {
+            $value: 10,
+            $type: 'spacing',
+            comment: 'letter spacing for primary'
+          },
+        },    
+      },
+    });
+  });
 
   it('should return original when no letterSpacing is present', () => {
     const typographyToken: DesignToken = {

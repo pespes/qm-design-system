@@ -296,37 +296,58 @@
       "hover-on-light": {
         "$type": "color",
         "$value": "oklch(0% 0 0 / 0.08)",
-        "$description": "Hover overlay for light surfaces"
+        "$description": "Hover overlay for light surfaces",
+        "$extensions": {
+          "rgba-fallback": "rgba(0, 0, 0, 0.08)"
+        }
       },
       "pressed-on-light": {
         "$type": "color",
         "$value": "oklch(0% 0 0 / 0.16)",
-        "$description": "Pressed/active overlay for light surfaces"
+        "$description": "Pressed/active overlay for light surfaces",
+        "$extensions": {
+          "rgba-fallback": "rgba(0, 0, 0, 0.16)"
+        }
       },
       "hover-on-dark": {
         "$type": "color",
         "$value": "oklch(100% 0 0 / 0.12)",
-        "$description": "Hover overlay for dark surfaces"
+        "$description": "Hover overlay for dark surfaces",
+        "$extensions": {
+          "rgba-fallback": "rgba(255, 255, 255, 0.12)"
+        }
       },
       "pressed-on-dark": {
         "$type": "color",
         "$value": "oklch(100% 0 0 / 0.24)",
-        "$description": "Pressed/active overlay for dark surfaces"
+        "$description": "Pressed/active overlay for dark surfaces",
+        "$extensions": {
+          "rgba-fallback": "rgba(255, 255, 255, 0.24)"
+        }
       },
       "disabled": {
         "$type": "color",
         "$value": "oklch(0% 0 0 / 0.38)",
-        "$description": "Applied to dark content to indicate disabled"
+        "$description": "Applied to dark content to indicate disabled",
+        "$extensions": {
+          "rgba-fallback": "#def5e0"
+        }
       },
       "disabled-subtle": {
         "$type": "color",
         "$value": "oklch(0% 0 0 / 0.6)",
-        "$description": "Applied to light content to indicate disabled"
+        "$description": "Applied to light content to indicate disabled",
+        "$extensions": {
+          "rgba-fallback": "rgba(0, 0, 0, 0.38)"
+        }
       },
       "dragged": {
         "$type": "color",
         "$value": "oklch(0% 0 0 / 0.12)",
-        "$description": "Drag state overlay"
+        "$description": "Drag state overlay",
+        "$extensions": { 
+          "rgba-fallback": "rgba(0, 0, 0, 0.12)"
+        }
       }
     },
     "focus": {

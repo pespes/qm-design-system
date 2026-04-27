@@ -2,8 +2,9 @@ import type { Config } from 'jest';
 
 const esmLibs = [
   'style-dictionary',
-  'is-plain-obj' 
-]
+  'is-plain-obj' ,
+  'lodash-es'
+];
 
 const config: Config = {
   testEnvironment: 'node',
