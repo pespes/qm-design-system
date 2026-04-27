@@ -55,7 +55,7 @@ const buildDictionary = async () => {
         actions: ['validate-tokens'],
         files: [
           {
-            destination: `tokens.${mode ? mode.name + '.' : ''}.css`,
+            destination: `tokens.${mode ? mode.name + '.' : ''}css`,
             format: mode ? 'css/variables' : 'css/tailwind-theme',
             filter: (token: TransformedToken) => token.isSource,
             options: {
@@ -85,7 +85,7 @@ const buildDictionary = async () => {
         actions: ['validate-tokens'],
         files: [
           {
-            destination: `native.${mode ? mode.name + '.' : ''}.ts`,
+            destination: `native.${mode ? mode.name + '.' : ''}ts`,
             format: 'js/tw-react-native',
             filter: (token: TransformedToken) => token.isSource,
             options: {
