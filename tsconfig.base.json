@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "rootDir": ".",
+
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "forceConsistentCasingInFileNames": true,
+
+    "paths": {
+      "@quartermaster/ui-tokens/native/tokens": ["./libs/ui-tokens/dist/native/native.ts"],
+      "@quartermaster/ui-tokens/native/tokens-pro": ["./libs/ui-tokens/dist/native/native.pro.ts"],
+      "@quartermaster/ui-tokens/css/tokens": ["./libs/ui-tokens/dist/css/tokens.css"],
+      "@quartermaster/ui-tokens/css/tokens-pro": ["./libs/ui-tokens/dist/css/tokens.pro.css"]
+    },
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}
