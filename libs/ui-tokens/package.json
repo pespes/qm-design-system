@@ -1,0 +1,45 @@
+{
+  "name": "@quartermaster/ui-tokens",
+  "version": "0.0.1",
+  "description": "Quartermaster design tokens — DTCG source, CSS custom properties, and React Native TwTheme objects",
+  "author": {
+    "name": "Quartermaster",
+    "url": "https://quartermaster.house"
+  },
+  "type": "module",
+  "private": true,
+  "keywords": [
+    "quartermaster",
+    "typescript",
+    "ui"
+  ],
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">= 22"
+  },
+  "exports": {
+    "./css/tokens": "./dist/css/tokens.css",
+    "./css/tokens-pro": "./dist/css/tokens.pro.css",
+    "./native/tokens": "./dist/native/native.ts",
+    "./native/tokens-pro": "./dist/native/native.pro.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build:tokens": "pnpm tsc && node build/dictionary-config.js",
+    "build": "pnpm run clean && pnpm run build:tokens"
+  },
+  "dependencies": {
+    "style-dictionary": "^5.4.0"
+  },
+  "devDependencies": {
+    "@nx/eslint": "^22.7.0",
+    "@nx/eslint-plugin": "^22.7.0",
+    "@nx/jest": "^22.7.0",
+    "@nx/workspace": "^22.7.0",
+    "@types/lodash-es": "^4.17.12",
+    "bignumber.js": "^11.0.0",
+    "jest": "^30.3.0",
+    "lodash-es": "^4.18.1"
+  }
+}

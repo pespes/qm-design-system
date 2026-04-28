@@ -5,3 +5,15 @@
 /node_modules
 /yalc.lock
 /.yalc
+
+.nx/cache
+.nx/workspace-data
+
+# IDE 
+.vscode/*
+.idea
+
+# Nested Node Modules
+/libs/*/build
+/libs/*/node_modules
+/apps/*/node_modules

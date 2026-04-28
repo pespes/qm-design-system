@@ -283,6 +283,7 @@ describe('formats', () => {
     });
 
     it('renders a "No tokens found" if no matching tokens', async () => {
+      console.log("IS THIS TEST RU NNING????")
       const dictionary: Dictionary = {
         allTokens: [mockTokens[1]] as TransformedToken[],
         tokens: {},
