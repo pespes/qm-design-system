@@ -1,5 +1,5 @@
 {
-  "name": "@quartermaster/ui-tokens",
+  "name": "@quartermaster/ui",
   "version": "0.0.1",
   "description": "Quartermaster design system & component library",
   "author": {
@@ -22,13 +22,12 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "typecheck": "nx run-many --all -t typecheck",
-    "test": "nx run-many --all -t test"
+    "test": "nx run-many --all -t test",
+    "build:tokens": "nx build ui-tokens",
+    "build:components": "nx build ui-components"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.3.0",
-    "@nx/eslint": "^22.7.0",
-    "@nx/eslint-plugin": "^22.7.0",
     "@nx/jest": "22.7.0",
     "@nx/js": "22.7.0",
     "@nx/workspace": "^22.7.0",
@@ -42,8 +41,6 @@
     "jest-environment-jsdom": "^30.0.2",
     "jest-util": "^30.0.2",
     "nx": "^22.7.0",
-    "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.7.2",
     "ts-jest": "^29.4.9",
     "ts-node": "10.9.1",
     "tsx": "^4.21.0",

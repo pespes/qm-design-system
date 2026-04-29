@@ -5,7 +5,7 @@
       "cache": false,
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm tsc --noEmit -p {projectRoot}/tsconfig.json"
+        "command": "pnpm tsc --noEmit -p {projectRoot}/tsconfig.lib.json"
       }
     },
     "test": {
@@ -15,6 +15,10 @@
         "jestConfig": "{projectRoot}/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "cache": true
     }
   },
   "analytics": false,

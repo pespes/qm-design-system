@@ -6,6 +6,17 @@
   "tags": ["scope:shared"],
   "targets": {
     "typecheck": {},
-    "test": {}
+    "test": {},
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm run build",
+        "cwd": "libs/ui-tokens"
+      },
+      "outputs": [
+        "{projectRoot}/dist", 
+        "{projectRoot}/build"
+      ]
+    }
   }
 }

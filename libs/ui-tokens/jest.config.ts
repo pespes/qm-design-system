@@ -1,5 +1,5 @@
 import type { Config } from 'jest';
-import baseConfig from '../../jest.shared.ts'; // Note the .js extension for ESM resolution
+import baseConfig from '../../jest.shared.ts';
 
 const config: Config = {
   ...baseConfig,
