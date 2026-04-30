@@ -6,13 +6,13 @@ export const hasInvalidLeaf = (obj: any): boolean => {
     return true;
   }
   if (isObject(obj)) {
-    return some(obj, val => hasInvalidLeaf(val))
+    return some(obj, (val) => hasInvalidLeaf(val));
   }
   if (typeof obj === 'string') {
     return hasUnresolvedVal(obj);
   }
   return false;
-}
+};
 
 // Check for any unresolved values in resulting string value - any string is contained in curly braces (ie. '{color.blue.500}')
 export const hasUnresolvedVal = (val: string): boolean => {
@@ -21,4 +21,4 @@ export const hasUnresolvedVal = (val: string): boolean => {
     return true;
   }
   return false;
-}
+};

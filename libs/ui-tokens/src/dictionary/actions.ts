@@ -1,6 +1,6 @@
 import type { Action } from 'style-dictionary/types';
 import { hasInvalidLeaf, hasUnresolvedVal } from '../utilities/validation.js';
-import { findTokenValue } from '../utilities/token-helpers.js'
+import { findTokenValue } from '../utilities/token-helpers.js';
 
 // Scan for undefined, null or incorrectly typed values after transforms have been applied
 export const validateTokens: Action = {
@@ -19,8 +19,7 @@ export const validateTokens: Action = {
           return hasUnresolvedVal(val);
         }
         return val === undefined || val === null || typeof val === 'object';
-      }
-      else {
+      } else {
         return hasInvalidLeaf(val);
       }
     });
@@ -29,5 +28,5 @@ export const validateTokens: Action = {
       throw new Error('Build failed: invalid token values found.');
     }
   },
-  undo: () => {} //style dictionary complains on build if no undo function is present
+  undo: () => {}, //style dictionary complains on build if no undo function is present
 };

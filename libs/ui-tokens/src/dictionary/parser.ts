@@ -8,7 +8,8 @@ export const typographySplitParser: Parser = {
   name: 'typography-split',
   pattern: /semantic\/type\.tokens\.json$/, //just the semantic type token values to be parsed
   parser: ({ contents }: { contents: string | DesignTokens }) => {
-    const data: DesignTokens = typeof contents === 'string' ? JSON.parse(contents) : contents;
+    const data: DesignTokens =
+      typeof contents === 'string' ? JSON.parse(contents) : contents;
 
     const splitTypography = (obj: DesignTokens) => {
       return Object.entries(obj).reduce((acc, [key, val]: [string, any]) => {
@@ -17,12 +18,13 @@ export const typographySplitParser: Parser = {
           acc[key] = val; // Keep the original token
 
           // Extract letterSpacing into separate token
-          const letterSpacing = val.$value?.letterSpacing ?? val.value?.letterSpacing;
+          const letterSpacing =
+            val.$value?.letterSpacing ?? val.value?.letterSpacing;
           if (letterSpacing !== undefined) {
             acc[`${key}-tracking`] = {
               $type: 'spacing',
               $value: letterSpacing,
-              comment: `letter spacing for ${key}`
+              comment: `letter spacing for ${key}`,
             };
           }
         } else if (typeof val === 'object' && val !== null) {
@@ -34,5 +36,5 @@ export const typographySplitParser: Parser = {
     };
 
     return splitTypography(data);
-  }
+  },
 };
