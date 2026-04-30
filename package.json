@@ -1,7 +1,7 @@
 {
-  "name": "@quartermaster/ui-tokens",
+  "name": "@quartermaster/ui",
   "version": "0.0.1",
-  "description": "Quartermaster design tokens — DTCG source, CSS custom properties, and React Native TwTheme objects",
+  "description": "Quartermaster design system & component library",
   "author": {
     "name": "Quartermaster",
     "url": "https://quartermaster.house"
@@ -14,34 +14,39 @@
     "ui"
   ],
   "license": "UNLICENSED",
+  "packageManager": "pnpm@10.33.0",
   "engines": {
     "node": ">= 22"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build:tokens": "tsc && node build/dictionary-config.js",
-    "build": "pnpm run clean && pnpm run build:tokens",
-    "test": "TZ=UTC jest --passWithNoTests"
-  },
-  "dependencies": {
-    "style-dictionary": "^5.4.0"
+    "typecheck": "nx run-many --all -t typecheck",
+    "test": "nx run-many --all -t test",
+    "build:tokens": "nx build ui-tokens",
+    "build:components": "nx build ui-components"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.3.0",
+    "@nx/jest": "22.7.0",
+    "@nx/js": "22.7.0",
+    "@nx/workspace": "^22.7.0",
+    "@swc-node/register": "^1.11.1",
     "@swc/core": "^1.15.30",
+    "@swc/helpers": "~0.5.18",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
-    "@types/lodash-es": "^4.17.12",
-    "bignumber.js": "^11.0.0",
+    "@types/node": "20.19.9",
     "jest": "^30.3.0",
-    "lodash-es": "^4.18.1",
-    "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "jest-environment-jsdom": "^30.0.2",
+    "jest-util": "^30.0.2",
+    "nx": "^22.7.0",
     "ts-jest": "^29.4.9",
+    "ts-node": "10.9.1",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
   }
 }

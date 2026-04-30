@@ -1,0 +1,6 @@
+packages:
+  - 'libs/*'
+
+nodeLinker: isolated
+autoInstallPeers: true
+strictPeerDependencies: false
