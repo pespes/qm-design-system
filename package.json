@@ -24,10 +24,14 @@
     "typecheck": "nx run-many --all -t typecheck",
     "test": "nx run-many --all -t test",
     "build:tokens": "nx build ui-tokens",
-    "build:components": "nx build ui-components"
+    "build:components": "nx build ui-components",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true nx run-many --all -t lint"
   },
   "devDependencies": {
+    "@eslint/js": "^8.57.1",
     "@jest/globals": "^30.3.0",
+    "@nx/eslint": "22.7.0",
+    "@nx/eslint-plugin": "^22.7.1",
     "@nx/jest": "22.7.0",
     "@nx/js": "22.7.0",
     "@nx/workspace": "^22.7.0",
@@ -37,16 +41,24 @@
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
     "@types/node": "20.19.9",
+    "eslint": "~8.57.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jest": "^29.15.2",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.5.0",
     "jest": "^30.3.0",
     "jest-environment-jsdom": "^30.0.2",
     "jest-util": "^30.0.2",
     "nx": "^22.7.0",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "ts-jest": "^29.4.9",
     "ts-node": "10.9.1",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.59.1"
   },
   "dependencies": {
+    "@quartermaster/eslint-plugin-quartermaster": "^2.2.0",
     "tslib": "^2.3.0"
   }
 }
