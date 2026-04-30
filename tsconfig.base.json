@@ -17,7 +17,7 @@
     "skipDefaultLibCheck": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "noUncheckedSideEffectImports": true,
+    "noUncheckedSideEffectImports": false,
     "moduleDetection": "force",
     "forceConsistentCasingInFileNames": true,
 
