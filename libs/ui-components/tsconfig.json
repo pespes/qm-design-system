@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+  ],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"] //Shadcn configuration to correctly map their utils and hooks imports
+    }
+  },
+}
