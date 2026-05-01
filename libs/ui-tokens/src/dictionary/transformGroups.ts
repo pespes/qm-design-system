@@ -10,14 +10,15 @@ const cssBuiltins = StyleDictionary.hooks.transformGroups.css ?? [];
 export const cssTransformGroup = {
   name: 'css/tokens',
   transforms: [
-    ...cssBuiltins.filter((t) => t !== 'size/rem' && t !== 'typography/css/shorthand'),
+    ...cssBuiltins.filter(
+      (t) => t !== 'size/rem' && t !== 'typography/css/shorthand',
+    ),
     'size/pxToRem',
     'spacing/em',
     'typography/clean',
-    'typography/css/shorthand'
-  ]
+    'typography/css/shorthand',
+  ],
 };
-
 
 export const nativeTransformGroup = {
   name: 'json/tokens',
@@ -27,7 +28,8 @@ export const nativeTransformGroup = {
     'size/px',
     'native-color-fallback',
     'typography/convert',
-  ]
-}
+  ],
+};
+
 const groups = [cssTransformGroup, nativeTransformGroup];
 export default groups;

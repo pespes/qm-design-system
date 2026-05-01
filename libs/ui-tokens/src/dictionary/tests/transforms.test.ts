@@ -1,6 +1,11 @@
 import { describe, it, expect } from '@jest/globals';
 import { type TransformedToken } from 'style-dictionary/types';
-import { spacingToEm, typeConversion, nativeColorFallback, typeConversionRN } from '../transforms.js';
+import {
+  spacingToEm,
+  typeConversion,
+  nativeColorFallback,
+  typeConversionRN,
+} from '../transforms.js';
 
 type TypographyType = {
   fontFamily: string;
@@ -8,10 +13,9 @@ type TypographyType = {
   fontWeight?: number;
   lineHeight?: number;
   letterSpacing?: number;
-}
+};
 
 type NativeTypographyType = Omit<TypographyType, 'fontFamily'>;
-
 
 describe('Custom Transforms', () => {
   describe('spacingToEm', () => {
@@ -19,47 +23,60 @@ describe('Custom Transforms', () => {
       name: 'letterSpacing-050',
       path: ['letterSpacing', '050'],
       original: {
-          $value: 50,
-          $type: 'number',
+        $value: 50,
+        $type: 'number',
       },
       $value: 50,
       isSource: true,
-      filePath: 'fake/filepath.json'
+      filePath: 'fake/filepath.json',
     };
 
     describe('transforming tokens', () => {
-      it('should convert unitless tracking (base 1000) to em string', () => {      
+      it('should convert unitless tracking (base 1000) to em string', () => {
         expect(spacingToEm.transform(token, {}, {})).toBe('0.05em');
       });
 
       it('should handle negative tracking values', () => {
-        const updatedToken = { ...token, $value: -25, original: { ...token.original, value: -25 }};
+        const updatedToken = {
+          ...token,
+          $value: -25,
+          original: { ...token.original, value: -25 },
+        };
         expect(spacingToEm.transform(updatedToken, {}, {})).toBe('-0.025em');
       });
 
       it('should handle unitless string numbers correctly', () => {
-        const updatedToken = { ...token, $value: '100', original: { ...token.original, $value: '100' }};
+        const updatedToken = {
+          ...token,
+          $value: '100',
+          original: { ...token.original, $value: '100' },
+        };
         expect(spacingToEm.transform(updatedToken, {}, {})).toBe('0.1em');
       });
 
       it('should return original value for unit strings like 2px', () => {
-        const updatedToken = { ...token, $value: '2px', original: { ...token.original, $value: '2px' }};
+        const updatedToken = {
+          ...token,
+          $value: '2px',
+          original: { ...token.original, $value: '2px' },
+        };
         expect(spacingToEm.transform(updatedToken, {}, {})).toBe('2px');
       });
 
       it('should return the value as is if it is missing (to be caught by validation/formatter)', () => {
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const { $value, ...otherTokenProps } = token;
         expect(spacingToEm.transform(otherTokenProps, {}, {})).toBe(undefined);
       });
-    })
+    });
 
     describe('filtering tokens', () => {
       it('should filter any tokens that shold be converted', () => {
         expect(spacingToEm.filter?.(token, {})).toBe(true);
-      })
+      });
 
       it('should filter out any tokens that should not be converted', () => {
-        const updatedToken = { ...token, path: [ 'color', 'white' ]};
+        const updatedToken = { ...token, path: ['color', 'white'] };
         expect(spacingToEm.filter?.(updatedToken, {})).toBe(false);
       });
     });
@@ -77,17 +94,21 @@ describe('Custom Transforms', () => {
         letterSpacing: 25,
       },
       original: {
-        $value: { fontFamily: 'DM Sans'},
+        $value: { fontFamily: 'DM Sans' },
         $type: 'typography',
       },
       path: ['header, h1'],
       filePath: 'fake/filepath.json',
-      isSource: true
+      isSource: true,
     };
 
     describe('transforming tokens', () => {
       it('should remove letterSpacing from the value object, and return other variables unchanged', () => {
-        const result = typeConversion.transform(token, {}, {}) as TypographyType;     
+        const result = typeConversion.transform(
+          token,
+          {},
+          {},
+        ) as TypographyType;
         expect(result).not.toHaveProperty('letterSpacing');
         expect(result.fontFamily).toBe('DM Sans');
         expect(result.fontSize).toBe(16);
@@ -96,41 +117,51 @@ describe('Custom Transforms', () => {
       });
 
       it('should return original value if letterSpacing is already removed', () => {
-        const noSpacingToken = { 
+        const noSpacingToken = {
           ...token,
-          $value: { fontSize: 16, fontFamily: 'DM Sans'},
-          original: { ...token.original, $value: { fontSize: 16 }}
-        }
-        const result = typeConversion.transform(noSpacingToken, {}, {}) as TypographyType;     
+          $value: { fontSize: 16, fontFamily: 'DM Sans' },
+          original: { ...token.original, $value: { fontSize: 16 } },
+        };
+        const result = typeConversion.transform(
+          noSpacingToken,
+          {},
+          {},
+        ) as TypographyType;
         expect(result.fontSize).toBe(16);
         expect(result.fontFamily).toBe('DM Sans');
         expect(result).not.toHaveProperty('lineHeight');
         expect(result).not.toHaveProperty('fontWeight');
         expect(result).not.toHaveProperty('letterSpacing');
-      })
+      });
 
       it('should return undefined if value is missing (to be caught by validation/formatter)', () => {
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const { $value, ...otherTokenProps } = token;
-        expect(typeConversion.transform(otherTokenProps, {}, {})).toBe(undefined);
+        expect(typeConversion.transform(otherTokenProps, {}, {})).toBe(
+          undefined,
+        );
       });
 
       it('should return undefined if required field is missing (to be caught by validation/formatter)', () => {
-        const noFamilyToken = { 
+        const noFamilyToken = {
           ...token,
           $value: { fontSize: 16, lineHeight: 1.25 },
-          original: { ...token.original, $value: { fontSize: 16, lineHeight: 1.25 }}
-        }
+          original: {
+            ...token.original,
+            $value: { fontSize: 16, lineHeight: 1.25 },
+          },
+        };
         expect(typeConversion.transform(noFamilyToken, {}, {})).toBe(undefined);
       });
-    })
-    
+    });
+
     describe('filtering tokens', () => {
       it('should filter any tokens that shold be converted', () => {
         expect(typeConversion.filter?.(token, {})).toBe(true);
-      })
+      });
 
       it('should filter out any tokens that should not be converted', () => {
-        const updatedToken = { ...token, $type: 'color'};
+        const updatedToken = { ...token, $type: 'color' };
         expect(typeConversion.filter?.(updatedToken, {})).toBe(false);
       });
     });
@@ -141,13 +172,13 @@ describe('Custom Transforms', () => {
       name: 'color-primary-background',
       path: ['color', 'primary', 'background'],
       original: {},
-      $value: "oklch(26.24% 0.0036 78.30)",
+      $value: 'oklch(26.24% 0.0036 78.30)',
       $extensions: {
-        "hex-fallback": "#262423",
+        'hex-fallback': '#262423',
       },
       $type: 'color',
       isSource: true,
-      filePath: 'fake/filepath.json'
+      filePath: 'fake/filepath.json',
     };
 
     describe('transforming tokens', () => {
@@ -160,32 +191,36 @@ describe('Custom Transforms', () => {
           ...token,
           original: {},
           $extensions: {
-            "rgba-fallback": "rgba(255,255,255, 0.1)",
-          }
-        }
-        expect(nativeColorFallback.transform(updatedToken, {}, {})).toBe('rgba(255,255,255, 0.1)');
+            'rgba-fallback': 'rgba(255,255,255, 0.1)',
+          },
+        };
+        expect(nativeColorFallback.transform(updatedToken, {}, {})).toBe(
+          'rgba(255,255,255, 0.1)',
+        );
       });
 
       it('should return undefined if missing the fallback (to be caught by validation/formatter)', () => {
         const updatedToken = {
           ...token,
           original: {},
-          $extensions: {}
-        }
-        expect(nativeColorFallback.transform(updatedToken, {}, {})).toBe(undefined);
+          $extensions: {},
+        };
+        expect(nativeColorFallback.transform(updatedToken, {}, {})).toBe(
+          undefined,
+        );
       });
     });
 
     describe('filtering tokens', () => {
       it('should filter any tokens that shold be converted', () => {
         expect(nativeColorFallback.filter?.(token, {})).toBe(true);
-      })
+      });
 
       it('should filter out any tokens that should not be converted', () => {
-        const updatedToken = { ...token, $type: 'typography'};
+        const updatedToken = { ...token, $type: 'typography' };
         expect(nativeColorFallback.filter?.(updatedToken, {})).toBe(false);
       });
-    })
+    });
   });
 
   describe('typeConversionRN', () => {
@@ -202,17 +237,21 @@ describe('Custom Transforms', () => {
       original: {},
       path: ['header, h1'],
       filePath: 'fake/filepath.json',
-      isSource: true
+      isSource: true,
     };
-
 
     describe('transforming tokens', () => {
       it('should remove fontFamily from the value object, and return other transformed variables in string format', () => {
         // Should return an array - first value is fontSize, second is object with other properties
-        const result = typeConversionRN.transform(token, {}, {}) as [string, NativeTypographyType];
-        const spacingConversion = token.$value.letterSpacing / 1000 * token.$value.fontSize;
-        const lineHeightConversion = token.$value.lineHeight * token.$value.fontSize;
-        expect(result[0]).toBe('16'); 
+        const result = typeConversionRN.transform(token, {}, {}) as [
+          string,
+          NativeTypographyType,
+        ];
+        const spacingConversion =
+          (token.$value.letterSpacing / 1000) * token.$value.fontSize;
+        const lineHeightConversion =
+          token.$value.lineHeight * token.$value.fontSize;
+        expect(result[0]).toBe('16');
         expect(result[1].fontWeight).toBe('700');
         expect(result[1].lineHeight).toBe(lineHeightConversion.toString());
         expect(result[1].letterSpacing).toBe(spacingConversion.toString());
@@ -232,24 +271,27 @@ describe('Custom Transforms', () => {
           original: {},
           path: ['header, h1'],
           filePath: 'fake/filepath.json',
-          isSource: true
+          isSource: true,
         };
         expect(typeConversionRN.transform(token, {}, {})).toBe(undefined);
       });
 
       it('should return undefined if value is missing (to be caught by validation/formatter)', () => {
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const { $value, ...otherTokenProps } = token;
-        expect(typeConversionRN.transform(otherTokenProps, {}, {})).toBe(undefined);
+        expect(typeConversionRN.transform(otherTokenProps, {}, {})).toBe(
+          undefined,
+        );
       });
     });
 
     describe('filtering tokens', () => {
       it('should filter any tokens that shold be converted', () => {
         expect(typeConversionRN.filter?.(token, {})).toBe(true);
-      })
+      });
 
       it('should filter out any tokens that should not be converted', () => {
-        const updatedToken = { ...token, $type: 'color'};
+        const updatedToken = { ...token, $type: 'color' };
         expect(typeConversionRN.filter?.(updatedToken, {})).toBe(false);
       });
     });

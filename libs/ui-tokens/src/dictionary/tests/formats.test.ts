@@ -1,7 +1,6 @@
 import { describe, it, expect } from '@jest/globals';
-import { type TransformedToken, type Dictionary, type DesignToken } from 'style-dictionary/types';
+import { type TransformedToken, type Dictionary } from 'style-dictionary/types';
 import { tailwindTheme, nativeTheme } from '../formats.js';
-import { getReferences } from 'style-dictionary/utils';
 
 describe('formats', () => {
   describe('tailwindTheme', () => {
@@ -49,16 +48,21 @@ describe('formats', () => {
         path: ['text', 'heading', 'h1'],
         filePath: 'fake/filePath.json',
         original: {},
-      }
+      },
     ];
 
     it('should format source tokens into Tailwind @theme blocks', async () => {
       const dictionary: Dictionary = {
         allTokens: mockTokens,
         tokens: {},
-        tokenMap: new Map()
+        tokenMap: new Map(),
       };
-      const result = await tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} }) as string;
+      const result = (await tailwindTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: {},
+      })) as string;
       const themeBlocks = result.match(/@theme {/g) || [];
       expect(themeBlocks.length).toBe(2); //one for clearing existing variables, one for tokens
       expect(result).toContain('--color-*: initial;');
@@ -68,11 +72,18 @@ describe('formats', () => {
       const dictionary: Dictionary = {
         allTokens: mockTokens,
         tokens: {},
-        tokenMap: new Map()
+        tokenMap: new Map(),
       };
-      const result = await tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} });
+      const result = await tailwindTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: {},
+      });
       expect(result).toContain('--color-primary: #00ba3b;');
-      expect(result).toContain('--text-body-default: 16px bold 16px/1.25 "DM Sans"');
+      expect(result).toContain(
+        '--text-body-default: 16px bold 16px/1.25 "DM Sans"',
+      );
       expect(result).toContain('--tracking-heading-h1: 0em');
     });
 
@@ -80,9 +91,14 @@ describe('formats', () => {
       const dictionary: Dictionary = {
         allTokens: mockTokens,
         tokens: {},
-        tokenMap: new Map()
+        tokenMap: new Map(),
       };
-      const result = await tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {} });
+      const result = await tailwindTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: {},
+      });
       expect(result).not.toContain('--color-corrupted');
       expect(result).not.toContain('--color-undefined');
     });
@@ -91,11 +107,16 @@ describe('formats', () => {
       const dictionary: Dictionary = {
         allTokens: [mockTokens[1]] as TransformedToken[],
         tokens: {},
-        tokenMap: new Map()
+        tokenMap: new Map(),
       };
-      const result = await tailwindTheme.format({ dictionary, platform: {}, options: {}, file: {destination: 'tokens.css'} });
-      expect(result).toContain('No tokens found for tokens.css')
-    })
+      const result = await tailwindTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: { destination: 'tokens.css' },
+      });
+      expect(result).toContain('No tokens found for tokens.css');
+    });
   });
 
   describe('nativeTheme', () => {
@@ -147,7 +168,7 @@ describe('formats', () => {
       {
         name: 'text-body-corrupted', // Nested undefined value, should be filtered out
         $type: 'typography',
-        $value: [ undefined, { lineHeight: '20', fontWeight: '700' }],
+        $value: [undefined, { lineHeight: '20', fontWeight: '700' }],
         isSource: true,
         path: ['text', 'body', 'corrupted'],
         filePath: 'fake/filePath.json',
@@ -160,8 +181,7 @@ describe('formats', () => {
         isSource: true,
         path: ['text', 'body', 'default'],
         filePath: 'fake/filePath.json',
-        original: {
-        },
+        original: {},
       },
     ];
 
@@ -171,7 +191,12 @@ describe('formats', () => {
         tokens: {},
         tokenMap: new Map(),
       };
-      const result = await nativeTheme.format({ dictionary, platform: {}, options: {}, file: {} });
+      const result = await nativeTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: {},
+      });
       expect(result).toContain('colors: {');
       expect(result).not.toContain('color: {');
       expect(result).toContain('fontSize: {');
@@ -186,16 +211,21 @@ describe('formats', () => {
       const dictionary: Dictionary = {
         allTokens: mockTokens,
         tokens: {},
-        tokenMap: new Map()
+        tokenMap: new Map(),
       };
-      const result = await nativeTheme.format({ dictionary, platform: {}, options: {}, file: {} });
-      expect(result).toContain('primary:')
-      expect(result).not.toContain('undefined:')
-      expect(result).not.toContain('corrupted:')
+      const result = await nativeTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: {},
+      });
+      expect(result).toContain('primary:');
+      expect(result).not.toContain('undefined:');
+      expect(result).not.toContain('corrupted:');
       expect(result).toContain('"body-default":');
-      expect(result).not.toContain('"body-corrupted":')
-      expect(result).toContain('"base-radius":')
-      expect(result).toContain('"small-shadow":')
+      expect(result).not.toContain('"body-corrupted":');
+      expect(result).toContain('"base-radius":');
+      expect(result).toContain('"small-shadow":');
     });
 
     it('surfaces fontFamilySans from typography token', async () => {
@@ -209,32 +239,37 @@ describe('formats', () => {
             path: ['fontFamily', 'sans'],
             original: {},
             filePath: 'fake/filePath.json',
-          }
-        }
-      }
+          },
+        },
+      };
 
       const mockTokens: TransformedToken[] = [
         {
-        name: 'text-body-default',
-        $type: 'typography',
-        $value: ['16px', { lineHeight: '20', fontWeight: '700' }],
-        isSource: true,
-        path: ['text', 'body', 'default'],
-        filePath: 'fake/filePath.json',
-        original: {
-          $value: {
-            fontFamily: "{fontFamily.sans}",
-          }
+          name: 'text-body-default',
+          $type: 'typography',
+          $value: ['16px', { lineHeight: '20', fontWeight: '700' }],
+          isSource: true,
+          path: ['text', 'body', 'default'],
+          filePath: 'fake/filePath.json',
+          original: {
+            $value: {
+              fontFamily: '{fontFamily.sans}',
+            },
+          },
         },
-      },
-      ]
+      ];
       const dictionary: Dictionary = {
         allTokens: mockTokens,
         tokens: primitiveTokens,
         tokenMap: new Map(),
         unfilteredTokens: primitiveTokens, // getReferences in NatveTheme format looks for reference token here
       };
-      const result = await nativeTheme.format({ dictionary, platform: {}, options: {}, file: {} });
+      const result = await nativeTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: {},
+      });
       expect(result).toContain('fontFamily: {');
       expect(result).toContain('sans: "DM Sans"');
     });
@@ -250,25 +285,25 @@ describe('formats', () => {
             path: ['fontFamily', 'sans'],
             original: {},
             filePath: 'fake/filePath.json',
-          }
-        }
-      }
+          },
+        },
+      };
 
       const mockTokens: TransformedToken[] = [
         {
-        name: 'text-body-default',
-        $type: 'typography',
-        $value: ['16px', { lineHeight: '20', fontWeight: '700' }],
-        isSource: true,
-        path: ['text', 'body', 'default'],
-        filePath: 'fake/filePath.json',
-        original: {
-          $value: {
-            fontFamily: "{fontFamily.sans}",
-          }
+          name: 'text-body-default',
+          $type: 'typography',
+          $value: ['16px', { lineHeight: '20', fontWeight: '700' }],
+          isSource: true,
+          path: ['text', 'body', 'default'],
+          filePath: 'fake/filePath.json',
+          original: {
+            $value: {
+              fontFamily: '{fontFamily.sans}',
+            },
+          },
         },
-      },
-      ]
+      ];
 
       const dictionary: Dictionary = {
         allTokens: mockTokens,
@@ -278,7 +313,7 @@ describe('formats', () => {
       };
 
       await expect(
-        nativeTheme.format({ dictionary, platform: {}, options: {}, file: {} })
+        nativeTheme.format({ dictionary, platform: {}, options: {}, file: {} }),
       ).rejects.toThrow(/fontFamily.sans/);
     });
 
@@ -286,10 +321,15 @@ describe('formats', () => {
       const dictionary: Dictionary = {
         allTokens: [mockTokens[1]] as TransformedToken[],
         tokens: {},
-        tokenMap: new Map()
+        tokenMap: new Map(),
       };
-      const result = await nativeTheme.format({ dictionary, platform: {}, options: {}, file: {destination: 'tokens.css'} });
-      expect(result).toContain('No tokens found for tokens.css')
-    })
+      const result = await nativeTheme.format({
+        dictionary,
+        platform: {},
+        options: {},
+        file: { destination: 'tokens.css' },
+      });
+      expect(result).toContain('No tokens found for tokens.css');
+    });
   });
 });
