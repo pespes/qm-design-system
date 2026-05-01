@@ -17,8 +17,22 @@
       }
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "cache": true
+    },
+    "lint": {
+      "cache": true,
+      "executor": "@nx/lint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/src/**/*.ts",
+          "{projectRoot}/src/**/*.tsx",
+          "{projectRoot}/src/**/*.js",
+          "{projectRoot}/src/**/*.jsx"
+        ]
+      }
     }
   },
   "analytics": false,
@@ -27,6 +41,12 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
       }
     }
   ]

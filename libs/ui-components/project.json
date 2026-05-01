@@ -3,10 +3,20 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ui-components/src",
   "projectType": "library",
-  "tags": ["scope:shared"],
+  "tags": ["scope:ui"],
   "targets": {
     "typecheck": {},
     "test": {},
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "eslintConfig": "./eslint.config.mjs",
+        "lintFilePatterns": [
+          "libs/ui-components/src/**/*.ts",
+          "libs/ui-components/src/**/*.tsx"
+        ]
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
       "options": {

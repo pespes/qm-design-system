@@ -4,7 +4,6 @@
     "outDir": "./dist",
     "rootDir": ".",
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true,
   },
   "include": ["./src/**/*.ts", "./src/**/*.js", "./src/**/*.tsx", "./src/**/*.jsx"],
   "exclude": ["./src/**/*/test.ts", "./src/**/tests/*", "node_modules", "dist"]
