@@ -28,6 +28,15 @@ const categoryMap: Record<string, string> = {
   shadow: 'boxShadow',
 };
 
+interface ThemeValue {
+  [key: string]: string | number | ThemeValue;
+}
+
+interface ThemeAcc {
+  extend: Record<string, ThemeValue>;
+  [key: string]: ThemeValue;
+}
+
 // for base Tailwind @theme
 export const tailwindTheme: Format = {
   name: 'css/tailwind-theme',
@@ -76,8 +85,8 @@ export const tailwindTheme: Format = {
 export const nativeTheme: Format = {
   name: 'js/tw-react-native',
   format: async ({ dictionary, file }: FormatFnArguments) => {
-    const theme = dictionary.allTokens.reduce(
-      (acc: Record<string, any>, token: TransformedToken) => {
+    const theme = dictionary.allTokens.reduce<ThemeAcc>(
+      (acc, token: TransformedToken) => {
         const value = findTokenValue(token);
 
         // filter out any undefined / null values, or empty objects

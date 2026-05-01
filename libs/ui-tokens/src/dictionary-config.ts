@@ -1,5 +1,5 @@
 import StyleDictionary from 'style-dictionary';
-import type { TransformedToken } from 'style-dictionary/types';
+import type { TransformedToken, Config } from 'style-dictionary/types';
 import { typographySplitParser } from './dictionary/parser.js';
 import transforms from './dictionary/transforms.js';
 import groups from './dictionary/transformGroups.js';
@@ -22,6 +22,12 @@ const SEMANTICS = ['tokens/semantic/**/*.tokens.json'];
 const CSS_SHADOW = 'tokens/primitives/shadow.tokens.json';
 const NATIVE_SHADOW = 'tokens/primitives/shadowNative.tokens.json';
 
+type modeType = {
+  name: string;
+  cssSelector: string;
+  rnExportName: string;
+};
+
 const buildDictionary = async () => {
   const hooks = {
     transforms: Object.fromEntries(transforms.map((t) => [t.name, t])),
@@ -39,8 +45,8 @@ const buildDictionary = async () => {
   };
 
   // Token build for CSS
-  const getCssConfig = (mode?: any) => ({
-    log: { verbosity: 'silent' as const },
+  const getCssConfig = (mode?: modeType): Config => ({
+    log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
     parsers: ['typography-split'], // includes parser to surface letterSpacing variables
@@ -74,10 +80,10 @@ const buildDictionary = async () => {
   });
 
   // Token build for RN
-  const getNativeConfig = (mode?: any) => ({
+  const getNativeConfig = (mode?: modeType): Config => ({
     // Style Dictionary complains about too many tokens ending in 'foreground', or variables
     // being overridden by the pro mode. As these are design choices, silence the warnings.
-    log: { verbosity: 'silent' as const },
+    log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
     include: HIDDEN_PRIMITIVES,

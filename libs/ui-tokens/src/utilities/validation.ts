@@ -1,7 +1,7 @@
 import { isNil, isObject, some } from 'lodash-es';
 
 // Recursively check for any undefined/null values in nested object
-export const hasInvalidLeaf = (obj: any): boolean => {
+export const hasInvalidLeaf = (obj: string | object): boolean => {
   if (isNil(obj)) {
     return true;
   }

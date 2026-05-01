@@ -1,4 +1,4 @@
-import type { Parser, DesignTokens } from 'style-dictionary/types';
+import type { Parser, DesignTokens, DesignToken } from 'style-dictionary/types';
 
 // Create a separate letter-spacing token alongside the initial typography token
 // Dictionary transforms handing the transformation from object to css font property do not include letterSpacing, so a separate token
@@ -11,9 +11,14 @@ export const typographySplitParser: Parser = {
     const data: DesignTokens =
       typeof contents === 'string' ? JSON.parse(contents) : contents;
 
-    const splitTypography = (obj: DesignTokens) => {
-      return Object.entries(obj).reduce((acc, [key, val]: [string, any]) => {
-        const isToken = typeof val === 'object' && (val.$value || val.value);
+    const splitTypography = (obj: DesignTokens): DesignTokens => {
+      return Object.entries(obj).reduce<DesignTokens>((acc, [key, val]) => {
+        const isToken =
+          typeof val === 'object' &&
+          val !== null &&
+          !Array.isArray(val) &&
+          (val.$value || val.value);
+        // const isToken = typeof val === 'object' && (val.$value || val.value);
         if (isToken) {
           acc[key] = val; // Keep the original token
 
@@ -28,11 +33,11 @@ export const typographySplitParser: Parser = {
             };
           }
         } else if (typeof val === 'object' && val !== null) {
-          acc[key] = splitTypography(val);
+          acc[key] = splitTypography(val as DesignToken);
         }
 
         return acc;
-      }, {} as DesignTokens);
+      }, {});
     };
 
     return splitTypography(data);

@@ -3,14 +3,14 @@ import BigNumber from 'bignumber.js';
 import { findTokenValue } from '../utilities/token-helpers.js';
 
 // Check if a token is a number or unitless string that can be treated as a number.
-const isNumericToken = (val: any) => {
+const isNumericToken = (val: unknown) => {
   const num = Number(val);
   // null & empty string return 0 for Number(), and '2px' & undefined for Number() return undefined'
   // confirm val is none of these
   return val !== null && val !== '' && !isNaN(num);
 };
 
-function isTypographyToken(val: any, requiredFields: string[]) {
+function isTypographyToken(val: unknown, requiredFields: string[]) {
   if (
     typeof val !== 'object' ||
     val === null ||
@@ -19,9 +19,14 @@ function isTypographyToken(val: any, requiredFields: string[]) {
   ) {
     return false;
   }
-  //Also check for required fields that web / native need to build typography token
+  //Asserted it is type object, now also check for required fields that web / native need to build typography token
+  const cleanedVal = val as Record<string, unknown>;
   return requiredFields.every((f) => {
-    return val[f] !== undefined && val[f] !== null && val[f] !== '';
+    return (
+      cleanedVal[f] !== undefined &&
+      cleanedVal[f] !== null &&
+      cleanedVal[f] !== ''
+    );
   });
 }
 
