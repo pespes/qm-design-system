@@ -11,6 +11,7 @@ export const themeDecorator: Decorator = (Story, context) => {
 };
 
 export const MarkdownBlock = () => {
+  // return the annotated 'meta' exported by the story
   const resolvedOf = useOf('meta', ['meta']);
   const dataArr = resolvedOf.preparedMeta.title.split('/');
   const title = dataArr[dataArr.length - 1];

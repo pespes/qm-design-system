@@ -1,12 +1,6 @@
 packages:
   - 'libs/*'
-allowBuilds:
-  '@swc/core': true
-  esbuild: true
-  msw: true
-  nx: true
-  unrs-resolver: true
-autoInstallPeers: true
 
 nodeLinker: isolated
+autoInstallPeers: true
 strictPeerDependencies: false

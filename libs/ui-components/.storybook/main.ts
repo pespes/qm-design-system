@@ -21,15 +21,11 @@ const config: StorybookConfig = {
   docs: {},
   typescript: {
     reactDocgen: 'react-docgen-typescript',
-    
+    // Config to allow for the reactDocgen to render options from enums/unions instead of rendering generics (ie 'string')
     reactDocgenTypescriptOptions: {
-      // This is the specific fix for your 'string' vs 'union' issue
       shouldExtractLiteralValuesFromEnum: true, 
-      // This ensures that even if a prop is optional, the union is preserved
       shouldRemoveUndefinedFromOptional: true,
-      // Helps with complex types from libraries
       compilerOptions: {
-        // allowSyntheticDefaultImports: false,
         esModuleInterop: false,
       },
       tsconfigPath: './tsconfig.storybook.json',

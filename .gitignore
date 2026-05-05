@@ -19,5 +19,4 @@
 /libs/*/node_modules
 /apps/*/node_modules
 
-
 storybook-static

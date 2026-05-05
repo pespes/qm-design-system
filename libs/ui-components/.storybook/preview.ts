@@ -9,6 +9,7 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
+      // docgen automatically populates className & style from element prop types, remove
       exclude: /^(className|style)$/g
     },
     docs: {
@@ -17,17 +18,16 @@ const preview: Preview = {
       toc: {
         headingSelector: 'h1, h2, h3',
         disable: false,
-        unsafeTocbotOptions: {
-          orderedList: false,
-        },
       }
     },
     customBlock: {
+      // provide documentation placeholders for customization on a per-component basis
       accessibility: '',
       usage: '',
     }
   },
   tags: ['autodocs'],
+  //globalTypes helps render toolbar options applicable to all stories - in this case default brand colours
   globalTypes: {
     brand: {
       description: 'Brand Themes',
@@ -40,7 +40,7 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    theme: 'homeowner',
+    brand: 'Homeowner',
   },
   decorators: [themeDecorator],
 };
