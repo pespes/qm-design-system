@@ -34,24 +34,21 @@ describe('formats', () => {
       {
         name: 'text-body-default',
         $type: 'typography',
-        value: '16px bold 16px/1.25 "DM Sans"',
+        $value: {
+          'font-size': '1rem',
+          'font-family': 'DM Sans',
+          'line-height': 1.25,
+          'font-weight': 700,
+          'letter-spacing': '0.025em',
+        },
         isSource: true,
         path: ['text', 'body', 'default'],
         filePath: 'fake/filePath.json',
         original: {},
       },
-      {
-        name: 'text-heading-h1',
-        $type: 'spacing',
-        value: '0em',
-        isSource: true,
-        path: ['text', 'heading', 'h1'],
-        filePath: 'fake/filePath.json',
-        original: {},
-      },
     ];
 
-    it('should format source tokens into Tailwind @theme blocks', async () => {
+    it('should format source tokens into Tailwind @theme and @utility blocks', async () => {
       const dictionary: Dictionary = {
         allTokens: mockTokens,
         tokens: {},
@@ -63,8 +60,13 @@ describe('formats', () => {
         options: {},
         file: {},
       })) as string;
+
       const themeBlocks = result.match(/@theme {/g) || [];
       expect(themeBlocks.length).toBe(2); //one for clearing existing variables, one for tokens
+
+      const utilityBlocks = result.match(/@utility /g) || [];
+      expect(utilityBlocks.length).toBe(1); //only one typography token
+
       expect(result).toContain('--color-*: initial;');
     });
 
@@ -80,11 +82,19 @@ describe('formats', () => {
         options: {},
         file: {},
       });
+
+      const expectedUtility = [
+        '@utility text-body-default {',
+        '  font-size: 1rem;',
+        '  font-family: DM Sans;',
+        '  line-height: 1.25;',
+        '  font-weight: 700;',
+        '  letter-spacing: 0.025em;',
+        '}',
+      ].join('\n');
+
+      expect(result).toContain(expectedUtility);
       expect(result).toContain('--color-primary: #00ba3b;');
-      expect(result).toContain(
-        '--text-body-default: 16px bold 16px/1.25 "DM Sans"',
-      );
-      expect(result).toContain('--tracking-heading-h1: 0em');
     });
 
     it('should filter out undefined values and objects where transforms could have been corrupted', async () => {

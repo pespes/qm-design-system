@@ -13,6 +13,23 @@ describe('validateTokens action', () => {
       filePath: 'fake/filePath.json',
       original: {},
     };
+
+    const mockToken2: TransformedToken = {
+      name: 'text-header-h2',
+      $type: 'typography',
+      $value: {
+        'font-weight': 700,
+        'line-height': 1.25,
+        'font-family': "'DM Sans', 'Arial'",
+        'font-size': '1rem',
+        'letter-spacing': '0em',
+      },
+      isSource: true,
+      path: ['text', 'header', 'h2'],
+      filePath: 'fake/filePath.json',
+      original: {},
+    };
+
     const cssConfig = {
       platforms: {
         css: {},
@@ -21,14 +38,14 @@ describe('validateTokens action', () => {
 
     it('should not throw an error if all tokens have values', () => {
       const mockDictionary: Dictionary = {
-        allTokens: [mockToken],
+        allTokens: [mockToken, mockToken2],
         tokens: {},
         tokenMap: new Map(),
       };
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, cssConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, cssConfig, {});
         }
       }).not.toThrow();
     });
@@ -56,12 +73,50 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, cssConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, cssConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
 
-    it('should throw an error if a token has value of type object', () => {
+    it('should throw an error if a typography token has a nested null value', () => {
+      const mockDictionary: Dictionary = {
+        allTokens: [
+          {
+            ...mockToken2,
+            $value: { ...mockToken2.$value, 'font-weight': null },
+          },
+        ],
+        tokens: {},
+        tokenMap: new Map(),
+      };
+
+      expect(() => {
+        if (typeof validateTokens.do === 'function') {
+          validateTokens.do(mockDictionary, {}, cssConfig, {});
+        }
+      }).toThrow('Build failed: invalid token values found.');
+    });
+
+    it('should throw an error if a typography token has a nested undefined value', () => {
+      const mockDictionary: Dictionary = {
+        allTokens: [
+          {
+            ...mockToken2,
+            $value: { ...mockToken2.$value, 'font-weight': undefined },
+          },
+        ],
+        tokens: {},
+        tokenMap: new Map(),
+      };
+
+      expect(() => {
+        if (typeof validateTokens.do === 'function') {
+          validateTokens.do(mockDictionary, {}, cssConfig, {});
+        }
+      }).toThrow('Build failed: invalid token values found.');
+    });
+
+    it('should throw an error if a non-typography token has value of type object', () => {
       const mockDictionary: Dictionary = {
         allTokens: [{ ...mockToken, $value: {} }],
         tokens: {},
@@ -70,7 +125,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, cssConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, cssConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
@@ -84,7 +139,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, cssConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, cssConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
@@ -114,7 +169,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, nativeConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, nativeConfig, {});
         }
       }).not.toThrow();
     });
@@ -128,7 +183,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, nativeConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, nativeConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
@@ -142,7 +197,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, nativeConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, nativeConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
@@ -161,7 +216,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, nativeConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, nativeConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
@@ -175,7 +230,7 @@ describe('validateTokens action', () => {
 
       expect(() => {
         if (typeof validateTokens.do === 'function') {
-          validateTokens.do(mockDictionary, nativeConfig, {}, {});
+          validateTokens.do(mockDictionary, {}, nativeConfig, {});
         }
       }).toThrow('Build failed: invalid token values found.');
     });
