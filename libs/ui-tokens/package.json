@@ -26,7 +26,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build:tokens": "pnpm tsc && node build/src/dictionary-config.js",
+    "build:tokens": "pnpm tsc --build && node build/src/dictionary-config.js",
     "build": "pnpm run clean && pnpm run build:tokens"
   },
   "dependencies": {

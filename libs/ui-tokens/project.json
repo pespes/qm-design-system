@@ -24,7 +24,7 @@
         "cwd": "libs/ui-tokens"
       },
       "outputs": [
-        "{projectRoot}/dist", 
+        "{projectRoot}/dist",
         "{projectRoot}/build"
       ]
     }
