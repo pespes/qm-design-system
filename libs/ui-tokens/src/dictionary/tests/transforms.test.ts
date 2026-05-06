@@ -7,15 +7,20 @@ import {
   typeConversionRN,
 } from '../transforms.js';
 
-type TypographyType = {
-  fontFamily: string;
+type CleanedTypographyType = {
+  'font-family': string;
+  'font-size': string;
+  'font-weight'?: number;
+  'line-height'?: number;
+  'letter-spacing'?: number;
+};
+
+type NativeTypographyType = {
   fontSize: string;
   fontWeight?: number;
   lineHeight?: number;
   letterSpacing?: number;
 };
-
-type NativeTypographyType = Omit<TypographyType, 'fontFamily'>;
 
 describe('Custom Transforms', () => {
   describe('spacingToEm', () => {
@@ -88,10 +93,10 @@ describe('Custom Transforms', () => {
       $type: 'typography',
       $value: {
         fontFamily: 'DM Sans',
-        fontSize: 16,
+        fontSize: '1rem',
         fontWeight: 700,
         lineHeight: 1.25,
-        letterSpacing: 25,
+        letterSpacing: '0.25em',
       },
       original: {
         $value: { fontFamily: 'DM Sans' },
@@ -103,35 +108,17 @@ describe('Custom Transforms', () => {
     };
 
     describe('transforming tokens', () => {
-      it('should remove letterSpacing from the value object, and return other variables unchanged', () => {
+      it('should return new configuration with variables unchanged', () => {
         const result = typeConversion.transform(
           token,
           {},
           {},
-        ) as TypographyType;
-        expect(result).not.toHaveProperty('letterSpacing');
-        expect(result.fontFamily).toBe('DM Sans');
-        expect(result.fontSize).toBe(16);
-        expect(result.lineHeight).toBe(1.25);
-        expect(result.fontWeight).toBe(700);
-      });
-
-      it('should return original value if letterSpacing is already removed', () => {
-        const noSpacingToken = {
-          ...token,
-          $value: { fontSize: 16, fontFamily: 'DM Sans' },
-          original: { ...token.original, $value: { fontSize: 16 } },
-        };
-        const result = typeConversion.transform(
-          noSpacingToken,
-          {},
-          {},
-        ) as TypographyType;
-        expect(result.fontSize).toBe(16);
-        expect(result.fontFamily).toBe('DM Sans');
-        expect(result).not.toHaveProperty('lineHeight');
-        expect(result).not.toHaveProperty('fontWeight');
-        expect(result).not.toHaveProperty('letterSpacing');
+        ) as CleanedTypographyType;
+        expect(result['letter-spacing']).not.toHaveProperty('letterSpacing');
+        expect(result['font-family']).toBe('DM Sans');
+        expect(result['font-size']).toBe('1rem');
+        expect(result['line-height']).toBe(1.25);
+        expect(result['font-weight']).toBe(700);
       });
 
       it('should return undefined if value is missing (to be caught by validation/formatter)', () => {
@@ -145,10 +132,10 @@ describe('Custom Transforms', () => {
       it('should return undefined if required field is missing (to be caught by validation/formatter)', () => {
         const noFamilyToken = {
           ...token,
-          $value: { fontSize: 16, lineHeight: 1.25 },
+          $value: { fontSize: '1rem', lineHeight: 1.25 },
           original: {
             ...token.original,
-            $value: { fontSize: 16, lineHeight: 1.25 },
+            $value: { fontSize: '1rem', lineHeight: 1.25 },
           },
         };
         expect(typeConversion.transform(noFamilyToken, {}, {})).toBe(undefined);

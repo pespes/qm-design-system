@@ -5,16 +5,7 @@ import { set } from 'lodash-es';
 import { hasInvalidLeaf } from '../utilities/validation.js';
 import { findTokenValue } from '../utilities/token-helpers.js';
 
-const tokenTypes = [
-  'border-width',
-  'color',
-  'radius',
-  'spacing',
-  'text',
-  'breakpoint',
-  'opacity',
-  'z-index',
-];
+const tokenTypes = ['border-width', 'color', 'radius', 'spacing', 'text'];
 
 const categoryMap: Record<string, string> = {
   color: 'colors',
