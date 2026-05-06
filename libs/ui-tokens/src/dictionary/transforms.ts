@@ -48,8 +48,9 @@ export const spacingToEm: Transform = {
   },
 };
 
-// clean typography tokens to remove letterSpacing, which is not compatible with css 'font' property
-// transforming the remaining properties is handled in StyleDictionary's built-in transform 'typography/css/shorthand'
+// Update typography configuration to match proper css properties, and confirm presence of fontSize & fontFamily.
+// Because transforms are executed sequentially, fontSize and letterSpacing have already been transformed via
+// Style Dictionary's built-in size/pxToRem and the custom spacingToEm
 export const typeConversion: Transform = {
   name: 'typography/clean',
   type: 'value',
@@ -64,9 +65,28 @@ export const typeConversion: Transform = {
       );
       return undefined;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    const { letterSpacing, ...fontConfig } = val;
-    return fontConfig;
+
+    const { fontSize, fontWeight, fontFamily, lineHeight, letterSpacing } = val;
+    const formattedFontFamily = Array.isArray(fontFamily)
+      ? fontFamily.map((f) => (f.includes(' ') ? `'${f}'` : f)).join(', ')
+      : fontFamily;
+
+    const config: Record<string, string> = {};
+    config['font-size'] = fontSize;
+    config['font-family'] = formattedFontFamily;
+
+    if (isNumericToken(fontWeight)) {
+      config['font-weight'] = fontWeight;
+    }
+
+    if (isNumericToken(lineHeight)) {
+      config['line-height'] = lineHeight;
+    }
+
+    if (letterSpacing !== undefined || letterSpacing !== null) {
+      config['letter-spacing'] = letterSpacing;
+    }
+    return config;
   },
 };
 

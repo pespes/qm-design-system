@@ -16,7 +16,7 @@
   },
   "fontSize": {
     "$description": "Font sizes stored as raw pixel equivalents",
-    "$type": "number",
+    "$type": "dimension",
     "025":  { "$value": 11 },
     "050":  { "$value": 12 },
     "075":  { "$value": 14 },

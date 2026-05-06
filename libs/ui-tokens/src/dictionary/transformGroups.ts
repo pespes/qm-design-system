@@ -16,7 +16,6 @@ export const cssTransformGroup = {
     'size/pxToRem',
     'spacing/em',
     'typography/clean',
-    'typography/css/shorthand',
   ],
 };
 

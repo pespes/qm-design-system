@@ -8,11 +8,11 @@ import { findTokenValue } from '../utilities/token-helpers.js';
 const tokenTypes = [
   'border-width',
   'color',
-  'breakpoint',
-  'opacity',
   'radius',
   'spacing',
   'text',
+  'breakpoint',
+  'opacity',
   'z-index',
 ];
 
@@ -46,26 +46,32 @@ export const tailwindTheme: Format = {
       return acc + `  --${type}-*: initial;${renderLineBreak}`;
     }, '');
 
-    const vars = dictionary.allTokens.reduce((acc, token, idx) => {
-      const val = findTokenValue(token);
-      if (val === undefined || val === null || typeof val === 'object') {
+    const { themeVars, utilityVars } = dictionary.allTokens.reduce(
+      (acc, token) => {
+        const val = findTokenValue(token);
+        if (val === undefined || val === null) return acc;
+
+        const isTypography =
+          token.$type === 'typography' || token.type === 'typography';
+
+        if (isTypography && typeof val === 'object') {
+          // typography tokens defined under @utility to group font-related css properties
+          const properties = Object.entries(val)
+            .map(([prop, value]) => `  ${prop}: ${value};`)
+            .join('\n');
+
+          acc.utilityVars += `@utility ${token.name} {\n${properties}\n}\n`;
+        } else if (!isTypography && typeof val !== 'object') {
+          // other tokens defined under @theme, which should not be of type object
+          acc.themeVars += `  --${token.name}: ${val};\n`;
+        }
+
         return acc;
-      }
+      },
+      { themeVars: '', utilityVars: '' },
+    );
 
-      const renderLineBreak = idx < dictionary.allTokens.length - 1 ? '\n' : '';
-      let name = token.name;
-
-      // Style Dictionary interally calculates names from their path. Since the split letter spacing
-      // token's path mirrors that of the original typography token, rename it to start with 'tracking'
-      // instead of 'text
-      if (token.$type === 'spacing' || token.type === 'spacing') {
-        name = `${name.replace('text', 'tracking').replace('-tracking', '')}`;
-      }
-
-      return acc + `  --${name}: ${val};${renderLineBreak}`;
-    }, '');
-
-    if (!vars.trim()) {
+    if (!themeVars.trim() && !utilityVars.trim()) {
       return `/* No tokens found for ${file.destination} */`;
     }
 
@@ -73,11 +79,11 @@ export const tailwindTheme: Format = {
       await fileHeader({ file }),
       '@theme {',
       defaults,
-      '}',
-      '',
+      '}\n',
       '@theme {',
-      vars,
-      '}',
+      themeVars,
+      '}\n',
+      utilityVars,
     ].join('\n');
   },
 };
