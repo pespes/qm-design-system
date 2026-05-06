@@ -1,5 +1,13 @@
 import type { Decorator } from '@storybook/react-vite';
-import { Title, Description, Primary, Controls, Stories, Source, useOf } from '@storybook/addon-docs/blocks';
+import {
+  Title,
+  Description,
+  Primary,
+  Controls,
+  Stories,
+  Source,
+  useOf,
+} from '@storybook/addon-docs/blocks';
 
 export const themeDecorator: Decorator = (Story, context) => {
   const theme = context.globals.brand?.toLowerCase();
@@ -17,16 +25,13 @@ export const MarkdownBlock = () => {
   const title = dataArr[dataArr.length - 1];
   return (
     <div>
-      <h3 id="sb-import">Import</h3>
-      <Source code= {`
-        import { ${title} } from @quartermaster/qm-components
-        `} 
-      />
+      <h3 id='sb-import'>Import</h3>
+      <Source code={`import { ${title} } from @quartermaster/qm-components`} />
     </div>
-  )
-}
+  );
+};
 
-export const customBlock = (blockName: string) => {
+export const CustomBlock = (blockName: string) => {
   const resolvedOf = useOf('meta', ['meta']);
   const data = resolvedOf.preparedMeta.parameters.customBlock;
   const cleanedName = blockName.toLowerCase();
@@ -39,9 +44,9 @@ export const customBlock = (blockName: string) => {
       ) : (
         data[cleanedName]
       )}
-  </div>
-  )
-}
+    </div>
+  );
+};
 
 export const docPageMarkup = () => (
   <div>
@@ -49,10 +54,10 @@ export const docPageMarkup = () => (
     <Description />
     <Primary />
     <MarkdownBlock />
-    <h2 id="sb-props">Props</h2>
+    <h2 id='sb-props'>Props</h2>
     <Controls />
-    {customBlock('Usage')}
-    {customBlock('Accessibility')}
+    {CustomBlock('Usage')}
+    {CustomBlock('Accessibility')}
     <Stories />
   </div>
 );

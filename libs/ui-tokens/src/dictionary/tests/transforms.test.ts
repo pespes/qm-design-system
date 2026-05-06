@@ -69,8 +69,7 @@ describe('Custom Transforms', () => {
       });
 
       it('should return the value as is if it is missing (to be caught by validation/formatter)', () => {
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        const { $value, ...otherTokenProps } = token;
+        const { $value: _, ...otherTokenProps } = token;
         expect(spacingToEm.transform(otherTokenProps, {}, {})).toBe(undefined);
       });
     });
@@ -122,8 +121,7 @@ describe('Custom Transforms', () => {
       });
 
       it('should return undefined if value is missing (to be caught by validation/formatter)', () => {
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        const { $value, ...otherTokenProps } = token;
+        const { $value: _, ...otherTokenProps } = token;
         expect(typeConversion.transform(otherTokenProps, {}, {})).toBe(
           undefined,
         );
@@ -264,8 +262,7 @@ describe('Custom Transforms', () => {
       });
 
       it('should return undefined if value is missing (to be caught by validation/formatter)', () => {
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        const { $value, ...otherTokenProps } = token;
+        const { $value: _, ...otherTokenProps } = token;
         expect(typeConversionRN.transform(otherTokenProps, {}, {})).toBe(
           undefined,
         );

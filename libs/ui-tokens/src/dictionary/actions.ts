@@ -13,16 +13,18 @@ export const validateTokens: Action = {
     // Check both for any unresolved values that could break consuming apps (tokenName: '{color.blue.500}')
     const invalidTokens = dictionary.allTokens.filter((token) => {
       const val = findTokenValue(token);
-      if (platform && platform.css) {
-        if (typeof val === 'string') {
-          return hasUnresolvedVal(val);
-        } else if (token.$type === 'typography') {
-          return hasInvalidLeaf(val);
-        }
-        return val === undefined || val === null || typeof val === 'object';
-      } else {
+
+      if (!platform?.css) {
         return hasInvalidLeaf(val);
       }
+      if (typeof val === 'string') {
+        return hasUnresolvedVal(val);
+      }
+      if (token.$type === 'typography') {
+        return hasInvalidLeaf(val);
+      }
+
+      return val === undefined || val === null || typeof val === 'object';
     });
 
     if (invalidTokens.length > 0) {
