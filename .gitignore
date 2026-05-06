@@ -15,5 +15,8 @@
 
 # Nested Node Modules
 /libs/*/build
+/libs/*/dist
 /libs/*/node_modules
 /apps/*/node_modules
+
+storybook-static

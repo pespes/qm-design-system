@@ -17,9 +17,7 @@
       }
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "cache": true
     },
     "lint": {
@@ -32,6 +30,12 @@
           "{projectRoot}/src/**/*.js",
           "{projectRoot}/src/**/*.jsx"
         ]
+      }
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "options": {
+        "port": 6006
       }
     }
   },
@@ -47,6 +51,17 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "serveStorybookTargetName": "storybook",
+        "buildStorybookTargetName": "build-storybook",
+        "testStorybookTargetName": "test-storybook",
+        "staticStorybookTargetName": "static-storybook",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
       }
     }
   ]
