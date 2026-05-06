@@ -110,7 +110,7 @@
       "border-strong": {
         "$type": "color",
         "$value": "{color.grey.900}",
-        "$description": "Primary-weight border (outlined buttons at rest)"
+        "$description": "Strong primary border (high-emphasis outlined buttons)"
       }
     },
     "brand": {
@@ -174,120 +174,146 @@
         "$type": "color",
         "$value": "{color.violet.200}",
         "$description": "Accent-tinted border"
+      },
+      "border-strong": {
+        "$type": "color",
+        "$value": "{color.violet.600}",
+        "$description": "Strong accent border"
       }
     },
     "status": {
       "$description": "Semantic status colors. All pairings verified for WCAG AA.",
-
       "danger": {
+        "$description": "Destructive actions, error states, and validation failures. Use background for destructive buttons and high-emphasis alerts; background-subtle for inline error messages and alert banners.",
+
         "background": {
           "$type": "color",
-          "$value": "{color.red.050}",
-          "$description": "Danger background (banners, inline alerts)"
+          "$value": "{color.red.600}",
+          "$description": "Danger solid fill (destructive buttons, high-emphasis alerts)"
         },
         "foreground": {
           "$type": "color",
+          "$value": "{color.white}",
+          "$description": "Text/icons on danger.background (6.85:1)"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{color.red.050}",
+          "$description": "Danger tinted surface (banners, inline alerts)"
+        },
+        "text": {
+          "$type": "color",
           "$value": "{color.red.700}",
-          "$description": "Danger text and icons (7.65:1 on red.050)"
+          "$description": "Danger-hued text and icons on light surfaces (7.65:1 on red.050)"
         },
         "border": {
           "$type": "color",
           "$value": "{color.red.200}",
           "$description": "Danger border"
         },
-        "background-strong": {
+        "border-strong": {
           "$type": "color",
           "$value": "{color.red.600}",
-          "$description": "Danger solid fill (destructive buttons)"
-        },
-        "foreground-strong": {
-          "$type": "color",
-          "$value": "{color.white}",
-          "$description": "Text on danger.background-strong (6.85:1)"
+          "$description": "High-contrast danger border"
         }
       },
-
       "warning": {
+        "$description": "Cautionary states that require attention but aren't failures. Use background for high-emphasis warning actions; background-subtle for advisory banners, rate limit notices, and non-blocking warnings.",
         "background": {
           "$type": "color",
-          "$value": "{color.yellow.050}",
-          "$description": "Warning background"
+          "$value": "{color.yellow.600}",
+          "$description": "Warning solid fill (6.33:1 vs white)"
         },
         "foreground": {
           "$type": "color",
+          "$value": "{color.white}",
+          "$description": "Text/icons on warning.background"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{color.yellow.050}",
+          "$description": "Warning tinted surface (banners, inline alerts)"
+        },
+        "text": {
+          "$type": "color",
           "$value": "{color.yellow.700}",
-          "$description": "Warning text and icons (7.34:1 on yellow.050)"
+          "$description": "Warning-hued text and icons on light surfaces (7.34:1 on yellow.050)"
         },
         "border": {
           "$type": "color",
           "$value": "{color.yellow.200}",
           "$description": "Warning border"
         },
-        "background-strong": {
+        "border-strong": {
           "$type": "color",
-          "$value": "{color.yellow.500}",
-          "$description": "Warning solid fill"
-        },
-        "foreground-strong": {
-          "$type": "color",
-          "$value": "{color.black}",
-          "$description": "Dark text on warning.background-strong (4.52:1). Yellow is the only status that uses dark text on its solid fill."
+          "$value": "{color.yellow.600}",
+          "$description": "High-contrast warning border"
         }
       },
-
       "success": {
+        "$description": "Confirmation, completion, and positive feedback states. Use background for success actions and high-emphasis confirmations; background-subtle for success toasts, completion banners, and inline validation.",
         "background": {
           "$type": "color",
-          "$value": "{color.green.050}",
-          "$description": "Success background"
+          "$value": "{color.green.500}",
+          "$description": "Success solid fill (4.18:1 vs white). Uses green.500 rather than green.600 to differentiate from brand.background in the Homeowner theme."
         },
         "foreground": {
           "$type": "color",
+          "$value": "{color.white}",
+          "$description": "Text/icons on success.background"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{color.green.050}",
+          "$description": "Success tinted surface (banners, confirmation states)"
+        },
+        "text": {
+          "$type": "color",
           "$value": "{color.green.700}",
-          "$description": "Success text and icons (6.74:1 on green.050)"
+          "$description": "Success-hued text and icons on light surfaces (6.74:1 on green.050)"
         },
         "border": {
           "$type": "color",
           "$value": "{color.green.200}",
           "$description": "Success border"
         },
-        "background-strong": {
+        "border-strong": {
           "$type": "color",
-          "$value": "{color.green.400}",
-          "$description": "Success solid fill — lighter than brand.background to differentiate in Homeowner theme"
-        },
-        "foreground-strong": {
-          "$type": "color",
-          "$value": "{color.black}",
-          "$description": "Dark text on success.background-strong (6.68:1)"
+          "$value": "{color.green.500}",
+          "$description": "High-contrast success border"
         }
       },
-
       "info": {
+        "$description": "Informational status.",
         "background": {
           "$type": "color",
-          "$value": "{color.blue.050}",
-          "$description": "Info background"
+          "$value": "{color.blue.600}",
+          "$description": "Info solid fill (6.47:1 vs white)"
         },
         "foreground": {
           "$type": "color",
+          "$value": "{color.white}",
+          "$description": "Text/icons on info.background"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{color.blue.050}",
+          "$description": "Info tinted surface (banners, informational callouts)"
+        },
+        "text": {
+          "$type": "color",
           "$value": "{color.blue.700}",
-          "$description": "Info text and icons (7.42:1 on blue.050)"
+          "$description": "Info-hued text and icons on light surfaces (7.42:1 on blue.050)"
         },
         "border": {
           "$type": "color",
           "$value": "{color.blue.200}",
           "$description": "Info border"
         },
-        "background-strong": {
+        "border-strong": {
           "$type": "color",
           "$value": "{color.blue.600}",
-          "$description": "Info solid fill"
-        },
-        "foreground-strong": {
-          "$type": "color",
-          "$value": "{color.white}",
-          "$description": "Text on info.background-strong (6.47:1)"
+          "$description": "High-contrast info border"
         }
       }
     },
@@ -330,7 +356,7 @@
         "$value": "oklch(0% 0 0 / 0.38)",
         "$description": "Applied to dark content to indicate disabled",
         "$extensions": {
-          "rgba-fallback": "#def5e0"
+          "rgba-fallback": "rgba(0, 0, 0, 0.38)"
         }
       },
       "disabled-subtle": {
@@ -338,7 +364,7 @@
         "$value": "oklch(0% 0 0 / 0.6)",
         "$description": "Applied to light content to indicate disabled",
         "$extensions": {
-          "rgba-fallback": "rgba(0, 0, 0, 0.38)"
+          "rgba-fallback": "rgba(0, 0, 0, 0.6)"
         }
       },
       "dragged": {
