@@ -27,6 +27,7 @@ Found in `src/components/composed`, these pre-assemble multiple primitive or oth
 The library currently uses overall versioning, but individual components are designed to ease the transition to component-level versioning if the need arrives. Every component should be self-contained with its own logic, types and tests, and any component imports should use formal entry points (ie. `import { Button } from '.../button.index.js`). The component files are exported via its own `index.ts` file to be funnelled through the library's root `index.ts` entry point.
 To maintain consistency, each component folder should have the following layout:
 
+```text
 ── button/
   ├── Button.tsx
   ├── Button.types.ts
@@ -34,6 +35,7 @@ To maintain consistency, each component folder should have the following layout:
   |    └── Button.stories.tsx
   ├── Button.test.ts
   └── index.ts
+```
 
 ## Usage
 
@@ -73,9 +75,8 @@ Base UI also provides a `render` prop on many components to override the rendere
         {state.loading ? <LoadingSpinner/>}
         I still look like a button
       </div>
-    )}>
-    I still look like a button
-  </Button>
+    )}
+  />
 ```
 
 ## Development: Storybook

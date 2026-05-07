@@ -7,7 +7,7 @@ This package contains the sharable DTCG tokens to be used across Quartermaster a
 - `src/dictionary-config.ts`: The creation of the StyleDictionary instances.
 - `dist/`: The generated style artifacts.
 
-Currently, all token values are hosted in the `tokens/` folder, based off of tokens defined in [Notion][https://www.notion.so/Design-token-spec-33a4dc390c85803a9bdaf6ccfda64330#33d4dc390c8580f88224defe10fbc6c1]. In the future, tokens will be handled within Figma and imported into the `ui-tokens`. For now, any new tokens should be added directly into either the `/tokens/primitives` or `/tokens/semantic` folders, and theme-specific tokens should be added into the `tokens/modes` folder. Adding tokens into these folders will ensure the dictionary pipeline registers the new additions.
+Currently, all token values are hosted in the `tokens/` folder, based off of tokens defined in [Notion](https://www.notion.so/Design-token-spec-33a4dc390c85803a9bdaf6ccfda64330#33d4dc390c8580f88224defe10fbc6c1). In the future, tokens will be handled within Figma and imported into the `ui-tokens`. For now, any new tokens should be added directly into either the `/tokens/primitives` or `/tokens/semantic` folders, and theme-specific tokens should be added into the `tokens/modes` folder. Adding tokens into these folders will ensure the dictionary pipeline registers the new additions.
 
 ## Style Dictionary Pipeline
 

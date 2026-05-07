@@ -30,5 +30,6 @@ Packages can be managed individually but the root `package.json` provides the st
 
 ## Libraries
 To find out more about each of the libraries within `qm-ui`, refer to the library README.md file:
-[ui-components](./libs/ui-components/README.md)
-[ui-tokens](./libs/ui-tokens/README.md)
+
+- [ui-components](./libs/ui-components/README.md)
+- [ui-tokens](./libs/ui-tokens/README.md)
