@@ -1,3 +1,42 @@
 @import "tailwindcss";
 @import "@quartermaster/ui-tokens/css/tokens";
 @import "@quartermaster/ui-tokens/css/tokens-pro";
+
+@utility state-overlay {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: var(--overlay-inset, 0);
+    pointer-events: none;
+    border-radius: inherit; /* Matches the button's rounded corners */
+  }
+}
+
+@utility hover-overlay-light {
+  @apply state-overlay ;
+  &:hover::after {
+    background-color: var(--color-state-hover-on-light);
+  }
+}
+
+@utility hover-overlay-dark {
+  @apply state-overlay ;
+  &:hover::after {
+    background-color: var(--color-state-hover-on-dark);
+  }
+}
+
+@utility pressed-overlay-light {
+  @apply state-overlay ;
+  &:active::after {
+    background-color: var(--color-state-pressed-on-light);
+  }
+}
+
+@utility pressed-overlay-dark {
+  @apply state-overlay ;
+  &:active::after {
+    background-color: var(--color-state-pressed-on-dark);
+  }
+}

@@ -1,1 +1,1 @@
-//theoretical exporting components from here for dist folder
+export * from './components/primitives/button/index.js';
