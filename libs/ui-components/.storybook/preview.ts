@@ -10,7 +10,7 @@ const preview: Preview = {
         date: /Date$/,
       },
       // docgen automatically populates className & style from element prop types, remove
-      exclude: /^(className|style)$/g
+      exclude: /^(className|style)$/g,
     },
     docs: {
       page: docPageMarkup,
@@ -18,13 +18,13 @@ const preview: Preview = {
       toc: {
         headingSelector: 'h1, h2, h3',
         disable: false,
-      }
+      },
     },
     customBlock: {
       // provide documentation placeholders for customization on a per-component basis
       accessibility: '',
       usage: '',
-    }
+    },
   },
   tags: ['autodocs'],
   //globalTypes helps render toolbar options applicable to all stories - in this case default brand colours

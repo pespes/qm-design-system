@@ -5,8 +5,10 @@ import importPlugin from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier";
 import jest from "eslint-plugin-jest";
 import quartermasterPlugin from "@quartermaster/eslint-plugin-quartermaster";
+import { defineConfig } from "eslint/config";
 
-const config = [
+
+export default defineConfig([
   ...nx.configs["flat/base"],
   ...nx.configs["flat/typescript"],
   ...nx.configs["flat/javascript"],
@@ -107,6 +109,4 @@ const config = [
       "libs/*/build",
     ],
   },
-];
-
-export default config;
+]);
