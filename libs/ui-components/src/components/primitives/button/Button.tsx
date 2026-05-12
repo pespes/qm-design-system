@@ -1,20 +1,23 @@
 import React, { type ReactElement } from 'react';
 import { Button as ButtonPrimitive } from '@base-ui/react/button';
-// import { cva, type VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/utils.js';
 import { Spinner } from '../spinner/Spinner.jsx';
-import type { ButtonProps } from './Button.types.js';
+import type { ButtonProps, IconProps } from './Button.types.js';
 
 const ICON_SIZES = {
-  sm: '16',
-  md: '16',
-  lg: '20',
+  sm: 16,
+  md: 16,
+  lg: 20,
+} as const;
+
+const ICON_POSITION = {
+  left: 'inline-start',
+  right: 'inline-end',
 } as const;
 
 const buttonVariants = cva(
-  // "group/button inline-flex shrink-0 items-center justify-center rounded-lg bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  "group/button inline-flex shrink-0 align-middle items-center justify-center bg-clip-padding whitespace-nowrap focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  'group/button inline-flex shrink-0 align-middle items-center justify-center bg-clip-padding whitespace-nowrap focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -40,10 +43,6 @@ const buttonVariants = cva(
         default: 'rounded-400',
         full: 'rounded-full',
       },
-      fullWidth: {
-        true: 'w-full',
-        false: 'w-fit',
-      },
     },
     defaultVariants: {
       variant: 'primary',
@@ -56,10 +55,10 @@ const buttonVariants = cva(
 function Button({
   ref,
   className,
+  classes,
   variant = 'primary',
   size = 'md',
   rounded,
-  fullWidth,
   loading,
   disabled,
   icon,
@@ -69,15 +68,21 @@ function Button({
 }: ButtonProps) {
   const isLoading = loading?.state === 'loading';
   const isDisabled = disabled || isLoading;
+  // To check whether the <Button/> renders a native button, check for the prop, then check if the 'render' prop exists to override the native <button> el.
+  // If 'render' does exist, check if it is passed an HTML element and its type to determine if a button is being rendered. Finally, if the 'render' prop returns
+  // a function instead, isNativeButton will default to false. If the 'render' prop is passed a function: () => <button/>, then it is up to the consuming dev to
+  // to pass 'isNative={true}' to prevent duplicate ARIA properties from being applied, as specified in the docs.
   const isNativeButton =
     nativeButton ??
     (!render || (React.isValidElement(render) && render.type === 'button'));
 
-  const renderIcon = (el: ReactElement) => {
-    console.log(el);
+  const renderIcon = (el: ReactElement, position: 'left' | 'right') => {
+    console.log(classes?.icon);
     return React.cloneElement(el, {
       size: ICON_SIZES[size],
-    });
+      'data-icon': ICON_POSITION[position],
+      className: classes?.icon,
+    } as IconProps);
   };
 
   return (
@@ -87,21 +92,23 @@ function Button({
       nativeButton={isNativeButton}
       render={render}
       className={cn(
-        buttonVariants({ variant, size, fullWidth, rounded, className }),
+        buttonVariants({ variant, size, rounded }),
+        className,
+        classes?.root,
       )}
       disabled={isDisabled}
       {...props}
     >
-      {icon && icon.position === 'left' && renderIcon(icon.component)}
+      {icon && icon.position === 'left' && renderIcon(icon.component, 'left')}
       {isLoading ? (
         <>
-          <Spinner data-icon='inline-start' />
-          {loading.title}
+          <Spinner data-icon='inline-start' className={classes?.icon} />
+          <span className={classes?.content}>{loading.title}</span>
         </>
       ) : (
-        props.children
+        <span className={classes?.content}>{props.children}</span>
       )}
-      {icon && icon.position === 'right' && renderIcon(icon.component)}
+      {icon && icon.position === 'right' && renderIcon(icon.component, 'right')}
     </ButtonPrimitive>
   );
 }
