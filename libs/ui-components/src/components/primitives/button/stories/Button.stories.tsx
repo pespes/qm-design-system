@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { CiCircleInfo } from 'react-icons/ci';
+import { MdInfoOutline } from 'react-icons/md';
 import { Button } from '../Button.js';
 import { VARIANT_TYPES, SIZE_TYPES, RADIUS_TYPES } from '../Button.types.js';
 import {
@@ -54,6 +54,7 @@ export const Disabled: Story = {
   args: {
     children: 'Just try and Click Me',
     disabled: true,
+    onClick: fn(),
   },
   render: (args) => (
     <div className='flex flex-wrap gap-400'>
@@ -101,7 +102,7 @@ export const AllSizes: Story = {
       const [lastClicked, setLastClicked] = useState('');
       return (
         <>
-          <div className='flex flex-wrap gap-400'>
+          <div className='flex flex-wrap items-center gap-400'>
             {SIZE_TYPES.map((size, idx) => (
               <Button
                 data-testid={`btn-${size}`}
@@ -156,7 +157,6 @@ export const Loading: Story = {
   },
   render: (args) => {
     const LoadingStory = () => {
-      console.log(args);
       const [isLoading, setIsLoading] = useState(false);
       const handleClick = () => {
         setIsLoading(true);
@@ -196,7 +196,7 @@ export const WithIcon: Story = {
               data-testid='btn-icon-left'
               icon={{
                 position: 'left',
-                component: <CiCircleInfo />,
+                component: <MdInfoOutline />,
               }}
               onClick={() => setLastClicked('Left Icon')}
             >
@@ -207,7 +207,7 @@ export const WithIcon: Story = {
               data-testid='btn-icon-right'
               icon={{
                 position: 'right',
-                component: <CiCircleInfo />,
+                component: <MdInfoOutline />,
               }}
               onClick={() => setLastClicked('Right Icon')}
             >

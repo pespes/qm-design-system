@@ -3,7 +3,7 @@ import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/utils.js';
 import { Spinner } from '../spinner/Spinner.jsx';
-import type { ButtonProps, IconProps } from './Button.types.js';
+import type { ButtonProps, IconSlotProps } from './Button.types.js';
 
 const ICON_SIZES = {
   sm: 16,
@@ -17,7 +17,7 @@ const ICON_POSITION = {
 } as const;
 
 const buttonVariants = cva(
-  'group/button inline-flex shrink-0 align-middle items-center justify-center bg-clip-padding whitespace-nowrap focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'group/button inline-flex shrink-0 align-middle items-center justify-center cursor-pointer bg-clip-padding whitespace-nowrap focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle disabled:pointer-events-none [&_[data-icon]]:pointer-events-none [&_[data-icon]]:shrink-0',
   {
     variants: {
       variant: {
@@ -76,13 +76,15 @@ function Button({
     nativeButton ??
     (!render || (React.isValidElement(render) && render.type === 'button'));
 
-  const renderIcon = (el: ReactElement, position: 'left' | 'right') => {
-    console.log(classes?.icon);
+  const renderIcon = (
+    el: ReactElement<IconSlotProps>,
+    position: 'left' | 'right',
+  ) => {
     return React.cloneElement(el, {
       size: ICON_SIZES[size],
       'data-icon': ICON_POSITION[position],
-      className: classes?.icon,
-    } as IconProps);
+      ...(!!classes?.icon && { className: classes.icon }),
+    });
   };
 
   return (

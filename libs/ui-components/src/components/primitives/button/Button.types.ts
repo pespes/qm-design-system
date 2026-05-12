@@ -14,9 +14,9 @@ export const VARIANT_TYPES = [
 export const SIZE_TYPES = ['sm', 'md', 'lg'] as const;
 export const RADIUS_TYPES = ['default', 'full'] as const;
 
-export interface IconProps {
+export interface IconSlotProps {
   className?: string;
-  size?: number;
+  size?: number | string;
   'data-icon'?: 'inline-start' | 'inline-end';
 }
 
@@ -31,7 +31,7 @@ export interface ButtonProps extends BaseButton.Props {
   size?: Size;
   rounded?: Radius;
   disabled?: boolean;
-  icon?: { position: 'left' | 'right'; component: ReactElement<IconProps> };
+  icon?: { position: 'left' | 'right'; component: ReactElement<IconSlotProps> };
   loading?: { title: string; state: 'active' | 'loading' };
   classes?: ButtonClassMap;
 }

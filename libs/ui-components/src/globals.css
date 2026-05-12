@@ -14,28 +14,28 @@
 }
 
 @utility hover-overlay-light {
-  @apply state-overlay ;
+  @apply state-overlay;
   &:hover::after {
     background-color: var(--color-state-hover-on-light);
   }
 }
 
 @utility hover-overlay-dark {
-  @apply state-overlay ;
+  @apply state-overlay;
   &:hover::after {
     background-color: var(--color-state-hover-on-dark);
   }
 }
 
 @utility pressed-overlay-light {
-  @apply state-overlay ;
+  @apply state-overlay;
   &:active::after {
     background-color: var(--color-state-pressed-on-light);
   }
 }
 
 @utility pressed-overlay-dark {
-  @apply state-overlay ;
+  @apply state-overlay;
   &:active::after {
     background-color: var(--color-state-pressed-on-dark);
   }
