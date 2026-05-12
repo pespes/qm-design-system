@@ -90,7 +90,6 @@ function Button({
         buttonVariants({ variant, size, fullWidth, rounded, className }),
       )}
       disabled={isDisabled}
-      name='id-form'
       {...props}
     >
       {icon && icon.position === 'left' && renderIcon(icon.component)}

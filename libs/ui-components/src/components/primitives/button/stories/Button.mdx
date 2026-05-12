@@ -1,0 +1,53 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './Button.stories';
+import { MarkdownBlock } from '../../../../utils/storybook-configs';
+
+<Meta of={ButtonStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Accessibility
+- **Loading State**: When in a 'loading' state, the button is automatically disabled to prevent multiple submissions. The mandatory `loading.title` prop provides the necessary text alternative announced by screen readers.
+- **Polymorphism**: When using the `render` prop for non-button elements (like a `<div>`), the component automatically applies `role="button"` and `tabindex="0"`. Avoid rendering anchor tags to prevent unexpected keyboard behaviour, and use the `<Link/>` component instead.
+- **Native Button Prop**: If rendering a native `<button>` via a function in the `render` prop, set `nativeButton={true}` to ensure the correct ARIA attributes are applied without duplication.
+
+## Examples
+
+### Default
+<Canvas of={ButtonStories.Default} />
+
+### Brand
+<Canvas of={ButtonStories.Brand} />
+
+### Disabled
+<Canvas of={ButtonStories.Disabled} />
+
+### All Variants
+<Canvas of={ButtonStories.AllVariants} />
+
+### All Sizes
+<Canvas of={ButtonStories.AllSizes} />
+
+### All Radius
+<Canvas of={ButtonStories.AllRadius} />
+
+### Loading State
+<Canvas of={ButtonStories.Loading} />
+
+### With Icon
+<Canvas of={ButtonStories.WithIcon} />
+
+### Rendered as Another Element
+<Canvas of={ButtonStories.AsADiv} />
