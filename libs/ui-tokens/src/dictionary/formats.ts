@@ -50,8 +50,8 @@ export const tailwindTheme: Format = {
           const properties = Object.entries(val)
             .map(([prop, value]) => `  ${prop}: ${value};`)
             .join('\n');
-
-          acc.utilityVars += `@utility ${token.name} {\n${properties}\n}\n`;
+          const cleanedName = token.name.split('-').slice(1).join('-');
+          acc.utilityVars += `@utility type-${cleanedName} {\n${properties}\n}\n`;
         } else if (!isTypography && typeof val !== 'object') {
           // other tokens defined under @theme, which should not be of type object
           acc.themeVars += `  --${token.name}: ${val};\n`;

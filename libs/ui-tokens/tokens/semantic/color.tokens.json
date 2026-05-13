@@ -361,10 +361,10 @@
       },
       "disabled-subtle": {
         "$type": "color",
-        "$value": "oklch(0% 0 0 / 0.6)",
+        "$value": "oklch(0% 0 0 / 0.04)",
         "$description": "Applied to light content to indicate disabled",
         "$extensions": {
-          "rgba-fallback": "rgba(0, 0, 0, 0.6)"
+          "rgba-fallback": "rgba(0, 0, 0, 0.04)"
         }
       },
       "dragged": {
