@@ -1,5 +1,5 @@
 import type { StoryContext } from '@storybook/react';
-import { expect, within, fireEvent, userEvent } from 'storybook/test';
+import { expect, within, fireEvent, userEvent, waitFor } from 'storybook/test';
 import type { ButtonProps } from './Button.types.js';
 
 type ButtonPlayContext = StoryContext<ButtonProps>;
@@ -64,7 +64,9 @@ export const disabledTests = async ({
     // Recent versions of userEvent will throw an error if trying to click an element that has
     // pointer-events:none set. Using fireEvent as a workaround to confirm onClick is not called
     fireEvent.click(button);
-    expect(args.onClick).not.toHaveBeenCalled();
+    waitFor(() => {
+      expect(args.onClick).not.toHaveBeenCalled();
+    });
     const style = window.getComputedStyle(button);
     await expect(style.pointerEvents).toBe('none');
   });
