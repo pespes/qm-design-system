@@ -1,0 +1,48 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as IconButtonStories from './IconButton.stories';
+import { MarkdownBlock } from '../../../../utils/storybook-configs';
+
+<Meta of={IconButtonStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Accessibility
+- **Accessible Label**: The `label` prop is mandatory on an IconButton so a screen reader can interpret the content correctly.
+- **Loading State**: When in a 'loading' state, the button is automatically disabled to prevent multiple submissions. The mandatory `loading.title` prop overrides the `label` prop announced by screen readers.
+- **Polymorphism**: When using the `render` prop for non-button elements (like a `<div>`), the component automatically applies `role="button"` and `tabindex="0"`. Avoid rendering anchor tags to prevent unexpected keyboard behaviour, and use the `<Link/>` component instead.
+- **Native Button Prop**: If rendering a native `<button>` via a function in the `render` prop, set `nativeButton={true}` to ensure the correct ARIA attributes are applied without duplication.
+
+## Examples
+
+### Default
+<Canvas of={IconButtonStories.Default} />
+
+### Brand
+<Canvas of={IconButtonStories.Brand} />
+
+### Disabled
+<Canvas of={IconButtonStories.Disabled} />
+
+### All Variants
+<Canvas of={IconButtonStories.AllVariants} />
+
+### All Sizes
+<Canvas of={IconButtonStories.AllSizes} />
+
+### Loading
+<Canvas of={IconButtonStories.Loading} />
+
+### Rendered as Another Element
+<Canvas of={IconButtonStories.AsAnotherElement} />
