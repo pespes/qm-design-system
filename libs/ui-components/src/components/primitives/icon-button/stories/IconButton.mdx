@@ -19,8 +19,8 @@ import { MarkdownBlock } from '../../../../utils/storybook-configs';
 TBD from Design
 
 ## Accessibility
-- **Accessible Label**: The `label` prop is mandatory on an IconButton so a screen reader can interpret the content correctly.
-- **Loading State**: When in a 'loading' state, the button is automatically disabled to prevent multiple submissions. The mandatory `loading.title` prop overrides the `label` prop announced by screen readers.
+- **Accessible Label**: The `label` prop is mandatory on an IconButton so a screen reader can interpret the content correctly via aria-label.
+- **Loading State**: When in a 'loading' state, the button is automatically disabled to prevent multiple submissions. The `loading.title` prop is announced by screen readers.
 - **Polymorphism**: When using the `render` prop for non-button elements (like a `<div>`), the component automatically applies `role="button"` and `tabindex="0"`. Avoid rendering anchor tags to prevent unexpected keyboard behaviour, and use the `<Link/>` component instead.
 - **Native Button Prop**: If rendering a native `<button>` via a function in the `render` prop, set `nativeButton={true}` to ensure the correct ARIA attributes are applied without duplication.
 

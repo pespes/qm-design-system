@@ -1,4 +1,4 @@
-import React, { type ReactElement, useId } from 'react';
+import React, { type ReactElement } from 'react';
 import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/utils.js';
@@ -13,17 +13,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-primary-background text-primary-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled',
+          'bg-primary-background text-primary-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled aria-disabled:bg-state-disabled',
         outline:
-          'border-primary-border border-1 text-primary-text hover-overlay-light pressed-overlay-light [--overlay-inset:-1px] disabled:border-state-disabled disabled:text-state-disabled',
+          'border-primary-border border-1 text-primary-text hover-overlay-light pressed-overlay-light [--overlay-inset:-1px] disabled:border-state-disabled disabled:text-state-disabled aria-disabled:border-state-disabled aria-disabled:text-state-disabled',
         secondary:
-          'bg-primary-background-subtle text-primary-text hover-overlay-light pressed-overlay-light disabled:bg-state-disabled-subtle disabled:text-state-disabled',
+          'bg-primary-background-subtle text-primary-text hover-overlay-light pressed-overlay-light disabled:bg-state-disabled-subtle disabled:text-state-disabled aria-disabled:bg-state-disabled-subtle aria-disabled:text-state-disabled',
         brand:
-          'bg-brand-background text-brand-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled',
+          'bg-brand-background text-brand-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled aria-disabled:bg-state-disabled',
         ghost:
-          'text-primary-text hover:bg-muted hover-overlay-light pressed-overlay-light disabled:text-state-disabled',
+          'text-primary-text hover:bg-muted hover-overlay-light pressed-overlay-light disabled:text-state-disabled aria-disabled:text-state-disabled',
         danger:
-          'bg-status-danger-background text-status-danger-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled-subtle disabled:text-state-disabled',
+          'bg-status-danger-background text-status-danger-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled-subtle disabled:text-state-disabled aria-disabled:bg-state-disabled-subtle aria-disabled:text-state-disabled',
       },
       size: {
         md: 'h-1000 min-w-1000 p-300',
@@ -53,7 +53,6 @@ function IconButton({
 }: IconButtonProps) {
   const isLoading = loading?.state === 'loading';
   const isDisabled = disabled || isLoading;
-  const labelId = useId();
 
   // Check for if the <Button /> renders a native button based on presence of nativeButton & render props.
   // If render prop is passed a function that returns a button, it is up to the consuming dev to pass nativeButton={true} to
@@ -70,7 +69,8 @@ function IconButton({
   return (
     <ButtonPrimitive
       data-slot='button'
-      aria-labelledby={labelId}
+      aria-label={label}
+      aria-busy={isLoading}
       nativeButton={isNativeButton}
       render={render}
       disabled={isDisabled}
@@ -80,9 +80,10 @@ function IconButton({
         classes?.root,
       )}
       {...props}
+      focusableWhenDisabled={isLoading}
     >
-      <span id={labelId} className='sr-only'>
-        {isLoading ? loading.title : label}
+      <span role='status' className='sr-only'>
+        {isLoading ? loading.title : ''}
       </span>
       {isLoading ? (
         <Spinner
