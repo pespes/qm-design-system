@@ -59,10 +59,10 @@ export const disabledTests = async ({
     if (!button) throw new Error('Button not found');
     // Recent versions of userEvent will throw an error if trying to click an element that has
     // pointer-events:none set. Using fireEvent as a workaround to confirm onClick is not called
+    fireEvent.click(button);
     waitFor(() => {
-      fireEvent.click(button);
+      expect(args.onClick).not.toHaveBeenCalled();
     });
-    expect(args.onClick).not.toHaveBeenCalled();
     const style = window.getComputedStyle(button);
     await expect(style.pointerEvents).toBe('none');
   });

@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { MdOutlineAdd, MdInfoOutline } from 'react-icons/md';
+import {
+  MdOutlineAdd,
+  MdInfoOutline,
+  MdOutlineEdit,
+  MdOutlineDelete,
+} from 'react-icons/md';
 import { IconButton } from '../IconButton.js';
 import { VARIANT_TYPES, SIZE_TYPES } from '../IconButton.types.js';
 import {
@@ -17,12 +22,29 @@ const meta = {
   args: {
     label: 'An Icon Button',
     children: <MdInfoOutline />,
+    classes: { root: '', icon: '' },
     onClick: fn(),
   },
   argTypes: {
     children: {
       table: {
         type: { summary: 'ReactElement' },
+      },
+      control: { type: 'select' },
+      options: ['add', 'edit', 'delete', 'info'],
+      mapping: {
+        add: <MdOutlineAdd />,
+        edit: <MdOutlineEdit />,
+        delete: <MdOutlineDelete />,
+        info: <MdInfoOutline />,
+      },
+    },
+    loading: {
+      control: { type: 'select' },
+      options: ['loading', 'active'],
+      mapping: {
+        loading: { title: 'Now Loading', state: 'loading' },
+        active: { title: 'Now Loading', state: 'active' },
       },
     },
   },
