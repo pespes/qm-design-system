@@ -99,14 +99,16 @@ export const loadingTests = async ({
     },
   );
 
-  await step('Disables button when loading', async () => {
+  await step('Sets aria-disabled button when loading', async () => {
     const activeBtn = canvas.getByTestId('btn-active');
     expect(activeBtn).toHaveTextContent('Click to Load');
-    expect(activeBtn).not.toBeDisabled();
+    expect(activeBtn).not.toHaveAttribute('aria-disabled');
+    expect(activeBtn).toHaveAttribute('aria-busy', 'false');
 
     await userEvent.click(activeBtn);
-    expect(activeBtn).toBeDisabled();
+    expect(activeBtn).toHaveAttribute('aria-disabled', 'true');
     expect(activeBtn).toHaveAttribute('data-disabled');
+    expect(activeBtn).toHaveAttribute('aria-busy', 'true');
     expect(activeBtn).toHaveTextContent('Now Loading');
   });
 };

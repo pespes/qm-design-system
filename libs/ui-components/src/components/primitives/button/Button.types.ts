@@ -1,5 +1,6 @@
 import type { Button as BaseButton } from '@base-ui/react/button';
 import type { ReactElement } from 'react';
+import type { IconSlotProps } from '../../_shared/iconSlot.js';
 import type { ClassMap } from '../../../types.js';
 
 export const VARIANT_TYPES = [
@@ -13,12 +14,6 @@ export const VARIANT_TYPES = [
 
 export const SIZE_TYPES = ['sm', 'md', 'lg'] as const;
 export const RADIUS_TYPES = ['default', 'full'] as const;
-
-export interface IconSlotProps {
-  className?: string;
-  size?: number | string;
-  'data-icon'?: 'inline-start' | 'inline-end';
-}
 
 type Variant = (typeof VARIANT_TYPES)[number];
 type Size = (typeof SIZE_TYPES)[number];
