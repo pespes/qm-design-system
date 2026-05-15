@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import type { Button as BaseButton } from '@base-ui/react/button';
-import type { ClassMap } from '../../../types.js';
-import type { IconSlotProps } from '../../_shared/iconSlot.js';
+import type { ClassMap } from '@/types.js';
+import type { IconSlotProps } from '@/components/_shared/iconSlot.js';
 
 export const VARIANT_TYPES = [
   'primary',

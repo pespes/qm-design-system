@@ -1,14 +1,4 @@
-import type { Decorator } from '@storybook/react-vite';
 import { Source, useOf } from '@storybook/addon-docs/blocks';
-
-export const themeDecorator: Decorator = (Story, context) => {
-  const theme = context.globals.brand?.toLowerCase();
-  return (
-    <div data-theme={theme}>
-      <Story />
-    </div>
-  );
-};
 
 export const MarkdownBlock = () => {
   // return the annotated 'meta' exported by the story

@@ -1,11 +1,14 @@
 import React, { type ReactElement } from 'react';
 import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva } from 'class-variance-authority';
-import { cn } from '../../../utils/utils.js';
-import { resolveButtonTag } from '../../_shared/renderUtils.js';
-import { Spinner } from '../spinner/Spinner.jsx';
-import { type IconSlotProps, ICON_SIZES } from '../../_shared/iconSlot.js';
 import type { IconButtonProps } from './IconButton.types.js';
+import { cn } from '@/utils/utils.js';
+import { resolveButtonTag } from '@/components/_shared/renderUtils.js';
+import { Spinner } from '@/components/primitives/spinner/Spinner.jsx';
+import {
+  type IconSlotProps,
+  ICON_SIZES,
+} from '@/components/_shared/iconSlot.js';
 
 const buttonVariants = cva(
   'aspect-square group/button inline-flex shrink-0 align-middle items-center cursor-pointer rounded-full justify-center bg-clip-padding whitespace-nowrap focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0',
