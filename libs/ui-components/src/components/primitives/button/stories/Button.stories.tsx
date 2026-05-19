@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { MdInfoOutline } from 'react-icons/md';
+import { MdInfoOutline, MdOutlineAdd } from 'react-icons/md';
 import { Button } from '../Button.js';
 import { VARIANT_TYPES, SIZE_TYPES, RADIUS_TYPES } from '../Button.types.js';
 import {
@@ -14,7 +14,26 @@ import {
 const meta = {
   title: 'Components/Button',
   component: Button,
-  args: { onClick: fn() },
+  args: { onClick: fn(), classes: { root: '', content: '', icon: '' } },
+  argTypes: {
+    icon: {
+      control: { type: 'select' },
+      options: ['left', 'right', 'none'],
+      mapping: {
+        left: { position: 'left', component: <MdOutlineAdd /> },
+        right: { position: 'right', component: <MdOutlineAdd /> },
+        none: null,
+      },
+    },
+    loading: {
+      control: { type: 'select' },
+      options: ['loading', 'active'],
+      mapping: {
+        active: { title: 'Loading...', state: 'active' },
+        loading: { title: 'Loading...', state: 'loading' },
+      },
+    },
+  },
   parameters: {
     docs: {
       description: {
@@ -33,12 +52,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Click me',
     variant: 'primary',
     size: 'md',
     rounded: 'default',
+    children: 'Click me',
     disabled: false,
-    loading: { title: 'loading', state: 'active' },
   },
   play: defaultTests,
 };
@@ -223,7 +241,7 @@ export const WithIcon: Story = {
   },
 };
 
-export const AsADiv: Story = {
+export const AsAnotherElement: Story = {
   render: (args) => {
     const PolyStory = () => {
       const [lastClicked, setLastClicked] = useState('');
@@ -233,6 +251,7 @@ export const AsADiv: Story = {
             <Button
               data-testid='btn-render-el'
               render={<div />}
+              {...args}
               onClick={(e) => {
                 if (args.onClick) {
                   args.onClick(e);
@@ -246,6 +265,7 @@ export const AsADiv: Story = {
               data-testid='btn-render-func'
               nativeButton={false}
               render={(props) => <span {...props} />}
+              {...args}
               onClick={(e) => {
                 if (args.onClick) {
                   args.onClick(e);

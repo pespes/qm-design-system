@@ -99,14 +99,25 @@ export const loadingTests = async ({
     },
   );
 
-  await step('Disables button when loading', async () => {
+  await step('Button does not trigger onClick when loading', async () => {
+    const button = canvas.getByTestId('btn-loading');
+    fireEvent.click(button);
+    waitFor(() => {
+      expect(args.onClick).not.toHaveBeenCalled();
+    });
+  });
+
+  await step('Sets aria-disabled button when loading', async () => {
     const activeBtn = canvas.getByTestId('btn-active');
     expect(activeBtn).toHaveTextContent('Click to Load');
-    expect(activeBtn).not.toBeDisabled();
+    expect(activeBtn).not.toHaveAttribute('aria-disabled');
+    expect(activeBtn).toHaveAttribute('aria-busy', 'false');
 
     await userEvent.click(activeBtn);
-    expect(activeBtn).toBeDisabled();
+    expect(activeBtn).toHaveAttribute('aria-disabled', 'true');
+    expect(activeBtn).toHaveAttribute('aria-busy', 'true');
     expect(activeBtn).toHaveAttribute('data-disabled');
+    expect(activeBtn).not.toBeDisabled();
     expect(activeBtn).toHaveTextContent('Now Loading');
   });
 };
