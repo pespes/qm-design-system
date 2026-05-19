@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
 import '../src/globals.css';
-import { themeDecorator } from './configs/decorators.jsx';
+import { themeDecorator } from '@sb/configs/decorators';
 
 const preview: Preview = {
   parameters: {

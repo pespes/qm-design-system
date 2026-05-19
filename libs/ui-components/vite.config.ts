@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@sb': path.resolve(__dirname, './.storybook'),
     },
   },
 });
