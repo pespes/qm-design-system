@@ -329,10 +329,10 @@
       },
       "pressed-on-light": {
         "$type": "color",
-        "$value": "oklch(0% 0 0 / 0.16)",
+        "$value": "oklch(0% 0 0 / 0.12)",
         "$description": "Pressed/active overlay for light surfaces",
         "$extensions": {
-          "rgba-fallback": "rgba(0, 0, 0, 0.16)"
+          "rgba-fallback": "rgba(0, 0, 0, 0.12)"
         }
       },
       "hover-on-dark": {
@@ -345,10 +345,10 @@
       },
       "pressed-on-dark": {
         "$type": "color",
-        "$value": "oklch(100% 0 0 / 0.24)",
+        "$value": "oklch(100% 0 0 / 0.20)",
         "$description": "Pressed/active overlay for dark surfaces",
         "$extensions": {
-          "rgba-fallback": "rgba(255, 255, 255, 0.24)"
+          "rgba-fallback": "rgba(255, 255, 255, 0.20)"
         }
       },
       "disabled": {

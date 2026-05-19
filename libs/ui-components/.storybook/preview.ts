@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
 import '../src/globals.css';
-import { docPageMarkup, themeDecorator } from '../src/utils/storybook-configs';
+import { themeDecorator } from '@sb/configs/decorators';
 
 const preview: Preview = {
   parameters: {
@@ -13,7 +13,6 @@ const preview: Preview = {
       exclude: /^(className|style)$/g,
     },
     docs: {
-      page: docPageMarkup,
       codePanel: true,
       toc: {
         headingSelector: 'h1, h2, h3',
