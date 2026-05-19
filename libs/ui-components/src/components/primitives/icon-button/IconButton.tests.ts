@@ -106,6 +106,7 @@ export const loadingTests = async ({
       await userEvent.click(activeBtn);
       expect(activeBtn).toHaveAttribute('aria-disabled', 'true');
       expect(activeBtn).toHaveAttribute('data-disabled');
+      expect(activeBtn).not.toBeDisabled();
       expect(activeBtn).toHaveAttribute('aria-busy', 'true');
 
       expect(status).toHaveTextContent('Now Loading');
