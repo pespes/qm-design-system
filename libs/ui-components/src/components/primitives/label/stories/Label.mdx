@@ -1,0 +1,37 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as LabelStories from './Label.stories';
+import { MarkdownBlock } from '@/../.storybook/configs/docBlocks.jsx';
+
+<Meta of={LabelStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Accessibility
+The Label component is to be paired with a form control element (ie. `<button>`, `<input>`, `<select>`, etc). In order to correctly pair the label to the form control element,
+use the `htmlFor` attribute, with the form element’s id as the value. Refer to story [Disabled by Sibling](#disabled-by-sibling) for example of the `htmlFor` attribute in use.
+
+## Examples
+
+### Default
+<Canvas of={LabelStories.Default} />
+
+### Emphasis
+<Canvas of={LabelStories.Emphasis} />
+
+### Disabled by Sibling
+<Canvas of={LabelStories.DisabledBySibling} />
+
+### Disabled by Parent
+<Canvas of={LabelStories.DisabledByParent} />
