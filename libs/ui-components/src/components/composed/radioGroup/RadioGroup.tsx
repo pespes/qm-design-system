@@ -8,10 +8,9 @@ import {
 import { cn } from '@/utils/utils.js';
 
 // https://base-ui.com/react/components/radio#form-integration
-// According to BaseUI, the RadioGroup component is only meant to be integrated into a form in conjunction with
-// the Field and Fieldset elements. RadioGroup on its own does not handle any data-required or data-invalid
-// attributes, only data-disabled to disable the group as a whole.
-// A composed RadioFieldSet component will be used for form integration.
+// RadioGroup on its own does not handle form validation (data-required / data-invalid), and only serves as a logical
+// and accessible container for radio buttons. More robust form integration with validation and legends should use
+// the RadioFieldSet component.
 function RadioGroup({
   options,
   orientation = 'vertical',
