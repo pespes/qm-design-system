@@ -19,5 +19,4 @@ export type RadioGroupMap = ClassMap<'root' | 'option' | 'radio' | 'label'>;
 export interface RadioGroupProps extends GroupProps {
   classes?: RadioGroupMap;
   options: OptionProps[];
-  orientation?: 'vertical' | 'horizontal';
 }

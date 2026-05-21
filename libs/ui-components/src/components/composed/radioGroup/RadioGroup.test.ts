@@ -1,5 +1,5 @@
 import type { StoryContext } from '@storybook/react';
-import { expect, within, userEvent } from 'storybook/test';
+import { expect, within, userEvent, fireEvent, waitFor } from 'storybook/test';
 import type { RefObject } from 'react';
 import type { RadioGroupProps } from './RadioGroup.types.js';
 
@@ -114,6 +114,19 @@ export const disabledTests = async ({
         expect(args.onValueChange).not.toHaveBeenCalled();
       },
     );
+
+    await step(
+      'Clicking disabled Radio Label does not trigger selection',
+      async () => {
+        const radio = within(radioGroup).getAllByRole('radio')[3];
+        const label = within(radioGroup).getByText('Not this either');
+        expect(radio).not.toBeChecked();
+
+        await userEvent.click(label);
+        expect(radio).not.toBeChecked();
+        expect(args.onValueChange).not.toHaveBeenCalled();
+      },
+    );
   });
 };
 
@@ -124,11 +137,11 @@ export const disabledGroupTests = async ({
   step,
 }: RadioGroupContext) => {
   const canvas = within(canvasElement);
+  const radioGroup = canvas.getByRole('radiogroup');
 
   await step(
     'disabled property in option sets aria-disabled on the RadioGroupItem',
     async () => {
-      const radioGroup = canvas.getByRole('radiogroup');
       expect(radioGroup).toHaveAttribute('aria-disabled', 'true');
       expect(radioGroup).toHaveAttribute('data-disabled');
       expect(radioGroup).not.toBeDisabled();
@@ -141,7 +154,6 @@ export const disabledGroupTests = async ({
   );
 
   await step('Clicking disabled Radio does not trigger selection', async () => {
-    const radioGroup = canvas.getByRole('radiogroup');
     const radio = within(radioGroup).getAllByRole('radio')[0];
     expect(radio).not.toBeChecked();
 
@@ -156,4 +168,21 @@ export const disabledGroupTests = async ({
     expect(radio).not.toBeChecked();
     expect(args.onValueChange).not.toHaveBeenCalled();
   });
+
+  await step(
+    'Clicking disabled Radio Label does not trigger selection',
+    async () => {
+      const radio = within(radioGroup).getAllByRole('radio')[0];
+      const label = within(radioGroup).getByText('Label 1');
+      expect(radio).not.toBeChecked();
+
+      // Recent versions of userEvent will throw an error if trying to click an element that has
+      // pointer-events:none set. Using fireEvent as a workaround to confirm onClick is not called
+      fireEvent.click(label);
+      waitFor(() => {
+        expect(args.onValueChange).not.toHaveBeenCalled();
+        expect(radio).not.toBeChecked();
+      });
+    },
+  );
 };

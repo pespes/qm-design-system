@@ -20,7 +20,6 @@ const meta = {
     value: '',
     onValueChange: fn(),
     classes: { root: '', option: '', label: '', radio: '' },
-    orientation: 'vertical',
   },
   argTypes: {
     value: {
@@ -108,27 +107,6 @@ export const WithGroupLabel: Story = {
           }}
         />
       </>
-    );
-  },
-};
-
-export const Horizontal: Story = {
-  args: {
-    orientation: 'horizontal',
-  },
-  render: function LabelledStory(args) {
-    const [selected, setSelected] = useState('');
-    return (
-      <RadioGroup
-        {...args}
-        value={selected}
-        onValueChange={(val) => {
-          if (args.onValueChange) {
-            args.onValueChange(val);
-          }
-          setSelected(val);
-        }}
-      />
     );
   },
 };

@@ -13,18 +13,13 @@ import { cn } from '@/utils/utils.js';
 // the RadioFieldSet component.
 function RadioGroup({
   options,
-  orientation = 'vertical',
   classes,
   className,
   ...props
 }: RadioGroupProps) {
   const { root, ...childrenClasses } = classes || {};
-  const layout =
-    orientation === 'horizontal'
-      ? 'flex flex-row flex-wrap gap-300 w-auto'
-      : '';
   return (
-    <RadioGroupPrimitive className={cn(root, layout, className)} {...props}>
+    <RadioGroupPrimitive className={cn(root, className)} {...props}>
       {options.map((opt) => (
         <RadioGroupItem key={opt.value} {...opt} classes={childrenClasses} />
       ))}
@@ -51,7 +46,11 @@ function RadioGroupItem({
         className={classes?.radio}
         {...props}
       />
-      <Label htmlFor={radioId} type='emphasis' className={classes?.label}>
+      <Label
+        htmlFor={radioId}
+        type='emphasis'
+        className={cn('cursor-pointer', classes?.label)}
+      >
         {label}
       </Label>
     </div>
