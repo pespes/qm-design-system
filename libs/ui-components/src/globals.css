@@ -2,6 +2,34 @@
 @import "@quartermaster/ui-tokens/css/tokens";
 @import "@quartermaster/ui-tokens/css/tokens-pro";
 
+@layer base {
+  button,
+  a,
+  select,
+  [role="button"],
+  [role="checkbox"],
+  [role="radio"],
+  [role="switch"],
+  [role="tab"],
+  [role="menuitem"],
+  [role="option"],
+  [role="link"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    cursor: pointer;
+  }
+
+  :disabled,
+  :disabled *,
+  [aria-disabled="true"],
+  [aria-disabled="true"] * {
+    cursor: default;
+  }
+}
+
 @utility state-overlay {
   position: relative;
   &::after {
