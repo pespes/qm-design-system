@@ -1,0 +1,34 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as CheckboxStories from './Checkbox.stories';
+import { MarkdownBlock } from '@/../.storybook/configs/docBlocks.jsx';
+
+<Meta of={CheckboxStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Examples
+
+### Default
+<Canvas of={CheckboxStories.Default} />
+
+### Disabled States
+<Canvas of={CheckboxStories.Disabled} />
+
+### Error State
+<Canvas of={CheckboxStories.Invalid} />
+
+#### Additional Documentation
+- BaseUI Checkbox: [Learn More](https://base-ui.com/react/components/checkbox)
+- Shadcn Checkbox: [Learn More](https://ui.shadcn.com/docs/components/base/checkbox)
