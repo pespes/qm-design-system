@@ -3,8 +3,11 @@ import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox';
 import { CheckIcon } from 'lucide-react';
 import { cn } from '@/utils/utils.js';
 
-function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
-  console.log(props);
+function Checkbox({
+  className,
+  iconClasses,
+  ...props
+}: CheckboxPrimitive.Root.Props & { iconClasses?: string | undefined }) {
   return (
     <CheckboxPrimitive.Root
       data-slot='checkbox'
@@ -21,9 +24,9 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
     >
       <CheckboxPrimitive.Indicator
         data-slot='checkbox-indicator'
-        className='grid place-content-center transition-none [&>svg]:size-350 [&>svg]:text-brand-foreground'
+        className='grid place-content-center transition-none [&>svg]:size-350'
       >
-        <CheckIcon />
+        <CheckIcon className={cn('text-brand-foreground', iconClasses)} />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

@@ -4,18 +4,27 @@ import { Checkbox as CheckboxPrimitive } from '@/components/primitives/checkbox/
 import { Label } from '@/components/primitives/label/Label.js';
 import { cn } from '@/utils/utils.js';
 
-function Checkbox({ label, className, classes, ref, ...props }: CheckboxProps) {
+function Checkbox({
+  label: labelString,
+  className,
+  classes,
+  ref,
+  ...props
+}: CheckboxProps) {
   const checkboxId = useId();
+  const { root, label, checkbox, icon } = classes || {};
+
   return (
-    <div className={cn('flex items-center gap-250', classes?.root)}>
+    <div className={cn('flex items-center gap-250', className, root)}>
       <CheckboxPrimitive
         id={checkboxId}
         ref={ref}
-        className={cn(className, classes?.checkbox)}
+        className={checkbox}
+        iconClasses={icon}
         {...props}
       />
-      <Label htmlFor={checkboxId} type='emphasis' className={classes?.label}>
-        {label}
+      <Label htmlFor={checkboxId} type='emphasis' className={label}>
+        {labelString}
       </Label>
     </div>
   );
