@@ -1,0 +1,37 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as SeparatorStories from './Separator.stories';
+import { MarkdownBlock } from '@/../.storybook/configs/docBlocks.jsx';
+
+<Meta of={SeparatorStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Accessibility
+Although the separator is not focusable, this element (with an accessible role of `"separator"`) is still 
+readable by screenreaders when in Browse / Read mode.
+
+## Examples
+
+### Default
+<Canvas of={SeparatorStories.Default} />
+
+### Vertical
+<Canvas of={SeparatorStories.Vertical} />
+
+### Horizontal Orientation
+<Canvas of={SeparatorStories.HorizontalOrientation} />
+
+### Vertical Orientation
+<Canvas of={SeparatorStories.VerticalOrientation} />
