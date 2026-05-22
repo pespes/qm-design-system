@@ -37,7 +37,7 @@ function RadioGroupItem({
 }: OptionProps) {
   const radioId = useId();
   return (
-    <div className={cn('flex items-center gap-200', classes?.option)}>
+    <div className={cn('flex items-center gap-250', classes?.option)}>
       <RadioItemPrimitive
         id={radioId}
         value={value}

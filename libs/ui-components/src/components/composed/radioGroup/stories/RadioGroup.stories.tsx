@@ -29,6 +29,11 @@ const meta = {
       description:
         'Array of `OptionProps[]`. Each item shape: `{ value: string; label: string; disabled: bool }`',
     },
+    disabled: {
+      description: 'Whether the entire RadioGroup & options are disabled',
+      type: 'boolean',
+      control: { type: 'boolean' },
+    },
     classes: {
       description: 'For custom styling individual elements',
     },
