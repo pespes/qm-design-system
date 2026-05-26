@@ -353,18 +353,18 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "oklch(0% 0 0 / 0.38)",
+        "$value": "oklch(0% 0 0 / 0.4)",
         "$description": "Applied to dark content to indicate disabled",
         "$extensions": {
-          "rgba-fallback": "rgba(0, 0, 0, 0.38)"
+          "rgba-fallback": "rgba(0, 0, 0, 0.4)"
         }
       },
       "disabled-subtle": {
         "$type": "color",
-        "$value": "oklch(0% 0 0 / 0.04)",
+        "$value": "oklch(0% 0 0 / 0.08)",
         "$description": "Applied to light content to indicate disabled",
         "$extensions": {
-          "rgba-fallback": "rgba(0, 0, 0, 0.04)"
+          "rgba-fallback": "rgba(0, 0, 0, 0.08)"
         }
       },
       "dragged": {
