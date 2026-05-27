@@ -21,10 +21,9 @@ export const defaultTests = async ({
     const input = canvas.getByRole('textbox');
     await userEvent.tab();
     expect(input).toHaveFocus();
+    expect(args.onChange).not.toHaveBeenCalled();
     await userEvent.keyboard('t');
     expect(args.onChange).toHaveBeenCalledTimes(1);
-    await userEvent.keyboard('e');
-    expect(args.onChange).toHaveBeenCalledTimes(2);
   });
 };
 
@@ -40,11 +39,15 @@ export const iconTests = async ({ canvasElement, step }: InputPlayContext) => {
         throw new Error('Default size input not found');
       }
 
-      const startIcon = within(startIconInput).getByTestId('input-group-addon');
+      const startIcon = within(startIconInput).getByTestId(
+        'input-group-addon-inline-start',
+      );
       expect(startIcon).toBeInTheDocument();
       expect(startIcon).toHaveAttribute('aria-hidden', 'true');
 
-      const endIcon = within(endIconInput).getByTestId('input-group-addon');
+      const endIcon = within(endIconInput).getByTestId(
+        'input-group-addon-inline-end',
+      );
       expect(endIcon).toBeInTheDocument();
       expect(endIcon).toHaveAttribute('aria-hidden', 'true');
     },
@@ -189,15 +192,17 @@ export const sizesTest = async ({ canvasElement, step }: InputPlayContext) => {
   const canvas = within(canvasElement);
 
   await step('Input renders "default" size variant by default', async () => {
-    const [defaultInput, largeInput] = canvas.getAllByRole('group');
+    const [defaultInput, largeInput] = canvas.getAllByRole('textbox');
     if (!defaultInput || !largeInput) {
       throw new Error('Inputs not found');
     }
 
-    expect(defaultInput.classList).toContain('[&_input]:py-250');
-    expect(defaultInput.classList).toContain('[&_input]:px-300');
+    expect(defaultInput.classList).toContain('py-250');
+    expect(defaultInput.classList).toContain('px-300');
+    expect(largeInput.classList).toContain('type-ui-default');
 
-    expect(largeInput.classList).toContain('[&_input]:px-350');
-    expect(largeInput.classList).toContain('[&_input]:py-300');
+    expect(largeInput.classList).toContain('px-350');
+    expect(largeInput.classList).toContain('py-300');
+    expect(largeInput.classList).toContain('type-ui-lead');
   });
 };
