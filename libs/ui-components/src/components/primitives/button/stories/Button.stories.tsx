@@ -9,7 +9,7 @@ import {
   disabledTests,
   loadingTests,
   polymorphismTests,
-} from '../Button.tests.js';
+} from '../Button.test.js';
 
 const meta = {
   title: 'Components/Button',
