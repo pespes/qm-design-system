@@ -42,6 +42,16 @@ const meta = {
         none: undefined,
       },
     },
+    type: {
+      description: 'Array of input data types',
+      control: { type: 'select' },
+      options: ['text', 'number', 'email', 'password', 'tel', 'url'],
+    },
+    disabled: {
+      description: 'Whether the Input is disabled',
+      type: 'boolean',
+      control: { type: 'boolean' },
+    },
     togglePasswordText: {
       description: 'Aria-label text for the passwword toggle button',
     },
@@ -51,6 +61,15 @@ const meta = {
     autoFocus: {
       description: 'If true, the input element is focused on first mount',
       type: 'boolean',
+    },
+    testId: {
+      description: "An id to pass to the native input's data-testid attribute",
+      type: 'string',
+    },
+    passwordTestId: {
+      description:
+        "An id to pass to the password toggle's data-testid attribute",
+      type: 'string',
     },
   },
   parameters: {
@@ -77,7 +96,14 @@ export const Default: Story = {
       args.onChange?.(e);
       setValue(e.target.value);
     };
-    return <Input {...args} onChange={handleChange} value={value} />;
+    return (
+      <Input
+        {...args}
+        testId='default-input'
+        onChange={handleChange}
+        value={value}
+      />
+    );
   },
   play: defaultTests,
 };
@@ -95,7 +121,14 @@ export const Disabled: Story = {
       args.onChange?.(e);
       setValue(e.target.value);
     };
-    return <Input {...args} onChange={handleChange} value={value} />;
+    return (
+      <Input
+        {...args}
+        testId='disabled-input'
+        onChange={handleChange}
+        value={value}
+      />
+    );
   },
   play: disabledTests,
 };
@@ -111,7 +144,14 @@ export const Invalid: Story = {
       args.onChange?.(e);
       setValue(e.target.value);
     };
-    return <Input {...args} onChange={handleChange} value={value} />;
+    return (
+      <Input
+        {...args}
+        testId='invalid-input'
+        onChange={handleChange}
+        value={value}
+      />
+    );
   },
   play: invalidTests,
 };
@@ -124,12 +164,14 @@ export const WithAdornments: Story = {
       <div className='flex flex-col gap-400'>
         <Input
           {...args}
+          testId='start-adorn-input'
           startAdornment={<LockIcon />}
           onChange={(e) => setValue1(e.target.value)}
           value={value1}
         />
         <Input
           {...args}
+          testId='end-adorn-input'
           endAdornment={<InfoIcon />}
           onChange={(e) => setValue2(e.target.value)}
           value={value2}
@@ -151,7 +193,14 @@ export const Password: Story = {
       args.onChange?.(e);
       setValue(e.target.value);
     };
-    return <Input {...args} onChange={handleChange} value={value} />;
+    return (
+      <Input
+        {...args}
+        testId='password-input'
+        onChange={handleChange}
+        value={value}
+      />
+    );
   },
   play: passwordTests,
 };
@@ -167,12 +216,14 @@ export const PasswordDisabled: Story = {
       <div className='flex flex-col gap-400'>
         <Input
           {...args}
+          testId='disabled-pass-input'
           disabled
           onChange={(e) => setDisabledValue(e.target.value)}
           value={disabledValue}
         />
         <Input
           {...args}
+          testId='no-toggle-input'
           hasVisibilityToggle={false}
           onChange={(e) => setNoToggleValue(e.target.value)}
           value={noToggleValue}
@@ -186,8 +237,8 @@ export const PasswordDisabled: Story = {
 export const AllSizes: Story = {
   render: () => (
     <div className='flex flex-col gap-400'>
-      <Input placeholder='default placeholder' />
-      <Input size='lg' placeholder='lg placeholder' />
+      <Input testId='default-input' placeholder='default placeholder' />
+      <Input testId='large-input' size='lg' placeholder='lg placeholder' />
     </div>
   ),
   play: sizesTest,
@@ -196,11 +247,11 @@ export const AllSizes: Story = {
 export const AllTypes: Story = {
   render: () => (
     <div className='flex flex-col gap-400'>
-      <Input placeholder='text...' type='text' />
-      <Input placeholder='email...' type='email' />
-      <Input placeholder='number...' type='number' />
-      <Input placeholder='telephone...' type='tel' />
-      <Input placeholder='password...' type='password' />
+      <Input testId='text-input' placeholder='text...' type='text' />
+      <Input testId='email-input' placeholder='email...' type='email' />
+      <Input testId='number-input' placeholder='number...' type='number' />
+      <Input testId='tel-input' placeholder='telephone...' type='tel' />
+      <Input testId='pass-input' placeholder='password...' type='password' />
     </div>
   ),
 };

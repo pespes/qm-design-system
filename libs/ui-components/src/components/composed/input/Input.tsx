@@ -19,6 +19,8 @@ function Input({
   classes,
   className,
   ref,
+  testId,
+  passwordTestId,
   ...props
 }: InputProps) {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -27,13 +29,16 @@ function Input({
   const isPasswordToggle = type === 'password' && hasVisibilityToggle;
   const inputType = isPasswordToggle && passwordVisible ? 'text' : type;
 
+  // The icon rendered within the start / endAdornments should always be size 20,
+  // no matter the size of the input
   const renderIcon = (el: React.ReactElement<IconSlotProps>) => {
     return React.cloneElement(el, {
       size: 20,
-      ...(!!classes?.icon && { className: cn('aspect-square', classes.icon) }),
+      className: cn('aspect-square', classes?.icon),
     });
   };
 
+  // If rendering an input with type='password' and hasVisibilityToggle=true, then overwrite any endAdornment prop
   const renderEndAdornment = () => {
     if (isPasswordToggle) {
       const passwordIcon = passwordVisible ? <EyeIcon /> : <EyeOffIcon />;
@@ -49,6 +54,7 @@ function Input({
           onClick={togglePasswordVisible}
           aria-pressed={passwordVisible}
           aria-controls={inputId}
+          data-testid={passwordTestId}
         >
           {renderIcon(passwordIcon)}
         </InputGroupIconButton>
@@ -65,13 +71,20 @@ function Input({
   };
 
   return (
-    <InputGroup size={size} className={cn(className, classes?.root)}>
+    <InputGroup className={cn(className, classes?.root)}>
       {startAdornment && (
         <InputGroupAddon align='inline-start'>
           {renderIcon(startAdornment)}
         </InputGroupAddon>
       )}
-      <InputGroupInput ref={ref} type={inputType} {...props} id={inputId} />
+      <InputGroupInput
+        {...props}
+        ref={ref}
+        type={inputType}
+        data-testid={testId ?? 'input-group-input'}
+        size={size}
+        id={inputId}
+      />
       {renderEndAdornment()}
     </InputGroup>
   );

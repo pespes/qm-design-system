@@ -6,38 +6,20 @@ import { Button } from '@/components/primitives/button/Button.js';
 import { cn } from '@/utils/utils.js';
 import { Input } from '@/components/primitives/input/input.js';
 
-const inputGroupVariants = cva(
-  [
-    'group/input-group relative flex w-full min-w-0 self-stretch items-center rounded-400 border border-border-default transition-colors',
-    'in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0',
-    'has-disabled:bg-transparent has-disabled:border-border-subtle [&_input:disabled]:text-state-disabled [&_input:disabled::placeholder]:text-state-disabled',
-    'has-[[data-slot=input-group-control]:focus-visible]:outline-2 has-[[data-slot=input-group-control]:focus-visible]:outline-focus-ring has-[[data-slot=input-group-control]:focus-visible]:outline-offset-2 has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-border-subtle',
-    'has-aria-invalid:border-status-danger-border-strong has-aria-invalid:border-2',
-    'has-[>textarea]:h-auto has-[>[data-align=inline-end]]:[&>input]:pr-0 has-[>[data-align=inline-start]]:[&>input]:pl-0',
-  ].join(' '),
-  {
-    variants: {
-      size: {
-        default: '[&_input]:py-250 [&_input]:px-300 [&_input]:min-h-1000',
-        lg: '[&_input]:py-300 [&_input]:px-350 [&_input]:min-h-1200',
-      },
-    },
-    defaultVariants: {
-      size: 'default',
-    },
-  },
-);
-
-function InputGroup({
-  className,
-  size,
-  ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof inputGroupVariants>) {
+function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot='input-group'
       role='group'
-      className={cn(inputGroupVariants({ size }), className)}
+      className={cn(
+        'group/input-group relative flex w-full min-w-0 self-stretch items-center rounded-400 border border-border-default transition-colors',
+        'in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0',
+        'has-disabled:bg-transparent has-disabled:border-border-subtle [&_input:disabled]:text-state-disabled [&_input:disabled::placeholder]:text-state-disabled',
+        'has-[[data-slot=input-group-control]:focus-visible]:outline-2 has-[[data-slot=input-group-control]:focus-visible]:outline-focus-ring has-[[data-slot=input-group-control]:focus-visible]:outline-offset-2 has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-border-subtle',
+        'has-aria-invalid:border-status-danger-border-strong has-aria-invalid:border-2',
+        'has-[>textarea]:h-auto has-[>[data-align=inline-end]]:[&>input]:pr-0 has-[>[data-align=inline-start]]:[&>input]:pl-0',
+        className,
+      )}
       {...props}
     />
   );
@@ -57,7 +39,12 @@ const inputGroupAddonVariants = cva(
     },
   },
 );
-//added aria-hidden true, removed clickable functionality - this hsould only be for adding in icons
+
+/**
+ * Removed the click functionality & added aria-hidden=true here. Agreed upon with Design, this should only be for adding
+ * icons into the InputGroup. If there is a need to add text, use InputGroupText, and if there is a need for a button,
+ * use InputGroupButton / InputGroupIconButton
+ */
 function InputGroupAddon({
   className,
   align = 'inline-start',
@@ -68,7 +55,7 @@ function InputGroupAddon({
       aria-hidden={true}
       data-slot='input-group-addon'
       data-align={align}
-      data-testid='input-group-addon'
+      data-testid={`input-group-addon-${align}`}
       className={cn(inputGroupAddonVariants({ align }), className)}
       {...props}
     />
@@ -78,6 +65,7 @@ function InputGroupAddon({
 type InputGroupButtonExtras = {
   type?: 'button' | 'submit' | 'reset';
   align?: 'inline-start' | 'inline-end';
+  'data-testid'?: string | undefined;
 };
 
 const inputGroupButtonVariants = cva('flex items-center gap-200 mx-100', {
@@ -99,6 +87,7 @@ function InputGroupButton({
 }: Omit<React.ComponentProps<typeof Button>, 'type'> & InputGroupButtonExtras) {
   return (
     <Button
+      data-testid='input-group-button'
       type={type}
       data-slot='input-group-button'
       data-size={size}
@@ -111,6 +100,10 @@ function InputGroupButton({
   );
 }
 
+/**
+ * This component was added in addition to IconGroupButton. It contains the same functionality except for the addition of
+ * an aria-label and slightly different styling overrides. Users needing a nested <Button/> can use InputGroupButton.
+ */
 function InputGroupIconButton({
   className,
   type = 'button',
@@ -122,6 +115,7 @@ function InputGroupIconButton({
   InputGroupButtonExtras) {
   return (
     <IconButton
+      data-testid='input-group-icon-button'
       type={type}
       data-slot='input-group-button'
       data-size={size}
@@ -153,9 +147,12 @@ function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
 function InputGroupInput({
   className,
   ...props
-}: React.ComponentProps<'input'>) {
+}: Omit<React.ComponentProps<'input'>, 'size'> & {
+  size?: 'default' | 'lg';
+}) {
   return (
     <Input
+      data-testid='input-group-input'
       data-slot='input-group-control'
       className={cn('flex-1', className)}
       {...props}
