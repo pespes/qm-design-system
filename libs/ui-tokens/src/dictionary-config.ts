@@ -69,6 +69,19 @@ const buildDictionary = async () => {
               selector: mode?.cssSelector,
             },
           },
+          // JSON output only needs key / token names to feed into extendTailwindMerge, not token
+          // values, so no need to call for base build. Include under Css Config to ensure same transforms / actions
+          // are applied to both files
+          ...(!mode
+            ? [
+                {
+                  destination: '../json/tokenKeys.ts',
+                  format: 'json/tw-merge',
+                  filter: (token: TransformedToken) => token.isSource,
+                  options: { fileHeader: 'qm-header' },
+                },
+              ]
+            : []),
         ],
       },
     },
