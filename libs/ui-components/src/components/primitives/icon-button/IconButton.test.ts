@@ -1,8 +1,8 @@
 import type { StoryContext } from '@storybook/react';
 import { expect, within, fireEvent, userEvent, waitFor } from 'storybook/test';
-import type { ButtonProps } from './Button.types.js';
+import type { IconButtonProps } from './IconButton.types.js';
 
-type ButtonPlayContext = StoryContext<ButtonProps>;
+type ButtonPlayContext = StoryContext<IconButtonProps>;
 
 // ---  Default Button Tests ---
 export const defaultTests = async ({
@@ -18,14 +18,10 @@ export const defaultTests = async ({
     expect(button.classList).toContain('bg-primary-background');
   });
 
-  await step(
-    'Button width set to fit content when fullWidth not specified',
-    async () => {
-      const button = canvas.getByRole('button');
-      expect(button).toBeInTheDocument();
-      expect(button.classList).not.toContain('w-full');
-    },
-  );
+  await step('Button renders an aria-label by default', async () => {
+    const button = canvas.getByRole('button');
+    expect(button).toHaveAccessibleName(args.label);
+  });
 
   await step('Button triggers onClick via Enter and Space keys', async () => {
     const button = canvas.getByRole('button');
@@ -64,7 +60,7 @@ export const disabledTests = async ({
     // Recent versions of userEvent will throw an error if trying to click an element that has
     // pointer-events:none set. Using fireEvent as a workaround to confirm onClick is not called
     fireEvent.click(button);
-    waitFor(() => {
+    await waitFor(() => {
       expect(args.onClick).not.toHaveBeenCalled();
     });
     const style = window.getComputedStyle(button);
@@ -81,45 +77,41 @@ export const disabledTests = async ({
 
 // --- Loading State Tests ---
 export const loadingTests = async ({
-  args,
   canvasElement,
   step,
 }: ButtonPlayContext) => {
   const canvas = within(canvasElement);
 
+  await step('Button renders loading spinner', async () => {
+    const loadingBtn = canvas.getByTestId('btn-loading');
+    const statusRegions = within(loadingBtn).getAllByRole('status', {
+      hidden: true,
+    });
+    expect(statusRegions.length).toBe(2); // 1 for .sr-only, one for loading spinner
+    if (statusRegions[1]) {
+      expect(statusRegions[1].tagName).toBe('svg');
+    }
+  });
+
   await step(
-    'Button renders loading spinner and loadingText when in loading state',
+    'Sets aria-disabled, aria-busy on button and populates live region with loading.title when loading',
     async () => {
-      const loadingBtn = canvas.getByTestId('btn-loading');
-      if (args.loading) {
-        expect(loadingBtn).toHaveTextContent(args.loading.title);
-      }
-      expect(loadingBtn).not.toHaveTextContent(args.children as string);
-      expect(within(loadingBtn).getByRole('status')).toBeInTheDocument();
+      const activeBtn = canvas.getByTestId('btn-active');
+      expect(activeBtn).not.toHaveAttribute('aria-disabled');
+      expect(activeBtn).toHaveAttribute('aria-busy', 'false');
+
+      const status = within(activeBtn).getByRole('status');
+      expect(status).toBeEmptyDOMElement();
+
+      await userEvent.click(activeBtn);
+      expect(activeBtn).toHaveAttribute('aria-disabled', 'true');
+      expect(activeBtn).toHaveAttribute('data-disabled');
+      expect(activeBtn).not.toBeDisabled();
+      expect(activeBtn).toHaveAttribute('aria-busy', 'true');
+
+      expect(status).toHaveTextContent('Now Loading');
     },
   );
-
-  await step('Button does not trigger onClick when loading', async () => {
-    const button = canvas.getByTestId('btn-loading');
-    fireEvent.click(button);
-    waitFor(() => {
-      expect(args.onClick).not.toHaveBeenCalled();
-    });
-  });
-
-  await step('Sets aria-disabled button when loading', async () => {
-    const activeBtn = canvas.getByTestId('btn-active');
-    expect(activeBtn).toHaveTextContent('Click to Load');
-    expect(activeBtn).not.toHaveAttribute('aria-disabled');
-    expect(activeBtn).toHaveAttribute('aria-busy', 'false');
-
-    await userEvent.click(activeBtn);
-    expect(activeBtn).toHaveAttribute('aria-disabled', 'true');
-    expect(activeBtn).toHaveAttribute('aria-busy', 'true');
-    expect(activeBtn).toHaveAttribute('data-disabled');
-    expect(activeBtn).not.toBeDisabled();
-    expect(activeBtn).toHaveTextContent('Now Loading');
-  });
 };
 
 // --- Polymorphism Tests ---

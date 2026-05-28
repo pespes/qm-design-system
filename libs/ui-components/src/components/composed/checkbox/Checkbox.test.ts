@@ -27,7 +27,7 @@ export const defaultTests = async ({
     expect(checkbox).not.toBeChecked();
 
     await userEvent.click(checkbox);
-    waitFor(() => {
+    await waitFor(() => {
       expect(checkbox).toBeChecked();
     });
     expect(args.onCheckedChange).toHaveBeenCalledTimes(1);

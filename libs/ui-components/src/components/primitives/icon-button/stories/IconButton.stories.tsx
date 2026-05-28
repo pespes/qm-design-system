@@ -14,7 +14,7 @@ import {
   disabledTests,
   loadingTests,
   polymorphismTests,
-} from '../IconButton.tests.js';
+} from '../IconButton.test.js';
 
 const meta = {
   title: 'Components/IconButton',
