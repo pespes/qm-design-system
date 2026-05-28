@@ -84,7 +84,7 @@ describe('formats', () => {
       });
 
       const expectedUtility = [
-        '@utility text-body-default {',
+        '@utility type-body-default {',
         '  font-size: 1rem;',
         '  font-family: DM Sans;',
         '  line-height: 1.25;',

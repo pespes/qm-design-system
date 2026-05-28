@@ -179,7 +179,7 @@ export const disabledGroupTests = async ({
       // Recent versions of userEvent will throw an error if trying to click an element that has
       // pointer-events:none set. Using fireEvent as a workaround to confirm onClick is not called
       fireEvent.click(label);
-      waitFor(() => {
+      await waitFor(() => {
         expect(args.onValueChange).not.toHaveBeenCalled();
         expect(radio).not.toBeChecked();
       });

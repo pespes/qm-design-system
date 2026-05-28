@@ -4,6 +4,9 @@ import { themeDecorator } from '@sb/configs/decorators';
 
 const preview: Preview = {
   parameters: {
+    a11y: {
+      test: 'error',
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
