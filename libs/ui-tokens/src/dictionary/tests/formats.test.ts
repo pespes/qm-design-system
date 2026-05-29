@@ -263,12 +263,12 @@ describe('formats', () => {
 
   describe('CSS / JSON parity', () => {
     // Same fixture run through both formats — guarantees that every theme key exposed to tailwind-merge has
-    // a corresponding CSS variable, and every utility name has a corresponding @utility block. If there is any
-    // unintentional future divergence this test fails loudly will fail.
+    // a corresponding CSS variable, and every utility name has a corresponding @utility block (and vice versa).
+    // If there is any unintentional future divergence this test fails loudly.
     const categoryToKebab = (cat: string) =>
       cat.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
-    it('every JSON theme key has a matching CSS variable, and vice versa', async () => {
+    const buildOutputs = async () => {
       const dictionary: Dictionary = {
         allTokens: cssMockTokens,
         tokens: {},
@@ -289,16 +289,53 @@ describe('formats', () => {
       const parsed = JSON.parse(
         jsonResult.match(/= ([\s\S]+) as const;/)?.[1] ?? '{}',
       ) as { theme: Record<string, string[]>; utilities: string[] };
+      return { css, parsed };
+    };
 
+    const assertParity = (
+      css: string,
+      parsed: { theme: Record<string, string[]>; utilities: string[] },
+    ) => {
+      // JSON --> CSS: check every JSON theme key / utility appears in CSS.
       for (const [category, keys] of Object.entries(parsed.theme)) {
         for (const key of keys) {
-          const cssVar = `--${categoryToKebab(category)}-${key}:`;
-          expect(css).toContain(cssVar);
+          expect(css).toContain(`--${categoryToKebab(category)}-${key}:`);
         }
       }
       for (const utility of parsed.utilities) {
         expect(css).toContain(`@utility ${utility} {`);
       }
+      // CSS --> JSON: check every CSS var included in the tw-merge category, and every @utility block, are listed in JSON.
+      for (const category of Object.keys(parsed.theme)) {
+        // Grab the key portion of `--<category>-<key>:`, eg. `brand-background` from `--color-brand-background:`.
+        const cssVarRegex = new RegExp(
+          `--${categoryToKebab(category)}-(?<key>[a-zA-Z0-9_-]+):`,
+          'g',
+        );
+        for (const { groups } of css.matchAll(cssVarRegex)) {
+          expect(parsed.theme[category]).toContain(groups?.key);
+        }
+      }
+      // Captures the utility name from `@utility <name> {`, eg. `type-body-default`.
+      const utilityRegex = /@utility (?<name>\S+) \{/g;
+      for (const { groups } of css.matchAll(utilityRegex)) {
+        expect(parsed.utilities).toContain(groups?.name);
+      }
+    };
+
+    it('every JSON theme key has a matching CSS variable, and vice versa', async () => {
+      const { css, parsed } = await buildOutputs();
+      expect(() => assertParity(css, parsed)).not.toThrow();
+    });
+
+    it('throws when CSS and JSON diverge', async () => {
+      const { css, parsed } = await buildOutputs();
+      // Drop one CSS var and add a new CSS var to test divergence in matches
+      // (both JSON --> CSS and CSS --> JSON gaps)
+      const updatedCss =
+        css.replace('--opacity-200: 0.5;', '') +
+        '\n@theme {\n  --color-phantom: #000;\n}\n';
+      expect(() => assertParity(updatedCss, parsed)).toThrow();
     });
   });
 

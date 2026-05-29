@@ -124,7 +124,7 @@ function InputGroupIconButton({
       variant={variant}
       className={cn(
         inputGroupButtonVariants({ align }),
-        'rounded-200 h-auto min-w-auto text-foreground-subtle p-100',
+        'rounded-400 h-auto min-w-auto text-foreground-subtle p-100',
         className,
       )}
       {...props}
