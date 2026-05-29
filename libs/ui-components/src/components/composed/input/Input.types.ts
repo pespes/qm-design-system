@@ -15,7 +15,7 @@ export interface InputProps
   endAdornment?: React.ReactElement<IconSlotProps>;
   hasVisibilityToggle?: boolean;
   togglePasswordText?: { hide: string; show: string };
-  testId?: string;
+  testId?: string | undefined;
   passwordTestId?: string;
   classes?: InputClassMap;
 }
