@@ -221,6 +221,7 @@ export const PasswordDisabled: Story = {
         <Input
           {...args}
           testId='disabled-pass-input'
+          passwordTestId='disabled-pass-toggle'
           disabled
           onChange={(e) => setDisabledValue(e.target.value)}
           value={disabledValue}
@@ -255,7 +256,12 @@ export const AllTypes: Story = {
       <Input testId='email-input' placeholder='email...' type='email' />
       <Input testId='number-input' placeholder='number...' type='number' />
       <Input testId='tel-input' placeholder='telephone...' type='tel' />
-      <Input testId='pass-input' placeholder='password...' type='password' />
+      <Input
+        testId='pass-input'
+        passwordTestId='pass-toggle'
+        placeholder='password...'
+        type='password'
+      />
     </div>
   ),
 };

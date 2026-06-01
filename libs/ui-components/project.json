@@ -12,6 +12,7 @@
         "command": "vitest run",
         "cwd": "libs/ui-components"
       },
+      "dependsOn": ["^build"],
       "cache": true,
       "outputs": []
     },
