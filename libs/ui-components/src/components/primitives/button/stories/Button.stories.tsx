@@ -58,6 +58,7 @@ export const Default: Story = {
     children: 'Click me',
     disabled: false,
   },
+  render: (args) => <Button {...args} data-testid='btn-default' />,
   play: defaultTests,
 };
 
@@ -66,6 +67,7 @@ export const Brand: Story = {
     variant: 'brand',
     children: 'Choose Brand to Watch Me Change',
   },
+  render: (args) => <Button {...args} data-testid='btn-brand' />,
 };
 
 export const Disabled: Story = {

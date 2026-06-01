@@ -72,6 +72,7 @@ export const Default: Story = {
     disabled: false,
     loading: { title: 'loading', state: 'active' },
   },
+  render: (args) => <IconButton {...args} data-testid='btn-default' />,
   play: defaultTests,
 };
 
@@ -79,6 +80,7 @@ export const Brand: Story = {
   args: {
     variant: 'brand',
   },
+  render: (args) => <IconButton {...args} data-testid='btn-brand' />,
 };
 
 export const Disabled: Story = {

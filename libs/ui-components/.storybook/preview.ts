@@ -6,6 +6,25 @@ const preview: Preview = {
   parameters: {
     a11y: {
       test: 'error',
+      config: {
+        checks: [
+          {
+            id: 'has-test-id',
+            evaluate: (node: HTMLElement) => node.hasAttribute('data-testid'),
+          },
+        ],
+        rules: [
+          {
+            id: 'target-size', // WCAG2.2 not currently enabled by default, added the new rule from 2.2
+            enabled: true,
+          },
+          {
+            id: 'require-test-id',
+            selector: 'button, a, input, select, textarea, form',
+            any: ['has-test-id'],
+          },
+        ],
+      },
     },
     controls: {
       matchers: {
