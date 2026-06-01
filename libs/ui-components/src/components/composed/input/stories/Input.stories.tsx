@@ -89,6 +89,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  args: {
+    testId: 'default-input',
+  },
   render: function DefaultStory(args) {
     const [value, setValue] = useState(args.value ?? '');
     useEffect(() => setValue(args.value ?? ''), [args.value]);
@@ -99,7 +102,7 @@ export const Default: Story = {
     return (
       <Input
         {...args}
-        testId='default-input'
+        testId={args.testId}
         onChange={handleChange}
         value={value}
       />
@@ -185,6 +188,7 @@ export const WithAdornments: Story = {
 export const Password: Story = {
   args: {
     type: 'password',
+    passwordTestId: 'password-button',
     endAdornment: <LockIcon />,
   },
   render: function PasswordStory(args) {

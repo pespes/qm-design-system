@@ -12,9 +12,17 @@ export const defaultTests = async ({
 }: InputPlayContext) => {
   const canvas = within(canvasElement);
 
-  await step('Button correctly renders placeholder', async () => {
+  await step('Input correctly renders placeholder', async () => {
     const input = canvas.getByRole('textbox');
     expect(input).toHaveAttribute('placeholder', args.placeholder);
+  });
+
+  await step('Correctly passes the testId to the input', () => {
+    // Required in order to allow passing of args.testId to 'getByTestId' without
+    // typescript complaint, even though we deliberately pass a testId in the args
+    if (!args.testId) throw new Error('testId arg is required for this story');
+    const input = canvas.getByTestId(args.testId);
+    expect(input.tagName).toBe('INPUT');
   });
 
   await step('Input triggers onChange when user types', async () => {
@@ -101,6 +109,17 @@ export const passwordTests = async ({
 
   await step('Input renders with type="password" by default', async () => {
     expect(input).toHaveAttribute('type', 'password');
+  });
+
+  await step('Correctly passes the passwordId to the toggle', () => {
+    if (!args.passwordTestId)
+      throw new Error('passwordId arg is required for this story');
+    const passwordToggle = canvas.getByTestId(args.passwordTestId);
+    expect(passwordToggle.tagName).toBe('BUTTON');
+    expect(passwordToggle).toHaveAttribute(
+      'aria-label',
+      args.togglePasswordText?.show,
+    );
   });
 
   await step(
