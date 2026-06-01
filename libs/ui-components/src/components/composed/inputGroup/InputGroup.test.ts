@@ -42,6 +42,14 @@ export const defaultTests = async ({
     await userEvent.click(input);
     expect(input).toHaveFocus();
   });
+
+  await step('Input triggers onChange when user types', async () => {
+    const input = canvas.getByRole('textbox');
+    expect(input).toHaveFocus(); // already has focus from previous test
+    expect(args.onChange).not.toHaveBeenCalled();
+    await userEvent.keyboard('t');
+    expect(args.onChange).toHaveBeenCalledTimes(1);
+  });
 };
 
 // ---  Disabled InputGroup Test ---
