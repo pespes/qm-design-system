@@ -4,8 +4,22 @@ import { fileHeader, getReferences } from 'style-dictionary/utils';
 import { set } from 'lodash-es';
 import { hasInvalidLeaf } from '../utilities/validation.js';
 import { findTokenValue } from '../utilities/token-helpers.js';
+import { categorizeTokens } from './token-categorization.js';
 
 const tokenTypes = ['border-width', 'color', 'radius', 'spacing', 'text'];
+
+// Categories surfaced to tailwind-merge so QM keys are recognized in the right conflict group.
+// Included when tw-merge's scale is theme-based, or when a predicate scale would miss non-numeric
+// keys. `borderWidth` and `zIndex` are omitted — their `isNumber` / `isInteger` predicates already
+// cover all keys.
+const TW_MERGE_THEME_CATEGORIES = [
+  'breakpoint',
+  'color',
+  'opacity',
+  'radius',
+  'shadow',
+  'spacing',
+] as const;
 
 const categoryMap: Record<string, string> = {
   color: 'colors',
@@ -37,30 +51,22 @@ export const tailwindTheme: Format = {
       return acc + `  --${type}-*: initial;${renderLineBreak}`;
     }, '');
 
-    const { themeVars, utilityVars } = dictionary.allTokens.reduce(
-      (acc, token) => {
-        const val = findTokenValue(token);
-        if (val === undefined || val === null) return acc;
-
-        const isTypography =
-          token.$type === 'typography' || token.type === 'typography';
-
-        if (isTypography && typeof val === 'object') {
-          // typography tokens defined under @utility to group font-related css properties
-          const properties = Object.entries(val)
-            .map(([prop, value]) => `  ${prop}: ${value};`)
-            .join('\n');
-          const cleanedName = token.name.split('-').slice(1).join('-');
-          acc.utilityVars += `@utility type-${cleanedName} {\n${properties}\n}\n`;
-        } else if (!isTypography && typeof val !== 'object') {
-          // other tokens defined under @theme, which should not be of type object
-          acc.themeVars += `  --${token.name}: ${val};\n`;
-        }
-
-        return acc;
-      },
-      { themeVars: '', utilityVars: '' },
+    const { themeVars: themeVarList, utilities } = categorizeTokens(
+      dictionary.allTokens,
     );
+
+    const themeVars = themeVarList
+      .map(({ cssVarName, value }) => `  --${cssVarName}: ${value};\n`)
+      .join('');
+
+    const utilityVars = utilities
+      .map(({ name, properties }) => {
+        const props = Object.entries(properties)
+          .map(([prop, value]) => `  ${prop}: ${value};`)
+          .join('\n');
+        return `@utility ${name} {\n${props}\n}\n`;
+      })
+      .join('');
 
     if (!themeVars.trim() && !utilityVars.trim()) {
       return `/* No tokens found for ${file.destination} */`;
@@ -75,6 +81,31 @@ export const tailwindTheme: Format = {
       themeVars,
       '}\n',
       utilityVars,
+    ].join('\n');
+  },
+};
+
+// A JSON output consumed by ui-components' cn() utility to inform tailwind-merge about
+// custom token values. Shares categorizeTokens() with tailwindTheme format above so
+// theme keys / utility names remain insync with CSS output.
+export const jsonTwMerge: Format = {
+  name: 'json/tw-merge',
+  format: async ({ dictionary, file }: FormatFnArguments) => {
+    const { themeVars, utilities } = categorizeTokens(dictionary.allTokens);
+
+    const theme = Object.fromEntries(
+      TW_MERGE_THEME_CATEGORIES.map((category) => [
+        category,
+        themeVars.filter((v) => v.category === category).map((v) => v.key),
+      ]),
+    );
+
+    const tokenNames = { theme, utilities: utilities.map((u) => u.name) };
+
+    return [
+      await fileHeader({ file }),
+      `export const tokens = ${JSON.stringify(tokenNames, null, 2)} as const;`,
+      '',
     ].join('\n');
   },
 };
@@ -154,5 +185,5 @@ export const nativeTheme: Format = {
   },
 };
 
-const formats = [tailwindTheme, nativeTheme];
+const formats = [tailwindTheme, nativeTheme, jsonTwMerge];
 export default formats;

@@ -22,7 +22,8 @@
     "./css/tokens": "./dist/css/tokens.css",
     "./css/tokens-pro": "./dist/css/tokens.pro.css",
     "./native/tokens": "./dist/native/native.ts",
-    "./native/tokens-pro": "./dist/native/native.pro.ts"
+    "./native/tokens-pro": "./dist/native/native.pro.ts",
+    "./json/token-keys": "./dist/json/tokenKeys.ts"
   },
   "scripts": {
     "clean": "rm -rf dist",

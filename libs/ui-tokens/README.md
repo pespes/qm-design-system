@@ -16,3 +16,12 @@ Currently, all token values are hosted in the `tokens/` folder, based off of tok
 3. Transforms: Token values are modified by an array of transforms, defined by the `TransformGroup` and run sequentially. Transforms modify the token to be understood by a specific platform, and are therefore isolated per platform. Here we run built-in transforms, and several custom transforms to handle some custom configuration.
 4. Formats: With the tokens transformed, the formats are responsible for rendering the template for the output file, whether it be CSS variables, a Tailwind @theme block, etc. 
 5. Actions: After the output files have been generated, actions run to handle any custom side effects. In this case, an action is used to check for any invalid token values that could break the CSS, and will throw an error to break the build. 
+
+
+## ui-tokens Output
+
+The pipeline produces three artifacts split across web (`ui-components` + `web-app` using Tailwind v4) and native (`expo-apps` using TWRNC + Tailwind v3). The web needs two outputs because Tailwind v4 only handles the build-time stylesheet; the runtime `cn()` tailwind helper needs a separate registry to know about the custom tokens.
+
+- **`tokens.css`** — The actual stylesheet consumed by Tailwind v4 in `ui-components`. Defines tokens as CSS variables inside `@theme` blocks, and typography tokens as `@utility type-*` blocks so they can be applied as single classes.
+- **`tokenKeys.ts`** — A typed map of theme keys and utility names consumed by `ui-components`' `cn()` helper. It tells `tailwind-merge` which custom token names belong to which conflict group (eg. `color`, `radius`), so overriding `bg-brand-background` with `bg-surface-default` dedupes correctly at runtime. Shares same transformations / transformationGroups and formatting logic with `tokens.css` to stay in sync.
+- **`tokens.native.ts`** — A JS object to be merged into the `tailwind.config` of `expo-apps` using `tailwind-react-native-classnames` for React Native + Tailwind v3. Maps token paths to TWRNC's expected theme prop names (`colors`, `fontSize`, `borderRadius`, `boxShadow`, etc.).
