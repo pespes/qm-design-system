@@ -5,3 +5,4 @@ export * from './components/composed/radioGroup/index.js';
 export * from './components/composed/checkbox/index.js';
 export * from './components/primitives/separator/index.js';
 export * from './components/composed/input/index.js';
+export * from './components/composed/inputGroup/index.js';

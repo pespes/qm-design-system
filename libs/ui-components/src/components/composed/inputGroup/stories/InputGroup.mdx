@@ -1,8 +1,8 @@
 import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
-import * as InputStories from './Input.stories';
+import * as InputGroupStories from './InputGroup.stories';
 import { MarkdownBlock } from '@sb/configs/docBlocks';
 
-<Meta of={InputStories} />
+<Meta of={InputGroupStories} />
 
 <Title />
 
@@ -19,33 +19,16 @@ import { MarkdownBlock } from '@sb/configs/docBlocks';
 TBD from Design
 
 ## Accessibility
-- **Label** — No label is rendered by this component. Always pair it with an associated `<Label htmlFor={inputId} />` (or wrap the input in a label) so assistive techology can announce the input's purpose.
-- **Placeholder is not a label** — The `placeholder` attribute is not an accessible name. Use it for a hint about the expected value format, not to convey the input's purpose.
 - **Adornments are decorative** — `startAdornment` and `endAdornment` render inside an `aria-hidden` wrapper and are for icons only and not to be used to convey information a user needs. 
 - **Disabled state** — A disabled input is removed from the tab order and ignores all input events (including its password visibility toggle). If the value still needs to be focusable or copyable, prefer `readOnly` instead of `disabled`.
 
 ## Examples
 
 ### Default
-<Canvas of={InputStories.Default} />
+<Canvas of={InputGroupStories.Default} />
 
 ### Disabled
-<Canvas of={InputStories.Disabled} />
-
-### Invalid
-<Canvas of={InputStories.Invalid} />
-
-### With Adornments
-<Canvas of={InputStories.WithAdornments} />
-
-### Password
-<Canvas of={InputStories.Password} />
-
-### Password (Disabled / No Toggle)
-<Canvas of={InputStories.PasswordDisabled} />
-
-### All Sizes
-<Canvas of={InputStories.AllSizes} />
+<Canvas of={InputGroupStories.Disabled} />
 
 #### Additional Documentation
 - BaseUI: [Learn More](https://base-ui.com/react/components/input)

@@ -8,7 +8,7 @@ function Label({ type = 'default', className, ...props }: LabelProps) {
     <label
       data-slot='label'
       className={cn(
-        'flex items-center gap-2 leading-none select-none group-data-disabled:pointer-events-none group-data-disabled:text-state-disabled peer-data-disabled:cursor-default peer-data-disabled:text-state-disabled peer-aria-invalid:text-status-danger-text',
+        'flex items-center gap-2 select-none group-data-disabled:pointer-events-none group-data-disabled:text-state-disabled peer-data-disabled:cursor-default peer-data-disabled:text-state-disabled peer-aria-invalid:text-status-danger-text',
         type === 'default' ? 'type-body-default' : 'type-ui-default',
         className,
       )}
