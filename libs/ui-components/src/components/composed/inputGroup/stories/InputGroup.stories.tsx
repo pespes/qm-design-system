@@ -52,7 +52,9 @@ const meta = {
       control: { type: 'boolean' },
     },
     togglePasswordText: {
-      description: 'Aria-label text for the passwword toggle button',
+      description:
+        'Aria-label text for the passwword toggle button. Defaults to "hide password" / "show password" ',
+      control: { type: 'object' },
     },
     hasVisibilityToggle: {
       description:
