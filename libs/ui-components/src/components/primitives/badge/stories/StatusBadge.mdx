@@ -1,0 +1,39 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as StatusBadgeStories from './StatusBadge.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={StatusBadgeStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+A `<StatusBadge/>` communicates the current state / condition of an item with the use of colour and a label to convey meaning
+at a glance. Labels should be concise and meaningful, without requiring the user to dig into further details for understanding.
+As these indicators are not assigned `role=status`, a `<StatusBadge>` should not be used to indicate live state changes, such
+as a form submission. See Alert or Toast for more details.
+
+## Examples
+
+### Primary Badge
+<Canvas of={StatusBadgeStories.System} />
+
+### All Variants
+<Canvas of={StatusBadgeStories.AllVariants} />
+
+### With Icon
+<Canvas of={StatusBadgeStories.WithIcon} />
+
+### Polymoprhic Badge
+<Canvas of={StatusBadgeStories.AsADiv} />
+
+#### Additional Documentation
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/badge)
