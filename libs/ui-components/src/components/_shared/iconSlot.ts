@@ -13,4 +13,6 @@ export interface IconSlotProps {
   className?: string;
   size?: number | string;
   'data-icon'?: 'inline-start' | 'inline-end';
+  'aria-hidden'?: boolean;
+  'data-slot'?: 'icon';
 }

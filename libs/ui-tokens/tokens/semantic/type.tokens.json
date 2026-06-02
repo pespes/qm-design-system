@@ -146,7 +146,7 @@
           "fontFamily": "{fontFamily.sans}",
           "fontSize": "{fontSize.050}",
           "fontWeight": "{fontWeight.500}",
-          "lineHeight": "{lineHeight.150}",
+          "lineHeight": "{lineHeight.125}",
           "letterSpacing": "{letterSpacing.000}"
         }
       }
