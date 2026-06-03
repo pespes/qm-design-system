@@ -1,0 +1,41 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as BadgeStories from './Badge.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={BadgeStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+A `<Badge/>` helps users quickly identify and filter items by associating them with a descriptive keyword or snippet.
+Therefore, use when content needs to be organized into scannable categories, or when user need to distinguish items at a glance.
+
+Badges using status variants like `system`, `danger`, `success` or `warning` also help communicate the current state / condition of an item.
+These indicators are not assigned `role="status"`, so should not indicate live state changes such as a form submission. See Alert or Toast
+for more appropriate use cases.
+
+## Examples
+
+### Base Badge
+<Canvas of={BadgeStories.Base} />
+
+### All Variants
+<Canvas of={BadgeStories.AllVariants} />
+
+### With Icon
+<Canvas of={BadgeStories.WithIcon} />
+
+### Polymoprhic Badge
+<Canvas of={BadgeStories.AsADiv} />
+
+#### Additional Documentation
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/badge)
