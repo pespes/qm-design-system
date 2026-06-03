@@ -34,7 +34,7 @@ export const variantTests = async ({
   await step('Correctly applies different variants', async () => {
     // variations in styling between different options, so just testing 2 to confirm styling changes
     // according to the variant
-    const primaryBadge = canvas.getByText(/primary badge/i).parentElement;
+    const primaryBadge = canvas.getByText(/base badge/i).parentElement;
     expect(primaryBadge?.classList).toContain('bg-primary-background');
     const brandBadge = canvas.getByText(/brand badge/i).parentElement;
     expect(brandBadge?.classList).toContain('bg-brand-background');

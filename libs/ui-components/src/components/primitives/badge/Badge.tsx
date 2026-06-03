@@ -57,7 +57,7 @@ const baseBadgeClasses =
 const badgeVariants = cva(baseBadgeClasses, {
   variants: {
     variant: {
-      primary: 'bg-primary-background text-primary-foreground',
+      base: 'bg-primary-background text-primary-foreground',
       secondary: 'bg-primary-background-subtle text-primary-text',
       brand: 'bg-brand-background text-brand-foreground',
       destructive: 'bg-status-danger-background text-status-danger-foreground',

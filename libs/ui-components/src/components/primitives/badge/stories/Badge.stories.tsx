@@ -15,7 +15,7 @@ const meta = {
   component: Badge,
   args: {
     children: 'Badge',
-    variant: 'primary',
+    variant: 'base',
     classes: { root: '', content: '', icon: '' },
   },
   argTypes: {
@@ -48,7 +48,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Base: Story = {
   play: defaultTests,
 };
 
