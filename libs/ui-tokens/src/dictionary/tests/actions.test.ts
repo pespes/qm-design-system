@@ -5,11 +5,11 @@ import { validateTokens } from '../actions.js';
 describe('validateTokens action', () => {
   describe('when platform is css', () => {
     const mockToken: TransformedToken = {
-      name: 'color-primary',
+      name: 'color-base',
       $type: 'color',
       $value: '#00ba3b',
       isSource: true,
-      path: ['color', 'primary'],
+      path: ['color', 'base'],
       filePath: 'fake/filePath.json',
       original: {},
     };

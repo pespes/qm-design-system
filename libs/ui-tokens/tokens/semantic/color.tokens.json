@@ -3,11 +3,6 @@
     "surface": {
       "$description": "Background colors for layered UI surfaces",
 
-      "page": {
-        "$type": "color",
-        "$value": "{color.white}",
-        "$description": "Page/body background"
-      },
       "default": {
         "$type": "color",
         "$value": "{color.white}",
@@ -32,6 +27,14 @@
         "$type": "color",
         "$value": "{color.grey.950}",
         "$description": "Inverted surface (tooltips, toasts)"
+      },
+      "scrim": {
+        "$type": "color",
+        "$value":  "oklch(0% 0 0 / 0.5)",
+        "$description": "Inverted surface (tooltips, toasts)",
+        "$extensions": {
+          "rgba-fallback": "rgba(0, 0, 0, 0.5)"
+        }
       }
     },
 
@@ -41,16 +44,11 @@
       "default": {
         "$type": "color",
         "$value": "{color.grey.900}",
-        "$description": "Primary body text"
-      },
-      "muted": {
-        "$type": "color",
-        "$value": "{color.grey.500}",
-        "$description": "Secondary text, labels, captions"
+        "$description": "Base body text"
       },
       "subtle": {
         "$type": "color",
-        "$value": "{color.grey.400}",
+        "$value": "{color.grey.500}",
         "$description": "Placeholder text, disabled labels"
       },
       "inverse": {
@@ -79,38 +77,38 @@
         "$description": "Low-contrast separators (within cards, between list items)"
       }
     },
-    "primary": {
+    "base": {
       "$description": "Default interactive color — grey. Used for standard buttons, toggles, active states.",
 
       "background": {
         "$type": "color",
         "$value": "{color.grey.900}",
-        "$description": "Primary solid fill (default buttons). Use state.hover-on-dark / pressed-on-dark for states."
+        "$description": "Base solid fill (default buttons). Use state.hover-on-dark / pressed-on-dark for states."
       },
       "foreground": {
         "$type": "color",
         "$value": "{color.white}",
-        "$description": "Text on primary.background"
+        "$description": "Text on base.background"
       },
       "background-subtle": {
         "$type": "color",
         "$value": "{color.grey.100}",
-        "$description": "Subtle primary surface (toggle bg, selected table row)"
+        "$description": "Subtle base surface (toggle bg, selected table row)"
       },
       "text": {
         "$type": "color",
         "$value": "{color.grey.900}",
-        "$description": "Primary-hued text/icons on light surfaces (active states, emphasis)"
+        "$description": "Base-hued text/icons on light surfaces (active states, emphasis)"
       },
       "border": {
         "$type": "color",
         "$value": "{color.grey.300}",
-        "$description": "Primary-weight border (outlined buttons at rest)"
+        "$description": "Base-weight border (outlined buttons at rest)"
       },
       "border-strong": {
         "$type": "color",
         "$value": "{color.grey.900}",
-        "$description": "Strong primary border (high-emphasis outlined buttons)"
+        "$description": "Strong base border (high-emphasis outlined buttons)"
       }
     },
     "brand": {
@@ -254,7 +252,7 @@
         "$description": "Confirmation, completion, and positive feedback states. Use background for success actions and high-emphasis confirmations; background-subtle for success toasts, completion banners, and inline validation.",
         "background": {
           "$type": "color",
-          "$value": "{color.green.500}",
+          "$value": "{color.green.600}",
           "$description": "Success solid fill (4.18:1 vs white). Uses green.500 rather than green.600 to differentiate from brand.background in the Homeowner theme."
         },
         "foreground": {
@@ -353,10 +351,10 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "oklch(0% 0 0 / 0.4)",
+        "$value": "oklch(0% 0 0 / 0.38)",
         "$description": "Applied to dark content to indicate disabled",
         "$extensions": {
-          "rgba-fallback": "rgba(0, 0, 0, 0.4)"
+          "rgba-fallback": "rgba(0, 0, 0, 0.38)"
         }
       },
       "disabled-subtle": {
@@ -380,7 +378,7 @@
       "$description": "Focus ring and offset colors",
       "ring": {
         "$type": "color",
-        "$value": "{color.primary.border-strong}",
+        "$value": "{color.base.border-strong}",
         "$description": "Focus ring color."
       },
       "offset": {

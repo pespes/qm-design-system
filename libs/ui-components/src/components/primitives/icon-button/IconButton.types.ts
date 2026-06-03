@@ -4,7 +4,7 @@ import type { ClassMap } from '@/types.js';
 import type { IconSlotProps } from '@/components/_shared/iconSlot.js';
 
 export const VARIANT_TYPES = [
-  'primary',
+  'base',
   'secondary',
   'outline',
   'brand',

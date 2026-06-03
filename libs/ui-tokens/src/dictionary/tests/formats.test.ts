@@ -342,11 +342,11 @@ describe('formats', () => {
   describe('nativeTheme', () => {
     const mockTokens: TransformedToken[] = [
       {
-        name: 'color-primary',
+        name: 'color-base',
         $type: 'color',
         $value: '#00ba3b',
         isSource: true,
-        path: ['color', 'primary'],
+        path: ['color', 'base'],
         filePath: 'fake/filePath.json',
         original: {},
       },
@@ -439,7 +439,7 @@ describe('formats', () => {
         options: {},
         file: {},
       });
-      expect(result).toContain('primary:');
+      expect(result).toContain('base:');
       expect(result).not.toContain('undefined:');
       expect(result).not.toContain('corrupted:');
       expect(result).toContain('"body-default":');

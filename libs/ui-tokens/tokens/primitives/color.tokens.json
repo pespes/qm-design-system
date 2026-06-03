@@ -80,20 +80,6 @@
       "800": { "$type": "color", "$value": "oklch(34.83% 0.1444 79.23)", "$extensions": { "hex-fallback": "#602a00" } },
       "900": { "$type": "color", "$value": "oklch(26.24% 0.0856 78.73)", "$extensions": { "hex-fallback": "#3a1d00" } },
       "950": { "$type": "color", "$value": "oklch(20.39% 0.0499 78.48)", "$extensions": { "hex-fallback": "#231300" } }
-    },
-    "neutral": {
-      "$description": "Pure achromatic grey — fallback ramp for contexts requiring zero color bias",
-      "050": { "$type": "color", "$value": "oklch(94.80% 0.0000 0)", "$extensions": { "hex-fallback": "#eeeeee" } },
-      "100": { "$type": "color", "$value": "oklch(89.82% 0.0000 0)", "$extensions": { "hex-fallback": "#dddddd" } },
-      "200": { "$type": "color", "$value": "oklch(80.50% 0.0000 0)", "$extensions": { "hex-fallback": "#bfbfbf" } },
-      "300": { "$type": "color", "$value": "oklch(71.91% 0.0000 0)", "$extensions": { "hex-fallback": "#a4a4a4" } },
-      "400": { "$type": "color", "$value": "oklch(63.93% 0.0000 0)", "$extensions": { "hex-fallback": "#8c8c8c" } },
-      "500": { "$type": "color", "$value": "oklch(56.43% 0.0000 0)", "$extensions": { "hex-fallback": "#767676" } },
-      "600": { "$type": "color", "$value": "oklch(49.25% 0.0000 0)", "$extensions": { "hex-fallback": "#616161" } },
-      "700": { "$type": "color", "$value": "oklch(42.18% 0.0000 0)", "$extensions": { "hex-fallback": "#4d4d4d" } },
-      "800": { "$type": "color", "$value": "oklch(34.83% 0.0000 0)", "$extensions": { "hex-fallback": "#3a3a3a" } },
-      "900": { "$type": "color", "$value": "oklch(26.24% 0.0000 0)", "$extensions": { "hex-fallback": "#252525" } },
-      "950": { "$type": "color", "$value": "oklch(20.39% 0.0000 0)", "$extensions": { "hex-fallback": "#171717" } }
     }
   }
 }
