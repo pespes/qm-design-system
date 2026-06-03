@@ -1,10 +1,9 @@
 import type { RefObject } from 'react';
 import { expect, within } from 'storybook/test';
 import type { StoryContext } from '@storybook/react';
-import type { BadgeProps, StatusBadgeProps } from './Badge.types.js';
+import type { BadgeProps } from './Badge.types.js';
 
-type Props = BadgeProps | StatusBadgeProps;
-type BadgePlayContext<T = Props> = StoryContext<T>;
+type BadgePlayContext = StoryContext<BadgeProps>;
 
 // ---  Default Badge Tests ---
 export const defaultTests = async ({
@@ -32,33 +31,14 @@ export const variantTests = async ({
 }: BadgePlayContext) => {
   const canvas = within(canvasElement);
   await step('Correctly applies different variants', async () => {
-    // variations in styling between different options, so just testing 2 to confirm styling changes
+    // variations in styling between different options, so just testing 3 to confirm styling changes
     // according to the variant
-    const primaryBadge = canvas.getByText(/base badge/i).parentElement;
-    expect(primaryBadge?.classList).toContain('bg-primary-background');
+    const baseBadge = canvas.getByText(/base badge/i).parentElement;
+    expect(baseBadge?.classList).toContain('bg-base-background');
     const brandBadge = canvas.getByText(/brand badge/i).parentElement;
     expect(brandBadge?.classList).toContain('bg-brand-background');
-    expect(brandBadge?.classList).not.toContain('bg-primary-background');
-  });
-};
-
-// ---  Variant StatusBadge Tests ---
-export const statusVariantTests = async ({
-  canvasElement,
-  step,
-}: BadgePlayContext) => {
-  const canvas = within(canvasElement);
-
-  await step('Correctly applies different variants', async () => {
-    // variations in styling between different options, so just testing 2 to confirm styling changes
-    // according to the variant
     const dangerBadge = canvas.getByText(/danger badge/i).parentElement;
     expect(dangerBadge?.classList).toContain(
-      'bg-status-danger-background-subtle',
-    );
-    const brandBadge = canvas.getByText(/system badge/i).parentElement;
-    expect(brandBadge?.classList).toContain('bg-accent-background-subtle');
-    expect(brandBadge?.classList).not.toContain(
       'bg-status-danger-background-subtle',
     );
   });

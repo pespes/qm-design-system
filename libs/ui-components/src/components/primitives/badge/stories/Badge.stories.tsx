@@ -11,7 +11,7 @@ import {
 } from '../Badge.test.js';
 
 const meta = {
-  title: 'Components/Badges/Badge',
+  title: 'Components/Badge',
   component: Badge,
   args: {
     children: 'Badge',
