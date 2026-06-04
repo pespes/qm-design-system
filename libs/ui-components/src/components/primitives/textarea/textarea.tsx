@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { TextAreaProps } from '@/composed/textarea/TextArea.types.js';
+import type { TextAreaProps } from '@/components/composed/textarea/TextArea.types.js';
 import { cn } from '@/utils/utils.js';
 
 /**
