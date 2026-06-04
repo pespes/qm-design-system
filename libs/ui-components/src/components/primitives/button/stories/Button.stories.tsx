@@ -52,7 +52,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    variant: 'primary',
+    variant: 'base',
     size: 'md',
     rounded: 'default',
     children: 'Click me',
@@ -78,7 +78,7 @@ export const Disabled: Story = {
   },
   render: (args) => (
     <div className='flex flex-wrap gap-400'>
-      <Button data-testid='btn-loading-primary' {...args}>
+      <Button data-testid='btn-loading-base' {...args}>
         {args.children}
       </Button>
       <Button data-testid='btn-loading-secondary' {...args} variant='secondary'>
@@ -212,7 +212,7 @@ export const WithIcon: Story = {
         <>
           <div className='flex gap-400'>
             <Button
-              variant='primary'
+              variant='base'
               data-testid='btn-icon-left'
               icon={{
                 position: 'left',

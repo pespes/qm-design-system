@@ -67,7 +67,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: <MdOutlineAdd />,
-    variant: 'primary',
+    variant: 'base',
     size: 'md',
     disabled: false,
     loading: { title: 'loading', state: 'active' },
@@ -89,7 +89,7 @@ export const Disabled: Story = {
   },
   render: (args) => (
     <div className='flex flex-wrap gap-400'>
-      <IconButton data-testid='btn-loading-primary' {...args} />
+      <IconButton data-testid='btn-loading-base' {...args} />
       <IconButton
         data-testid='btn-loading-secondary'
         variant='secondary'

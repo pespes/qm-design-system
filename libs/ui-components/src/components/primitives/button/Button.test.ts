@@ -12,10 +12,10 @@ export const defaultTests = async ({
 }: ButtonPlayContext) => {
   const canvas = within(canvasElement);
 
-  await step('Button renders primary variant by default', async () => {
+  await step('Button renders base variant by default', async () => {
     const button = canvas.getByRole('button');
     expect(button).toBeInTheDocument();
-    expect(button.classList).toContain('bg-primary-background');
+    expect(button.classList).toContain('bg-base-background');
   });
 
   await step(

@@ -15,16 +15,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          'bg-primary-background text-primary-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled aria-disabled:bg-state-disabled',
+        base: 'bg-base-background text-base-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled aria-disabled:bg-state-disabled',
         outline:
-          'border-primary-border border-1 text-primary-text hover-overlay-light pressed-overlay-light [--overlay-inset:-1px] disabled:border-state-disabled disabled:text-state-disabled aria-disabled:border-state-disabled aria-disabled:text-state-disabled',
+          'border-base-border border-1 text-base-text hover-overlay-light pressed-overlay-light [--overlay-inset:-1px] disabled:border-state-disabled disabled:text-state-disabled aria-disabled:border-state-disabled aria-disabled:text-state-disabled',
         secondary:
-          'bg-primary-background-subtle text-primary-text hover-overlay-light pressed-overlay-light disabled:bg-state-disabled-subtle disabled:text-state-disabled aria-disabled:bg-state-disabled-subtle aria-disabled:text-state-disabled',
+          'bg-base-background-subtle text-base-text hover-overlay-light pressed-overlay-light disabled:bg-state-disabled-subtle disabled:text-state-disabled aria-disabled:bg-state-disabled-subtle aria-disabled:text-state-disabled',
         brand:
           'bg-brand-background text-brand-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled aria-disabled:bg-state-disabled',
         ghost:
-          'text-primary-text hover:bg-muted hover-overlay-light pressed-overlay-light disabled:text-state-disabled aria-disabled:text-state-disabled',
+          'text-base-text hover:bg-muted hover-overlay-light pressed-overlay-light disabled:text-state-disabled aria-disabled:text-state-disabled',
         danger:
           'bg-status-danger-background text-status-danger-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled-subtle disabled:text-state-disabled aria-disabled:bg-state-disabled-subtle aria-disabled:text-state-disabled',
       },
@@ -35,7 +34,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: 'primary',
+      variant: 'base',
       size: 'md',
     },
   },
@@ -45,7 +44,7 @@ function IconButton({
   children,
   className,
   classes,
-  variant = 'primary',
+  variant = 'base',
   size = 'md',
   disabled,
   label,

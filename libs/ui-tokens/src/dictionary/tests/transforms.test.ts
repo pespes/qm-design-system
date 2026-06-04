@@ -154,8 +154,8 @@ describe('Custom Transforms', () => {
 
   describe('nativeColorFallback', () => {
     const token: TransformedToken = {
-      name: 'color-primary-background',
-      path: ['color', 'primary', 'background'],
+      name: 'color-base-background',
+      path: ['color', 'base', 'background'],
       original: {},
       $value: 'oklch(26.24% 0.0036 78.30)',
       $extensions: {
