@@ -29,9 +29,9 @@ const buttonVariants = cva(
           'bg-status-danger-background text-status-danger-foreground hover-overlay-light pressed-overlay-light disabled:bg-state-disabled aria-disabled:bg-state-disabled',
       },
       size: {
-        md: 'type-ui-default h-1000 gap-150 px-350 py-250',
-        sm: 'type-ui-default h-800 gap-150 px-300 py-150',
-        lg: 'type-ui-lead h-1200 gap-150 px-350',
+        md: 'type-ui-default h-1000 gap-150 px-400 py-250',
+        sm: 'type-ui-default h-800 gap-150 px-350 py-150',
+        lg: 'type-ui-lead h-1200 gap-150 py-350 px-450',
       },
       rounded: {
         default: 'rounded-400',
