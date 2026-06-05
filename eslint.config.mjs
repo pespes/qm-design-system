@@ -4,6 +4,7 @@ import tseslint from "typescript-eslint";
 import importPlugin from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier";
 import jest from "eslint-plugin-jest";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import quartermasterPlugin from "@quartermaster/eslint-plugin-quartermaster";
 import { defineConfig } from "eslint/config";
 
@@ -54,6 +55,7 @@ export default defineConfig([
       jest,
       "@typescript-eslint": tseslint.plugin,
       import: importPlugin,
+      "jsx-a11y": jsxA11y,
       quartermaster: quartermasterPlugin,
     },
     rules: {
