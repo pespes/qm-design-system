@@ -51,13 +51,13 @@ jobs:
         run: pnpm exec nx build ui-tokens
 
       - name: Typecheck
-        run: pnpm exec nx affected --target=typecheck --head=HEAD --base=origin/main --nx-bail
+        run: pnpm typecheck
 
       - name: Lint
-        run: pnpm exec nx affected --target=lint --head=HEAD --base=origin/main --nx-bail
+        run: pnpm lint
 
       - name: Build Components
         run: pnpm exec nx build ui-components
 
       - name: Test
-        run: pnpm exec nx affected --target=test --head=HEAD --base=origin/main --passWithNoTests --nx-bail
+        run: pnpm test
