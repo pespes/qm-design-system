@@ -44,6 +44,8 @@ jobs:
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build Tokens
         run: pnpm exec nx build ui-tokens
