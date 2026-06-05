@@ -1,0 +1,61 @@
+name: CI Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths-ignore: ["**/*.md", "docs/**", "*.png", "*.svg"]
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "10.33.0"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    name: CI checks
+    runs-on: [self-hosted, qm-dev]
+    environment: continuous-integration
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm 
+        uses: pnpm/action-setup@v5
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Nx outputs
+        uses: actions/cache@v5
+        with:
+          path: .nx
+          key: ${{ runner.os }}-nx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Tokens
+        run: pnpm exec nx build ui-tokens
+
+      - name: Typecheck
+        run: pnpm exec nx affected --target=typecheck --head=HEAD --base=origin/main --nx-bail
+
+      - name: Lint
+        run: pnpm exec nx affected --target=lint --head=HEAD --base=origin/main --nx-bail
+
+      - name: Build Components
+        run: pnpm exec nx build ui-components
+
+      - name: Test
+        run: pnpm exec nx affected --target=test --head=HEAD --base=origin/main --passWithNoTests --nx-bail
