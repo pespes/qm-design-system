@@ -4,6 +4,10 @@ import type { RefObject } from 'react';
 import type { TextAreaProps } from './TextArea.types.js';
 
 type TextAreaPlayContext = StoryContext<TextAreaProps>;
+const MIN_TEXTAREA_HEIGHT = 68;
+const USER_CHARS_ENTERED = 10;
+const LINE_HEIGHT = 17.5;
+const PADDING = 10;
 
 // --- Default Textarea Tests ---
 export const defaultTests = async ({
@@ -117,12 +121,12 @@ export const maxLengthTests = async ({
       throw new Error('maxLength arg is required for this story');
     }
     const textarea = canvas.getByRole('textbox');
-    expect(args.translateFn).not.toHaveBeenCalled();
+    expect(args.maxLengthSRFunc).not.toHaveBeenCalled();
 
-    const longText = 'a'.repeat(args.maxLength + 10);
+    const longText = 'a'.repeat(args.maxLength + USER_CHARS_ENTERED);
     await userEvent.type(textarea, longText);
 
-    expect(args.translateFn).toHaveBeenCalledTimes(1);
+    expect(args.maxLengthSRFunc).toHaveBeenCalledTimes(1);
     await userEvent.clear(textarea);
   });
 
@@ -131,7 +135,7 @@ export const maxLengthTests = async ({
       throw new Error('maxLength arg is required for this story');
     }
     const textarea = canvas.getByRole('textbox');
-    const longText = 'a'.repeat(args.maxLength + 10);
+    const longText = 'a'.repeat(args.maxLength + USER_CHARS_ENTERED);
     await userEvent.type(textarea, longText);
 
     expect(textarea).toHaveValue('a'.repeat(args.maxLength));
@@ -144,17 +148,21 @@ export const maxLengthTests = async ({
     const textarea = canvas.getByRole('textbox');
     await userEvent.clear(textarea);
 
-    const longText = 'a'.repeat(10);
+    const longText = 'a'.repeat(USER_CHARS_ENTERED);
     await userEvent.type(textarea, longText);
 
-    expect(textarea).toHaveValue('a'.repeat(10));
+    expect(textarea).toHaveValue('a'.repeat(USER_CHARS_ENTERED));
     const counter = textareaWrapper.querySelector(
       '[data-slot="input-group-text"]',
     );
-    expect(counter).toHaveTextContent(`10 / ${args.maxLength}`);
+    expect(counter).toHaveTextContent(
+      `${USER_CHARS_ENTERED} / ${args.maxLength}`,
+    );
 
     await userEvent.type(textarea, '{backspace}');
-    expect(counter).toHaveTextContent(`9 / ${args.maxLength}`);
+    expect(counter).toHaveTextContent(
+      `${USER_CHARS_ENTERED - 1} / ${args.maxLength}`,
+    );
   });
 
   await step('Textarea has aria-describedby set to counter value', async () => {
@@ -194,7 +202,7 @@ export const fixedSizeTests = async ({
         window.getComputedStyle(textareaWrapper).height,
         10,
       );
-      expect(renderedHeight).toBeGreaterThan(68);
+      expect(renderedHeight).toBeGreaterThan(MIN_TEXTAREA_HEIGHT);
     },
   );
 
@@ -210,7 +218,7 @@ export const fixedSizeTests = async ({
         window.getComputedStyle(textareaWrapper).height,
         10,
       );
-      expect(renderedHeight).toBe(68);
+      expect(renderedHeight).toBe(MIN_TEXTAREA_HEIGHT);
     },
   );
 };
@@ -233,7 +241,7 @@ export const autoGrowTests = async ({
       window.getComputedStyle(textareaWrapper).height,
       10,
     );
-    expect(initialHeight).toBe(68);
+    expect(initialHeight).toBe(MIN_TEXTAREA_HEIGHT);
 
     await userEvent.click(textarea);
     await userEvent.keyboard(
@@ -245,5 +253,8 @@ export const autoGrowTests = async ({
       10,
     );
     expect(grownHeight).toBeGreaterThan(initialHeight);
+    //6 lines of text, top and bottom padding, 2px for border
+    const calculatedHeight = LINE_HEIGHT * 6 + PADDING * 2 + 2;
+    expect(grownHeight).toBe(calculatedHeight);
   });
 };

@@ -3,13 +3,25 @@ import type { ClassMap } from '@/types.js';
 
 export type TextAreaClassMap = ClassMap<'root' | 'content' | 'counter'>;
 
-export type TranslateFnProps = {
+export type MaxLengthTranslateFnProps = {
   count: number;
   maxLength: number;
 };
 
-export interface TextAreaProps extends React.ComponentProps<'textarea'> {
+export interface BaseTextAreaProps
+  extends Omit<React.ComponentProps<'textarea'>, 'maxLength'> {
   testId?: string | undefined;
-  translateFn?: (params: TranslateFnProps) => string;
   classes?: TextAreaClassMap;
 }
+
+export type TextAreaProps = BaseTextAreaProps &
+  (
+    | {
+        maxLength: number;
+        maxLengthSRFunc: (params: MaxLengthTranslateFnProps) => string;
+      }
+    | {
+        maxLength?: undefined;
+        maxLengthSRFunc?: never;
+      }
+  );

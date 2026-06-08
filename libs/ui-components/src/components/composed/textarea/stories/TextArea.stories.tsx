@@ -22,6 +22,22 @@ const meta = {
     classes: { root: '', content: '', counter: '' },
   },
   argTypes: {
+    value: {
+      control: { disable: true },
+    },
+    maxLength: {
+      description: 'The maximum characters allowed in a textarea.',
+      type: 'number',
+      control: {
+        // This needs to be paired with the maxLengthSrFunc. If dev adjusts maxLength number, it will break because the func is not provided.
+        // Example provided instead for clarity
+        disable: true,
+      },
+    },
+    maxLengthSRFunc: {
+      description:
+        'The translate fn producing a string the screen reader announces when maxLength is reached. Only to be used with `maxLength` prop',
+    },
     rows: {
       description:
         "Number of visible lines for textarea and locks in textarea's height. Must be positive number",
@@ -58,8 +74,7 @@ export const Default: Story = {
     ref: textareaRef,
   },
   render: function DefaultStory(args) {
-    const [value, setValue] = useState(args.value ?? '');
-    useEffect(() => setValue(args.value ?? ''), [args.value]);
+    const [value, setValue] = useState('');
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       args.onChange?.(e);
       setValue(e.target.value);
@@ -98,7 +113,7 @@ export const WithMaxLength: Story = {
   args: {
     testId: 'default-textarea',
     maxLength: 30,
-    translateFn: fn(() => 'You have reached your character limit'),
+    maxLengthSRFunc: fn(() => 'You have reached your character limit'),
   },
   render: function DefaultStory(args) {
     const [value, setValue] = useState('');

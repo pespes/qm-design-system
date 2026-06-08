@@ -1,12 +1,15 @@
 import * as React from 'react';
-import type { TextAreaProps } from '@/components/composed/textarea/TextArea.types.js';
 import { cn } from '@/utils/utils.js';
 
 /**
  * Bare textarea control. Should be rendered inside an `InputGroup`, which styles the border, background,
  * radius, transitions, and focus ring. Using `Textarea` outside of an `InputGroup` is unsupported.
  */
-function Textarea({ className, rows, ...props }: TextAreaProps) {
+function Textarea({
+  className,
+  rows,
+  ...props
+}: React.ComponentProps<'textarea'>) {
   const isResizeDisabled = rows && rows > 0;
   return (
     <textarea
