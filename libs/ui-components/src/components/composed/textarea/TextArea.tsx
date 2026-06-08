@@ -31,6 +31,8 @@ function TextArea({
 
   const displayValue = value ?? internalValue;
   const charLength = String(displayValue).length;
+  const counterColour =
+    charLength > 0 ? 'text-foreground-default' : 'text-foreground-subtle';
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (value === undefined) {
@@ -72,7 +74,10 @@ function TextArea({
       {maxLength && (
         <>
           <InputGroupAddon align='block-end'>
-            <InputGroupText id={counterId} className={classes?.counter}>
+            <InputGroupText
+              id={counterId}
+              className={cn(counterColour, classes?.counter)}
+            >
               {`${charLength} / ${maxLength}`}
             </InputGroupText>
           </InputGroupAddon>
