@@ -6,3 +6,4 @@ export * from './components/composed/checkbox/index.js';
 export * from './components/primitives/separator/index.js';
 export * from './components/composed/input/index.js';
 export * from './components/composed/inputGroup/index.js';
+export * from './components/composed/textarea/index.js';

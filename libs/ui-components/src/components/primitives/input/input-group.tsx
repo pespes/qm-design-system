@@ -5,6 +5,7 @@ import { IconButton } from '@/components/primitives/icon-button/IconButton.js';
 import { Button } from '@/components/primitives/button/Button.js';
 import { cn } from '@/utils/utils.js';
 import { Input } from '@/components/primitives/input/input.js';
+import { Textarea } from '@/components/primitives/textarea/textarea.js';
 
 function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -12,8 +13,8 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
       data-slot='input-group'
       role='group'
       className={cn(
-        'group/input-group relative flex w-full min-w-0 self-stretch items-center rounded-400 border border-border-default transition-colors',
-        'in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0',
+        'group/input-group relative items-center flex w-full min-w-0 self-stretch rounded-400 border border-border-default transition-colors',
+        'has-[>textarea]:h-auto has-[>textarea]:flex-col has-[>textarea]:min-h-[68px] in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0',
         'has-disabled:bg-transparent has-disabled:border-border-subtle [&_input:disabled]:text-state-disabled [&_input:disabled::placeholder]:text-state-disabled',
         'has-[[data-slot=input-group-control]:focus-visible]:outline-2 has-[[data-slot=input-group-control]:focus-visible]:outline-focus-ring has-[[data-slot=input-group-control]:focus-visible]:outline-offset-2 has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-border-subtle',
         'has-aria-invalid:border-status-danger-border-strong has-aria-invalid:border-2',
@@ -26,10 +27,12 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 const inputGroupAddonVariants = cva(
-  'flex h-auto items-center justify-center gap-200 py-150 type-ui-default text-foreground-subtle select-none group-has-disabled/input-group:text-state-disabled [&>kbd]:rounded-400',
+  'flex h-auto items-center justify-center gap-200 type-ui-default text-foreground-subtle select-none group-has-disabled/input-group:text-state-disabled [&>kbd]:rounded-400',
   {
     variants: {
       align: {
+        'block-start': 'order-first w-full justify-start px-300 pt-200 pb-100',
+        'block-end': 'order-last w-full justify-start px-300 pb-150',
         'inline-start': 'order-first pl-300 pr-200 has-[>kbd]:ml-[-0.15rem]',
         'inline-end': 'order-last pr-300 pl-200 has-[>kbd]:mr-[-0.15rem]',
       },
@@ -135,8 +138,9 @@ function InputGroupIconButton({
 function InputGroupText({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
+      data-slot='input-group-text'
       className={cn(
-        "flex items-center gap-200 type-ui-default [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-400",
+        "flex items-center gap-200 type-ui-default text-foreground-default [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-400",
         className,
       )}
       {...props}
@@ -160,6 +164,23 @@ function InputGroupInput({
   );
 }
 
+function InputGroupTextarea({
+  className,
+  ...props
+}: React.ComponentProps<'textarea'>) {
+  return (
+    <Textarea
+      data-testid='input-group-textarea'
+      data-slot='input-group-control'
+      className={cn(
+        'w-full flex-1 resize-none rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 aria-invalid:ring-0',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 export {
   InputGroup,
   InputGroupAddon,
@@ -167,4 +188,5 @@ export {
   InputGroupIconButton,
   InputGroupText,
   InputGroupInput,
+  InputGroupTextarea,
 };
