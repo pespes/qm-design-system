@@ -121,12 +121,12 @@ export const maxLengthTests = async ({
       throw new Error('maxLength arg is required for this story');
     }
     const textarea = canvas.getByRole('textbox');
-    expect(args.translateFn).not.toHaveBeenCalled();
+    expect(args.maxLengthSRFunc).not.toHaveBeenCalled();
 
     const longText = 'a'.repeat(args.maxLength + USER_CHARS_ENTERED);
     await userEvent.type(textarea, longText);
 
-    expect(args.translateFn).toHaveBeenCalledTimes(1);
+    expect(args.maxLengthSRFunc).toHaveBeenCalledTimes(1);
     await userEvent.clear(textarea);
   });
 

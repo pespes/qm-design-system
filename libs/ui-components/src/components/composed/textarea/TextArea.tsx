@@ -13,7 +13,7 @@ function TextArea({
   testId,
   id,
   maxLength,
-  translateFn,
+  maxLengthSRFunc,
   onChange,
   value,
   className,
@@ -45,9 +45,7 @@ function TextArea({
   useEffect(() => {
     if (maxLength && charLength === maxLength) {
       limitToggle.current = !limitToggle.current;
-      const msg = translateFn
-        ? translateFn({ count: charLength, maxLength })
-        : `Character limit reached. ${charLength} of ${maxLength}`;
+      const msg = maxLengthSRFunc({ count: charLength, maxLength });
       // append the 'zero-width space' unicode character that helps trick the
       // screen reader into thinking the message has changed and therefore read
       // the character limit announcement again if user hits the limit more than once
@@ -55,7 +53,7 @@ function TextArea({
     } else {
       setLimitMessage('');
     }
-  }, [charLength, maxLength, translateFn]);
+  }, [charLength, maxLength, maxLengthSRFunc]);
 
   return (
     <InputGroup className={cn('relative', className, classes?.root)}>
