@@ -3,6 +3,7 @@ import type {
   TextAreaGroupProps,
   TextAreaGroupClassMap,
 } from './TextAreaGroup.types.js';
+import type { TextAreaProps } from '@/components/composed/textarea/TextArea.types.js';
 import { Label } from '@/components/primitives/label/Label.js';
 import { TextArea } from '@/components/composed/textarea/TextArea.js';
 
@@ -32,7 +33,7 @@ function TextAreaGroup({
         {labelString}
       </Label>
       <TextArea
-        {...props}
+        {...(props as TextAreaProps)}
         id={textareaId}
         ref={ref}
         classes={textareaClasses}

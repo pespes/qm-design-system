@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { TextAreaGroup } from '../TextAreaGroup.js';
@@ -19,6 +19,9 @@ const meta = {
     classes: { root: '', label: '', textarea: '' },
   },
   argTypes: {
+    value: {
+      control: { disabled: true },
+    },
     disabled: {
       description: 'Whether the Textarea is disabled',
       type: 'boolean',
@@ -64,8 +67,7 @@ export const Default: Story = {
     id: 'custom-id',
   },
   render: function DefaultStory(args) {
-    const [value, setValue] = useState(args.value ?? '');
-    useEffect(() => setValue(args.value ?? ''), [args.value]);
+    const [value, setValue] = useState('');
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       args.onChange?.(e);
       setValue(e.target.value);
