@@ -1,0 +1,40 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as SwitchStories from './Switch.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={SwitchStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+A `<Switch/>` allows users to only toggle between "on" and "off", with no partially checked/pressed states. While checkboxes have a similar 
+"checked"/"unchecked" state, prefer a `Switch` when semantically suggesting on/off, as this is easier for assistive technology to understand. 
+
+## Accessibility
+- A label should always be accompanied with the component, and should never change when its state changes. For example, a label string should not
+change from "Turn Feature On" to "Turn Feature Off" when the Switch is in a checked / unchecked state.
+- **Polymorphism**: If rendering a `<button>` in place of a `<span>` via a function in the `render` prop, set `nativeButton={true}` to ensure the correct ARIA attributes are applied without duplication. See [Polymorphism Example](#as-a-button).
+
+## Examples
+
+### Default
+<Canvas of={SwitchStories.Default} />
+
+### Disabled
+<Canvas of={SwitchStories.Disabled} />
+
+### All Sizes
+<Canvas of={SwitchStories.AllSizes} />
+
+#### Additional Documentation
+- BaseUI: [Learn More](https://base-ui.com/react/components/switch)
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/switch)
