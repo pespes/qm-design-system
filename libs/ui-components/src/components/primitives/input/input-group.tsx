@@ -15,7 +15,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<'div'>) {
       className={cn(
         'group/input-group relative items-center flex w-full min-w-0 self-stretch rounded-400 border border-border-default transition-colors',
         'has-[>textarea]:h-auto has-[>textarea]:flex-col has-[>textarea]:min-h-[68px] in-data-[slot=combobox-content]:focus-within:border-inherit in-data-[slot=combobox-content]:focus-within:ring-0',
-        'has-disabled:bg-transparent has-disabled:border-border-subtle [&_input:disabled]:text-state-disabled [&_input:disabled::placeholder]:text-state-disabled',
+        'has-disabled:bg-transparent has-disabled:border-border-subtle [&_input:disabled]:text-state-disabled [&_input:disabled::placeholder]:text-state-disabled [&_textarea:disabled]:text-state-disabled [&_textarea:disabled::placeholder]:text-state-disabled',
         'has-[[data-slot=input-group-control]:focus-visible]:outline-2 has-[[data-slot=input-group-control]:focus-visible]:outline-focus-ring has-[[data-slot=input-group-control]:focus-visible]:outline-offset-2 has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-border-subtle',
         'has-aria-invalid:border-status-danger-border-strong has-aria-invalid:border-2',
         'has-[>textarea]:h-auto has-[>[data-align=inline-end]]:[&>input]:pr-0 has-[>[data-align=inline-start]]:[&>input]:pl-0',

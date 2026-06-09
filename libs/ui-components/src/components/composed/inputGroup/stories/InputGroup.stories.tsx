@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { InfoIcon, LockIcon } from 'lucide-react';
 import { fn } from 'storybook/test';
@@ -100,8 +100,7 @@ export const Default: Story = {
     id: 'custom-id',
   },
   render: function DefaultStory(args) {
-    const [value, setValue] = useState(args.value ?? '');
-    useEffect(() => setValue(args.value ?? ''), [args.value]);
+    const [value, setValue] = useState('');
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       args.onChange?.(e);
       setValue(e.target.value);

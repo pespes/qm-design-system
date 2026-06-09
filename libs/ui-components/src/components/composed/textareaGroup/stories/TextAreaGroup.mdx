@@ -1,0 +1,33 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as TextAreaGroupStories from './TextAreaGroup.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={TextAreaGroupStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Accessibility
+- **Disabled state** — A disabled textarea is removed from the tab order and ignores all input events. If the value still needs to be focusable or copyable, prefer `readOnly` instead of `disabled`.
+
+## Examples
+
+### Default
+<Canvas of={TextAreaGroupStories.Default} />
+
+### Generated Id
+<Canvas of={TextAreaGroupStories.GeneratedId} />
+
+### Disabled
+<Canvas of={TextAreaGroupStories.Disabled} />
