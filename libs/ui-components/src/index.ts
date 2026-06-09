@@ -8,3 +8,4 @@ export * from './components/composed/input/index.js';
 export * from './components/composed/inputGroup/index.js';
 export * from './components/composed/textarea/index.js';
 export * from './components/composed/textareaGroup/index.js';
+export * from './components/primitives/switch/index.js';
