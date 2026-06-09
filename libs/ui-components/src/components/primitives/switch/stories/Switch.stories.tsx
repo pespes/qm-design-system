@@ -79,6 +79,28 @@ export const Default: Story = {
   play: defaultTests,
 };
 
+export const WithLabel: Story = {
+  render: function WithLabel(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <div>
+        <Label htmlFor='switch-labelled' className='inline-flex mr-600'>
+          Automatically Update
+        </Label>
+        <Switch
+          {...args}
+          id='switch-labelled'
+          checked={checked}
+          onCheckedChange={(val) => {
+            args.onCheckedChange?.(val);
+            setChecked(val);
+          }}
+        />
+      </div>
+    );
+  },
+};
+
 export const Disabled: Story = {
   args: {
     disabled: true,
@@ -132,4 +154,50 @@ export const AllSizes: Story = {
       </div>
     );
   },
+};
+
+export const Polymorphism: Story = {
+  render: function Test(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Switch
+        {...args}
+        render={<button data-testid='test' />}
+        nativeButton
+        aria-label='Satisfy a11y Testing'
+        data-testid='test'
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: polymorphicTests,
+};
+
+const inputRef = createRef<HTMLInputElement>();
+const rootRef = createRef<HTMLSpanElement>();
+export const Invalid: Story = {
+  args: {
+    'aria-invalid': true,
+    inputRef,
+    ref: rootRef,
+  },
+  render: function InvalidStory(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Switch
+        {...args}
+        aria-label='Satisfy a11y Testing'
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
 };
