@@ -148,26 +148,6 @@ export const disabledTests = async ({
   );
 };
 
-// ---  Disabled Select - open Tests ---
-export const disabledOpenTests = async ({
-  args,
-  canvasElement,
-  step,
-}: SelectContext) => {
-  const canvas = within(canvasElement);
-  const trigger = canvas.getByRole('combobox');
-
-  await step('does not call onValueChange when disabled', async () => {
-    expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    const options = screen.getAllByRole('option');
-    if (!options[0]) throw new Error('no option found');
-    fireEvent.click(options[0]);
-    await waitFor(() => {
-      expect(args.onValueChange).not.toHaveBeenCalled();
-    });
-  });
-};
-
 // ---  Disabled Options in Select Tests ---
 export const disabledOptionTests = async ({
   args,

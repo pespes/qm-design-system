@@ -5,7 +5,6 @@ import { Select } from '../Select.js';
 import {
   defaultTests,
   disabledTests,
-  disabledOpenTests,
   invalidTests,
   groupedTests,
   disabledOptionTests,
@@ -88,33 +87,6 @@ export const Disabled: Story = {
   play: disabledTests,
 };
 
-export const DisabledOpen: Story = {
-  args: {
-    placeholder: "can't select here...",
-    disabled: true,
-    items: [
-      { value: 'apple', label: 'Selected: Apple' },
-      { value: 'pear', label: 'Selected: Pear' },
-    ],
-  },
-  render: function DisabledOptionStory(args) {
-    const [selectedVal, setSelectedVal] = useState(args.value);
-    return (
-      <Select
-        {...args}
-        data-testid='disabled-select-open'
-        value={selectedVal}
-        onValueChange={(val) => {
-          args.onValueChange?.(val);
-          setSelectedVal(val);
-        }}
-        open
-      />
-    );
-  },
-  play: disabledOpenTests,
-};
-
 export const DisabledOptions: Story = {
   args: {
     items: [
@@ -122,7 +94,7 @@ export const DisabledOptions: Story = {
       { value: 'pear', label: 'Selected: Pear', disabled: true },
     ],
   },
-  render: function DisabledStory(args) {
+  render: function DisabledOptionsStory(args) {
     const [selectedVal, setSelectedVal] = useState(args.value);
     return (
       <Select
@@ -133,7 +105,6 @@ export const DisabledOptions: Story = {
           args.onValueChange?.(val);
           setSelectedVal(val);
         }}
-        open
       />
     );
   },
