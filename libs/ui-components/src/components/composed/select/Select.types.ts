@@ -17,20 +17,27 @@ export type SelectOverlayClassMap = ClassMap<'root' | 'scrollBtn'>;
 
 export type SelectValueType = string | number | null;
 
-export interface FlatItem {
+export interface FlatItemType {
   value: SelectValueType;
   label: string;
   disabled?: boolean;
   ref?: React.Ref<HTMLDivElement>;
 }
 
-export interface GroupedItem {
+export type GroupedItemType = {
   groupLabel: string;
-  items: FlatItem[];
+  items: FlatItemType[];
   [key: string]: unknown;
+};
+
+export interface GroupedItemProps {
+  item: GroupedItemType;
+  disabled?: boolean;
+  labelClassName?: string | undefined;
+  classes?: SelectItemClassMap;
 }
 
-export type SelectItemsType = FlatItem[] | GroupedItem[];
+export type SelectItemsType = FlatItemType[] | GroupedItemType[];
 
 export interface SelectProps
   extends Omit<SelectRootProps<SelectValueType, false>, 'items'> {

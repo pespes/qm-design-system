@@ -1,7 +1,8 @@
 import type {
   SelectProps,
-  FlatItem,
-  GroupedItem,
+  FlatItemType,
+  GroupedItemType,
+  GroupedItemProps,
   SelectItemClassMap,
   SelectOverlayClassMap,
 } from './Select.types.js';
@@ -27,7 +28,13 @@ function Select({
   triggerTestId,
   ...props
 }: SelectProps) {
-  const { item, selectItemIcon, overlay, scrollBtn } = classes || {};
+  const {
+    item,
+    selectItemIcon,
+    overlay,
+    scrollBtn,
+    groupLabel: groupLabelClasses,
+  } = classes || {};
   const selectItemClasses = {
     root: item,
     selectItemIcon,
@@ -43,25 +50,15 @@ function Select({
     return firstItem !== undefined && 'groupLabel' in firstItem;
   }
 
-  const renderOptions = isGroupedItems()
-    ? (items as GroupedItem[]).map((group, groupIdx, arr) => (
+  const renderItems = isGroupedItems()
+    ? (items as GroupedItemType[]).map((group, groupIdx, arr) => (
         <>
-          <SelectGroup key={groupIdx}>
-            <SelectLabel className={classes?.groupLabel}>
-              {group.groupLabel as React.ReactNode}
-            </SelectLabel>
-            {group.items.map((flatItem, itemIdx) => (
-              <SelectItem
-                key={itemIdx}
-                value={flatItem.value}
-                disabled={flatItem.disabled || props.disabled}
-                classes={selectItemClasses}
-                ref={flatItem.ref}
-              >
-                {flatItem.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
+          <SelectGroupedItem
+            key={groupIdx}
+            item={group}
+            labelClassName={groupLabelClasses}
+            classes={selectItemClasses}
+          />
           {groupIdx < arr.length - 1 && (
             <Separator
               orientation='horizontal'
@@ -71,7 +68,7 @@ function Select({
           )}
         </>
       ))
-    : (items as FlatItem[])?.map((flatItem, idx) => (
+    : (items as FlatItemType[])?.map((flatItem, idx) => (
         <SelectItem
           key={idx}
           value={flatItem.value}
@@ -92,8 +89,8 @@ function Select({
   const resolvedTriggerTitle = (() => {
     if (props.value && items) {
       const flatItems = isGroupedItems()
-        ? (items as GroupedItem[]).flatMap((g) => g.items)
-        : ((items as FlatItem[] | undefined) ?? []);
+        ? (items as GroupedItemType[]).flatMap((g) => g.items)
+        : ((items as FlatItemType[] | undefined) ?? []);
       const match = flatItems.find((item) => item.value === props.value);
       if (match) return String(match.label);
     }
@@ -118,9 +115,34 @@ function Select({
         classes={overlayClasses}
         alignItemWithTrigger={!!items?.length}
       >
-        {!!items?.length && renderOptions}
+        {!!items?.length && renderItems}
       </SelectContent>
     </SelectRoot>
+  );
+}
+
+function SelectGroupedItem({
+  classes,
+  labelClassName,
+  disabled,
+  item: groupItem,
+}: GroupedItemProps) {
+  const { items, groupLabel } = groupItem;
+  return (
+    <SelectGroup>
+      <SelectLabel className={labelClassName}>{groupLabel}</SelectLabel>
+      {items.map((flatItem, idx) => (
+        <SelectItem
+          key={idx}
+          value={flatItem.value}
+          disabled={flatItem.disabled || disabled}
+          classes={classes ?? {}}
+          ref={flatItem.ref}
+        >
+          {flatItem.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
   );
 }
 
