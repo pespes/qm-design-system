@@ -76,14 +76,14 @@ export const defaultTests = async ({
       },
     );
 
-    await step('Renders the selected option label', async () => {
+    await step('Renders the selected item label', async () => {
       await userEvent.click(trigger);
-      const options = screen.getAllByRole('option');
-      if (!options[0]) throw new Error('no options found');
-      const optionLabel = options[0].textContent;
-      await userEvent.click(options[0]);
+      const items = screen.getAllByRole('option');
+      if (!items[0]) throw new Error('no options found');
+      const itemLabel = items[0].textContent;
+      await userEvent.click(items[0]);
       expect(args.onValueChange).toHaveBeenCalledTimes(1);
-      expect(within(trigger).getByText(optionLabel)).toBeInTheDocument();
+      expect(within(trigger).getByText(itemLabel)).toBeInTheDocument();
     });
   });
 
@@ -92,34 +92,34 @@ export const defaultTests = async ({
     await userEvent.click(trigger);
 
     const overlay = screen.getByRole('listbox');
-    const options = within(overlay).getAllByRole('option');
+    const items = within(overlay).getAllByRole('option');
 
     await step('renders all items', async () => {
       const itemsLength = args.items?.length;
-      expect(options.length).toBe(itemsLength);
+      expect(items.length).toBe(itemsLength);
     });
 
     await step('moves focus with arrow keys', async () => {
       //listbox is open
       await userEvent.keyboard('[ArrowDown]');
-      expect(options[1]).toHaveFocus();
+      expect(items[1]).toHaveFocus();
       await userEvent.keyboard('[ArrowDown]');
-      expect(options[2]).toHaveFocus();
+      expect(items[2]).toHaveFocus();
       await userEvent.keyboard('[ArrowUp]');
-      expect(options[1]).toHaveFocus();
+      expect(items[1]).toHaveFocus();
     });
 
     await step(
-      'hitting "Enter" selects the option and closes the listbox',
+      'hitting "Enter" selects the item and closes the listbox',
       async () => {
-        const optionToSelect = options[1];
-        if (!optionToSelect) throw new Error('no option found');
-        expect(optionToSelect).toHaveFocus();
+        const itemToSelect = items[1];
+        if (!itemToSelect) throw new Error('no option found');
+        expect(itemToSelect).toHaveFocus();
         await userEvent.keyboard('{enter}');
         expect(args.onValueChange).toHaveBeenCalledTimes(2);
-        expect(optionToSelect).toHaveAttribute('aria-selected');
+        expect(itemToSelect).toHaveAttribute('aria-selected');
         expect(
-          within(trigger).getByText(optionToSelect.textContent),
+          within(trigger).getByText(itemToSelect.textContent),
         ).toBeInTheDocument();
       },
     );
@@ -148,8 +148,8 @@ export const disabledTests = async ({
   );
 };
 
-// ---  Disabled Options in Select Tests ---
-export const disabledOptionTests = async ({
+// ---  Disabled Items in Select Tests ---
+export const disabledItemsTests = async ({
   args,
   canvasElement,
   step,
@@ -162,27 +162,27 @@ export const disabledOptionTests = async ({
     expect(screen.getByRole('listbox')).toBeInTheDocument();
   });
 
-  const options = screen.getAllByRole('option');
+  const items = screen.getAllByRole('option');
 
-  await step('Disabled option has data-disabled attribute', async () => {
-    expect(options[0]).not.toHaveAttribute('aria-disabled');
-    expect(options[1]).toHaveAttribute('aria-disabled', 'true');
+  await step('Disabled item has data-disabled attribute', async () => {
+    expect(items[0]).not.toHaveAttribute('aria-disabled');
+    expect(items[1]).toHaveAttribute('aria-disabled', 'true');
   });
 
   await step(
-    'Clicking a disabled option does not call onValueChange',
+    'Clicking a disabled item does not call onValueChange',
     async () => {
-      if (!options[1]) throw new Error('no option found');
-      fireEvent.click(options[1]);
+      if (!items[1]) throw new Error('no option found');
+      fireEvent.click(items[1]);
       await waitFor(() => {
         expect(args.onValueChange).not.toHaveBeenCalled();
       });
     },
   );
 
-  await step('Non-disabled options are still selectable', async () => {
-    if (!options[0]) throw new Error('no option found');
-    await userEvent.click(options[0]);
+  await step('Non-disabled item are still selectable', async () => {
+    if (!items[0]) throw new Error('no option found');
+    await userEvent.click(items[0]);
     expect(args.onValueChange).toHaveBeenCalledTimes(1);
   });
 };
@@ -216,13 +216,13 @@ export const invalidTests = async ({
     });
   });
 
-  await step('Correctly passes the option ref to the option', async () => {
+  await step('Correctly passes the items ref to the select item', async () => {
     const firstItem = (args.items as FlatItem[])[0];
-    if (!firstItem) throw new Error('no option found');
+    if (!firstItem) throw new Error('no items found');
     const ref = firstItem.ref as RefObject<HTMLDivElement>;
-    const option = ref.current;
-    expect(option).toHaveTextContent(firstItem.label as string);
-    await userEvent.click(option);
+    const items = ref.current;
+    expect(items).toHaveTextContent(firstItem.label as string);
+    await userEvent.click(items);
     await waitFor(() => {
       expect(trigger).toHaveTextContent(firstItem.label as string);
     });

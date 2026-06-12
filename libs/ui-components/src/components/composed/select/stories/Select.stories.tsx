@@ -7,7 +7,7 @@ import {
   disabledTests,
   invalidTests,
   groupedTests,
-  disabledOptionTests,
+  disabledItemsTests,
 } from '../Select.test.js';
 
 const meta = {
@@ -87,14 +87,14 @@ export const Disabled: Story = {
   play: disabledTests,
 };
 
-export const DisabledOptions: Story = {
+export const DisabledItems: Story = {
   args: {
     items: [
       { value: 'apple', label: 'Selected: Apple' },
       { value: 'pear', label: 'Selected: Pear', disabled: true },
     ],
   },
-  render: function DisabledOptionsStory(args) {
+  render: function DisabledItemsStory(args) {
     const [selectedVal, setSelectedVal] = useState(args.value);
     return (
       <Select
@@ -108,18 +108,18 @@ export const DisabledOptions: Story = {
       />
     );
   },
-  play: disabledOptionTests,
+  play: disabledItemsTests,
 };
 
 const inputRef = createRef<HTMLInputElement>();
 const triggerRef = createRef<HTMLButtonElement>();
-const optionRef = createRef<HTMLDivElement>();
+const itemRef = createRef<HTMLDivElement>();
 
 export const Invalid: Story = {
   args: {
     triggerTestId: 'test-select',
     items: [
-      { value: 'apple', label: 'Selected: Apple', ref: optionRef },
+      { value: 'apple', label: 'Selected: Apple', ref: itemRef },
       { value: 'pear', label: 'Selected: Pear' },
     ],
     placeholder: 'wait for it...',
