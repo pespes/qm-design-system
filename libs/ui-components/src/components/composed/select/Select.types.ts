@@ -19,13 +19,13 @@ export type SelectValueType = string | number | null;
 
 export interface FlatItem {
   value: SelectValueType;
-  label: React.ReactNode;
+  label: string;
   disabled?: boolean;
   ref?: React.Ref<HTMLDivElement>;
 }
 
 export interface GroupedItem {
-  groupLabel: React.ReactNode;
+  groupLabel: string;
   items: FlatItem[];
   [key: string]: unknown;
 }
