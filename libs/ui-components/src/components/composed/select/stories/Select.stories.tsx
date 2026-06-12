@@ -76,6 +76,104 @@ export const Default: Story = {
   play: defaultTests,
 };
 
+export const Disabled: Story = {
+  args: {
+    triggerTestId: 'disabled-select-closed',
+    disabled: true,
+    items: [
+      { value: 'apple', label: 'Selected: Apple' },
+      { value: 'pear', label: 'Selected: Pear' },
+    ],
+  },
+  play: disabledTests,
+};
+
+export const DisabledOpen: Story = {
+  args: {
+    placeholder: "can't select here...",
+    disabled: true,
+    items: [
+      { value: 'apple', label: 'Selected: Apple' },
+      { value: 'pear', label: 'Selected: Pear' },
+    ],
+  },
+  render: function DisabledOptionStory(args) {
+    const [selectedVal, setSelectedVal] = useState(args.value);
+    return (
+      <Select
+        {...args}
+        data-testid='disabled-select-open'
+        value={selectedVal}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelectedVal(val);
+        }}
+        open
+      />
+    );
+  },
+  play: disabledOpenTests,
+};
+
+export const DisabledOptions: Story = {
+  args: {
+    items: [
+      { value: 'apple', label: 'Selected: Apple' },
+      { value: 'pear', label: 'Selected: Pear', disabled: true },
+    ],
+  },
+  render: function DisabledStory(args) {
+    const [selectedVal, setSelectedVal] = useState(args.value);
+    return (
+      <Select
+        {...args}
+        data-testid='disabled-select-open'
+        value={selectedVal}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelectedVal(val);
+        }}
+        open
+      />
+    );
+  },
+  play: disabledOptionTests,
+};
+
+const inputRef = createRef<HTMLInputElement>();
+const triggerRef = createRef<HTMLButtonElement>();
+const optionRef = createRef<HTMLDivElement>();
+
+export const Invalid: Story = {
+  args: {
+    triggerTestId: 'test-select',
+    items: [
+      { value: 'apple', label: 'Selected: Apple', ref: optionRef },
+      { value: 'pear', label: 'Selected: Pear' },
+    ],
+    placeholder: 'wait for it...',
+    error: true,
+    id: 'select-trigger-id',
+    inputRef,
+    ref: triggerRef,
+  },
+  render: function InvalidStory(args) {
+    const [selectedVal, setSelectedVal] = useState(args.value);
+    return (
+      <Select
+        {...args}
+        data-testid={args.triggerTestId}
+        value={selectedVal}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelectedVal(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
 export const Grouped: Story = {
   args: {
     placeholder: 'select a fruit',

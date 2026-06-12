@@ -1,0 +1,58 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as SelectStories from './Select.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={SelectStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+The options rendered by the `<Select/>` are passed via the `items` prop. These options can be a single flat array, or can be grouped into categories similar to an `<optgroup>`.
+The typing of the `items` prop by BaseUI is as follows:
+```
+// As a flat array
+items = [{ value: string | number, label: string }, ...]
+
+// As a grouped array
+items = [
+  {
+    groupLabel: string;
+    items = [{ value: string | number, label: string }, ...]
+  }
+]
+```
+Note that the `<Select/>` only allows for a single selection, so prefer a `<Dropdown/>` when multiple selections are required.
+
+
+## Accessibility
+- **Label** — No label is rendered by this component. Always pair it with an associated `<Label htmlFor={inputId} />` or `aria-label` so assistive techology can announce the Select's purpose.
+- **Placeholder is not a label** — The `placeholder` attribute is not an accessible name. Use it for a hint about the expected value, not to convey the Select's purpose.
+- **Disabled state** — A disabled input is removed from the tab order and ignores all input events. If the value still needs to be focusable or copyable, prefer `readOnly` instead of `disabled`.
+
+## Examples
+
+### Default
+<Canvas of={SelectStories.Default} />
+
+### Disabled
+<Canvas of={SelectStories.Disabled} />
+
+### Invalid
+<Canvas of={SelectStories.Invalid} />
+
+### GroupedItems
+<Canvas of={SelectStories.Grouped} />
+
+
+#### Additional Documentation
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/textarea)
+- BaseUI: [Learn More](https://base-ui.com/react/components/select)
