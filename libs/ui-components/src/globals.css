@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "@quartermaster/ui-tokens/css/tokens";
 @import "@quartermaster/ui-tokens/css/tokens-pro";
 
@@ -66,5 +67,13 @@
   @apply state-overlay;
   &:active::after {
     background-color: var(--color-state-pressed-on-dark);
+  }
+}
+
+@utility surface-overlay-backdrop {
+  background-color: oklch(from var(--color-surface-overlay) l c h / var(--opacity-300));
+  @supports (backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0)) {
+    -webkit-backdrop-filter: blur(2px); /* Safari < 18 needs the prefix */
+    backdrop-filter: blur(2px);
   }
 }
