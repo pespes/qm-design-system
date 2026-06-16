@@ -163,17 +163,19 @@ export const disabledItemsTests = async ({
   });
 
   const items = screen.getAllByRole('option');
+  const enabledItem = items[0];
+  const disabledItem = items[1];
 
   await step('Disabled item has data-disabled attribute', async () => {
-    expect(items[0]).not.toHaveAttribute('aria-disabled');
-    expect(items[1]).toHaveAttribute('aria-disabled', 'true');
+    expect(enabledItem).not.toHaveAttribute('aria-disabled');
+    expect(disabledItem).toHaveAttribute('aria-disabled', 'true');
   });
 
   await step(
     'Clicking a disabled item does not call onValueChange',
     async () => {
-      if (!items[1]) throw new Error('no option found');
-      fireEvent.click(items[1]);
+      if (!disabledItem) throw new Error('no option found');
+      fireEvent.click(disabledItem);
       await waitFor(() => {
         expect(args.onValueChange).not.toHaveBeenCalled();
       });
@@ -181,8 +183,8 @@ export const disabledItemsTests = async ({
   );
 
   await step('Non-disabled item are still selectable', async () => {
-    if (!items[0]) throw new Error('no option found');
-    await userEvent.click(items[0]);
+    if (!enabledItem) throw new Error('no option found');
+    await userEvent.click(enabledItem);
     expect(args.onValueChange).toHaveBeenCalledTimes(1);
   });
 };
