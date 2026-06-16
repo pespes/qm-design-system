@@ -25,8 +25,6 @@ function Dialog({
   secondaryFooterBtn,
   footerFullWidth = false,
   open,
-  onOpenChange,
-  onOpenChangeComplete,
   disablePointerDismissal = false,
   initialFocus,
   finalFocus,
@@ -55,11 +53,6 @@ function Dialog({
     <DialogRoot
       open={open}
       disablePointerDismissal={disablePointerDismissal}
-      onOpenChange={(nextOpen, eventDetails) => {
-        onOpenChange?.(nextOpen, eventDetails);
-        // if (!nextOpen) closeAction?.();
-      }}
-      onOpenChangeComplete={onOpenChangeComplete}
       {...props}
     >
       {triggerBtn ? <DialogTrigger render={triggerBtn} /> : null}

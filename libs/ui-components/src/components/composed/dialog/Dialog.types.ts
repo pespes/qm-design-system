@@ -1,5 +1,4 @@
 import type { ReactElement, ReactNode } from 'react';
-// import type { Dialog as DialogPrimitive } from '@base-ui/react/dialog';
 import type {
   DialogRootProps,
   DialogPopupProps as PrimitiveDialogPopupProps,
