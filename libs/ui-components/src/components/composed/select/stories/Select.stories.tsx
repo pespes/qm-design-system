@@ -5,10 +5,9 @@ import { Select } from '../Select.js';
 import {
   defaultTests,
   disabledTests,
-  disabledOpenTests,
   invalidTests,
   groupedTests,
-  disabledOptionTests,
+  disabledItemsTests,
 } from '../Select.test.js';
 
 const meta = {
@@ -74,6 +73,76 @@ export const Default: Story = {
     );
   },
   play: defaultTests,
+};
+
+export const Disabled: Story = {
+  args: {
+    triggerTestId: 'disabled-select-closed',
+    disabled: true,
+    items: [
+      { value: 'apple', label: 'Selected: Apple' },
+      { value: 'pear', label: 'Selected: Pear' },
+    ],
+  },
+  play: disabledTests,
+};
+
+export const DisabledItems: Story = {
+  args: {
+    items: [
+      { value: 'apple', label: 'Selected: Apple' },
+      { value: 'pear', label: 'Selected: Pear', disabled: true },
+    ],
+  },
+  render: function DisabledItemsStory(args) {
+    const [selectedVal, setSelectedVal] = useState(args.value);
+    return (
+      <Select
+        {...args}
+        data-testid='disabled-select-open'
+        value={selectedVal}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelectedVal(val);
+        }}
+      />
+    );
+  },
+  play: disabledItemsTests,
+};
+
+const inputRef = createRef<HTMLInputElement>();
+const triggerRef = createRef<HTMLButtonElement>();
+const itemRef = createRef<HTMLDivElement>();
+
+export const Invalid: Story = {
+  args: {
+    triggerTestId: 'test-select',
+    items: [
+      { value: 'apple', label: 'Selected: Apple', ref: itemRef },
+      { value: 'pear', label: 'Selected: Pear' },
+    ],
+    placeholder: 'wait for it...',
+    error: true,
+    id: 'select-trigger-id',
+    inputRef,
+    ref: triggerRef,
+  },
+  render: function InvalidStory(args) {
+    const [selectedVal, setSelectedVal] = useState(args.value);
+    return (
+      <Select
+        {...args}
+        data-testid={args.triggerTestId}
+        value={selectedVal}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelectedVal(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
 };
 
 export const Grouped: Story = {
