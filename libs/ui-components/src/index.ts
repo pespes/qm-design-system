@@ -10,3 +10,4 @@ export * from './components/composed/textarea/index.js';
 export * from './components/composed/textareaGroup/index.js';
 export * from './components/primitives/switch/index.js';
 export * from './components/composed/select/index.js';
+export * from './components/composed/dialog/index.js';
