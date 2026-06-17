@@ -16,11 +16,12 @@ import { MarkdownBlock } from '@sb/configs/docBlocks';
 <Controls />
 
 ## Usage
+This component is replacing the `qm-ui` `<Modal/>` component, with some key architectural differences noted below.
 #### Integrated vs External Trigger
 By default, the `<Dialog/>` component is controlled, allowing devs to pass in `open` and `onOpenChange` props to handle
-the open state of the dialog from anywhere in the codebase. In siutations where the sole trigger for the `<Dialog/>` lives
-the same file as its definition, devs can pass a `<Button/>` into the `triggerBtn` prop, which allows BaseUI to internally
-manage the Dialog's open / closed state.
+the open / close state of the dialog from anywhere in the codebase. onOpenChange handles both the opening and closing of the dialog.
+In siutations where the sole trigger for the `<Dialog/>` lives the same file as its definition, devs can pass a `<Button/>` into the
+`triggerBtn` prop, which allows BaseUI to internally manage the Dialog's open / closed state.
 Note that you can have the internal `triggerBtn` prop, and also still pass `open` and `onOpenChange` props to the Dialog for
 other onOpenChange events, such as the closing of the Dialog from a footer button.
 
@@ -30,6 +31,8 @@ handle the closure of the Dialog, no onClick function necessary. However, an onC
 should fire on button click as well, and BaseUI will fire all events in tandem. One caveat to note is that the close event
 will fire immediately, without waiting for any requests still in flight. Delaying the closure until requests are completed
 requires an onClick function to be passed that also handles the closure of the Dialog.
+
+*Note that the footer buttons now accept a JSX `<Button/>` instead of an object of button props.*
 
 #### onOpenChangeComplete
 Fires only after the open or close animation of the dialog completes. When closing a dialog, this is ideal for resetting content
