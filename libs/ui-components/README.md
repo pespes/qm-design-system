@@ -37,6 +37,9 @@ To maintain consistency, each component folder should have the following layout:
   └── index.ts
 ```
 
+Each component is rendered as a standard function call isntead of an arrow function. This is to remain insync with Shadcn, which renders each of its components in this manner. Any additional functions called
+within components are expected to be arrow functions for consistency.
+
 ## Usage
 
 Import the `ui-components` package with:
