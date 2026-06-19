@@ -44,7 +44,7 @@ export interface SelectProps
   items?: SelectItemsType;
   placeholder?: string;
   classes?: SelectClassMap;
-  className?: string;
+  className?: string | undefined;
   triggerTestId?: string;
   error?: boolean;
   ref?: Ref<HTMLButtonElement | null> | undefined;

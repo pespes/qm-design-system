@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import type {
   SelectProps,
   FlatItemType,
@@ -52,9 +53,8 @@ function Select({
 
   const renderItems = isGroupedItems()
     ? (items as GroupedItemType[]).map((group, groupIdx, arr) => (
-        <>
+        <Fragment key={`group-${groupIdx}`}>
           <SelectGroupedItem
-            key={groupIdx}
             item={group}
             labelClassName={groupLabelClasses}
             classes={selectItemClasses}
@@ -66,7 +66,7 @@ function Select({
               aria-hidden={true}
             />
           )}
-        </>
+        </Fragment>
       ))
     : (items as FlatItemType[])?.map((flatItem, idx) => (
         <SelectItem
@@ -133,7 +133,7 @@ function SelectGroupedItem({
       <SelectLabel className={labelClassName}>{groupLabel}</SelectLabel>
       {items.map((flatItem, idx) => (
         <SelectItem
-          key={idx}
+          key={`item-${idx}`}
           value={flatItem.value}
           disabled={flatItem.disabled || disabled}
           classes={classes ?? {}}
