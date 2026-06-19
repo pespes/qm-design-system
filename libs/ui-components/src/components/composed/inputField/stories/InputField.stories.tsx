@@ -2,24 +2,42 @@ import React, { useState, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { InfoIcon, LockIcon } from 'lucide-react';
 import { fn } from 'storybook/test';
-import { InputGroup } from '../InputGroup.js';
-import { defaultTests, disabledTests } from '../InputGroup.test.js';
+import { InputField } from '../InputField.js';
+import {
+  defaultTests,
+  disabledTests,
+  descriptionTest,
+  invalidTests,
+  requiredTests,
+} from '../InputField.test.js';
 
 const meta = {
-  title: 'Components/InputGroup',
-  component: InputGroup,
+  title: 'Components/InputField',
+  component: InputField,
   args: {
     label: 'I am a Label',
     size: 'default',
     value: '',
     onChange: fn(),
     placeholder: 'This is a placeholder...',
+    error: '',
+    description: '',
     classes: { root: '', label: '', input: '', icon: '' },
   },
   argTypes: {
     size: {
       control: { type: 'radio' },
       options: ['default', 'lg'],
+    },
+    description: {
+      description:
+        'optional helper text that links to input via aria-describedby',
+      type: 'string',
+    },
+    error: {
+      description:
+        'optional error text that renders when provided, setting the input as aria-invalid',
+      type: 'string',
     },
     startAdornment: {
       description: 'An icon that renders nested in the Input, at the start',
@@ -87,7 +105,7 @@ const meta = {
   async afterEach(context) {
     console.log(`✅ Tested ${context.name} story`);
   },
-} satisfies Meta<typeof InputGroup>;
+} satisfies Meta<typeof InputField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -100,13 +118,13 @@ export const Default: Story = {
     id: 'custom-id',
   },
   render: function DefaultStory(args) {
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(args.value);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       args.onChange?.(e);
       setValue(e.target.value);
     };
     return (
-      <InputGroup
+      <InputField
         {...args}
         testId={args.testId}
         onChange={handleChange}
@@ -115,6 +133,14 @@ export const Default: Story = {
     );
   },
   play: defaultTests,
+};
+
+export const WithDescription: Story = {
+  args: {
+    description: 'This is a description for your Input',
+    // error: [{ message: 'Uh Oh' }],
+  },
+  play: descriptionTest,
 };
 
 export const Disabled: Story = {
@@ -130,7 +156,7 @@ export const Disabled: Story = {
       setValue(e.target.value);
     };
     return (
-      <InputGroup
+      <InputField
         {...args}
         testId='disabled-input'
         onChange={handleChange}
@@ -139,4 +165,36 @@ export const Disabled: Story = {
     );
   },
   play: disabledTests,
+};
+
+export const Invalid: Story = {
+  args: {
+    placeholder: 'Uh oh....',
+    error: 'Input must not be empty',
+    description: 'More descriptive text for your Input',
+  },
+  render: function DisabledStory(args) {
+    const [value, setValue] = useState('');
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      args.onChange?.(e);
+      setValue(e.target.value);
+    };
+    return (
+      <InputField
+        {...args}
+        testId='disabled-input'
+        onChange={handleChange}
+        value={value}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+    testId: 'required-textarea-group',
+  },
+  play: requiredTests,
 };
