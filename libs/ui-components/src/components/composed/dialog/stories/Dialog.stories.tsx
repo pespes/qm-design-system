@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { ArrowLeftIcon, InfoIcon } from 'lucide-react';
 import { Dialog } from '../Dialog.js';
+import type { DialogProps } from '../Dialog.types.js';
 import {
   defaultTests,
   integratedTriggerTests,
@@ -107,7 +108,7 @@ const meta = {
   async afterEach(context) {
     console.log(`✅ Tested ${context.name} story`);
   },
-} satisfies Meta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -216,9 +217,11 @@ export const FooterFullWidth: Story = {
   },
 };
 
-export const AsyncPrimarySubmission: Story = {
+export const AsyncPrimarySubmission = {
   args: {
     title: 'Async Submission',
+    requestDelay: 2000,
+    successDelay: 800,
     secondaryFooterBtn: {
       component: (
         <Button
@@ -239,8 +242,20 @@ export const AsyncPrimarySubmission: Story = {
       ),
       closesDialog: false,
     },
-  },
-  render: function AsyncPrimarySubmissionStory(args) {
+  } as DialogProps & { requestDelay: number; successDelay: number },
+  argTypes: {
+    requestDelay: {
+      control: { type: 'number' },
+      description: 'Delay in ms for simulated network request',
+    },
+    successDelay: {
+      control: { type: 'number' },
+      description: 'Delay in ms before closing after success',
+    },
+  } as const,
+  render: function AsyncPrimarySubmissionStory(
+    args: DialogProps & { requestDelay: number; successDelay: number },
+  ) {
     const [isOpen, setIsOpen] = useState(false);
     const [submitState, setSubmitState] = useState('inactive');
 
@@ -251,8 +266,8 @@ export const AsyncPrimarySubmission: Story = {
         setSubmitState('submitted');
         setTimeout(() => {
           setIsOpen(false);
-        }, 800);
-      }, 2000);
+        }, args.requestDelay ?? 2000);
+      }, args.successDelay ?? 800);
     };
 
     const submitClick = (
