@@ -53,7 +53,7 @@ const fieldVariants = cva('group/field flex gap-100', {
     orientation: {
       vertical: 'flex-col items-center *:w-full [&>.sr-only]:w-auto',
       horizontal:
-        'grid grid-cols-[1fr_auto] gap-x-400 [grid-template-areas:"content_control"_"error_error"] [&>:not([data-slot])]:[grid-area:control]',
+        'grid grid-cols-[1fr_auto] gap-x-400 items-center [grid-template-areas:"content_control"_"error_error"] [&>:not([data-slot])]:[grid-area:control]',
       responsive:
         'flex-col *:w-full @md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px',
     },
@@ -108,7 +108,7 @@ function FieldLabel({
       data-slot='field-label'
       type='emphasis'
       className={cn(
-        'group/field-label peer/field-label flex w-fit gap-200',
+        'group/field-label peer/field-label flex gap-200',
         '*:data-[slot=field]:p-250 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col',
         className,
       )}

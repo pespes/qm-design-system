@@ -18,6 +18,11 @@ const meta = {
     },
   },
   argTypes: {
+    size: {
+      description: 'Size of the switch',
+      control: { type: 'radio' },
+      options: ['md', 'sm', 'lg'],
+    },
     description: {
       description: 'The description for the switch',
       type: 'string',
