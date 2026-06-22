@@ -137,11 +137,7 @@ function FieldError({
   error,
   ...props
 }: React.ComponentProps<'div'> & {
-  error?:
-    | string
-    | React.ReactNode
-    | { message?: string }
-    | Array<string | React.ReactNode | { message?: string }>;
+  error?: string | { message: string } | Array<string | { message: string }>;
 }) {
   const content = useMemo(() => {
     if (children) {
@@ -152,19 +148,8 @@ function FieldError({
       return null;
     }
 
-    // Take first if array
     const firstError = Array.isArray(error) ? error[0] : error;
-
-    if (!firstError) {
-      return null;
-    }
-
-    // Extract message if object
-    if (typeof firstError === 'object' && 'message' in firstError) {
-      return firstError.message || null;
-    }
-
-    return firstError as React.ReactNode;
+    return typeof firstError === 'object' ? firstError.message : firstError;
   }, [children, error]);
 
   if (!content) {

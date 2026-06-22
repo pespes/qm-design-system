@@ -33,7 +33,9 @@ function FieldWrapper({
   const childId = controlId ?? generatedId;
 
   //Shadcn allows for an Array<{message : string}> to be passed in addition to ReactNode
-  const errorContent = Array.isArray(error) ? error[0]?.message : error;
+  const firstError = Array.isArray(error) ? error[0] : error;
+  const errorContent =
+    typeof firstError === 'object' ? firstError?.message : firstError;
   const isInvalid = invalid ?? !!errorContent;
 
   // Only include ids of descriptive / error text rendered (Description read before Error text)

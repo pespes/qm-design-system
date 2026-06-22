@@ -30,7 +30,11 @@ export interface BaseFieldProps {
   label: ReactNode;
   description?: ReactNode;
   /** Maintains backward compatible error handling from QM-UI, and allows for new Shadcn typing */
-  error?: ReactNode | Array<{ message?: string } | undefined>;
+  error?:
+    | string
+    | { message: string }
+    | Array<string | { message: string }>
+    | undefined;
   /** Explicit invalid override — defaults to !!error */
   invalid?: boolean | undefined;
   required?: boolean | undefined;
