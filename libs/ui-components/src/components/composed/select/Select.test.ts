@@ -8,7 +8,11 @@ import {
   screen,
 } from 'storybook/test';
 import type { RefObject } from 'react';
-import type { SelectProps, GroupedItem, FlatItem } from './Select.types.js';
+import type {
+  SelectProps,
+  GroupedItemType,
+  FlatItemType,
+} from './Select.types.js';
 
 type SelectContext = StoryContext<SelectProps>;
 
@@ -91,6 +95,9 @@ export const defaultTests = async ({
     const trigger = canvas.getByRole('combobox');
     await userEvent.click(trigger);
 
+    await waitFor(() =>
+      expect(screen.getByRole('listbox')).toBeInTheDocument(),
+    );
     const overlay = screen.getByRole('listbox');
     const items = within(overlay).getAllByRole('option');
 
@@ -186,6 +193,9 @@ export const disabledItemsTests = async ({
     if (!enabledItem) throw new Error('no option found');
     await userEvent.click(enabledItem);
     expect(args.onValueChange).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    });
   });
 };
 
@@ -219,15 +229,16 @@ export const invalidTests = async ({
   });
 
   await step('Correctly passes the items ref to the select item', async () => {
-    const firstItem = (args.items as FlatItem[])[0];
+    const firstItem = (args.items as FlatItemType[])[0];
     if (!firstItem) throw new Error('no items found');
     const ref = firstItem.ref as RefObject<HTMLDivElement>;
     const items = ref.current;
     expect(items).toHaveTextContent(firstItem.label as string);
     await userEvent.click(items);
     await waitFor(() => {
-      expect(trigger).toHaveTextContent(firstItem.label as string);
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
     });
+    expect(trigger).toHaveTextContent(firstItem.label as string);
   });
 };
 
@@ -250,7 +261,7 @@ export const groupedTests = async ({
 
   await step('Renders appropriate label for grouping', async () => {
     const firstGroup = itemGroups[0];
-    const firstGroupLabel = (args.items as GroupedItem[])?.[0];
+    const firstGroupLabel = (args.items as GroupedItemType[])?.[0];
     if (!firstGroupLabel) throw new Error('no items provided');
     expect(firstGroup).toHaveAccessibleName(
       firstGroupLabel.groupLabel as string,
