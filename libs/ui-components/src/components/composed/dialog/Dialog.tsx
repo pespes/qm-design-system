@@ -8,7 +8,6 @@ import {
   Dialog as DialogRoot,
   DialogTrigger,
   DialogContent,
-  DialogBody,
   DialogClose,
   DialogHeader,
   DialogFooter,
@@ -102,10 +101,15 @@ function Dialog({
             )}
           </DialogHeader>
         )}
-
-        <DialogBody hasHeader={hasHeader} className={classes?.body}>
+        <div
+          className={cn(
+            'min-h-0 flex-1 overflow-y-auto px-600 pb-600',
+            !hasHeader && 'pt-600',
+          )}
+          // style={{ overscrollBehavior: 'none' }}
+        >
           {children}
-        </DialogBody>
+        </div>
 
         {hasFooter && (
           <>
