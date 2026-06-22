@@ -138,7 +138,6 @@ export const Default: Story = {
 export const WithDescription: Story = {
   args: {
     description: 'This is a description for your Input',
-    // error: [{ message: 'Uh Oh' }],
   },
   play: descriptionTest,
 };
@@ -148,6 +147,7 @@ export const Disabled: Story = {
     disabled: true,
     endAdornment: <LockIcon />,
     value: "You can't change me",
+    description: 'This is a disabled InputField',
   },
   render: function DisabledStory(args) {
     const [value, setValue] = useState('');
