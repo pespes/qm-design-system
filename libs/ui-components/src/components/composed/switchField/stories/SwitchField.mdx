@@ -1,0 +1,44 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as SwitchFieldStories from './SwitchField.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={SwitchFieldStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+A `<Switch/>` allows users to only toggle between "on" and "off", with no partially checked/pressed states. While checkboxes have a similar 
+"checked"/"unchecked" state, prefer a `Switch` when semantically suggesting on/off, as this is easier for assistive technology to understand. 
+
+## Accessibility
+- **Disabled state** — A disabled switch is removed from the tab order and cannot be toggled.
+- **Label association** — The label is automatically connected to the switch via the `htmlFor` attribute, allowing users to toggle the switch by clicking the label text.
+
+## Examples
+
+### Default
+<Canvas of={SwitchFieldStories.Default} />
+
+### Disabled
+<Canvas of={SwitchFieldStories.Disabled} />
+
+### With Description
+<Canvas of={SwitchFieldStories.WithDescription} />
+
+### Invalid
+<Canvas of={SwitchFieldStories.Invalid} />
+
+### Generated Id
+<Canvas of={SwitchFieldStories.GeneratedId} />
+
+### Required
+<Canvas of={SwitchFieldStories.Required} />
