@@ -31,6 +31,7 @@ export interface BaseFieldProps {
   description?: ReactNode;
   /** Maintains backward compatible error handling from QM-UI, and allows for new Shadcn typing */
   error?: ReactNode | Array<{ message?: string } | undefined>;
+  /** Explicit invalid override — defaults to !!error */
   invalid?: boolean | undefined;
   required?: boolean | undefined;
   disabled?: boolean | undefined;
@@ -38,10 +39,9 @@ export interface BaseFieldProps {
 }
 
 export interface FieldWrapperProps extends BaseFieldProps {
-  /** Explicit invalid override — defaults to !!error */
   controlId?: string | undefined;
   classes?: FieldWrapperClassMap;
-  /** Reverse grid layout for checkbox/radio controls */
+  /** Reverse grid layout for switch controls */
   reverse?: boolean | undefined;
   orientation?: 'vertical' | 'horizontal';
 }

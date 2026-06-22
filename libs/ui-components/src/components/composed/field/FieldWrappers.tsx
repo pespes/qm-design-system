@@ -95,7 +95,11 @@ function VerticalFieldWrapper({
   return (
     <>
       <div>
-        <FieldLabel htmlFor={controlProps.id} className={classes?.label}>
+        <FieldLabel
+          htmlFor={controlProps.id}
+          type='emphasis'
+          className={classes?.label}
+        >
           {label}
           {required && (
             <span

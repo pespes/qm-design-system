@@ -108,7 +108,7 @@ function FieldLabel({
       data-slot='field-label'
       type='emphasis'
       className={cn(
-        'group/field-label peer/field-label flex w-fit gap-200 leading-snug',
+        'group/field-label peer/field-label flex w-fit gap-200',
         '*:data-[slot=field]:p-250 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col',
         className,
       )}
