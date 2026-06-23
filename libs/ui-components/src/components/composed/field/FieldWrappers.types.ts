@@ -41,6 +41,8 @@ export interface FieldWrapperProps extends BaseFieldProps {
   /** Explicit invalid override — defaults to !!error */
   controlId?: string | undefined;
   classes?: FieldWrapperClassMap;
+  /** Reverse grid layout for switch controls */
+  reverse?: boolean | undefined;
   orientation?: 'vertical' | 'horizontal';
 }
 
@@ -49,6 +51,4 @@ export interface FieldOrientationProps extends BaseFieldProps {
   errorId?: string | undefined;
   classes?: FieldOrientationClassMap;
   controlProps: ControlRenderProps;
-  /** Reverse grid layout for switch controls */
-  reverse?: boolean | undefined;
 }
