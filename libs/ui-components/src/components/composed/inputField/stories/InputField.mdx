@@ -1,8 +1,8 @@
 import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
-import * as InputGroupStories from './InputGroup.stories';
+import * as InputFieldStories from './InputField.stories';
 import { MarkdownBlock } from '@sb/configs/docBlocks';
 
-<Meta of={InputGroupStories} />
+<Meta of={InputFieldStories} />
 
 <Title />
 
@@ -25,10 +25,16 @@ TBD from Design
 ## Examples
 
 ### Default
-<Canvas of={InputGroupStories.Default} />
+<Canvas of={InputFieldStories.Default} />
+
+### With A Description
+<Canvas of={InputFieldStories.WithDescription} />
 
 ### Disabled
-<Canvas of={InputGroupStories.Disabled} />
+<Canvas of={InputFieldStories.Disabled} />
+
+### Invalid
+<Canvas of={InputFieldStories.Invalid} />
 
 #### Additional Documentation
 - BaseUI: [Learn More](https://base-ui.com/react/components/input)

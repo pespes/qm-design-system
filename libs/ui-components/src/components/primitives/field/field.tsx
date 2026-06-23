@@ -121,7 +121,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot='field-description'
       className={cn(
-        'text-foreground-subtle type-body-caption leading-normal [[data-variant=legend]+&]:-mt-150',
+        'text-foreground-subtle type-body-caption [[data-variant=legend]+&]:-mt-150',
         'last:mt-0 nth-last-2:-mt-100',
         className,
       )}
