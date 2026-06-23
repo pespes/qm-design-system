@@ -138,27 +138,38 @@ function FieldError({
 }: React.ComponentProps<'div'> & {
   error?: string | { message: string } | Array<string | { message: string }>;
 }) {
-  const firstError = Array.isArray(errorProp) ? errorProp[0] : errorProp;
-  const errorMsg =
-    typeof firstError === 'object' ? firstError?.message : firstError;
-  const error = errorMsg || null;
-  const content = error || children;
+  const errors = Array.isArray(errorProp) ? errorProp : [errorProp];
+  const errorMessages = errors.reduce((acc: string[], err) => {
+    const msg = typeof err === 'object' ? err?.message : err;
+    if (msg) {
+      acc.push(msg);
+    }
+    return acc;
+  }, []);
 
-  if (!content) {
-    return null;
-  }
+  const hasErrors = errorMessages.length > 0;
+  const content = hasErrors ? errorMessages : children;
+
+  if (!content) return null;
 
   return (
     <div
       role='alert'
       data-slot='field-error'
       className={cn(
-        'type-header-caption text-status-danger-text group-data-horizontal/field:[grid-area:error]',
+        'type-header-caption text-status-danger-text group-data-horizontal/field:[grid-area:error] flex flex-col gap-050',
         className,
       )}
       {...props}
     >
-      {content}
+      {hasErrors && (
+        <>
+          {errorMessages.map((msg) => (
+            <div key={msg}>{msg}</div>
+          ))}
+        </>
+      )}
+      {!hasErrors && content}
     </div>
   );
 }
