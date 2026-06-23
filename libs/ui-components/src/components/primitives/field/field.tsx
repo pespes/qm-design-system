@@ -148,9 +148,8 @@ function FieldError({
   }, []);
 
   const hasErrors = errorMessages.length > 0;
-  const content = hasErrors ? errorMessages : children;
 
-  if (!content) return null;
+  if (!hasErrors && !children) return null;
 
   return (
     <div
@@ -162,14 +161,15 @@ function FieldError({
       )}
       {...props}
     >
-      {hasErrors && (
+      {hasErrors ? (
         <>
           {errorMessages.map((msg) => (
             <div key={msg}>{msg}</div>
           ))}
         </>
+      ) : (
+        children
       )}
-      {!hasErrors && content}
     </div>
   );
 }
