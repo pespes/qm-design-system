@@ -30,18 +30,6 @@ export const defaultTests = async ({
       expect(args.onCheckedChange).toHaveBeenCalledTimes(1);
     },
   );
-
-  await step('Correctly passes the ref through to the switch', async () => {
-    const ref = args.ref as RefObject<HTMLSpanElement>;
-    const switchElement = ref.current;
-    //element is checked and has focus from previous test
-    expect(switchElement).toBeChecked();
-    expect(switchElement.tagName).toBe('SPAN');
-    expect(switchElement).toHaveAttribute('role', 'switch');
-    await userEvent.click(switchElement);
-    expect(switchElement).not.toBeChecked();
-    expect(args.onCheckedChange).toHaveBeenCalledTimes(2);
-  });
 };
 
 // --- Generated id SwitchField Test (no id provided) ---
@@ -103,6 +91,17 @@ export const descriptionTests = async ({
     const switchEl = canvas.getByRole('switch');
     expect(switchEl).toHaveAccessibleDescription(descriptionText);
   });
+
+  await step('Correctly passes the ref through to the switch', async () => {
+    const ref = args.ref as RefObject<HTMLSpanElement>;
+    const switchElement = ref.current;
+    expect(switchElement).not.toBeChecked();
+    expect(switchElement.tagName).toBe('SPAN');
+    expect(switchElement).toHaveAttribute('role', 'switch');
+    await userEvent.click(switchElement);
+    expect(switchElement).toBeChecked();
+    expect(args.onCheckedChange).toHaveBeenCalledTimes(1);
+  });
 };
 
 // --- Invalid SwitchField Test ---
@@ -125,10 +124,10 @@ export const invalidTests = async ({
       const secondErrorMessage = errors[1].message;
 
       expect(canvas.getByText(firstErrorMessage)).toBeInTheDocument();
-      expect(canvas.queryByText(secondErrorMessage)).not.toBeInTheDocument();
+      expect(canvas.getByText(secondErrorMessage)).toBeInTheDocument();
 
       expect(switchEl).toHaveAccessibleDescription(
-        expect.stringContaining(firstErrorMessage),
+        `${args.description} ${firstErrorMessage} ${secondErrorMessage}`,
       );
     },
   );

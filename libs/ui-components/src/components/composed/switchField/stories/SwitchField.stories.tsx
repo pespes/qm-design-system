@@ -81,7 +81,6 @@ const switchRef = createRef<HTMLSpanElement>();
 
 export const Default: Story = {
   args: {
-    ref: switchRef,
     id: 'custom-switch-id',
   },
   render: function DefaultStory(args) {
@@ -144,6 +143,7 @@ export const Disabled: Story = {
 export const WithDescription: Story = {
   args: {
     description: 'This is a helpful description for the switch',
+    ref: switchRef,
   },
   render: function WithDescriptionStory(args) {
     const [checked, setChecked] = useState(false);
