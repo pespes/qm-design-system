@@ -35,6 +35,7 @@ export const defaultTests = async ({
   });
 
   await step('Correctly passes the ref through to the input', async () => {
+    await userEvent.click(document.body);
     const ref = args.ref as RefObject<HTMLInputElement>;
     const input = ref.current;
     expect(input.tagName).toBe('INPUT');
@@ -51,7 +52,9 @@ export const defaultTests = async ({
   );
 
   await step('Input triggers onChange when user types', async () => {
-    expect(input).toHaveFocus(); // already has focus from previous test
+    await userEvent.click(document.body);
+    await userEvent.click(input);
+    expect(input).toHaveFocus();
     expect(args.onChange).not.toHaveBeenCalled();
     await userEvent.keyboard('t');
     expect(args.onChange).toHaveBeenCalledTimes(1);
@@ -83,7 +86,7 @@ export const disabledTests = async ({
   const input = canvas.getByRole('textbox');
 
   await step(
-    'Passes aria-invalid to the innput, and assigns data-invalid to Field',
+    'Passes disabled to the innput, and assigns data-disabled to Field',
     async () => {
       // Field and encompassing shadcn InputField element both have role='group'
       const field = canvas.getAllByRole('group')[0];
@@ -98,7 +101,7 @@ export const disabledTests = async ({
     expect(label).toHaveAttribute('for', input.id);
   });
 
-  await step('Label focuses input when clicked', async () => {
+  await step('Label does not focus input when clicked', async () => {
     const label = canvas.getByText('I am a Label');
     expect(input).not.toHaveFocus();
     await userEvent.click(label);
