@@ -2,7 +2,14 @@ import { useState, useEffect, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { SwitchField } from '../SwitchField.js';
-import { defaultTests, descriptionTests } from '../SwitchField.test.js';
+import {
+  defaultTests,
+  generatedIdTests,
+  disabledTests,
+  descriptionTests,
+  invalidTests,
+  requiredTests,
+} from '../SwitchField.test.js';
 
 const meta = {
   title: 'Components/SwitchField',
@@ -94,6 +101,46 @@ export const Default: Story = {
   play: defaultTests,
 };
 
+export const GeneratedId: Story = {
+  args: {
+    id: undefined,
+  },
+  render: function GeneratedIdStory(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <SwitchField
+        {...args}
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: generatedIdTests,
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+  render: function DisabledStory(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <SwitchField
+        {...args}
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: disabledTests,
+};
+
 export const WithDescription: Story = {
   args: {
     description: 'This is a helpful description for the switch',
@@ -112,4 +159,51 @@ export const WithDescription: Story = {
     );
   },
   play: descriptionTests,
+};
+
+export const Invalid: Story = {
+  args: {
+    error: [
+      {
+        message:
+          'You must enable this feature this feature to continue to the next step',
+      },
+      { message: 'Second error should not appear' },
+    ],
+    description: 'This is a really awesome feature',
+  },
+  render: function InvalidStory(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <SwitchField
+        {...args}
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+  },
+  render: function RequiredStory(args) {
+    const [checked, setChecked] = useState(false);
+    return (
+      <SwitchField
+        {...args}
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: requiredTests,
 };
