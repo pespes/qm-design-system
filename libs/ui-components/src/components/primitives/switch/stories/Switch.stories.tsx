@@ -83,7 +83,7 @@ export const WithLabel: Story = {
   render: function WithLabel(args) {
     const [checked, setChecked] = useState(false);
     return (
-      <div>
+      <div className='flex'>
         <Label htmlFor='switch-labelled' className='inline-flex mr-600'>
           Automatically Update
         </Label>
