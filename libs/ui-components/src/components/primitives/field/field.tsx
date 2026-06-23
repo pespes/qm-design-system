@@ -133,16 +133,16 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
 function FieldError({
   className,
   children,
-  error,
+  error: errorProp,
   ...props
 }: React.ComponentProps<'div'> & {
   error?: string | { message: string } | Array<string | { message: string }>;
 }) {
-  let content = children;
-  if (!content && error) {
-    const firstError = Array.isArray(error) ? error[0] : error;
-    content = typeof firstError === 'object' ? firstError.message : firstError;
-  }
+  const firstError = Array.isArray(errorProp) ? errorProp[0] : errorProp;
+  const errorMsg =
+    typeof firstError === 'object' ? firstError?.message : firstError;
+  const error = errorMsg || null;
+  const content = error || children;
 
   if (!content) {
     return null;
