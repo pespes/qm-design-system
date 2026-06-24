@@ -1,0 +1,46 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as SelectFieldStories from './SelectField.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={SelectFieldStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+The `<SelectField/>` component combines a `<Select/>` with a label, error state, and description to create an accessible form field. This component comes with
+a *required* label to enforce proper accessibility practices. A single or an array of errors (`Array<string | { message: string}>`) may be provided to the component,
+all of which will render. More information on the items prop can be found be the `<Select/>` page.
+
+## Accessibility
+- **Screen Readers** — The native button trigger has `aria-labelledby` set to connect with required label, and `aria-describedby` set to include the description and any error messages (in that order).
+- **Disabled state** — A disabled select is removed from the tab order and ignores all input events.
+
+## Examples
+
+### Default
+<Canvas of={SelectFieldStories.Default} />
+
+### Disabled
+<Canvas of={SelectFieldStories.Disabled} />
+
+### With Description
+<Canvas of={SelectFieldStories.WithDescription} />
+
+### Invalid
+<Canvas of={SelectFieldStories.Invalid} />
+
+### Required
+<Canvas of={SelectFieldStories.Required} />
+
+#### Additional Documentation
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/select)
+- BaseUI: [Learn More](https://base-ui.com/react/components/select)
