@@ -48,4 +48,8 @@ export interface SelectProps
   triggerTestId?: string;
   error?: boolean;
   ref?: Ref<HTMLButtonElement | null> | undefined;
+  'aria-invalid'?: true | undefined;
+  'aria-describedby'?: string | undefined;
+  'aria-required'?: true | undefined;
+  'aria-labelledby'?: string | undefined;
 }
