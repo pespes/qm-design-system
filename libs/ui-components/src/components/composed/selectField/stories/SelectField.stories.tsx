@@ -5,6 +5,9 @@ import { SelectField } from '../SelectField.js';
 import {
   defaultTests,
   descriptionTest,
+  disabledTests,
+  invalidTests,
+  requiredTests,
 } from '../SelectField.test.js';
 
 const meta = {
@@ -130,4 +133,74 @@ export const WithDescription: Story = {
     );
   },
   play: descriptionTest,
+};
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    id: 'disabled-select-field',
+    onOpenChange: fn(),
+  },
+  render: function DisabledStory(args) {
+    const [value, setValue] = useState<string | number | null>(null);
+    return (
+      <SelectField
+        {...args}
+        data-testid='disabled-select-field'
+        value={value}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setValue(val);
+        }}
+      />
+    );
+  },
+  play: disabledTests,
+};
+
+export const Invalid: Story = {
+  args: {
+    label: 'Favorite Fruit',
+    error: [
+      'This error message is of type string',
+      'Uh oh... another string error',
+    ],
+    description: 'Please select an option',
+  },
+  render: function InvalidStory(args) {
+    const [value, setValue] = useState<string | number | null>(null);
+    return (
+      <SelectField
+        {...args}
+        data-testid='invalid-select-field'
+        value={value}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setValue(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+  },
+  render: function RequiredStory(args) {
+    const [value, setValue] = useState<string | number | null>(null);
+    return (
+      <SelectField
+        {...args}
+        data-testid='required-select-field'
+        value={value}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setValue(val);
+        }}
+      />
+    );
+  },
+  play: requiredTests,
 };
