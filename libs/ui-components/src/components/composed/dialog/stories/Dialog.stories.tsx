@@ -12,7 +12,7 @@ import {
   lifecycleCallbackTests,
 } from '../Dialog.test.js';
 import { Button } from '@/components/primitives/button/Button.js';
-import { InputGroup } from '@/components/composed/inputGroup/InputGroup.js';
+import { InputField } from '@/components/composed/inputField/InputField.js';
 import { Checkbox } from '@/components/composed/checkbox/Checkbox.js';
 
 const meta = {
@@ -323,8 +323,8 @@ export const AsyncPrimarySubmission = {
                 BaseUI internal close: check the console logs to view secondary
                 button click action.
               </p>
-              <InputGroup label='Full Name' />
-              <InputGroup label='Address?' />
+              <InputField label='Full Name' />
+              <InputField label='Address?' />
               <Checkbox label='I am over the age of 18' />
             </div>
           )}

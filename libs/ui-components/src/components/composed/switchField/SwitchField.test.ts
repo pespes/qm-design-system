@@ -113,24 +113,21 @@ export const invalidTests = async ({
   const canvas = within(canvasElement);
   const switchEl = canvas.getByRole('switch');
 
-  await step(
-    'Only the first error message is rendered when multiple are provided',
-    () => {
-      const errors = args?.error as Array<{ message: string }>;
-      if (!errors[0] || !errors[1]) {
-        throw new Error('multiple errors not provided');
-      }
-      const firstErrorMessage = errors[0].message;
-      const secondErrorMessage = errors[1].message;
+  await step('Renders all errors provided', () => {
+    const errors = args?.error as Array<{ message: string }>;
+    if (!errors[0] || !errors[1]) {
+      throw new Error('multiple errors not provided');
+    }
+    const firstErrorMessage = errors[0].message;
+    const secondErrorMessage = errors[1].message;
 
-      expect(canvas.getByText(firstErrorMessage)).toBeInTheDocument();
-      expect(canvas.getByText(secondErrorMessage)).toBeInTheDocument();
+    expect(canvas.getByText(firstErrorMessage)).toBeInTheDocument();
+    expect(canvas.getByText(secondErrorMessage)).toBeInTheDocument();
 
-      expect(switchEl).toHaveAccessibleDescription(
-        `${args.description} ${firstErrorMessage} ${secondErrorMessage}`,
-      );
-    },
-  );
+    expect(switchEl).toHaveAccessibleDescription(
+      `${args.description} ${firstErrorMessage} ${secondErrorMessage}`,
+    );
+  });
 
   await step(
     'Passes aria-invalid and assigns data-invalid to Field',
