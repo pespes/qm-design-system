@@ -16,9 +16,12 @@ import { MarkdownBlock } from '@sb/configs/docBlocks';
 <Controls />
 
 ## Usage
-TBD from Design
+The `<Textarea/>` component has a base minimum height and is designed to scale to fit content. This component also comes with a *required* label to enforce proper accessibility practices.
+A single or an array of errors (`Array<string | { message: string}>`) may be provided to the component and all will render.
 
 ## Accessibility
+- **Placeholder** — The `placeholder` attribute is meant to provide a hint about the expected value only. When additional context is needed beyond the label, provide a `description` instead.
+- **Screen Readers** — The native textarea has `aria-describedby` set to include both the description and error message (in that order) If a `maxLength` prop is provided, the counter is also included in this list. 
 - **Disabled state** — A disabled textarea is removed from the tab order and ignores all input events. If the value still needs to be focusable or copyable, prefer `readOnly` instead of `disabled`.
 
 ## Examples
@@ -26,8 +29,17 @@ TBD from Design
 ### Default
 <Canvas of={TextAreaFieldStories.Default} />
 
-### Generated Id
-<Canvas of={TextAreaFieldStories.GeneratedId} />
-
 ### Disabled
 <Canvas of={TextAreaFieldStories.Disabled} />
+
+### With Description
+<Canvas of={TextAreaFieldStories.WithDescription} />
+
+### With a Counter
+<Canvas of={TextAreaFieldStories.WithCounter} />
+
+### Invalid - Multiple Errors
+<Canvas of={TextAreaFieldStories.Invalid} />
+
+### Required
+<Canvas of={TextAreaFieldStories.Required} />

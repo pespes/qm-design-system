@@ -6,6 +6,9 @@ import {
   defaultTests,
   disabledTests,
   generatedIdTests,
+  descriptionTest,
+  invalidTests,
+  requiredTests,
 } from '../TextAreaField.test.js';
 
 const meta = {
@@ -16,7 +19,15 @@ const meta = {
     value: '',
     onChange: fn(),
     placeholder: 'This is a placeholder...',
-    classes: { root: '', label: '', textarea: '' },
+    classes: {
+      root: '',
+      label: '',
+      errorText: '',
+      descriptionText: '',
+      textarea: '',
+      counter: '',
+      content: '',
+    },
   },
   argTypes: {
     value: {
@@ -27,27 +38,39 @@ const meta = {
       type: 'boolean',
       control: { type: 'boolean' },
     },
-    autoFocus: {
-      description: 'If true, the textarea element is focused on first mount',
-      type: 'boolean',
-    },
-    testId: {
+    id: {
       description:
-        "An id to pass to the native textarea's data-testid attribute",
+        'An id that connects label with native textarea, also passed as data-testid',
       type: 'string',
+    },
+    description: {
+      description: 'The description for the textarea',
+      type: 'string',
+    },
+    error: {
+      description: 'The error for the textarea',
+      type: 'string',
+    },
+    required: {
+      description: 'Whether the field is required',
+      type: 'boolean',
     },
     rows: {
       description:
         "Number of visible lines for textarea and locks in textarea's height. Must be positive number",
       control: { type: 'number' },
     },
+    autoFocus: {
+      description: 'If true, the textarea element is focused on first mount',
+      type: 'boolean',
+    },
   },
   parameters: {
     docs: {
       description: {
         component:
-          'A Textarea component combined with a label to create an accessible form field. For more information on the Textarea' +
-          ' component itself, visit the [Textarea Page](?path=/docs/components-textarea--docs)',
+          'The TextArea component combined with a label, error and description to create an accessible form field. For more information on the TextArea' +
+          ' component itself, visit the [TextArea Page](?path=/docs/components-textarea--docs)',
       },
     },
   },
@@ -62,9 +85,8 @@ type Story = StoryObj<typeof meta>;
 const textareaRef = createRef<HTMLTextAreaElement>();
 export const Default: Story = {
   args: {
-    testId: 'default-textarea-group',
+    id: 'default-textarea-group',
     ref: textareaRef,
-    id: 'custom-id',
   },
   render: function DefaultStory(args) {
     const [value, setValue] = useState('');
@@ -75,7 +97,7 @@ export const Default: Story = {
     return (
       <TextAreaField
         {...args}
-        testId={args.testId}
+        data-testid={args.id}
         onChange={handleChange}
         value={value}
       />
@@ -84,11 +106,14 @@ export const Default: Story = {
   play: defaultTests,
 };
 
-export const GeneratedId: Story = {
+export const WithCounter: Story = {
   args: {
     id: undefined,
+    description: 'Provide feedback, just not too much...',
+    maxLength: 50,
+    maxLengthSRFunc: () => 'Max length reached',
   },
-  render: function GeneratedIdStory(args) {
+  render: function MaxLength(args) {
     const [value, setValue] = useState('');
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       args.onChange?.(e);
@@ -97,7 +122,7 @@ export const GeneratedId: Story = {
     return (
       <TextAreaField
         {...args}
-        testId='generated-id-textarea-group'
+        data-testid='generated-id-textarea-group'
         onChange={handleChange}
         value={value}
       />
@@ -120,11 +145,82 @@ export const Disabled: Story = {
     return (
       <TextAreaField
         {...args}
-        testId='disabled-textarea-group'
+        data-testid='disabled-textarea-group'
         onChange={handleChange}
         value={value}
       />
     );
   },
   play: disabledTests,
+};
+
+export const WithDescription: Story = {
+  args: {
+    description: 'Please provide detailed feedback',
+  },
+  render: function WithDescriptionStory(args) {
+    const [value, setValue] = useState('');
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      args.onChange?.(e);
+      setValue(e.target.value);
+    };
+    return (
+      <TextAreaField
+        {...args}
+        data-testid='with-description-textarea-group'
+        onChange={handleChange}
+        value={value}
+      />
+    );
+  },
+  play: descriptionTest,
+};
+
+export const Invalid: Story = {
+  args: {
+    label: 'Feedback',
+    error: [
+      { message: 'This field is required' },
+      { message: 'Second error will appear as well' },
+    ],
+    description: 'Help us improve our service',
+  },
+  render: function InvalidStory(args) {
+    const [value, setValue] = useState('');
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      args.onChange?.(e);
+      setValue(e.target.value);
+    };
+    return (
+      <TextAreaField
+        {...args}
+        data-testid='invalid-textarea-group'
+        onChange={handleChange}
+        value={value}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
+export const Required: Story = {
+  args: {
+    required: true,
+  },
+  render: function RequiredStory(args) {
+    const [value, setValue] = useState('');
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      args.onChange?.(e);
+      setValue(e.target.value);
+    };
+    return (
+      <TextAreaField
+        {...args}
+        data-testid='required-textarea-group'
+        onChange={handleChange}
+        value={value}
+      />
+    );
+  },
+  play: requiredTests,
 };
