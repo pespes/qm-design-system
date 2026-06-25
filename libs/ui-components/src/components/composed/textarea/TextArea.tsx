@@ -55,6 +55,11 @@ function TextArea({
     }
   }, [charLength, maxLength, maxLengthSRFunc]);
 
+  const describedBy =
+    [props['aria-describedby'], maxLength ? counterId : undefined]
+      .filter(Boolean)
+      .join(' ') || undefined;
+
   return (
     <InputGroup className={cn('relative', className, classes?.root)}>
       <InputGroupTextarea
@@ -62,7 +67,7 @@ function TextArea({
         ref={ref}
         id={textareaId}
         value={displayValue}
-        aria-describedby={maxLength ? counterId : undefined}
+        aria-describedby={describedBy}
         onChange={handleChange}
         maxLength={maxLength}
         data-testid={testId ?? 'input-group-textarea'}
