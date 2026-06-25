@@ -119,8 +119,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
     <p
       data-slot='field-description'
       className={cn(
-        'text-foreground-subtle type-body-caption [[data-variant=legend]+&]:-mt-150',
-        'last:mt-0 nth-last-2:-mt-100',
+        'text-foreground-subtle type-body-caption [[data-variant=legend]+&]:-mt-200 last:mt-0',
         className,
       )}
       {...props}
@@ -131,14 +130,12 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
 function FieldError({
   className,
   children,
-  messages,
   error: errorProp,
   ...props
 }: React.ComponentProps<'div'> & {
-  messages?: string[];
   error?: string | { message: string } | Array<string | { message: string }>;
 }) {
-  const errorMessages = messages ?? cleanErrorMessages(errorProp);
+  const errorMessages = cleanErrorMessages(errorProp);
   const hasErrors = errorMessages.length > 0;
 
   if (!hasErrors && !children) return null;
