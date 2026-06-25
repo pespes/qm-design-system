@@ -58,3 +58,77 @@ export const descriptionTests = async ({
     expect(firstRadio).toHaveAccessibleDescription(radioText);
   });
 };
+
+// --- Disabled RadioField Test ---
+export const disabledTests = async ({
+  args,
+  canvasElement,
+  step,
+}: RadioFieldPlayContext) => {
+  const canvas = within(canvasElement);
+  const radioGroup = canvas.getAllByRole('group')[0];
+  const radios = canvas.getAllByRole('radio');
+
+  await step(
+    'Assigns data-disabled to FieldSet and disables all radios',
+    () => {
+      expect(radioGroup).toHaveAttribute('data-disabled', 'true');
+      radios.forEach((radio) => {
+        expect(radio).toHaveAttribute('aria-disabled', 'true');
+      });
+    },
+  );
+
+  await step('Disabled radios cannot be selected', async () => {
+    const firstRadio = radios[0];
+    if (!firstRadio) throw new Error('no radio found');
+    expect(firstRadio).not.toBeChecked();
+    await userEvent.click(firstRadio);
+    expect(args.onValueChange).not.toHaveBeenCalled();
+    expect(firstRadio).not.toBeChecked();
+  });
+};
+
+// --- Invalid & Required RadioField Test ---
+export const invalidTests = async ({
+  args,
+  canvasElement,
+  step,
+}: RadioFieldPlayContext) => {
+  const canvas = within(canvasElement);
+  const fieldSet = canvas.getAllByRole('group')[0];
+  const radioGroup = canvas.getByRole('radiogroup');
+  const radios = canvas.getAllByRole('radio');
+
+  await step(
+    'Error correctly renders and describes alongside description the radio group',
+    () => {
+      const errorText = args?.error as string;
+      expect(canvas.getByText(errorText)).toBeInTheDocument();
+      expect(radioGroup).toHaveAccessibleDescription(
+        `${args.description} ${errorText}`,
+      );
+    },
+  );
+
+  await step(
+    'Passes aria-invalid to radios and assigns data-invalid to FieldSet',
+    () => {
+      expect(fieldSet).toHaveAttribute('data-invalid', 'true');
+      radios.forEach((radio) => {
+        expect(radio).toHaveAttribute('aria-invalid', 'true');
+      });
+    },
+  );
+
+  await step('Assigns data-required to FieldSet', () => {
+    expect(fieldSet).toHaveAttribute('data-required', 'true');
+  });
+
+  await step('Assigns aria-required to RadioGroup, not radios', () => {
+    expect(radioGroup).toHaveAttribute('aria-required', 'true');
+    radios.forEach((radio) => {
+      expect(radio).not.toHaveAttribute('aria-required');
+    });
+  });
+};
