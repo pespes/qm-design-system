@@ -1,12 +1,12 @@
-import { type ReactElement, useId, isValidElement } from 'react';
+import { useId, isValidElement } from 'react';
 
 import type {
   ControlRenderProps,
-  FieldErrorType,
   FieldWrapperProps,
   FieldOrientationProps,
   FieldSetWrapperProps,
 } from './FieldWrappers.types.js';
+import { useFieldState } from './useFieldState.js';
 import {
   Field,
   FieldDescription,
@@ -17,51 +17,6 @@ import {
   FieldLegend,
 } from '@/components/primitives/field/field.js';
 import { cn } from '@/utils/utils.js';
-import { cleanErrorMessages } from '@/components/_shared/validationUtils.js';
-
-// Shared logic for FieldWrapper and FieldSetWrapper for ID generation and aria attributes
-function useFieldState(
-  error: FieldErrorType,
-  invalid: boolean | undefined,
-  description: string | ReactElement | undefined,
-  required: boolean | undefined,
-  controlId: string | undefined,
-) {
-  const generatedId = useId();
-  const descId = useId();
-  const errorId = useId();
-
-  const childId = controlId ?? generatedId;
-
-  const errorContent = cleanErrorMessages(error);
-  const isInvalid = invalid ?? errorContent.length > 0;
-
-  // Only include ids of descriptive / error text rendered (Description read before Error text)
-  const describedBy =
-    [
-      description ? descId : undefined,
-      errorContent.length > 0 ? errorId : undefined,
-    ]
-      .filter(Boolean)
-      .join(' ') || undefined;
-
-  const controlProps: ControlRenderProps = {
-    id: childId,
-    'aria-invalid': isInvalid ? true : undefined,
-    'aria-describedby': describedBy,
-    'aria-required': required ? true : undefined,
-  };
-
-  return {
-    childId,
-    descId,
-    errorId,
-    isInvalid,
-    errorContent,
-    describedBy,
-    controlProps,
-  };
-}
 
 function FieldWrapper({
   label,
@@ -71,24 +26,33 @@ function FieldWrapper({
   required,
   disabled,
   controlId,
+  labelId,
   classes,
   reverse,
   orientation = 'vertical',
   children,
 }: FieldWrapperProps) {
+  const labelIsElement = isValidElement(label);
   const { descId, errorId, childId, isInvalid, controlProps } = useFieldState(
     error,
     invalid,
     description,
     required,
     controlId,
+    labelIsElement,
+    labelId,
   );
-  const labelIsElement = isValidElement(label);
+
   const renderedLabel = labelIsElement ? (
     label
   ) : (
     <FieldLabel htmlFor={childId} type='emphasis' className={classes?.label}>
       {label}
+      {required && (
+        <span aria-hidden='true' className='-ml-100 text-status-danger-text'>
+          *
+        </span>
+      )}
     </FieldLabel>
   );
 
@@ -187,6 +151,7 @@ function FieldSetWrapper({
   required,
   disabled,
   controlId,
+  labelId,
   classes,
   children,
 }: FieldSetWrapperProps) {
@@ -197,6 +162,8 @@ function FieldSetWrapper({
     description,
     required,
     controlId,
+    false,
+    labelId,
   );
 
   const { root, ...contentClasses } = classes || {};
