@@ -21,6 +21,15 @@ export const defaultTests = async ({
     expect(label).toHaveAttribute('for', args.id);
   });
 
+  await step(
+    'Correctly passes the id to the TextArea data-testid attribute',
+    () => {
+      if (!args.id) throw new Error('testId arg is required for this story');
+      const textarea = canvas.getByTestId(args.id);
+      expect(textarea.tagName).toBe('TEXTAREA');
+    },
+  );
+
   await step('Label focuses textarea when clicked', async () => {
     expect(textarea).not.toHaveFocus();
     await userEvent.click(label);
@@ -123,6 +132,7 @@ export const descriptionTest = async ({
     const descriptionText = args?.description as string;
     expect(canvas.getByText(descriptionText)).toBeInTheDocument();
     const textarea = canvas.getByRole('textbox');
+    expect(descriptionText).toBe('Please provide detailed feedback');
     expect(textarea).toHaveAccessibleDescription(descriptionText);
   });
 };
@@ -142,6 +152,9 @@ export const invalidTests = async ({
     }
     const firstErrorMessage = errors[0].message;
     const secondErrorMessage = errors[1].message;
+
+    expect(firstErrorMessage).toBe('This field is required');
+    expect(secondErrorMessage).toBe('Second error will appear as well');
 
     expect(canvas.getByText(firstErrorMessage)).toBeInTheDocument();
     expect(canvas.getByText(secondErrorMessage)).toBeInTheDocument();
