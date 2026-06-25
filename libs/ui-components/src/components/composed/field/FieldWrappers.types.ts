@@ -29,7 +29,7 @@ export interface FieldLayoutProps {
 
 export interface BaseFieldProps {
   label: string | ReactElement;
-  description?: ReactNode;
+  description?: string | ReactElement | undefined;
   /** Maintains backward compatible error handling from QM-UI, and allows for new Shadcn typing */
   error?:
     | string

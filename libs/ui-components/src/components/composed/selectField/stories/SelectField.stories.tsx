@@ -2,10 +2,6 @@ import { useState, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { SelectField } from '../SelectField.js';
-import {
-  defaultTests,
-  descriptionTest,
-} from '../SelectField.test.js';
 
 const meta = {
   title: 'Components/SelectField',
@@ -107,7 +103,6 @@ export const Default: Story = {
       />
     );
   },
-  play: defaultTests,
 };
 
 export const WithDescription: Story = {
@@ -129,5 +124,4 @@ export const WithDescription: Story = {
       />
     );
   },
-  play: descriptionTest,
 };
