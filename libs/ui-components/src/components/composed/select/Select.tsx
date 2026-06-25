@@ -26,7 +26,12 @@ function Select({
   className,
   placeholder,
   error,
+  id,
   triggerTestId,
+  'aria-describedby': ariaDescribedBy,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-required': ariaRequired,
+  'aria-invalid': ariaInvalid,
   ...props
 }: SelectProps) {
   const {
@@ -100,8 +105,12 @@ function Select({
   return (
     <SelectRoot items={items} {...props}>
       <SelectTrigger
+        id={id}
         ref={ref}
-        aria-invalid={!!error}
+        aria-invalid={ariaInvalid ?? (error ? true : undefined)}
+        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaLabelledBy}
+        aria-required={ariaRequired}
         className={cn(className, classes?.trigger)}
         data-testid={triggerTestId ?? 'select-trigger'}
         title={resolvedTriggerTitle}

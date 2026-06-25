@@ -2,13 +2,19 @@ import * as React from 'react';
 import type { LabelProps } from './Label.types.js';
 import { cn } from '@/utils/utils.js';
 
+const labelBaseClassName =
+  'flex items-center gap-200 w-full select-none ' +
+  'group-data-disabled:pointer-events-none group-data-[disabled=true]/field:text-state-disabled ' +
+  'peer-data-disabled:cursor-default peer-data-disabled:text-state-disabled ' +
+  'peer-aria-invalid:text-status-danger-text';
+
 function Label({ type = 'default', className, ...props }: LabelProps) {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label
       data-slot='label'
       className={cn(
-        'flex items-center gap-2 w-full select-none group-data-disabled:pointer-events-none group-data-[disabled=true]/field:text-state-disabled peer-data-disabled:cursor-default peer-data-disabled:text-state-disabled peer-aria-invalid:text-status-danger-text',
+        labelBaseClassName,
         type === 'default' ? 'type-body-default' : 'type-ui-default',
         className,
       )}
@@ -17,4 +23,4 @@ function Label({ type = 'default', className, ...props }: LabelProps) {
   );
 }
 
-export { Label };
+export { Label, labelBaseClassName };
