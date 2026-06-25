@@ -1,16 +1,16 @@
 import type { StoryContext } from '@storybook/react';
 import { expect, within, userEvent } from 'storybook/test';
 import type { RefObject } from 'react';
-import type { TextAreaGroupProps } from './TextAreaGroup.types.js';
+import type { TextAreaFieldProps } from './TextAreaField.types.js';
 
-type TextareaGroupPlayContext = StoryContext<TextAreaGroupProps>;
+type TextAreaFieldPlayContext = StoryContext<TextAreaFieldProps>;
 
-// --- Default TextareaGroup Test (id provided by dev) ---
+// --- Default TextAreaField Test (id provided by dev) ---
 export const defaultTests = async ({
   args,
   canvasElement,
   step,
-}: TextareaGroupPlayContext) => {
+}: TextAreaFieldPlayContext) => {
   const canvas = within(canvasElement);
 
   await step('Label correctly connects to textarea via provided id', () => {
@@ -52,11 +52,11 @@ export const defaultTests = async ({
   });
 };
 
-// --- Generated id TextareaGroup Test (no id provided) ---
+// --- Generated id TextAreaField Test (no id provided) ---
 export const generatedIdTests = async ({
   canvasElement,
   step,
-}: TextareaGroupPlayContext) => {
+}: TextAreaFieldPlayContext) => {
   const canvas = within(canvasElement);
 
   await step('Label correctly connects to textarea via generated id', () => {
@@ -75,11 +75,11 @@ export const generatedIdTests = async ({
   });
 };
 
-// --- Disabled TextareaGroup Test ---
+// --- Disabled TextAreaField Test ---
 export const disabledTests = async ({
   canvasElement,
   step,
-}: TextareaGroupPlayContext) => {
+}: TextAreaFieldPlayContext) => {
   const canvas = within(canvasElement);
 
   await step('Label correctly connects to textarea', () => {

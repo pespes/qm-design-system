@@ -1,16 +1,16 @@
 import React, { useState, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { TextAreaGroup } from '../TextAreaGroup.js';
+import { TextAreaField } from '../TextAreaField.js';
 import {
   defaultTests,
   disabledTests,
   generatedIdTests,
-} from '../TextAreaGroup.test.js';
+} from '../TextAreaField.test.js';
 
 const meta = {
-  title: 'Components/TextAreaGroup',
-  component: TextAreaGroup,
+  title: 'Components/TextAreaField',
+  component: TextAreaField,
   args: {
     label: 'I am a Label',
     value: '',
@@ -54,7 +54,7 @@ const meta = {
   async afterEach(context) {
     console.log(`✅ Tested ${context.name} story`);
   },
-} satisfies Meta<typeof TextAreaGroup>;
+} satisfies Meta<typeof TextAreaField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -73,7 +73,7 @@ export const Default: Story = {
       setValue(e.target.value);
     };
     return (
-      <TextAreaGroup
+      <TextAreaField
         {...args}
         testId={args.testId}
         onChange={handleChange}
@@ -95,7 +95,7 @@ export const GeneratedId: Story = {
       setValue(e.target.value);
     };
     return (
-      <TextAreaGroup
+      <TextAreaField
         {...args}
         testId='generated-id-textarea-group'
         onChange={handleChange}
@@ -118,7 +118,7 @@ export const Disabled: Story = {
       setValue(e.target.value);
     };
     return (
-      <TextAreaGroup
+      <TextAreaField
         {...args}
         testId='disabled-textarea-group'
         onChange={handleChange}

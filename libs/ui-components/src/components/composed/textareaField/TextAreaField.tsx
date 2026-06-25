@@ -1,15 +1,15 @@
 import { useId } from 'react';
 import type {
-  TextAreaGroupProps,
-  TextAreaGroupClassMap,
-} from './TextAreaGroup.types.js';
+  TextAreaFieldProps,
+  TextAreaFieldClassMap,
+} from './TextAreaField.types.js';
 import type { TextAreaProps } from '@/components/composed/textarea/TextArea.types.js';
 import { Label } from '@/components/primitives/label/Label.js';
 import { TextArea } from '@/components/composed/textarea/TextArea.js';
 
 import { cn } from '@/utils/utils.js';
 
-function TextAreaGroup({
+function TextAreaField({
   label: labelString,
   className,
   classes,
@@ -17,7 +17,7 @@ function TextAreaGroup({
   id,
   ref,
   ...props
-}: TextAreaGroupProps) {
+}: TextAreaFieldProps) {
   const generatedId = useId();
   const textareaId = id ?? generatedId;
   const { root, label, textarea, content, counter } = classes || {};
@@ -25,7 +25,7 @@ function TextAreaGroup({
     root: textarea,
     content,
     counter,
-  } as TextAreaGroupClassMap;
+  } as TextAreaFieldClassMap;
 
   return (
     <div className={cn('flex flex-col items-start gap-100', className, root)}>
@@ -44,4 +44,4 @@ function TextAreaGroup({
   );
 }
 
-export { TextAreaGroup };
+export { TextAreaField };
