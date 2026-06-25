@@ -7,7 +7,7 @@ export * from './components/primitives/separator/index.js';
 export * from './components/composed/input/index.js';
 export * from './components/composed/inputField/index.js';
 export * from './components/composed/textarea/index.js';
-export * from './components/composed/textareaGroup/index.js';
+export * from './components/composed/textareaField/index.js';
 export * from './components/primitives/switch/index.js';
 export * from './components/composed/select/index.js';
 export * from './components/composed/dialog/index.js';
