@@ -23,11 +23,11 @@ export const defaultTests = async ({
 
   await step('One radio can be selected via click at a time', async () => {
     expect(firstRadio).not.toBeChecked();
-    if (!firstRadio) throw new Error('no radio found');
+    if (!firstRadio) throw new Error('first radio not found');
     await userEvent.click(firstRadio);
     expect(firstRadio).toBeChecked();
     expect(args.onValueChange).toHaveBeenCalledWith('value 1');
-    if (!secondRadio) throw new Error('no radio found');
+    if (!secondRadio) throw new Error('second radio not found');
     await userEvent.click(secondRadio);
     expect(secondRadio).toBeChecked();
     expect(args.onValueChange).toHaveBeenCalledWith('value 2');
