@@ -121,7 +121,7 @@ export const Disabled: Story = {
 const checkboxRef = createRef<HTMLSpanElement>();
 export const Invalid: Story = {
   args: {
-    'aria-invalid': true,
+    invalid: true,
     ref: checkboxRef,
   },
   render: function InvalidStory(args) {

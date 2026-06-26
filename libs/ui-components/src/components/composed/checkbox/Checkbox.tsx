@@ -17,11 +17,12 @@ function Checkbox({
   ...props
 }: CheckboxProps) {
   const checkboxId = useId();
-  const { checkbox, icon, root, ...fieldWrapperClasses } = classes || {};
+  const { checkbox, icon, root, label, descriptionText } = classes || {};
 
   const wrapperClasses = {
     root: cn('gap-x-250', className, root),
-    ...fieldWrapperClasses,
+    label: cn('group-data-invalid/field:text-status-danger-text', label),
+    descriptionText,
   } as FieldWrapperClassMap;
 
   return (
