@@ -16,13 +16,23 @@ function RadioGroup({
   options,
   classes,
   className,
+  disabled,
   ...props
 }: RadioGroupProps) {
   const { root, ...childrenClasses } = classes || {};
   return (
-    <RadioGroupPrimitive className={cn(root, className)} {...props}>
+    <RadioGroupPrimitive
+      className={cn(root, className)}
+      disabled={disabled}
+      {...props}
+    >
       {options.map((opt) => (
-        <RadioGroupItem key={opt.value} {...opt} classes={childrenClasses} />
+        <RadioGroupItem
+          key={opt.value}
+          {...opt}
+          disabled={disabled || opt.disabled}
+          classes={childrenClasses}
+        />
       ))}
     </RadioGroupPrimitive>
   );
@@ -47,6 +57,7 @@ function RadioGroupItem({
     root: cn('gap-x-250', fieldWrapperClasses?.option),
     label: cn(
       'group-data-invalid/field:text-status-danger-text',
+      disabled && 'text-state-disabled',
       fieldWrapperClasses?.label,
     ),
   } as FieldWrapperClassMap;

@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { RadioField } from '../RadioField.js';
-import { defaultTests, descriptionTests } from '../RadioField.test.js';
+import {
+  defaultTests,
+  descriptionTests,
+  disabledTests,
+  invalidTests,
+} from '../RadioField.test.js';
 
 const meta = {
   title: 'Components/RadioField',
@@ -126,4 +131,78 @@ export const WithDescription: Story = {
     );
   },
   play: descriptionTests,
+};
+
+export const Invalid: Story = {
+  args: {
+    error: 'Please select an option',
+    description: 'A description',
+    required: true,
+  },
+  render: function InvalidStory(args) {
+    const [selected, setSelected] = useState('');
+
+    return (
+      <RadioField
+        {...args}
+        value={selected}
+        onValueChange={(val) => {
+          if (args.onValueChange) {
+            args.onValueChange(val);
+          }
+          setSelected(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
+export const DisabledFieldSet: Story = {
+  args: {
+    disabled: true,
+  },
+  render: function DisabledFieldSetStory(args) {
+    const [selected, setSelected] = useState('');
+
+    return (
+      <RadioField
+        {...args}
+        value={selected}
+        onValueChange={(val) => {
+          if (args.onValueChange) {
+            args.onValueChange(val);
+          }
+          setSelected(val);
+        }}
+      />
+    );
+  },
+  play: disabledTests,
+};
+
+export const DisabledOptions: Story = {
+  args: {
+    options: [
+      { value: 'value 1', label: 'First Option' },
+      { value: 'value 2', label: 'Another Option' },
+      { value: 'value 3', label: 'Not this Option', disabled: true },
+    ],
+  },
+  render: function DisabledOptionsStory(args) {
+    const [selected, setSelected] = useState('');
+
+    return (
+      <RadioField
+        {...args}
+        value={selected}
+        onValueChange={(val) => {
+          if (args.onValueChange) {
+            args.onValueChange(val);
+          }
+          setSelected(val);
+        }}
+      />
+    );
+  },
 };
