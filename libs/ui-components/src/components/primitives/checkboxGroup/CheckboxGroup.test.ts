@@ -34,6 +34,7 @@ export const defaultTests = async ({
         'option-1',
         'option-2',
       ]);
+      //now uncheck checkbox to confirm removed from value list
       await userEvent.click(secondCheckbox);
       expect(args.onValueChange).toHaveBeenNthCalledWith(3, ['option-1']);
     },
@@ -66,6 +67,35 @@ export const disabledGroupTests = async ({
       if (!disabledCheckbox) throw new Error('no checkbox found');
       await userEvent.click(disabledCheckbox);
       expect(args.onValueChange).not.toHaveBeenCalled();
+    },
+  );
+};
+
+export const disabledOptionsTest = async ({
+  args,
+  canvasElement,
+  step,
+}: CheckboxGroupContext) => {
+  const canvas = within(canvasElement);
+  const checkboxes = canvas.getAllByRole('checkbox');
+  const enabledCheckbox = checkboxes[0];
+  const disabledCheckbox = checkboxes[2];
+
+  await step('Disables only checkboxes with disabled prop passed', async () => {
+    expect(enabledCheckbox).not.toHaveAttribute('aria-disabled');
+    expect(disabledCheckbox).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  await step(
+    'Clicking disabled checkbox does not trigger selection',
+    async () => {
+      if (!disabledCheckbox) throw new Error('no disabled checkbox found');
+      await userEvent.click(disabledCheckbox);
+      expect(args.onValueChange).not.toHaveBeenCalled();
+
+      if (!enabledCheckbox) throw new Error('no enabled checkbox found');
+      await userEvent.click(enabledCheckbox);
+      expect(args.onValueChange).toHaveBeenCalled();
     },
   );
 };

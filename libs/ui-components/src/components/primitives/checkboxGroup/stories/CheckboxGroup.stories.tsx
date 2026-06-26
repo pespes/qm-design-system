@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { CheckboxGroup } from '../CheckboxGroup.js';
-import { defaultTests, disabledGroupTests } from '../CheckboxGroup.test.js';
+import {
+  defaultTests,
+  disabledGroupTests,
+  disabledOptionsTest,
+} from '../CheckboxGroup.test.js';
 import { Checkbox } from '@/components/composed/checkbox/Checkbox.js';
 
 const meta = {
@@ -142,6 +146,7 @@ export const DisabledOptions: Story = {
       </CheckboxGroup>
     );
   },
+  play: disabledOptionsTest,
 };
 
 export const DisabledGroup: Story = {
