@@ -1,16 +1,14 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/utils/utils.js';
+import { parseErrorMessages } from '@/components/_shared/validationUtils.js';
 import { Label } from '@/components/primitives/label/Label.js';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
   return (
     <fieldset
       data-slot='field-set'
-      className={cn(
-        'flex flex-col gap-400 has-[>[data-slot=checkbox-group]]:gap-200 has-[>[data-slot=radio-group]]:gap-200',
-        className,
-      )}
+      className={cn('group/field-set flex flex-col gap-200', className)}
       {...props}
     />
   );
@@ -26,7 +24,7 @@ function FieldLegend({
       data-slot='field-legend'
       data-variant={variant}
       className={cn(
-        'data-[variant=label]:type-ui-default data-[variant=legend]:type-header-h2',
+        'data-[variant=label]:type-ui-default data-[variant=legend]:type-header-h2 text-foreground-default group-data-disabled/field-set:text-state-disabled',
         className,
       )}
       {...props}
@@ -133,20 +131,14 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
 function FieldError({
   className,
   children,
+  messages,
   error: errorProp,
   ...props
 }: React.ComponentProps<'div'> & {
+  messages?: string[];
   error?: string | { message: string } | Array<string | { message: string }>;
 }) {
-  const errors = Array.isArray(errorProp) ? errorProp : [errorProp];
-  const errorMessages = errors.reduce((acc: string[], err) => {
-    const msg = typeof err === 'object' ? err?.message : err;
-    if (msg) {
-      acc.push(msg);
-    }
-    return acc;
-  }, []);
-
+  const errorMessages = messages ?? parseErrorMessages(errorProp);
   const hasErrors = errorMessages.length > 0;
 
   if (!hasErrors && !children) return null;

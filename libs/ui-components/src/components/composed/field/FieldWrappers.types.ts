@@ -15,6 +15,12 @@ export interface ControlRenderProps {
   'aria-labelledby'?: string | undefined;
 }
 
+export type FieldErrorType =
+  | string
+  | { message: string }
+  | Array<string | { message: string }>
+  | undefined;
+
 export interface FieldLayoutProps {
   label: string | ReactElement;
   description?: ReactNode;
@@ -31,11 +37,7 @@ export interface BaseFieldProps {
   label: string | ReactElement;
   description?: string | ReactElement | undefined;
   /** Maintains backward compatible error handling from QM-UI, and allows for new Shadcn typing */
-  error?:
-    | string
-    | { message: string }
-    | Array<string | { message: string }>
-    | undefined;
+  error?: FieldErrorType;
   /** Explicit invalid override — defaults to !!error */
   invalid?: boolean | undefined;
   required?: boolean | undefined;
@@ -43,10 +45,13 @@ export interface BaseFieldProps {
   children: (controlProps: ControlRenderProps) => ReactNode;
 }
 
-export interface FieldWrapperProps extends BaseFieldProps {
+export interface FieldSetWrapperProps extends BaseFieldProps {
   controlId?: string | undefined;
   labelId?: string | undefined;
   classes?: FieldWrapperClassMap;
+}
+
+export interface FieldWrapperProps extends FieldSetWrapperProps {
   /** Reverse grid layout for switch controls */
   reverse?: boolean | undefined;
   orientation?: 'vertical' | 'horizontal';

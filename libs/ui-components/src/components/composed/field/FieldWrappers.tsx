@@ -4,14 +4,19 @@ import type {
   ControlRenderProps,
   FieldWrapperProps,
   FieldOrientationProps,
+  FieldSetWrapperProps,
 } from './FieldWrappers.types.js';
+import { useFieldState } from './useFieldState.js';
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
   FieldContent,
+  FieldSet,
+  FieldLegend,
 } from '@/components/primitives/field/field.js';
+import { cn } from '@/utils/utils.js';
 
 function FieldWrapper({
   label,
@@ -21,33 +26,23 @@ function FieldWrapper({
   required,
   disabled,
   controlId,
-  labelId: externalLabelId,
+  labelId,
   classes,
   reverse,
   orientation = 'vertical',
   children,
 }: FieldWrapperProps) {
-  const generatedId = useId();
-  const generatedLabelId = useId();
-  const descId = useId();
-  const errorId = useId();
-
-  const childId = controlId ?? generatedId;
-  const labelId = externalLabelId ?? generatedLabelId;
-
-  //Shadcn allows for an Array<{message : string}> to be passed in addition to ReactNode
-  const firstError = Array.isArray(error) ? error[0] : error;
-  const errorContent =
-    typeof firstError === 'object' ? firstError?.message : firstError;
-  const isInvalid = invalid ?? !!errorContent;
-
-  // Only include ids of descriptive / error text rendered (Description read before Error text)
-  const describedBy =
-    [description ? descId : undefined, errorContent ? errorId : undefined]
-      .filter(Boolean)
-      .join(' ') || undefined;
-
   const labelIsElement = isValidElement(label);
+  const { descId, errorId, childId, isInvalid, controlProps } = useFieldState(
+    error,
+    invalid,
+    description,
+    required,
+    controlId,
+    labelIsElement,
+    labelId,
+  );
+
   const renderedLabel = labelIsElement ? (
     label
   ) : (
@@ -60,14 +55,6 @@ function FieldWrapper({
       )}
     </FieldLabel>
   );
-
-  const controlProps: ControlRenderProps = {
-    id: childId,
-    'aria-invalid': isInvalid ? true : undefined,
-    'aria-describedby': describedBy,
-    'aria-required': required ? true : undefined,
-    'aria-labelledby': labelIsElement ? labelId : undefined, // without the htmlFor prop from Label, use aria-labelledby for label association instead
-  };
 
   const { root, ...orientationWrapperClasses } = classes || {};
 
@@ -156,4 +143,77 @@ function HorizontalFieldWrapper({
   );
 }
 
-export { FieldWrapper, VerticalFieldWrapper, HorizontalFieldWrapper };
+function FieldSetWrapper({
+  label,
+  description,
+  error,
+  invalid,
+  required,
+  disabled,
+  controlId,
+  labelId,
+  classes,
+  children,
+}: FieldSetWrapperProps) {
+  const legendId = useId();
+  const { descId, errorId, isInvalid, controlProps } = useFieldState(
+    error,
+    invalid,
+    description,
+    required,
+    controlId,
+    false,
+    labelId,
+  );
+
+  const { root, ...contentClasses } = classes || {};
+
+  const groupControlProps: ControlRenderProps = {
+    ...controlProps,
+    'aria-labelledby': label ? legendId : undefined,
+  };
+
+  return (
+    <FieldSet
+      data-invalid={isInvalid || undefined}
+      data-disabled={disabled || undefined}
+      data-required={required || undefined}
+      className={root}
+    >
+      <div>
+        {label && (
+          <FieldLegend
+            id={legendId}
+            variant='label'
+            className={contentClasses?.label}
+          >
+            {label}
+          </FieldLegend>
+        )}
+        {description && (
+          <FieldDescription
+            id={descId}
+            className={contentClasses?.descriptionText}
+          >
+            {description}
+          </FieldDescription>
+        )}
+        {error && (
+          <FieldError
+            id={errorId}
+            className={cn('!mt-0', contentClasses?.errorText)}
+            error={error}
+          />
+        )}
+      </div>
+      {children(groupControlProps)}
+    </FieldSet>
+  );
+}
+
+export {
+  FieldWrapper,
+  VerticalFieldWrapper,
+  HorizontalFieldWrapper,
+  FieldSetWrapper,
+};
