@@ -47,6 +47,25 @@ export const defaultTests = async ({
   });
 };
 
+// --- Checkbox with Description Tests ---
+export const descriptionTests = async ({
+  args,
+  canvasElement,
+  step,
+}: CheckboxContext) => {
+  const canvas = within(canvasElement);
+  await step(
+    'Render a description if provided, connected to checkbox',
+    async () => {
+      const descriptionText = args.description as string;
+      const checkbox = canvas.getByRole('checkbox');
+      expect(checkbox).toHaveAccessibleDescription(descriptionText);
+      expect(canvas.getByText(descriptionText)).toBeInTheDocument();
+      expect(descriptionText).toBe('This is an awesome feature');
+    },
+  );
+};
+
 // ---  Disabled Checkbox Tests ---
 export const disabledTests = async ({
   args,
