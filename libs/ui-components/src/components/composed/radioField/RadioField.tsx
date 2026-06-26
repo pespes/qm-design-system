@@ -2,7 +2,7 @@ import type { RadioFieldProps } from './RadioField.types.js';
 import type { RadioItemMap } from '@/components/composed/radioGroup/RadioGroup.types.js';
 import { FieldSetWrapper } from '@/components/composed/field/FieldWrappers.js';
 import { RadioGroup } from '@/components/composed/radioGroup/RadioGroup.js';
-import { cleanErrorMessages } from '@/components/_shared/validationUtils.js';
+import { parseErrorMessages } from '@/components/_shared/validationUtils.js';
 import { cn } from '@/utils/utils.js';
 
 function RadioField({
@@ -17,7 +17,7 @@ function RadioField({
   disabled,
   ...props
 }: RadioFieldProps) {
-  const errorContent = cleanErrorMessages(error);
+  const errorContent = parseErrorMessages(error);
   const isInvalid = invalidProp ?? errorContent.length > 0;
 
   // Enhance options: pass validation state down to each item

@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/utils/utils.js';
-import { cleanErrorMessages } from '@/components/_shared/validationUtils.js';
+import { parseErrorMessages } from '@/components/_shared/validationUtils.js';
 import { Label } from '@/components/primitives/label/Label.js';
 
 function FieldSet({ className, ...props }: React.ComponentProps<'fieldset'>) {
@@ -135,7 +135,7 @@ function FieldError({
 }: React.ComponentProps<'div'> & {
   error?: string | { message: string } | Array<string | { message: string }>;
 }) {
-  const errorMessages = cleanErrorMessages(errorProp);
+  const errorMessages = parseErrorMessages(errorProp);
   const hasErrors = errorMessages.length > 0;
 
   if (!hasErrors && !children) return null;

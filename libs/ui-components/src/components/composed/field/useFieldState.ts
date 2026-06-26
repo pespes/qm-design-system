@@ -3,7 +3,7 @@ import type {
   FieldErrorType,
   ControlRenderProps,
 } from './FieldWrappers.types.js';
-import { cleanErrorMessages } from '@/components/_shared/validationUtils.js';
+import { parseErrorMessages } from '@/components/_shared/validationUtils.js';
 
 // Shared logic for FieldWrapper and FieldSetWrapper for ID generation and aria attributes
 function useFieldState(
@@ -23,7 +23,7 @@ function useFieldState(
   const childId = controlId ?? generatedId;
   const finalLabelId = labelId ?? generatedLabelId;
 
-  const errorContent = cleanErrorMessages(error);
+  const errorContent = parseErrorMessages(error);
   const isInvalid = invalid ?? errorContent.length > 0;
 
   // Only include ids of descriptive / error text rendered (Description read before Error text)
