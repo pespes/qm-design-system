@@ -1,8 +1,9 @@
-import { useId } from 'react';
+import { useId, useContext } from 'react';
 import type { CheckboxProps } from './Checkbox.types.js';
 import { Checkbox as CheckboxPrimitive } from '@/components/primitives/checkbox/Checkbox.js';
 import { FieldWrapper } from '@/components/composed/field/FieldWrappers.js';
 import type { FieldWrapperClassMap } from '@/components/composed/field/FieldWrappers.types.js';
+import { CheckboxFieldContext } from '@/components/composed/checkboxField/CheckboxField.js';
 import { cn } from '@/utils/utils.js';
 
 function Checkbox({
@@ -17,7 +18,10 @@ function Checkbox({
   ...props
 }: CheckboxProps) {
   const checkboxId = useId();
+  const fieldContext = useContext(CheckboxFieldContext);
   const { checkbox, icon, root, label, descriptionText } = classes || {};
+
+  const isInvalid = invalid ?? fieldContext?.invalid;
 
   const wrapperClasses = {
     root: cn('gap-x-250', className, root),
@@ -29,7 +33,7 @@ function Checkbox({
     <FieldWrapper
       label={labelString}
       description={description}
-      invalid={invalid}
+      invalid={isInvalid}
       disabled={disabled}
       required={required}
       controlId={checkboxId}
