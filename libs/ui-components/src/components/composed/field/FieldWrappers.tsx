@@ -178,6 +178,7 @@ function FieldSetWrapper({
       data-invalid={isInvalid || undefined}
       data-disabled={disabled || undefined}
       data-required={required || undefined}
+      disabled={disabled || undefined}
       className={root}
     >
       <div>
