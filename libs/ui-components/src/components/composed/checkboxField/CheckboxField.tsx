@@ -46,10 +46,10 @@ function CheckboxField({
         <CheckboxFieldContext.Provider value={{ invalid: isInvalid }}>
           <CheckboxGroup
             {...props}
+            {...controlProps}
             className={cn(className, checkboxGroup)}
             disabled={disabled}
-            data-testid='test'
-            {...controlProps}
+            aria-required={undefined} // should not be passed to CheckboxGroup for accessibilitly purposes, unlike RadioGroup
           >
             {children}
           </CheckboxGroup>
