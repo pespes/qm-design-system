@@ -133,3 +133,87 @@ export const WithDescription: Story = {
   },
   play: descriptionTests,
 };
+
+export const Invalid: Story = {
+  args: {
+    error: [
+      { message: 'Please make a selection' },
+      { message: 'Another error!' },
+    ],
+    description: 'Your preferences help us tailor your experience.',
+  },
+  render: function InvalidStory(args) {
+    const [selected, setSelected] = useState<string[]>([]);
+
+    return (
+      <CheckboxField
+        {...args}
+        value={selected}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelected(val);
+        }}
+      />
+    );
+  },
+  play: invalidTests,
+};
+
+export const DisabledField: Story = {
+  args: {
+    disabled: true,
+  },
+  render: function DisabledFieldStory(args) {
+    const [selected, setSelected] = useState<string[]>([]);
+
+    return (
+      <CheckboxField
+        {...args}
+        value={selected}
+        onValueChange={(val) => {
+          args.onValueChange?.(val);
+          setSelected(val);
+        }}
+      />
+    );
+  },
+  play: disabledTests,
+};
+
+export const DisabledOptions: Story = {
+  render: function DisabledOptionsStory(args) {
+    const [selected, setSelected] = useState<string[]>([]);
+
+    return (
+      <div className='flex flex-col gap-300'>
+        <CheckboxField
+          {...args}
+          value={selected}
+          onValueChange={(val) => {
+            args.onValueChange?.(val);
+            setSelected(val);
+          }}
+        >
+          <Checkbox
+            label='Available Option'
+            value='available'
+            name='available'
+          />
+          <Checkbox
+            label='Another Available'
+            value='available-2'
+            name='available-2'
+          />
+          <Checkbox label='Coming Soon' value='soon' disabled name='soon' />
+          <Checkbox
+            label='Not Available'
+            value='unavailable'
+            disabled
+            name='unavailable'
+          />
+        </CheckboxField>
+        <p>Selected: {selected.join(', ')}</p>
+      </div>
+    );
+  },
+};
