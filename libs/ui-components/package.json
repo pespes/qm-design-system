@@ -16,7 +16,7 @@
   "license": "UNLICENSED",
   "packageManager": "pnpm@10.33.0",
   "engines": {
-    "node": ">= 22.18.0"
+    "node": ">= 22"
   },
   "module": "./dist/index.mjs",
   "main": "./dist/index.cjs",
@@ -39,7 +39,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && tsdown && node scripts/build-css.mjs",
+    "build": "rm -rf dist && tsc --noEmit && rollup -c && node scripts/build-css.mjs",
     "test:watch": "vitest"
   },
   "peerDependencies": {
@@ -67,10 +67,14 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-icons": "^5.6.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "rollup": "^4.62.2",
     "rollup-plugin-dts": "^6.4.1",
     "shadcn": "^4.6.0",
     "tailwindcss": "^4.2.4",
-    "tsdown": "^0.22.3",
     "vite": "^8.0.10",
     "vitest": "^4.1.7"
   },
