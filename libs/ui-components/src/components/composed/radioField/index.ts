@@ -1,2 +1,2 @@
 export { RadioField } from './RadioField.js';
-export type { RadioFieldProps } from './RadioField.types.js';
+export type { RadioFieldProps, RadioFieldMap } from './RadioField.types.js';

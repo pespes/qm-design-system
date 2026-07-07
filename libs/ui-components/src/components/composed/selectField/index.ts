@@ -1,2 +1,5 @@
 export { SelectField } from './SelectField.js';
-export type { SelectFieldProps } from './SelectField.types.js';
+export type {
+  SelectFieldProps,
+  SelectFieldClassMap,
+} from './SelectField.types.js';

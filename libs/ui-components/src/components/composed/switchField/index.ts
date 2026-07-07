@@ -1,2 +1,5 @@
 export { SwitchField } from './SwitchField.js';
-export type { SwitchFieldProps } from './SwitchField.types.js';
+export type {
+  SwitchFieldProps,
+  SwitchFieldClassMap,
+} from './SwitchField.types.js';
