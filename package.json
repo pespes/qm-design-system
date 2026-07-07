@@ -30,6 +30,8 @@
     "lint": "nx run-many --all -t lint"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.0",
+    "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^8.57.1",
     "@jest/globals": "^30.3.0",
     "@nx/eslint": "22.7.0",
