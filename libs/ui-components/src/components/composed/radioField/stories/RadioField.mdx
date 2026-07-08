@@ -1,0 +1,46 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as RadioFieldStories from './RadioField.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={RadioFieldStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+The `<RadioField/>` component combines a `<RadioGroup/>` with a label, error state, and description to create an accessible form field. This component comes with
+a *required* label to enforce proper accessibility practices. A single or an array of errors (`Array<string | { message: string}>`) may be provided to the component,
+all of which will render.
+
+## Accessibility
+- **Screen Readers** — The RadioGroup has `aria-labelledby` set to connect with required label, and `aria-describedby` set to include the description and any error messages (in that order). Individual radios are labelled and described by their corresponding label/description.
+- **Disabled state** — A disabled RadioField applies `aria-disabled` to the RadioGroup, which disables selection but does not remove the RadioGroup from the tab order. Individual RadioItems may also be disabled by passing the `disabled` prop into the `options` array.
+
+## Examples
+
+### Default
+<Canvas of={RadioFieldStories.Default} />
+
+### With Descriptions
+<Canvas of={RadioFieldStories.WithDescription} />
+
+### Invalid
+<Canvas of={RadioFieldStories.Invalid} />
+
+### Disabled RadioGroup
+<Canvas of={RadioFieldStories.DisabledFieldSet} />
+
+### Disabled Options
+<Canvas of={RadioFieldStories.DisabledOptions} />
+
+#### Additional Documentation
+- BaseUI: [Learn More](https://base-ui.com/react/components/radio)
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/radio-group)

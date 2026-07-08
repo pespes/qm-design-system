@@ -8,7 +8,7 @@ export const MarkdownBlock = () => {
   return (
     <div>
       <h3 id='sb-import'>Import</h3>
-      <Source code={`import { ${title} } from @quartermaster/qm-components`} />
+      <Source code={`import { ${title} } from @quartermaster/ui-components`} />
     </div>
   );
 };

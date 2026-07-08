@@ -1,0 +1,52 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as CheckboxFieldStories from './CheckboxField.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={CheckboxFieldStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+
+The `<CheckboxField/>` component wraps a `<CheckboxGroup/>` with a *required* label, and optional description, error messaging, and validation support in a `<fieldset/>` to create an accessible form field.
+A single or an array of errors (`Array<string | { message: string}>`) may be provided to the component, all of which will render. Any error present will mark individual checkboxes as `aria-invalid`, as seen the [Invalid example](#invalid)
+
+For more information about the CheckboxGroup state management, visit the `<CheckboxGroup/>` page, and visit the `<Checkbox/>` page for information on individual checkbox components.
+
+
+## Accessibility
+
+- **Screen Readers** — The legend has `aria-labelledby` connecting to the CheckboxGroup, and `aria-describedby` to include the description and any error messages (in that order).
+- **Disabled State** — A disabled CheckboxField applies `aria-disabled` to all checkboxes to prevent selection. Checkboxes can be individually disabled as well by passing the `disabled` prop directly to one.
+- **Required** - CheckboxField does not support `aria-required`, as assigning it to individual checkboxes would suggest all checkboxes should be selected. Error messaging and validation can help communicate that a selection is required upon form submission.
+
+## Examples
+
+### Default
+<Canvas of={CheckboxFieldStories.Default} />
+
+### With Description
+<Canvas of={CheckboxFieldStories.WithDescription} />
+
+### Disabled Field
+<Canvas of={CheckboxFieldStories.DisabledField} />
+
+### Disabled Options
+<Canvas of={CheckboxFieldStories.DisabledOptions} />
+
+### Invalid
+<Canvas of={CheckboxFieldStories.Invalid} />
+
+## Additional Documentation
+- BaseUI: [Checkbox](https://base-ui.com/react/components/checkbox)
+- BaseUI: [CheckboxGroup](https://base-ui.com/react/components/checkbox-group)
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/checkbox)

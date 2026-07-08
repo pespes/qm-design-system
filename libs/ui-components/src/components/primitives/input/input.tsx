@@ -13,8 +13,9 @@ const inputGroupVariants = cva(
   {
     variants: {
       size: {
-        default: 'py-250 px-300 min-h-1000',
-        lg: 'py-300 px-350 min-h-1200 type-ui-lead',
+        default:
+          'py-250 px-300 min-h-[calc(var(--spacing-1000)_-_var(--spacing-050))]',
+        lg: 'py-300 px-350 min-h-[calc(var(--spacing-1200)_-_var(--spacing-050))] type-ui-lead',
       },
     },
     defaultVariants: {
@@ -31,6 +32,7 @@ function Input({
   return (
     <InputPrimitive
       data-slot='input'
+      data-size={size}
       className={cn(inputGroupVariants({ size }), className)}
       {...props}
     />

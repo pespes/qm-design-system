@@ -2,7 +2,12 @@ import { useState, useEffect, createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { Checkbox } from '../Checkbox.js';
-import { defaultTests, disabledTests, invalidTests } from '../Checkbox.test.js';
+import {
+  defaultTests,
+  descriptionTests,
+  disabledTests,
+  invalidTests,
+} from '../Checkbox.test.js';
 
 const meta = {
   title: 'Components/Checkbox',
@@ -29,6 +34,11 @@ const meta = {
     checked: {
       description: 'Whether the checkbox is selected or not',
       control: { type: 'boolean' },
+    },
+    description: {
+      description:
+        'Optional helper text linked to the checkbox via aria-describedby',
+      type: 'string',
     },
     required: {
       type: 'boolean',
@@ -77,6 +87,27 @@ export const Default: Story = {
   play: defaultTests,
 };
 
+export const WithDescription: Story = {
+  args: {
+    label: 'Enable this feature',
+    description: 'This is an awesome feature',
+  },
+  render: function WithDescription(args) {
+    const [checked, setChecked] = useState(args.checked);
+    return (
+      <Checkbox
+        {...args}
+        checked={checked}
+        onCheckedChange={(val) => {
+          args.onCheckedChange?.(val);
+          setChecked(val);
+        }}
+      />
+    );
+  },
+  play: descriptionTests,
+};
+
 export const Disabled: Story = {
   render: () => (
     <div className='flex gap-400'>
@@ -90,7 +121,7 @@ export const Disabled: Story = {
 const checkboxRef = createRef<HTMLSpanElement>();
 export const Invalid: Story = {
   args: {
-    'aria-invalid': true,
+    invalid: true,
     ref: checkboxRef,
   },
   render: function InvalidStory(args) {

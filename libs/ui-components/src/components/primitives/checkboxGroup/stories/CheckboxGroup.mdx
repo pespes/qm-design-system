@@ -1,0 +1,57 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as CheckboxGroupStories from './CheckboxGroup.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={CheckboxGroupStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+
+CheckboxGroup wraps multiple Checkbox components and manages the collective selection state of the group. Unlike RadioGroup (where only one option can be selected),
+CheckboxGroup allows multiple selections. An expected use case pattern would look like:
+
+```jsx
+const [selected, setSelected] = useState([]);
+
+return (
+  <CheckboxGroup value={selected} onValueChange={setSelected}>
+    <Checkbox label="Option 1" name="option-1" />
+    <Checkbox label="Option 2" name="option-2" />
+    <Checkbox label="Option 3" name="option-3" />
+  </CheckboxGroup>
+);
+```
+
+The CheckboxGroup component does not come with a label / descritpion text / error handling. If this is required, refer to the CheckboxField component.
+
+## Accessibility
+- **Labelling**: This component does not include a label for the group itself. When using `<CheckboxGroup>`, create a sibling label element and use `aria-labelledby`. Refer to the [Group Label Example](#with-group-label) story for an example.
+- **Disabled State**: Individual checkboxes can be disabled, or the entire group can be disabled via the `disabled` prop.
+
+## Examples
+
+### Default
+<Canvas of={CheckboxGroupStories.Default} />
+
+### With Group Label
+<Canvas of={CheckboxGroupStories.WithGroupLabel} />
+
+### Disabled Checkbox Options
+<Canvas of={CheckboxGroupStories.DisabledOptions} />
+
+### Disabled CheckboxGroup
+<Canvas of={CheckboxGroupStories.DisabledGroup} />
+
+## Additional Documentation
+- BaseUI CheckboxGroup: [Learn More](https://base-ui.com/react/components/checkbox-group)
+- Shadcn Checkbox: [Learn More](https://ui.shadcn.com/docs/components/base/checkbox)

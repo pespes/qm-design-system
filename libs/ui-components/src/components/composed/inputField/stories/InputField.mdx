@@ -1,0 +1,41 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as InputFieldStories from './InputField.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={InputFieldStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+TBD from Design
+
+## Accessibility
+- **Adornments are decorative** — `startAdornment` and `endAdornment` render inside an `aria-hidden` wrapper and are for icons only and not to be used to convey information a user needs. 
+- **Disabled state** — A disabled input is removed from the tab order and ignores all input events (including its password visibility toggle). If the value still needs to be focusable or copyable, prefer `readOnly` instead of `disabled`.
+
+## Examples
+
+### Default
+<Canvas of={InputFieldStories.Default} />
+
+### With A Description
+<Canvas of={InputFieldStories.WithDescription} />
+
+### Disabled
+<Canvas of={InputFieldStories.Disabled} />
+
+### Invalid
+<Canvas of={InputFieldStories.Invalid} />
+
+#### Additional Documentation
+- BaseUI: [Learn More](https://base-ui.com/react/components/input)
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/input)

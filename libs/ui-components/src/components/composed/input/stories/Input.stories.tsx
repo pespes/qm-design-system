@@ -76,7 +76,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A Text input component. This component does not come with a label, description or error text. See InputGroup for this additional functionality.',
+          'A Text input component. This component does not come with a label, description or error text. See InputField for this additional functionality.',
       },
     },
   },

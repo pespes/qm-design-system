@@ -1,0 +1,54 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as TextareaStories from './TextArea.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={TextareaStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+The `<Textarea/>` component has a base minimum height and is designed to scale to fit content. The native textarea
+element does come with a `rows` attribute that allows devs to lock the size of textarea to a specified number of rows. However
+allowing the textarea to scale with size is the intented use case. 
+
+
+## Accessibility
+- **Label** — No label is rendered by this component. Always pair it with an associated `<Label htmlFor={inputId} />` or `aria-label` so assistive techology can announce the textarea's purpose. Refer to [With Label example](#with-label).
+- **Placeholder is not a label** — The `placeholder` attribute is not an accessible name. Use it for a hint about the expected value, not to convey the textarea's purpose.
+- **Disabled state** — A disabled input is removed from the tab order and ignores all input events. If the value still needs to be focusable or copyable, prefer `readOnly` instead of `disabled`.
+
+## Examples
+
+### Default
+<Canvas of={TextareaStories.Default} />
+
+### With Label
+<Canvas of={TextareaStories.WithLabel} />
+
+### With MaxLength Attribute
+<Canvas of={TextareaStories.WithMaxLength} />
+
+### Disabled
+<Canvas of={TextareaStories.Disabled} />
+
+### Invalid
+<Canvas of={TextareaStories.Invalid} />
+
+### Fixed Size
+<Canvas of={TextareaStories.FixedSize} />
+
+### AutoGrow Test 
+*Included for testing purposes*
+<Canvas of={TextareaStories.AutoGrow} />
+
+#### Additional Documentation
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/textarea)
