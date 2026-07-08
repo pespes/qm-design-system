@@ -41,7 +41,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["**/*.{ts,tsx,js,jsx}"],
+    files: ["**/*.{ts,tsx,js,jsx, mjs}"],
     languageOptions: {
       globals: {
         ...globals.browser,

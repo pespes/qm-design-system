@@ -28,6 +28,13 @@ Packages can be managed individually but the root `package.json` provides the st
 `pnpm lint` // Project wide eslint check
 `pnpm jest` // Project wide execution of Jest tests
 
+### Commits and Git Workflow
+We use the [Conventional Commits](https://www.notion.so/Conventional-Commits-1194dc390c858036b48ffb2a73c8f3e6) specification for commit messages. All commit messages must follow the following signature:
+```
+<type>: QP-<ticket-num> <subject>
+feat: QP-21039 SelectComponent
+```
+
 ## Libraries
 To find out more about each of the libraries within `qm-ui`, refer to the library README.md file:
 
