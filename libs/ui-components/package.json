@@ -7,6 +7,7 @@
     "url": "https://quartermaster.house"
   },
   "type": "module",
+  "private": true,
   "keywords": [
     "quartermaster",
     "typescript",
