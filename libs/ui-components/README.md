@@ -49,7 +49,7 @@ pnpm add @quartermaster/ui-components
 
 All packages are built using typescript, and expose ES6-compatible javascript files, alongside typescript definition files (`*.d.ts`). 
 ```typescript jsx
-import { Button, ButtonProps } from '@quartermaster/ui-web';
+import { Button, ButtonProps } from '@quartermaster/ui-components';
 
 type MyComponentProps = ButtonProps & { label: string };
 
@@ -82,6 +82,19 @@ Base UI also provides a `render` prop on many components to override the rendere
   />
 ```
 
+### Styling Imports
+When importing token and component styling into the app's main stylesheet, import in the following order:
+
+```
+@import ui-tokens/css/tokens
+@import ui-tokens/css/tokens-pro
+@import 'tailwindcss'
+@import ui-components/styles.css
+```
+
+- **design tokens / tokens-pro** - CSS custom properties (ie. --color-brand-background) must be declared before any rule references them. Loading tokens first ensures they exist in the cascade before Tailwind or consuming components attempt to use them.
+- **ui-components/styles.css** - This file is pre-compiled, so any Tailwind utitilies needed by the components are already included at library build time. Loading it after Tailwind ensures component-specific rules can override Tailwind base styles where necessary. This file uses **@reference** to point to token files, so does not re-emit these token values, preventing any duplication of the custom token properties.
+
 ## Development: Storybook
 In order to provide context and usage guidelines for components, additional configuration is required for the base `meta` data consumed for the component's docs page. Description, usage, and accessibility content should be added, and can be written as either strings or html.
 
@@ -102,7 +115,7 @@ const meta = {
   },
 } satisfies Meta<typeof Button>;
 ```
-In order to run storybook to interact with components and test documentation, run the following command from the `qm-ui` root directory:
+In order to run storybook to interact with components and test documentation, run the following command from the `qm-design-system` root directory:
 ```
 pnpm storybook
 ```

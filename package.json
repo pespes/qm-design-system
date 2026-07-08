@@ -25,6 +25,7 @@
     "test": "nx run-many --all -t test",
     "build:tokens": "nx build ui-tokens",
     "build:components": "nx build ui-components",
+    "build": "nx run-many --all -t build",
     "storybook": "nx storybook ui-components",
     "lint": "nx run-many --all -t lint"
   },
