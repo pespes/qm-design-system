@@ -1,2 +1,6 @@
 export { Dialog } from './Dialog.jsx';
-export type { DialogProps } from './Dialog.types.js';
+export type {
+  DialogProps,
+  DialogClassMap,
+  DialogHeaderActionBtn,
+} from './Dialog.types.js';

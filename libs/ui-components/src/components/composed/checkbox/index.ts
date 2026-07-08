@@ -1,2 +1,2 @@
 export { Checkbox } from './Checkbox.jsx';
-export type { CheckboxProps } from './Checkbox.types.js';
+export type { CheckboxProps, CheckboxMap } from './Checkbox.types.js';
