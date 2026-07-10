@@ -1,6 +1,6 @@
 {
   "name": "@quartermaster/ui-tokens",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Quartermaster design tokens — DTCG source, CSS custom properties, and React Native TwTheme objects",
   "author": {
     "name": "Quartermaster",

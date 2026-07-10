@@ -64,5 +64,28 @@
         "watchDepsTargetName": "watch-deps"
       }
     }
-  ]
+  ],
+    "release": {
+    "projects": ["ui-tokens", "ui-components"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}/v{version}",
+    "version": {
+      "specifierSource": "conventional-commits",
+      "currentVersionResolver": "git-tag",
+      "fallbackCurrentVersionResolver": "disk",
+      "updateDependents": "never"
+    },
+    "changelog": {
+      "automaticFromRef": true,
+      "workspaceChangelog": false,
+      "projectChangelogs": {
+        "file": false
+      }
+    },
+    "git": {
+      "commit": false,
+      "tag": false,
+      "push": true
+    }
+  }
 }
