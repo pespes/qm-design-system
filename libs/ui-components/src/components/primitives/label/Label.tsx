@@ -10,7 +10,6 @@ const labelBaseClassName =
 
 function Label({ type = 'default', className, ...props }: LabelProps) {
   return (
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label
       data-slot='label'
       className={cn(
