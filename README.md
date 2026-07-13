@@ -4,7 +4,7 @@ This project is structured as a monorepo managed by Nx and pnpm, focusing on the
 
 ## Monorepo Management
 
-The project is organized a monorepo using `Nx` and `pnpm`. This setup allows the management of multiple libraries in a single repo while keeping build processes and dependencies separated.
+The project is organized as a monorepo using `Nx` and `pnpm`. This setup allows the management of multiple libraries in a single repo while keeping build processes and dependencies separated.
 
 #### Configuration Structure
 
@@ -29,10 +29,15 @@ Packages can be managed individually but the root `package.json` provides the st
 `pnpm jest` // Project wide execution of Jest tests
 
 ### Commits and Git Workflow
-We use the [Conventional Commits](https://www.notion.so/Conventional-Commits-1194dc390c858036b48ffb2a73c8f3e6) specification for commit messages. All commit messages must follow the following signature:
+We use the [Conventional Commits](https://www.notion.so/Conventional-Commits-1194dc390c858036b48ffb2a73c8f3e6) specification for commit messages. 
+
+
+Because this is a mono-repo with both ui-tokens and ui-components packages, it is necessary to scope your commit message to the relevant package in order to allow releases to properly map commits to correct packages. For example, if you are working within ui-tokens, your commit message should start with `feat(ui-tokens):`. If you are working on the ui-components, it should start with `feat(ui-components):`. If you are working on architecture outside of these two packages (which would therefore always fall into a non-release-tiggering type such as `build` or `ci`), the appropriate scope would be `<type>(repo)`
+
+All commit messages must follow the following signature:
 ```
-<type>: QP-<ticket-num> <subject>
-feat: QP-21039 SelectComponent
+<type>(scope): QP-<ticket-num> <subject>
+feat(scope): QP-21039 SelectComponent
 ```
 
 ## Libraries

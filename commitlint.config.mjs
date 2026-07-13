@@ -31,6 +31,21 @@ const Configuration = {
     ],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
+    // ui-components depends on ui-tokens - to prevent nx from assigning ui-components a breaking change bump
+    // when ui-tokens has one, add scope
+    'scope-enum': [
+      2,
+      'always',
+      {
+        scopes: [
+          'ui-tokens',
+          'ui-components',
+          'repo',
+        ]
+      }
+    ],
+    'scope-case': [2, 'always', 'lower-case'],
+    'scope-empty': [2, 'never'],
     'subject-case': [0, 'always', []], // Disabled to allow ticket numbers and capitals
     'subject-empty': [2, 'never'],
     'subject-full-stop': [2, 'never', '.'],
