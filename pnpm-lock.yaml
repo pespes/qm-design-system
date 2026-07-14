@@ -147,7 +147,7 @@ importers:
 
   libs/ui-components:
     dependencies:
-      '@Quartermaster-Inc/ui-tokens':
+      '@quartermaster-inc/ui-tokens':
         specifier: workspace:^
         version: link:../ui-tokens
       '@base-ui/react':
