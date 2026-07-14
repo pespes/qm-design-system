@@ -1,10 +1,9 @@
 name: Cleanup self-hosted runner
 description: >
-  Remove the per-run pnpm directories created by this job (setup-pnpm and
-  the pnpm store), keyed by check_run_id so the cleanup is strictly scoped
-  to this run and cannot affect concurrent jobs. Runs as the final step
-  of every self-hosted job with `if: always()` so disk is reclaimed even
-  on failure or cancellation.
+  Remove the per-run setup-pnpm directory created by this job, keyed by
+  check_run_id so the cleanup is strictly scoped to this run and cannot 
+  affect concurrent jobs. Runs as the final step of every self-hosted job
+  with `if: always()` so disk is reclaimed even on failure or cancellation.
 
 inputs:
   check-run-id:

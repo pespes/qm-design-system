@@ -21,6 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
+          persist-credentials: false
           fetch-depth: 0
 
       - name: Setup pnpm
@@ -45,9 +46,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}   
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       
 
       - name: Validate PR commits with commitlint
         if: github.event_name == 'pull_request' && !contains(fromJSON('["main", "development"]'), github.head_ref)

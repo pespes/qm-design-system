@@ -36,6 +36,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
+          persist-credentials: false
           # Full history + tags: the git-tag version resolver needs the stable
           # tags from main, and conventional-commits needs commit history.
           fetch-depth: 0
@@ -66,7 +67,7 @@ jobs:
         run: pnpm install --frozen-lockfile
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       
 
       # Fail fast: same checks as CI
       - name: Validate commits with commitlint
