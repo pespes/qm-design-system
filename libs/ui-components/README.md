@@ -44,12 +44,12 @@ within components are expected to be arrow functions for consistency.
 
 Import the `ui-components` package with:
 ```
-pnpm add @quartermaster/ui-components
+pnpm add @Quartermaster-Inc/ui-components
 ```
 
 All packages are built using typescript, and expose ES6-compatible javascript files, alongside typescript definition files (`*.d.ts`). 
 ```typescript jsx
-import { Button, ButtonProps } from '@quartermaster/ui-components';
+import { Button, ButtonProps } from '@Quartermaster-Inc/ui-components';
 
 type MyComponentProps = ButtonProps & { label: string };
 
