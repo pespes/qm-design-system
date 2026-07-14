@@ -17,7 +17,7 @@ Merging a feature branch into development triggers the [Development Release Buil
   - uses nx release's git-tag version resolver to locate the latest stable version release on main
   - appends `-dev.<run_id>` to the version to create a unique release number
   - adds a `development` dist tag for testing in development environments
-  - publishes the branch to Quartermaster's jfrog registry
+  - publishes the branch to Quartermaster's Github Packages
 
 The development work flow does not create an additional merge commit, and does not create a git-tag in order to prevent git-tag pollution in the history, and allow nx release's git-tag version resolver to safely identify the `latest` (aka last stable version) git-tag from main.
 
@@ -28,7 +28,7 @@ A merging PR from the development branch into main triggers the [Production Rele
   - uses nx release's git-tag version resolver to locate the latest stable version release on main
   - uses conventional commits & semantic versioning to determine the appropriate version bump for the project, and both updates the relevant lib's package.json and the release tag's version number
   - publishes with the default `latest` npm dist-tag and creates a git-tag `{projectName}/v{version}`
-  - publishes the branch to Quartermaster's jfrog registry
+  - publishes the branch to Quartermaster's Github Packages
   - back merges a commit to the `development` branch to ensure the lib's package.json version remains in sync
 
 ### Versioning

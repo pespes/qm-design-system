@@ -1,5 +1,5 @@
 {
-  "name": "@quartermaster/ui-components",
+  "name": "@Quartermaster-Inc/ui-components",
   "version": "1.0.0",
   "description": "Quartermaster Component Library",
   "author": {
@@ -25,6 +25,10 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -44,7 +48,7 @@
     "test:watch": "vitest"
   },
   "peerDependencies": {
-    "@quartermaster/ui-tokens": "workspace:^",
+    "@Quartermaster-Inc/ui-tokens": "workspace:^",
     "clsx": "^2.1.1",
     "react": "^19",
     "react-dom": "^19"

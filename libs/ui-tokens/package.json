@@ -1,5 +1,5 @@
 {
-  "name": "@quartermaster/ui-tokens",
+  "name": "@Quartermaster-Inc/ui-tokens",
   "version": "1.0.0",
   "description": "Quartermaster design tokens — DTCG source, CSS custom properties, and React Native TwTheme objects",
   "author": {
@@ -18,6 +18,10 @@
   "engines": {
     "node": ">= 22"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "exports": {
     "./css/tokens": "./dist/css/tokens.css",
     "./css/tokens-pro": "./dist/css/tokens.pro.css",
