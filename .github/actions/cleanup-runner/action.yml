@@ -1,0 +1,22 @@
+name: Cleanup self-hosted runner
+description: >
+  Remove the per-run pnpm directories created by this job (setup-pnpm and
+  the pnpm store), keyed by check_run_id so the cleanup is strictly scoped
+  to this run and cannot affect concurrent jobs. Runs as the final step
+  of every self-hosted job with `if: always()` so disk is reclaimed even
+  on failure or cancellation.
+
+inputs:
+  check-run-id:
+    description: The job's check_run_id used to namespace per-run directories.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Reclaim runner disk
+      shell: bash
+      env:
+        CHECK_RUN_ID: ${{ inputs.check-run-id }}
+      run: |
+        rm -rf "/home/runner/setup-pnpm-${CHECK_RUN_ID}" 2>/dev/null || true

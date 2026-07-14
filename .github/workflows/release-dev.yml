@@ -1,0 +1,140 @@
+name: Development Release Build
+
+# Fires when a feature branch is merged into `development`.
+#
+# Determines the affected libraries via Nx to determine which dev prerelease should run.
+# Then iterates through affected libraries, publishing a disposable `{projectName}/vX.Y.Z-dev.<run_id> prelease,
+# where `X.Y.Z` reflects the last stable release for the library from production.
+# Each prerelease is published under the `development` dist-tag. 
+# 
+# For more information, see RELEASE.md.
+
+on:
+  pull_request:
+    branches: [development]
+    paths-ignore: ["**/*.md", "docs/**", "*.png", "*.svg"]
+  push:
+    branches: [development]
+    paths-ignore: ["**/*.md", "docs/**", "*.png", "*.svg"]
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "10.33.0"
+
+# Serialize dev releases so two quick merges can't publish out of order.
+concurrency:
+  group: release-dev
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Development Release
+    runs-on: [self-hosted, qm-dev]
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Full history + tags: the git-tag version resolver needs the stable
+          # tags from main, and conventional-commits needs commit history.
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+
+      - name: Cache Nx outputs
+        uses: actions/cache@v5
+        with:
+          path: .nx
+          key: ${{ runner.os }}-nx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Fail fast: same checks as CI
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request' && !contains(fromJSON('["main", "development"]'), github.head_ref)
+        run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+      - name: Build Tokens
+        run: pnpm exec nx build ui-tokens
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build Components
+        run: pnpm exec nx build ui-components
+
+      # Only publish libs that have updates based on diff range from the merging PR
+      - name: Determine Affected Projects
+        id: affected-libs
+        run: |
+          AFFECTED=$(pnpm exec nx show projects --affected \
+          --base="origin/${{ github.event.pull_request.base.ref }}" \
+          --head="${{ github.sha }}" | tr '\n' ' ')
+          if [ -z "$AFFECTED" ]; then
+            echo "No affected projects; nothing to publish."
+            exit 0
+          fi
+          echo "affected=${AFFECTED}" >> "$GITHUB_OUTPUT"
+
+      # Publish a dev prerelease of each affected package.
+      #
+      # `npm version --no-git-tag-version` only stamps the manifest for pack
+      # time and is never committed, so the repo's stable version is untouched.
+      - name: Publish development prereleases
+        if: steps.affected-libs.outputs.affected != ''
+        env:
+          RUN_ID: ${{ github.run_id }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          for PROJECT in ${{ steps.affected-libs.outputs.affected }}; do
+            DIR="libs/${PROJECT}"
+            TAG=$(git tag --list "${PROJECT}/v*" --sort=-v:refname | head -n1)
+            if [ -n "$TAG" ]; then
+              # Expected case where stable version comes from the last git tag.
+              STABLE=${TAG#"${PROJECT}/v"}
+            else
+              # If no stable tag yet (ie first-ever release). Fall back to the
+              # package.json version — mirrors nx's `fallbackCurrentVersionResolver: disk`.
+              STABLE=$(node -p "require('./${DIR}/package.json').version")
+              echo "No stable tag for ${PROJECT}; seeding from package.json (${STABLE})."
+            fi
+            DEV_VERSION="${STABLE}-dev.${RUN_ID}"
+            echo "Publishing ${PROJECT} @ ${DEV_VERSION}"
+            (
+              cd "$DIR"
+              npm version "$DEV_VERSION" --no-git-tag-version
+              pnpm publish --tag development --no-git-checks
+            )
+          done
+        
+      - name: Cleanup runner
+        if: always()
+        uses: ./.github/actions/cleanup-runner
+        with:
+          check-run-id: ${{ job.check_run_id }}
