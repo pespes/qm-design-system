@@ -45,10 +45,11 @@ jobs:
           fetch-tags: true
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: ${{ env.PNPM_VERSION }}
           run_install: false
+          dest: /home/runner/setup-pnpm-${{ job.check_run_id }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -102,13 +103,16 @@ jobs:
 
       # Publish a dev prerelease of each affected package.
       #
+      # First establish the last stable release for the library from production via git tag.
+      # If that does not exist (ie. first release), fall back to package.json version much like nx's
+      # fallback resolver.
       # `npm version --no-git-tag-version` only stamps the manifest for pack
-      # time and is never committed, so the repo's stable version is untouched.
+      # time and is never committed, and repo's stable version is untouched.
       - name: Publish development prereleases
         if: steps.affected-libs.outputs.affected != ''
         env:
           RUN_ID: ${{ github.run_id }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
@@ -116,11 +120,8 @@ jobs:
             DIR="libs/${PROJECT}"
             TAG=$(git tag --list "${PROJECT}/v*" --sort=-v:refname | head -n1)
             if [ -n "$TAG" ]; then
-              # Expected case where stable version comes from the last git tag.
               STABLE=${TAG#"${PROJECT}/v"}
             else
-              # If no stable tag yet (ie first-ever release). Fall back to the
-              # package.json version — mirrors nx's `fallbackCurrentVersionResolver: disk`.
               STABLE=$(node -p "require('./${DIR}/package.json').version")
               echo "No stable tag for ${PROJECT}; seeding from package.json (${STABLE})."
             fi

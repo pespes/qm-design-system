@@ -28,6 +28,7 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
           run_install: false
+          dest: /home/runner/setup-pnpm-${{ job.check_run_id }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -40,18 +41,6 @@ jobs:
           path: .nx
           key: ${{ runner.os }}-nx-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-nx-
-
-      - name: Debug .npmrc
-        run: |
-          echo "=== Project .npmrc ==="
-          cat .npmrc
-          echo "=== pnpm config list ==="
-          pnpm config list
-          echo "=== NPM_TOKEN check ==="
-          if [ -z "$NPM_TOKEN" ]; then echo "NPM_TOKEN is EMPTY"; else echo "NPM_TOKEN is SET (length: ${#NPM_TOKEN})"; fi
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
