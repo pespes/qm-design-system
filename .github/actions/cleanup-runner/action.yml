@@ -9,6 +9,9 @@ inputs:
   check-run-id:
     description: The job's check_run_id used to namespace per-run directories.
     required: true
+  runner-temp:
+    description: The runner's temp directory (runner.temp) where setup-pnpm was created.
+    required: true
 
 runs:
   using: composite
@@ -17,5 +20,6 @@ runs:
       shell: bash
       env:
         CHECK_RUN_ID: ${{ inputs.check-run-id }}
+        RUNNER_TEMP_DIR: ${{ inputs.runner-temp }}
       run: |
-        rm -rf "/home/runner/setup-pnpm-${CHECK_RUN_ID}" 2>/dev/null || true
+        rm -rf "${RUNNER_TEMP_DIR}/setup-pnpm-${CHECK_RUN_ID}" 2>/dev/null || true

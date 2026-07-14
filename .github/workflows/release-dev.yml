@@ -47,7 +47,7 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
           run_install: false
-          dest: /home/runner/setup-pnpm-${{ job.check_run_id }}
+          dest: ${{ runner.temp }}/setup-pnpm-${{ job.check_run_id }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -110,10 +110,11 @@ jobs:
         env:
           RUN_ID: ${{ github.run_id }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AFFECTED: ${{ steps.affected-libs.outputs.affected }}
         run: |
           set -euo pipefail
 
-          for PROJECT in ${{ steps.affected-libs.outputs.affected }}; do
+          for PROJECT in ${AFFECTED}; do
             DIR="libs/${PROJECT}"
             TAG=$(git tag --list "${PROJECT}/v*" --sort=-v:refname | head -n1)
             if [ -n "$TAG" ]; then
