@@ -1,5 +1,5 @@
 {
-  "name": "@Quartermaster-Inc/ui-components",
+  "name": "@quartermaster-inc/ui-components",
   "version": "1.0.0",
   "description": "Quartermaster Component Library",
   "author": {
@@ -50,7 +50,7 @@
     "test:watch": "vitest"
   },
   "peerDependencies": {
-    "@Quartermaster-Inc/ui-tokens": "workspace:^",
+    "@quartermaster-inc/ui-tokens": "workspace:^",
     "clsx": "^2.1.1",
     "react": "^19",
     "react-dom": "^19"
