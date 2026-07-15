@@ -1,0 +1,105 @@
+name: Production Release Build
+
+# Fires when `development` is merged into `main`.
+#
+# Uses nx release to determine affected libraries to release next stable release. 
+# Nx release will determine the last stable version based on the latest git-tag, and
+# resolves back to package.json version if git-tag is unresolved (ie. first release).
+#
+# Then uses commitlint to determine appropriate version update and releases version.
+# An additional commit is included to bump the package.json files in order to keep
+# versioning in sync with git-tags.
+# Back merges to `development` to update package.json version to keep in sync.
+#
+# For more information, see RELEASE.md.
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**/*.md", "docs/**", "*.png", "*.svg"]
+
+env:
+  NODE_VERSION: "22"
+  PNPM_VERSION: "10.33.0"
+
+concurrency:
+  group: release-prod
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Production Release
+    runs-on: [self-hosted, qm-dev]
+  
+    permissions:
+      contents: write
+      packages: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Full history + tags: the git-tag version resolver needs the stable
+          # tags from main, and conventional-commits needs commit history.
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.QM_BOT_GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+          dest: ${{ runner.temp }}/setup-pnpm-${{ job.check_run_id }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache Nx outputs
+        uses: actions/cache@v5
+        with:
+          path: .nx
+          key: ${{ runner.os }}-nx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nx-
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+
+      - name: CI Checks
+        uses: ./.github/actions/run-ci
+
+      - name: Configure Git Identity
+        run: |
+          git config user.email "ci@quartermaster.house"
+          git config user.name "CI Bot"
+
+      - name: Run Nx Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.QM_BOT_GITHUB_TOKEN }}
+        run: pnpm nx release --yes --verbose
+      - name: Back Merge main → development
+        if: github.ref_name == 'main'
+        run: |
+          git checkout development
+          if git merge-base --is-ancestor origin/main development; then
+            echo "development already contains main, skipping."
+          elif git merge origin/main --no-ff -m "chore: merge main into development"; then
+            git push origin development
+          else
+            git merge --abort
+            echo "::error::Merge conflict detected merging main into development. Resolve manually and re-merge."
+            exit 1
+          fi
+
+      - name: Cleanup runner
+        if: always()
+        uses: ./.github/actions/cleanup-runner
+        with:
+          check-run-id: ${{ job.check_run_id }}
+          runner-temp: ${{ runner.temp }}
