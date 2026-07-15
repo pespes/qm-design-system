@@ -15,7 +15,13 @@ inputs:
 
 runs:
   using: composite
-  steps:
+  steps:    
+    - name: Remove installed dependencies and outputs
+      shell: bash
+      run: |
+        rm -rf node_modules
+        rm -rf libs/*/node_modules libs/*/dist libs/*/build
+
     - name: Reclaim runner disk
       shell: bash
       env:
