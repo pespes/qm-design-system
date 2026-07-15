@@ -42,6 +42,7 @@ jobs:
           path: .nx
           key: ${{ runner.os }}-nx-${{ github.sha }}
           restore-keys: |
+            ${{ runner.os }}-nx-
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
