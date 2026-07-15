@@ -1,5 +1,5 @@
 {
-  "name": "@quartermaster/ui-components",
+  "name": "@quartermaster-inc/ui-components",
   "version": "1.0.0",
   "description": "Quartermaster Component Library",
   "author": {
@@ -7,7 +7,9 @@
     "url": "https://quartermaster.house"
   },
   "type": "module",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "keywords": [
     "quartermaster",
     "typescript",
@@ -24,6 +26,10 @@
   "types": "./dist/index.d.ts",
   "sideEffects": [
     "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
   ],
   "exports": {
     ".": {
@@ -44,7 +50,7 @@
     "test:watch": "vitest"
   },
   "peerDependencies": {
-    "@quartermaster/ui-tokens": "workspace:^",
+    "@quartermaster-inc/ui-tokens": "workspace:^",
     "clsx": "^2.1.1",
     "react": "^19",
     "react-dom": "^19"

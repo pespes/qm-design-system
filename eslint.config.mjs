@@ -30,7 +30,7 @@ export default defineConfig([
             {
               sourceTag: "scope:shared",
               onlyDependOnLibsWithTags: ["scope:shared"],
-              bannedExternalImports: ["@quartermaster/ui-components"],
+              bannedExternalImports: ["@quartermaster-inc/ui-components"],
             },
             {
               sourceTag: "scope:ui",
@@ -63,7 +63,7 @@ export default defineConfig([
       "quartermaster/no-internal-imports": [
         "error",
         {
-          pattern: "^@quartermaster/ui-tokens-[^/]+/.+",
+          pattern: "^@quartermaster-inc/ui-tokens-[^/]+/.+",
         },
       ],
       "@typescript-eslint/consistent-type-imports": "error",
