@@ -147,12 +147,12 @@ importers:
 
   libs/ui-components:
     dependencies:
-      '@quartermaster-inc/ui-tokens':
-        specifier: workspace:^
-        version: link:../ui-tokens
       '@base-ui/react':
         specifier: ^1.4.1
         version: 1.4.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@quartermaster-inc/ui-tokens':
+        specifier: workspace:^
+        version: link:../ui-tokens
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
