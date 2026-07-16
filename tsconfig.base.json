@@ -22,10 +22,10 @@
     "forceConsistentCasingInFileNames": true,
 
     "paths": {
-      "@quartermaster/ui-tokens/native/tokens": ["./libs/ui-tokens/dist/native/native.ts"],
-      "@quartermaster/ui-tokens/native/tokens-pro": ["./libs/ui-tokens/dist/native/native.pro.ts"],
-      "@quartermaster/ui-tokens/css/tokens": ["./libs/ui-tokens/dist/css/tokens.css"],
-      "@quartermaster/ui-tokens/css/tokens-pro": ["./libs/ui-tokens/dist/css/tokens.pro.css"]
+      "@quartermaster-inc/ui-tokens/native/tokens": ["./libs/ui-tokens/dist/native/native.ts"],
+      "@quartermaster-inc/ui-tokens/native/tokens-pro": ["./libs/ui-tokens/dist/native/native.pro.ts"],
+      "@quartermaster-inc/ui-tokens/css/tokens": ["./libs/ui-tokens/dist/css/tokens.css"],
+      "@quartermaster-inc/ui-tokens/css/tokens-pro": ["./libs/ui-tokens/dist/css/tokens.pro.css"]
     },
   },
   "exclude": [

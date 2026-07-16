@@ -10,6 +10,10 @@ const Configuration = {
       },
     },
   ],
+  ignores: [
+    (commitMsg) => /^chore\(release\): publish versions \[skip ci\]/.test(commitMsg),
+    (commitMsg) => /^chore: merge main into development \[skip ci\]/.test(commitMsg),
+  ],
   // Breaking changes are supported using the '!' syntax: feat!:
   rules: {
     'type-enum': [

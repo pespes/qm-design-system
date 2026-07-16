@@ -79,13 +79,18 @@
       "automaticFromRef": true,
       "workspaceChangelog": false,
       "projectChangelogs": {
-        "file": false
+        "file": false,
+        "createRelease": "github",
+        "renderOptions": {
+          "applyUsernameToAuthors": false
+        }
       }
     },
     "git": {
-      "commit": false,
-      "tag": false,
-      "push": true
+      "commit": true,
+      "tag": true,
+      "push": true,
+      "commitMessage": "chore(release): publish versions [skip ci]"
     }
   }
 }

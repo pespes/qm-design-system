@@ -1,0 +1,26 @@
+name: Run CI checks
+description: Shared ci checks for PRs & release
+
+runs:
+  using: composite
+  steps:
+    - name: Validate PR commits with commitlint
+      if: github.event_name == 'pull_request' && !contains(fromJSON('["main", "development"]'), github.head_ref)
+      shell: bash
+      run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+    - name: Build Tokens
+      shell: bash
+      run: pnpm exec nx build ui-tokens
+
+    - name: Typecheck
+      shell: bash
+      run: pnpm typecheck
+
+    - name: Lint
+      shell: bash
+      run: pnpm lint
+
+    - name: Build Components
+      shell: bash
+      run: pnpm exec nx build ui-components

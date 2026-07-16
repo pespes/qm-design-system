@@ -9,7 +9,7 @@
 
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@quartermaster/ui-tokens/css/tokens";
-@import "@quartermaster/ui-tokens/css/tokens-pro";
+@import "@quartermaster-inc/ui-tokens/css/tokens";
+@import "@quartermaster-inc/ui-tokens/css/tokens-pro";
 
 @import "./styles.css";

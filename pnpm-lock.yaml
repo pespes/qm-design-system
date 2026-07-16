@@ -147,6 +147,9 @@ importers:
 
   libs/ui-components:
     dependencies:
+      '@quartermaster-inc/ui-tokens':
+        specifier: workspace:^
+        version: link:../ui-tokens
       '@base-ui/react':
         specifier: ^1.4.1
         version: 1.4.1(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -166,9 +169,6 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
     devDependencies:
-      '@quartermaster/ui-tokens':
-        specifier: workspace:*
-        version: link:../ui-tokens
       '@rollup/plugin-commonjs':
         specifier: ^28.0.2
         version: 28.0.9(rollup@4.62.2)
