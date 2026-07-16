@@ -21,6 +21,7 @@ runs:
       run: |
         rm -rf node_modules
         rm -rf libs/*/node_modules libs/*/dist libs/*/build
+        rm -rf .npmrc
 
     - name: Reclaim runner disk
       shell: bash
