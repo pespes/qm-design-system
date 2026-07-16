@@ -87,9 +87,9 @@ jobs:
         if: github.ref_name == 'main'
         run: |
           git checkout development
-          if git merge-base --is-ancestor origin/main development; then
+          if git merge-base --is-ancestor main development; then
             echo "development already contains main, skipping."
-          elif git merge origin/main --no-ff -m "chore: merge main into development"; then
+          elif git merge main --no-ff -m "chore: merge main into development"; then
             git push origin development
           else
             git merge --abort
