@@ -21,7 +21,6 @@ runs:
       run: |
         rm -rf node_modules
         rm -rf libs/*/node_modules libs/*/dist libs/*/build
-        rm -rf .npmrc
 
     - name: Reclaim runner disk
       shell: bash
@@ -30,3 +29,4 @@ runs:
         RUNNER_TEMP_DIR: ${{ inputs.runner-temp }}
       run: |
         rm -rf "${RUNNER_TEMP_DIR}/setup-pnpm-${CHECK_RUN_ID}" 2>/dev/null || true
+        rm -f "${RUNNER_TEMP_DIR}/npmrc-${CHECK_RUN_ID}" 2>/dev/null || true
