@@ -86,13 +86,13 @@ jobs:
           umask 077
           {
             echo "@Quartermaster-Inc:registry=https://npm.pkg.github.com"
-            echo "//npm.pkg.github.com/:_authToken=${{ secrets.QM_BOT_GITHUB_TOKEN }}"
+            echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
             echo "always-auth=true"
           } > "$NPM_CONFIG_USERCONFIG"
 
       - name: Run Nx Release
         env:
-          GITHUB_TOKEN: ${{ secrets.QM_BOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/npmrc-${{ job.check_run_id }}
         run: pnpm nx release --yes --verbose
 
