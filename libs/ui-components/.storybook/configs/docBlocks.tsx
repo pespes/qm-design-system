@@ -9,7 +9,7 @@ export const MarkdownBlock = () => {
     <div>
       <h3 id='sb-import'>Import</h3>
       <Source
-        code={`import { ${title} } from '@quartermaster-inc/ui-components'`}
+        code={`import { ${title} } from '@Quartermaster-Inc/ui-components'`}
       />
     </div>
   );
