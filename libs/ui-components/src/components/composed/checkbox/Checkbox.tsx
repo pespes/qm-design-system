@@ -25,7 +25,10 @@ function Checkbox({
 
   const wrapperClasses = {
     root: cn('gap-x-250', className, root),
-    label: cn('group-data-invalid/field:text-status-danger-text', label),
+    label: cn(
+      'group-data-invalid/field:text-status-danger-text type-ui-default',
+      label,
+    ),
     descriptionText,
   } as FieldWrapperClassMap;
 

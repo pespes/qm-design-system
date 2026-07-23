@@ -42,7 +42,7 @@
         "default": "./dist/index.cjs"
       }
     },
-    "./styles.css": "./dist/styles.entry.css"
+    "./styles.css": "./dist/styles.css"
   },
   "scripts": {
     "dev": "vite",

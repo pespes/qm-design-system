@@ -59,15 +59,10 @@ function SelectField({
       id={labelId}
       className={cn(
         labelBaseClassName,
-        'type-ui-default group/field-label peer/field-label',
+        'type-ui-default-emphasis group/field-label peer/field-label',
       )}
     >
       {labelString}
-      {required && (
-        <span aria-hidden='true' className='-ml-100 text-status-danger-text'>
-          *
-        </span>
-      )}
     </label>
   );
 
