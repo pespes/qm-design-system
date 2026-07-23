@@ -6,8 +6,6 @@ import { hasInvalidLeaf } from '../utilities/validation.js';
 import { findTokenValue } from '../utilities/token-helpers.js';
 import { categorizeTokens } from './token-categorization.js';
 
-const tokenTypes = ['border-width', 'color', 'radius', 'spacing', 'text'];
-
 // Categories surfaced to tailwind-merge so QM keys are recognized in the right conflict group.
 // Included when tw-merge's scale is theme-based, or when a predicate scale would miss non-numeric
 // keys. `borderWidth` and `zIndex` are omitted — their `isNumber` / `isInteger` predicates already
@@ -46,11 +44,6 @@ interface ThemeAcc {
 export const tailwindTheme: Format = {
   name: 'css/tailwind-theme',
   format: async ({ dictionary, file }: FormatFnArguments) => {
-    const defaults = tokenTypes.reduce((acc, type, idx) => {
-      const renderLineBreak = idx < tokenTypes.length - 1 ? '\n' : ''; //prevent extra line before closing bracket
-      return acc + `  --${type}-*: initial;${renderLineBreak}`;
-    }, '');
-
     const { themeVars: themeVarList, utilities } = categorizeTokens(
       dictionary.allTokens,
     );
@@ -74,9 +67,6 @@ export const tailwindTheme: Format = {
 
     return [
       await fileHeader({ file }),
-      '@theme {',
-      defaults,
-      '}\n',
       '@theme {',
       themeVars,
       '}\n',
