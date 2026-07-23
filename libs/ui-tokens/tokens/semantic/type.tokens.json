@@ -140,6 +140,16 @@
           "letterSpacing": "{letterSpacing.000}"
         }
       },
+      "default-emphasis": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{fontFamily.sans}",
+          "fontSize": "{fontSize.075}",
+          "fontWeight": "{fontWeight.600}",
+          "lineHeight": "{lineHeight.125}",
+          "letterSpacing": "{letterSpacing.000}"
+        }
+      },
       "caption": {
         "$type": "typography",
         "$value": {

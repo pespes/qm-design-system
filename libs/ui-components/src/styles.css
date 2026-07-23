@@ -2,7 +2,7 @@
  * Component-only styles for @Quartermaster-Inc/ui-components.
  *
  * Shared by both the dev/Storybook entry (globals.css) and the published
- * build entry (styles.entry.css). Keep ONLY component rules here — no
+ * build entry (styles.css). Keep ONLY component rules here — no
  * `@import "tailwindcss"` and no token imports, so the two entries control
  * how Tailwind + tokens are wired without duplicating these rules.
  */
