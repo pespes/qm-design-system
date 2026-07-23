@@ -38,6 +38,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  render: (args: SeparatorProps) => (
+    <div className='h-1200 flex items-center'>
+      <Separator {...args} />
+    </div>
+  ),
   play: defaultTests,
 };
 
@@ -45,6 +50,11 @@ export const Vertical: Story = {
   args: {
     orientation: 'vertical',
   },
+  render: (args: SeparatorProps) => (
+    <div className='h-1800'>
+      <Separator {...args} />
+    </div>
+  ),
   play: verticalTests,
 };
 
