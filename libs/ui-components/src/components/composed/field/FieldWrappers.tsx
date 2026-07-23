@@ -48,11 +48,6 @@ function FieldWrapper({
   ) : (
     <FieldLabel htmlFor={childId} type='emphasis' className={classes?.label}>
       {label}
-      {required && (
-        <span aria-hidden='true' className='-ml-100 text-status-danger-text'>
-          *
-        </span>
-      )}
     </FieldLabel>
   );
 

@@ -56,7 +56,7 @@ function RadioGroupItem({
     ...fieldWrapperClasses,
     root: cn('gap-x-250', fieldWrapperClasses?.option),
     label: cn(
-      'group-data-invalid/field:text-status-danger-text',
+      'group-data-invalid/field:text-status-danger-text type-ui-default',
       disabled && 'text-state-disabled',
       fieldWrapperClasses?.label,
     ),

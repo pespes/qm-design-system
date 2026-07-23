@@ -24,7 +24,7 @@ function FieldLegend({
       data-slot='field-legend'
       data-variant={variant}
       className={cn(
-        'data-[variant=label]:type-ui-default data-[variant=legend]:type-header-h2 text-foreground-default group-data-disabled/field-set:text-state-disabled',
+        'data-[variant=label]:type-ui-default-emphasis data-[variant=legend]:type-header-h2 text-foreground-default group-data-disabled/field-set:text-state-disabled',
         className,
       )}
       {...props}
@@ -105,7 +105,7 @@ function FieldLabel({
       data-slot='field-label'
       type='emphasis'
       className={cn(
-        'group/field-label peer/field-label',
+        'group/field-label peer/field-label type-ui-default-emphasis',
         '*:data-[slot=field]:p-250 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col',
         className,
       )}
