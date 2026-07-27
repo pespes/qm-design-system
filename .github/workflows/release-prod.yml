@@ -85,7 +85,7 @@ jobs:
         run: |
           umask 077
           {
-            echo "@Quartermaster-Inc:registry=https://npm.pkg.github.com"
+            echo "@quartermaster-inc:registry=https://npm.pkg.github.com"
             echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
             echo "always-auth=true"
           } > "$NPM_CONFIG_USERCONFIG"
@@ -94,7 +94,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/npmrc-${{ job.check_run_id }}
-        run: pnpm nx release --yes --verbose
+        run: pnpm nx release --yes --verbose --first-release
 
       - name: Back Merge main → development
         if: github.ref_name == 'main'
