@@ -1,0 +1,77 @@
+name: Deploy Storybook
+
+on:
+  workflow_run:
+    workflows: [Development Release Build]
+    types: [completed]
+    branches: [development]
+
+# OIDC role assumption via aws-actions/configure-aws-credentials requires id-token: write.
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  PNPM_VERSION: "10.33.0"
+  NODE_VERSION: "22"
+
+jobs:
+  build-and-deploy:
+    name: Build Storybook and deploy to S3/CloudFront
+    runs-on: [self-hosted, qm-dev]
+  
+    env:
+      AWS_ROLE_ARN: ${{ secrets.STBK_AWS_ROLE_ARN }}
+      AWS_REGION: ${{ secrets.STBK_AWS_REGION }}
+      S3_BUCKET: ${{ secrets.STBK_S3_BUCKET }}
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.STBK_AWS_CLOUDFRONT_ID }}
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+          dest: ${{ runner.temp }}/setup-pnpm-${{ job.check_run_id }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
+
+      # build-storybook uses nx to mark ui-components/ui-tokens build commands as dependencies. Running build-storybook
+      # will trigger builds of ui-tokens & ui-components to ensure all token values are populated prior to bundling
+      - name: Build Storybook
+        run: pnpm build:storybook
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy to S3 Bucket
+        run: aws s3 sync ./libs/ui-components/storybook-static s3://${{ env.S3_BUCKET }}
+
+      - name: Invalidate CloudFront distribution
+        run: aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+
+      - name: Cleanup runner
+        if: always()
+        uses: ./.github/actions/cleanup-runner
+        with:
+          check-run-id: ${{ job.check_run_id }}
+          runner-temp: ${{ runner.temp }}
