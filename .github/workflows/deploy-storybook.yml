@@ -52,7 +52,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
 
-      # build-storybook uses nx to mark ui-components/ui-tokens build commands as dependencies. Running build-storybook
+      # build:storybook uses nx to mark ui-components/ui-tokens build commands as dependencies. Running build:storybook
       # will trigger builds of ui-tokens & ui-components to ensure all token values are populated prior to bundling
       - name: Build Storybook
         run: pnpm build:storybook
