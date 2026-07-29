@@ -37,6 +37,9 @@
       "options": {
         "port": 6006
       }
+    },
+    "build-storybook": {
+      "dependsOn": ["build"]
     }
   },
   "analytics": false,
@@ -65,7 +68,7 @@
       }
     }
   ],
-    "release": {
+  "release": {
     "projects": ["ui-tokens", "ui-components"],
     "projectsRelationship": "independent",
     "releaseTagPattern": "{projectName}/v{version}",
