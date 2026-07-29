@@ -6,7 +6,7 @@ import type { TextAreaProps } from './TextArea.types.js';
 type TextAreaPlayContext = StoryContext<TextAreaProps>;
 const MIN_TEXTAREA_HEIGHT = 68;
 const USER_CHARS_ENTERED = 10;
-const LINE_HEIGHT = 17.5;
+const LINE_HEIGHT = 21;
 const PADDING = 10;
 
 // --- Default Textarea Tests ---
@@ -44,12 +44,6 @@ export const defaultTests = async ({
       expect(textarea).toHaveValue('t');
     },
   );
-
-  await step('Passes ref to the textarea', async () => {
-    const ref = args.ref as RefObject<HTMLTextAreaElement>;
-    const textarea = ref.current;
-    expect(textarea.tagName).toBe('TEXTAREA');
-  });
 };
 
 // --- Disabled Textarea Tests ---
@@ -81,6 +75,7 @@ export const disabledTests = async ({
 export const invalidTests = async ({
   canvasElement,
   step,
+  args,
 }: TextAreaPlayContext) => {
   const canvas = within(canvasElement);
 
@@ -96,6 +91,12 @@ export const invalidTests = async ({
       expect(textarea.tagName).toBe('TEXTAREA');
     },
   );
+
+  await step('Passes ref to the textarea', async () => {
+    const ref = args.ref as RefObject<HTMLTextAreaElement>;
+    const textarea = ref.current;
+    expect(textarea.tagName).toBe('TEXTAREA');
+  });
 };
 
 // --- MaxLength Textarea Tests ---

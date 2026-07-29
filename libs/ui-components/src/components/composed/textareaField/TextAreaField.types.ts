@@ -1,6 +1,9 @@
 import type { BaseFieldProps } from '../field/FieldWrappers.types.js';
 import type { ClassMap } from '@/types.js';
-import type { TextAreaProps } from '@/components/composed/textarea/TextArea.types.js';
+import type {
+  BaseTextAreaProps,
+  MaxLengthProps,
+} from '@/components/composed/textarea/TextArea.types.js';
 
 export type TextAreaFieldClassMap = ClassMap<
   | 'root'
@@ -12,7 +15,8 @@ export type TextAreaFieldClassMap = ClassMap<
   | 'descriptionText'
 >;
 
-export type TextAreaFieldProps = Omit<TextAreaProps, 'testId'> &
+export type TextAreaFieldProps = Omit<BaseTextAreaProps, 'testId'> &
+  MaxLengthProps &
   Omit<BaseFieldProps, 'children'> & {
     classes?: TextAreaFieldClassMap;
   };

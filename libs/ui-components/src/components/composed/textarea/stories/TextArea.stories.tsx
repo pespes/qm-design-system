@@ -67,11 +67,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const textareaRef = createRef<HTMLTextAreaElement>();
 export const Default: Story = {
   args: {
     testId: 'default-textarea',
-    ref: textareaRef,
   },
   render: function DefaultStory(args) {
     const [value, setValue] = useState('');
@@ -156,9 +154,11 @@ export const Disabled: Story = {
   play: disabledTests,
 };
 
+const textareaRef = createRef<HTMLTextAreaElement>();
 export const Invalid: Story = {
   args: {
     'aria-invalid': true,
+    ref: textareaRef,
   },
   render: function InvalidStory(args) {
     const [value, setValue] = useState('');

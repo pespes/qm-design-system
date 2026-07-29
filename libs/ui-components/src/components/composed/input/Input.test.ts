@@ -218,10 +218,10 @@ export const sizesTest = async ({ canvasElement, step }: InputPlayContext) => {
 
     expect(defaultInput.classList).toContain('py-250');
     expect(defaultInput.classList).toContain('px-300');
-    expect(defaultInput.classList).toContain('type-ui-default');
+    expect(defaultInput.classList).toContain('type-body-default');
 
     expect(largeInput.classList).toContain('px-350');
     expect(largeInput.classList).toContain('py-300');
-    expect(largeInput.classList).toContain('type-ui-lead');
+    expect(largeInput.classList).toContain('type-body-lead');
   });
 };

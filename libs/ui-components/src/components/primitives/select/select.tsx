@@ -149,9 +149,9 @@ function SelectItem({
     <SelectPrimitive.Item
       data-slot='select-item'
       className={cn(
-        'relative flex w-full cursor-default items-center gap-150 rounded-400 py-100 pl-150 pr-600 type-ui-default select-none',
-        'focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle',
-        'hover:bg-state-hover-on-light pressed:bg-state-pressed-on-light',
+        'relative flex w-full cursor-default items-center gap-150 rounded-400 py-150 pl-250 pr-600 type-ui-default min-h-[var(--spacing-800)] select-none',
+        'focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 focus-visible:ring-2 focus-visible:ring-border-subtle',
+        'hover:bg-state-hover-on-light active:bg-state-pressed-on-light',
         'data-disabled:pointer-events-none data-disabled:text-state-disabled [&_svg]:pointer-events-none [&_svg:not([class*="size-"])]:size-400 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-200',
         className,
         classes?.root,

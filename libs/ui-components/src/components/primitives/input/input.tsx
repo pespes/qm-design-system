@@ -9,13 +9,13 @@ import { cn } from '@/utils/utils.js';
  */
 
 const inputGroupVariants = cva(
-  'w-full min-w-0 bg-transparent outline-none type-ui-default text-foreground-default placeholder:text-foreground-subtle',
+  'w-full min-w-0 bg-transparent outline-none type-body-default text-foreground-default placeholder:text-foreground-subtle',
   {
     variants: {
       size: {
         default:
           'py-250 px-300 min-h-[calc(var(--spacing-1000)_-_var(--spacing-050))]',
-        lg: 'py-300 px-350 min-h-[calc(var(--spacing-1200)_-_var(--spacing-050))] type-ui-lead',
+        lg: 'py-300 px-350 min-h-[calc(var(--spacing-1200)_-_var(--spacing-050))] type-body-lead',
       },
     },
     defaultVariants: {
