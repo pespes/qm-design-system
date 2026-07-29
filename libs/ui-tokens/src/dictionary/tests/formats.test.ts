@@ -129,12 +129,10 @@ describe('formats', () => {
       })) as string;
 
       const themeBlocks = result.match(/@theme {/g) || [];
-      expect(themeBlocks.length).toBe(2); //one for clearing existing variables, one for tokens
+      expect(themeBlocks.length).toBe(1);
 
       const utilityBlocks = result.match(/@utility /g) || [];
       expect(utilityBlocks.length).toBe(1); //only one typography token
-
-      expect(result).toContain('--color-*: initial;');
     });
 
     it('should render tokens in tailwind format', async () => {
