@@ -69,21 +69,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       
 
-      # Fail fast: same checks as CI
-      - name: Validate commits with commitlint
-        run: pnpm exec commitlint --from ${{ github.event.before }} --to ${{ github.sha }} --verbose
-
-      - name: Build Tokens
-        run: pnpm exec nx build ui-tokens
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Build Components
-        run: pnpm exec nx build ui-components
+      - name: CI Checks
+        uses: ./.github/actions/run-ci
 
       # Only publish libs that have updates based on diff range from the merging PR
       - name: Determine Affected Projects
@@ -98,6 +85,17 @@ jobs:
           fi
           echo "affected=${AFFECTED}" >> "$GITHUB_OUTPUT"
 
+      - name: Configure npm authentication
+        env:
+          NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/npmrc-${{ job.check_run_id }}
+        run: |
+          umask 077
+          {
+            echo "@quartermaster-inc:registry=https://npm.pkg.github.com"
+            echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
+            echo "always-auth=true"
+          } > "$NPM_CONFIG_USERCONFIG"
+
       # Publish a dev prerelease of each affected package.
       #
       # First establish the last stable release for the library from production via git tag.
@@ -111,6 +109,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AFFECTED: ${{ steps.affected-libs.outputs.affected }}
+          NPM_CONFIG_USERCONFIG: ${{ runner.temp }}/npmrc-${{ job.check_run_id }}
         run: |
           set -euo pipefail
 
