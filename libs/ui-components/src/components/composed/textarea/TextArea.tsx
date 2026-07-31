@@ -35,6 +35,12 @@ function TextArea({
     charLength > 0 ? 'text-foreground-default' : 'text-foreground-subtle';
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // in case a user pastes text longer than the maxLength, trim the text
+    // to the maxLength provided
+    if (maxLength !== undefined && e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
+
     if (value === undefined) {
       setInternalValue(e.target.value);
     }

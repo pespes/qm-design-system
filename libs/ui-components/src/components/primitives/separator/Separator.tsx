@@ -31,7 +31,7 @@ function Separator({
       data-slot='separator'
       orientation={orientation}
       className={cn(
-        'flex items-center justify-center shrink-0 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full',
+        'flex items-center justify-center shrink-0 data-[orientation=horizontal]:w-full data-[orientation=vertical]:self-stretch',
         'before:bg-border-subtle data-[orientation=horizontal]:before:w-full data-[orientation=horizontal]:before:h-px data-[orientation=vertical]:before:w-px data-[orientation=vertical]:before:self-stretch',
         spacingClass,
         className,

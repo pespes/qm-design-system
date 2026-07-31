@@ -86,7 +86,6 @@ const textareaRef = createRef<HTMLTextAreaElement>();
 export const Default: Story = {
   args: {
     id: 'default-textarea-group',
-    ref: textareaRef,
   },
   render: function DefaultStory(args) {
     const [value, setValue] = useState('');
@@ -184,6 +183,7 @@ export const Invalid: Story = {
       { message: 'Second error will appear as well' },
     ],
     description: 'Help us improve our service',
+    ref: textareaRef,
   },
   render: function InvalidStory(args) {
     const [value, setValue] = useState('');

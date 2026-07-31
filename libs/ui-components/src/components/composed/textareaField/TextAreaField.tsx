@@ -43,7 +43,7 @@ function TextAreaField({
   } as FieldWrapperClassMap;
 
   const maxLengthProps =
-    maxLength && maxLengthSRFunc ? { maxLength, maxLengthSRFunc } : {};
+    maxLength && !!maxLengthSRFunc ? { maxLength, maxLengthSRFunc } : {};
 
   return (
     <FieldWrapper

@@ -16,7 +16,7 @@ function Textarea({
       data-slot='textarea'
       data-testid='input-group-textarea'
       className={cn(
-        'w-full bg-transparent outline-none type-ui-default text-foreground-default placeholder:text-foreground-subtle px-300 py-250',
+        'w-full bg-transparent outline-none type-body-default text-foreground-default placeholder:text-foreground-subtle px-300 py-250',
         isResizeDisabled ? '' : 'field-sizing-content',
         className,
       )}

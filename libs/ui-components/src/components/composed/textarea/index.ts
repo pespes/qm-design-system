@@ -3,4 +3,5 @@ export type {
   TextAreaProps,
   TextAreaClassMap,
   MaxLengthTranslateFnProps,
+  MaxLengthProps,
 } from './TextArea.types.js';

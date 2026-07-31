@@ -36,16 +36,6 @@ export const defaultTests = async ({
     expect(textarea).toHaveFocus();
   });
 
-  await step('Correctly passes the ref through to the textarea', async () => {
-    await userEvent.click(document.body);
-    const ref = args.ref as RefObject<HTMLTextAreaElement>;
-    const textarea = ref.current;
-    expect(textarea.tagName).toBe('TEXTAREA');
-    expect(textarea).not.toHaveFocus();
-    await userEvent.click(textarea);
-    expect(textarea).toHaveFocus();
-  });
-
   await step('Textarea triggers onChange when user types', async () => {
     await userEvent.click(document.body);
     await userEvent.click(textarea);
@@ -172,6 +162,16 @@ export const invalidTests = async ({
       expect(textarea).toHaveAttribute('aria-invalid', 'true');
     },
   );
+
+  await step('Correctly passes the ref through to the textarea', async () => {
+    await userEvent.click(document.body);
+    const ref = args.ref as RefObject<HTMLTextAreaElement>;
+    const textarea = ref.current;
+    expect(textarea.tagName).toBe('TEXTAREA');
+    expect(textarea).not.toHaveFocus();
+    await userEvent.click(textarea);
+    expect(textarea).toHaveFocus();
+  });
 };
 
 export const requiredTests = async ({

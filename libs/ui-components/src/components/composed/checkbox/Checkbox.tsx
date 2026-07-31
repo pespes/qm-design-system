@@ -24,7 +24,7 @@ function Checkbox({
   const isInvalid = invalid ?? fieldContext?.invalid;
 
   const wrapperClasses = {
-    root: cn('gap-x-250', className, root),
+    root: cn('gap-x-250 items-start', className, root),
     label: cn(
       'group-data-invalid/field:text-status-danger-text type-ui-default',
       label,
@@ -49,7 +49,7 @@ function Checkbox({
           {...controlProps}
           id={checkboxId}
           ref={ref}
-          className={checkbox}
+          className={cn('mt-[1px]', checkbox)}
           iconClasses={icon}
           disabled={disabled}
           {...props}

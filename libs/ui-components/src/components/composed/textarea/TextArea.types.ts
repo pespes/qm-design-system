@@ -14,14 +14,14 @@ export interface BaseTextAreaProps
   classes?: TextAreaClassMap;
 }
 
-export type TextAreaProps = BaseTextAreaProps &
-  (
-    | {
-        maxLength: number;
-        maxLengthSRFunc: (params: MaxLengthTranslateFnProps) => string;
-      }
-    | {
-        maxLength?: undefined;
-        maxLengthSRFunc?: never;
-      }
-  );
+export type MaxLengthProps =
+  | {
+      maxLength: number;
+      maxLengthSRFunc: (params: MaxLengthTranslateFnProps) => string;
+    }
+  | {
+      maxLength?: undefined;
+      maxLengthSRFunc?: never;
+    };
+
+export type TextAreaProps = BaseTextAreaProps & MaxLengthProps;

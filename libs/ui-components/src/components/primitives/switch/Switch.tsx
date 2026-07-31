@@ -46,9 +46,9 @@ function Switch({
         data-slot='switch-thumb'
         className={cn(
           'data-disabled:data-unchecked:bg-state-disabled data-disabled:data-checked:bg-brand-foreground',
-          'pointer-events-none block rounded-full ring-0 transition-transform data-checked:bg-brand-foreground data-unchecked:bg-base-text',
-          'group-data-[size=md]/switch:h-300 group-data-[size=md]/switch:w-300 group-data-[size=sm]/switch:h-200 group-data-[size=sm]/switch:w-200 group-data-[size=lg]/switch:h-400 group-data-[size=lg]/switch:w-400',
-          'group-data-[size=md]/switch:data-checked:h-350 group-data-[size=md]/switch:data-checked:w-350 group-data-[size=sm]/switch:data-checked:h-250 group-data-[size=sm]/switch:data-checked:w-250 group-data-[size=lg]/switch:data-checked:h-450 group-data-[size=lg]/switch:data-checked:w-450',
+          'pointer-events-none block rounded-full ring-0 transition-transform origin-center data-checked:bg-brand-foreground data-unchecked:bg-base-text',
+          'group-data-[size=md]/switch:h-350 group-data-[size=md]/switch:w-350 group-data-[size=sm]/switch:h-250 group-data-[size=sm]/switch:w-250 group-data-[size=lg]/switch:h-450 group-data-[size=lg]/switch:w-450',
+          'group-data-[size=md]/switch:data-unchecked:scale-[0.86] group-data-[size=sm]/switch:data-unchecked:scale-[0.8] group-data-[size=lg]/switch:data-unchecked:scale-[0.89]', // scale values set to approx 2px smaller than data-checked height values
           'data-unchecked:translate-x-0 group-data-[size=md]/switch:data-checked:translate-x-300 group-data-[size=sm]/switch:data-checked:translate-x-250 group-data-[size=lg]/switch:data-checked:translate-x-400',
           classes?.thumb,
         )}

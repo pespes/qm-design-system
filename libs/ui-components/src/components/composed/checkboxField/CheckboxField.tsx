@@ -47,7 +47,7 @@ function CheckboxField({
           <CheckboxGroup
             {...props}
             {...controlProps}
-            className={cn(className, checkboxGroup)}
+            className={cn('gap-200', className, checkboxGroup)}
             disabled={disabled}
             aria-required={undefined} // should not be passed to CheckboxGroup for accessibilitly purposes, unlike RadioGroup
           >
