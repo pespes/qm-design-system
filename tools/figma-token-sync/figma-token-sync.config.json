@@ -1,0 +1,10 @@
+{
+  "repoPath": "../..",
+  "tokensRoot": "libs/ui-tokens/tokens",
+  "git": {
+    "remote": "origin",
+    "baseBranch": "development",
+    "branchName": "test-token-figma-sync",
+    "repoRemoteUrl": "git@github.com:Quartermaster-Inc/qm-design-system.git"
+  }
+}
