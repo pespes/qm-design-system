@@ -74,10 +74,10 @@ const runScript = (): void => {
   }
 
   // 4. Verify remote points to expected SSH URL.
-  const remoteUrl = git(cwd, ['remote', 'get-url', gitConfig.remote]);
+  const remoteUrl = git(cwd, ['remote', 'get-url', 'origin']);
   if (remoteUrl !== gitConfig.repoRemoteUrl) {
     fail(
-      `Remote "${gitConfig.remote}" points to ${remoteUrl}, expected ${gitConfig.repoRemoteUrl}.`,
+      `Remote "origin" points to ${remoteUrl}, expected ${gitConfig.repoRemoteUrl}.`,
     );
   }
 
@@ -88,30 +88,14 @@ const runScript = (): void => {
   })();
 
   try {
-    // 6. Checkout sync branch — use existing remote version if available, otherwise create from base.
+    // 6. Checkout token sync branch - pull remote then checkout locally.
+    git(cwd, ['fetch', 'origin', gitConfig.baseBranch, gitConfig.branchName]);
     git(cwd, [
-      'fetch',
-      gitConfig.remote,
-      gitConfig.baseBranch,
+      'checkout',
+      '-B',
       gitConfig.branchName,
+      `origin/${gitConfig.branchName}`,
     ]);
-
-    // Try to checkout from token branch; fall back to base branch if it doesn't exist
-    try {
-      git(cwd, [
-        'checkout',
-        '-B',
-        gitConfig.branchName,
-        `${gitConfig.remote}/${gitConfig.branchName}`,
-      ]);
-    } catch {
-      git(cwd, [
-        'checkout',
-        '-B',
-        gitConfig.branchName,
-        `${gitConfig.remote}/${gitConfig.baseBranch}`,
-      ]);
-    }
 
     // 7. Write tokens. (Currently just dumping JSON files into a test json file)
     const outPath = resolve(
@@ -122,7 +106,7 @@ const runScript = (): void => {
     );
     writeFileSync(outPath, JSON.stringify(parsedFile, null, 2), 'utf-8');
 
-    // 8. Build gate — a broken extraction never becomes a PR.
+    // 8. Confirm a broken build does not get pushed
     console.log('\nRunning build:tokens…');
     execFileSync('pnpm', ['build:tokens'], { cwd, stdio: 'inherit' });
 
@@ -136,15 +120,23 @@ const runScript = (): void => {
       git(cwd, ['add', config.tokensRoot]);
 
       git(cwd, ['commit', '-m', COMMIT_MESSAGE]);
-      git(cwd, ['push', gitConfig.remote, gitConfig.branchName]);
+      git(cwd, ['push', 'origin', gitConfig.branchName]);
     } catch (error) {
       fail(`Failed to commit / push tokens: ${(error as Error).message}`);
     }
 
     console.log(`\n✔ Pushed ${gitConfig.branchName}.`);
   } finally {
-    // 10. Restore the designer's original branch, whatever happened.
-    git(cwd, ['checkout', originalRef]);
+    // 10. Restore the original branch, whatever happened.
+    try {
+      git(cwd, ['checkout', originalRef]);
+    } catch (error) {
+      console.error(
+        `\nWarning: Could not restore original branch "${originalRef}"
+          \nYou may need to manually run: git checkout <your-branch-name> to return
+        `,
+      );
+    }
   }
 };
 

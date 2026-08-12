@@ -9,9 +9,8 @@ export const loadConfig = (): SyncConfig => {
     repoPath: resolve(configDir, '../..'),
     tokensRoot: 'libs/ui-tokens/tokens',
     git: {
-      remote: 'origin',
       baseBranch: 'development',
-      branchName: 'token-figma-sync',
+      branchName: 'test-token-figma-sync',
       repoRemoteUrl: 'git@github.com:Quartermaster-Inc/qm-design-system.git',
     },
   };
