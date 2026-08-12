@@ -25,10 +25,12 @@
     "test": "nx run-many --all -t test",
     "build:tokens": "nx build ui-tokens",
     "build:components": "nx build ui-components",
+    "build:figma-sync": "nx build figma-token-sync",
     "build:storybook": "nx run ui-components:build-storybook",
     "build": "nx run-many --all -t build",
     "storybook": "nx storybook ui-components",
-    "lint": "nx run-many --all -t lint"
+    "lint": "nx run-many --all -t lint",
+    "sync:tokens": "nx run figma-token-sync:sync"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.0",

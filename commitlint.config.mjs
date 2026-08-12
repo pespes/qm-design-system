@@ -44,6 +44,7 @@ const Configuration = {
         scopes: [
           'ui-tokens',
           'ui-components',
+          'plugin',
           'repo',
         ]
       }

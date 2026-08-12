@@ -1,0 +1,33 @@
+{
+  "name": "figma-token-sync",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/figma-token-sync/bridge/src",
+  "projectType": "application",
+  "tags": ["scope:tooling"],
+  "targets": {
+    "typecheck": {},
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "eslintConfig": "./eslint.config.mjs"
+      }
+    },
+     "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm run build",
+        "cwd": "tools/figma-token-sync"
+      },
+      "outputs": [
+        "{projectRoot}/build"
+      ]
+    },
+    "sync": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm run sync",
+        "cwd": "tools/figma-token-sync"
+      }
+    }
+  }
+}

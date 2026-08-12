@@ -1,5 +1,6 @@
 packages:
   - 'libs/*'
+  - 'tools/**'
 
 nodeLinker: isolated
 autoInstallPeers: true
