@@ -107,8 +107,10 @@ export default defineConfig([
     ignores: [
       "node_modules/",
       "libs/*/node_modules",
+      "tools/*/node_modules",
       "**/dist/**",
       "libs/*/build",
+      "tools/*/build"
     ],
   },
 ]);

@@ -17,6 +17,7 @@
 /libs/*/build
 /libs/*/dist
 /libs/*/node_modules
-/apps/*/node_modules
+/tools/**/build
+/tools/**/node_modules
 
 storybook-static

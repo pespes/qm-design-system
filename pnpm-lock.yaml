@@ -273,6 +273,12 @@ importers:
         specifier: ^4.18.1
         version: 4.18.1
 
+  tools/figma-token-sync:
+    dependencies:
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+
 packages:
 
   '@adobe/css-tools@4.5.0':
