@@ -101,6 +101,16 @@ const runScript = (): void => {
       `origin/${gitConfig.branchName}`,
     ]);
 
+    // Rebase onto base branch to drop commits already merged into development.
+    try {
+      git(cwd, ['rebase', `origin/${gitConfig.baseBranch}`]);
+    } catch (error) {
+      git(cwd, ['rebase', '--abort']);
+      endAndLog(
+        `Failed to rebase ${gitConfig.branchName} onto ${gitConfig.baseBranch}: ${(error as Error).message}. Resolve conflicts manually and re-run.`,
+      );
+    }
+
     // 7. Write tokens. (Currently just dumping JSON files into a test json file)
     const outPath = resolve(
       config.repoPath,
@@ -124,7 +134,7 @@ const runScript = (): void => {
       git(cwd, ['add', config.tokensRoot]);
 
       git(cwd, ['commit', '-m', COMMIT_MESSAGE]);
-      git(cwd, ['push', 'origin', gitConfig.branchName]);
+      git(cwd, ['push', '--force', 'origin', gitConfig.branchName]);
     } catch (error) {
       endAndLog(`Failed to commit / push tokens: ${(error as Error).message}`);
     }
