@@ -34,7 +34,7 @@ const isTreeClean = (cwd: string): boolean => {
   return status.length === 0;
 };
 
-const fail = (message: string) => {
+const endAndLog = (message: string) => {
   console.error(`\n✖ ${message}`);
   process.exit(1);
 };
@@ -43,7 +43,7 @@ const parseTokenFile = (inputPath: string) => {
   try {
     return JSON.parse(readFileSync(inputPath, 'utf-8'));
   } catch {
-    fail(`No extraction file at ${inputPath} or not valid JSON`);
+    endAndLog(`No extraction file at ${inputPath} or not valid JSON`);
   }
 };
 
@@ -52,15 +52,19 @@ const runScript = (): void => {
   const config = loadConfig();
   const { git: gitConfig } = config;
   const cwd = config.repoPath;
+  process.chdir(cwd);
 
   // 1. Before anything fires, confirm working tree is clean so only token updates are committed.
   if (!isTreeClean(cwd)) {
-    fail('Working tree has uncommitted changes. Commit/stash them first.');
+    endAndLog('Working tree has uncommitted changes. Commit/stash them first.');
   }
 
   // 2. Locate + parse the exported file.
-  const fileName = args.file ?? DEFAULT_EXPORT_FILENAME;
-  const inputPath = join(homedir(), 'Downloads', fileName);
+  const resolveInputPath = (filePath: string): string =>
+    filePath.startsWith('~') ? filePath.replace('~', homedir()) : filePath;
+  const inputPath = args.file
+    ? resolveInputPath(args.file)
+    : join(homedir(), 'Downloads', DEFAULT_EXPORT_FILENAME);
   const parsedFile = parseTokenFile(inputPath);
 
   // 3. Build DTCG trees (dry-run stops after reporting the would-be writes).
@@ -76,7 +80,7 @@ const runScript = (): void => {
   // 4. Verify remote points to expected SSH URL.
   const remoteUrl = git(cwd, ['remote', 'get-url', 'origin']);
   if (remoteUrl !== gitConfig.repoRemoteUrl) {
-    fail(
+    endAndLog(
       `Remote "origin" points to ${remoteUrl}, expected ${gitConfig.repoRemoteUrl}.`,
     );
   }
@@ -122,7 +126,7 @@ const runScript = (): void => {
       git(cwd, ['commit', '-m', COMMIT_MESSAGE]);
       git(cwd, ['push', 'origin', gitConfig.branchName]);
     } catch (error) {
-      fail(`Failed to commit / push tokens: ${(error as Error).message}`);
+      endAndLog(`Failed to commit / push tokens: ${(error as Error).message}`);
     }
 
     console.log(`\n✔ Pushed ${gitConfig.branchName}.`);
