@@ -13,11 +13,14 @@
   "engines": {
     "node": ">= 22"
   },
-  "files": ["build", "README.md"],
+  "files": [
+    "build",
+    "README.md"
+  ],
   "scripts": {
     "clean": "rm -rf build",
     "build": "pnpm run clean && pnpm tsc --build",
-    "sync": "pnpm run build && node build/src/cli.js"
+    "sync": "pnpm run build && node build/src/main.js"
   },
   "dependencies": {
     "zod": "^3.23.8"
