@@ -28,6 +28,15 @@
         "command": "pnpm run sync",
         "cwd": "tools/figma-token-sync"
       }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vitest run",
+        "cwd": "tools/figma-token-sync"
+      },
+      "cache": true,
+      "outputs": []
     }
   }
 }
