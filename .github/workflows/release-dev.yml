@@ -76,9 +76,11 @@ jobs:
       - name: Determine Affected Projects
         id: affected-libs
         run: |
-          AFFECTED=$(pnpm exec nx show projects --affected \
+          AFFECTED=$(pnpm exec nx show projects \
+          --affected \
           --base="${{ github.event.before }}" \
-          --head="${{ github.sha }}" | tr '\n' ' ')
+          --head="${{ github.sha }}" \
+          --exclude=figma-token-sync | tr '\n' ' ')
           if [ -z "$AFFECTED" ]; then
             echo "No affected projects; nothing to publish."
             exit 0
