@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["@figma/plugin-typings"],
+    "moduleDetection": "legacy",
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "outDir": "./build",
+    "rootDir": "."
+  },
+  "include": ["code.ts", "tests/*.ts", ]
+}
+

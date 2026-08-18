@@ -18,8 +18,8 @@
     "README.md"
   ],
   "scripts": {
-    "clean": "rm -rf build",
-    "build": "pnpm run clean && pnpm tsc --build",
+    "clean": "rm -rf build plugin/build",
+    "build": "pnpm run clean && pnpm tsc --build && pnpm tsc --project plugin/tsconfig.json",
     "sync": "pnpm run build && node build/src/cli.js",
     "test": "vitest run"
   },
@@ -27,6 +27,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@figma/plugin-typings": "^1.134.0",
     "@types/node": "20.19.9",
     "vitest": "^4.1.10"
   }
