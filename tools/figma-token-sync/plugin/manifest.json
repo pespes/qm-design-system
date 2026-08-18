@@ -1,0 +1,14 @@
+{
+  "name": "QM Token Sync",
+  "id": "qm-token-sync",
+  "api": "1.0.0",
+  "main": "build/code.js",
+  "ui": "ui.html",
+  "editorType": ["dev", "figma"],
+  "documentAccess": "dynamic-page",
+  "permissions": ["teamlibrary"],
+  "capabilities": ["inspect"],
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}

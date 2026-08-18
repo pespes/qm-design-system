@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        padding: 24px;
+        font-family: sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      p,
+      ol,
+      button {
+        margin: 0;
+        padding: 0
+      }
+      ol {
+        padding-left: 10px;
+      }
+      li {
+        margin-bottom: 4px;
+      }
+      code {
+        background: #EEEEEC;
+        padding: 1px 4px;
+      }
+      .action-item {
+        display: block;
+        box-sizing: border-box;
+        border: 1px solid black;
+        border-radius: 4px;
+        background: none;
+        color: inherit;
+        font: inherit;
+        text-decoration: none;
+        text-align: center;
+        width: 100%;
+        padding: 8px;
+        cursor: pointer;
+      }
+      .action-item:disabled,
+      #downloadLink:not([href]) {
+        opacity: 0.5;
+        cursor: default;
+      }
+      #status {
+        white-space: pre-wrap;
+        word-break: break-word;
+        align-self: stretch;
+      }
+      #status.ok {
+        color: #00780E;
+      }
+      #status.err {
+        color: #B51317;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <ol>
+      <li>Extract local Figma variables by clicking <b>Extract Variables</b>.</li>
+      <li>
+        When extraction is successful and ready, click <b>Download Variables</b>,
+        which will trigger the download interface.
+      </li>
+      <li>
+        To update qm-design-system with these changes, run <br>
+        <code>pnpm sync:tokens</code> at the root of the repository.
+      </li>
+    </ol>
+
+    <button id="exportBtn" class="action-item">Extract Variables</button>
+    <a id="downloadLink" class="action-item" download="figma-tokens.json">Download Variables</a>
+
+    <p id="status"></p>
+
+    <p id="fileNameWarning" class="hidden">
+      <b>Note:</b> Downloaded file will be named <code>figma-tokens.json</code>, set to
+      save in the Downloads folder by default. Renaming the file or changing the destination folder
+      will require you to specify the filepath with the <br><code>--file=&lt;filepath&gt;</code> flag when
+      running the sync command in qm-design-system.
+    </p>
+
+    <script>
+      const statusEl = document.getElementById('status');
+      const downloadLink = document.getElementById('downloadLink');
+      const exportBtn = document.getElementById('exportBtn');
+      const fileNameWarning = document.getElementById('fileNameWarning');
+
+      function setStatus(text, status) {
+        statusEl.textContent = text;
+        statusEl.className = status || '';
+      }
+
+      function unlinkVarFile() {
+        const prev = downloadLink.getAttribute('href');
+        if (prev) {
+          URL.revokeObjectURL(prev);
+        }
+        downloadLink.removeAttribute('href');
+        fileNameWarning.className = 'hidden';
+      }
+
+      function createVarFile(obj) {
+        const file = new File([JSON.stringify(obj, null, 2)], 'figma-tokens.json', {
+          type: 'application/json',
+        });
+        downloadLink.href = URL.createObjectURL(file);
+        fileNameWarning.className = ''; //remove hidden className
+      }
+
+      exportBtn.onclick = () => {
+        exportBtn.disabled = true;
+        unlinkVarFile();
+        setStatus('Extracting variables from Figma…');
+        parent.postMessage({ pluginMessage: { type: 'REQUEST_EXTRACTION' } }, '*');
+      };
+
+      window.onmessage = (event) => {
+        const msg = event.data.pluginMessage;
+        if (!msg) return;
+
+        if (msg.type === 'EXTRACTION_ERROR') {
+          setStatus('Error: ' + msg.message, 'err');
+          exportBtn.disabled = false;
+          return;
+        }
+
+        if (msg.type === 'EXTRACTION_READY') {
+          const { collections, variables, textVariables } = msg.extraction;
+          createVarFile({
+            exportedAt: new Date().toISOString(),
+            collections,
+            variables,
+            textVariables,
+          });
+          setStatus(
+            'Extracted ' + variables.length + ' variables in ' +
+              collections.length + ' collections.',
+            'ok'
+          );
+          exportBtn.disabled = false;
+        }
+      };
+    </script>
+  </body>
+</html>
