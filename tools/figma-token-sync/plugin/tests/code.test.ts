@@ -111,6 +111,30 @@ describe('extractAll', () => {
     await import('../code.js');
   });
 
+  describe('collections', async () => {
+    it('returns collections with expected shape', async () => {
+      const result = await triggerExtraction();
+      const returnedThemeColl = result.collections[1];
+      expect(returnedThemeColl).toEqual({
+        id: themeCollection.id,
+        name: themeCollection.name,
+        modes: themeCollection.modes,
+      });
+    });
+
+    it('posts EXTRACTION_ERROR when a collection returns null', async () => {
+      mockFigma.variables.getVariableCollectionByIdAsync.mockImplementation(
+        (id: string) => {
+          if (id === COMPONENT_ID) return Promise.resolve(null);
+          return Promise.resolve(collectionLookup[id] ?? null);
+        },
+      );
+      await expect(triggerExtraction()).rejects.toThrow(
+        'Not all collections properly retrieved',
+      );
+    });
+  });
+
   describe('variables', async () => {
     it('returns variables with an expected shape', async () => {
       const result = await triggerExtraction();
@@ -268,6 +292,128 @@ describe('extractAll', () => {
           expect(semColour.$proValue).toBeUndefined();
         });
       });
+    });
+  });
+
+  describe('text styles', async () => {
+    it('filters out text styles not beginning with "text/"', async () => {
+      const result = await triggerExtraction();
+      const nonText = result.textVariables.find(
+        (t: { id: string }) => t.id === nonTextStyle.id,
+      );
+      expect(nonText).toBeUndefined();
+    });
+
+    it('returns text styles with an expected shape', async () => {
+      const result = await triggerExtraction();
+      const textStyle = result.textVariables[0];
+
+      //fontFamily/fontSize/fontStyle to be tested in following tests - assert remainder is expected shape
+      expect(textStyle).toMatchObject({
+        id: expect.any(String),
+        name: expect.any(String),
+        lineHeight: expect.any(Number),
+        letterSpacing: expect.any(Number),
+      });
+    });
+
+    it('resolves boundVariable aliases on textVariables', async () => {
+      const result = await triggerExtraction();
+
+      const textVariableWithAlias: ExtractedText = result.textVariables.find(
+        (t: { id: string }) => t.id === textStyleWithBoundVars.id,
+      );
+      expect(textVariableWithAlias.fontFamily).toEqual({
+        type: 'VARIABLE_ALIAS',
+        aliasName: 'fontFamily/sans',
+      });
+      expect(textVariableWithAlias.fontSize).toEqual({
+        type: 'VARIABLE_ALIAS',
+        aliasName: 'fontSize/md',
+      });
+      expect(textVariableWithAlias.fontWeight).toEqual({
+        type: 'VARIABLE_ALIAS',
+        aliasName: 'fontWeight/regular',
+      });
+    });
+
+    it('falls back to hardcoded values when no boundVariables', async () => {
+      const result = await triggerExtraction();
+      const textVariableNoAlias = result.textVariables.find(
+        (t: { id: string }) => t.id === textStyleWithoutBoundVars.id,
+      ) as ExtractedText;
+
+      expect(textVariableNoAlias.fontFamily).toBe(
+        textStyleWithoutBoundVars.fontName.family,
+      );
+      expect(textVariableNoAlias.fontWeight).toBe(
+        textStyleWithoutBoundVars.fontName.style,
+      );
+      expect(textVariableNoAlias.fontSize).toBe(
+        textStyleWithoutBoundVars.fontSize,
+      );
+    });
+
+    it('falls back to hardcoded value when boundVariable resolves to null', async () => {
+      const unresolvedTextStyle = {
+        ...textStyleWithoutBoundVars,
+        boundVariables: {
+          fontFamily: { type: 'VARIABLE_ALIAS', id: 'var:fake' }, // use a variable that won't resolve to a value
+        },
+      };
+      mockFigma.getLocalTextStylesAsync.mockResolvedValue([
+        unresolvedTextStyle,
+      ]);
+
+      const result = await triggerExtraction();
+      const textVar = result.textVariables[0];
+      expect(textVar.fontFamily).toBe(
+        textStyleWithoutBoundVars.fontName.family,
+      );
+    });
+
+    it('throws an error when boundVariable resolves to null and no fallback', async () => {
+      const unresolvedTextStyle = {
+        ...textStyleWithoutBoundVars,
+        boundVariables: {
+          fontSize: { type: 'VARIABLE_ALIAS', id: 'var:fake' }, // use a variable that won't resolve to a value
+        },
+        fontSize: undefined,
+      };
+
+      mockFigma.getLocalTextStylesAsync.mockResolvedValue([
+        unresolvedTextStyle,
+      ]);
+
+      await expect(triggerExtraction()).rejects.toThrow(
+        `"${unresolvedTextStyle.name}" references an unresolved alias`,
+      );
+    });
+
+    it('converts PERCENT value to decimal and returns raw PIXEL value for lineHeight / letterSpacing', async () => {
+      const result = await triggerExtraction();
+      const bound: ExtractedText = result.textVariables.find(
+        (t: { id: string }) => t.id === textStyleWithBoundVars.id,
+      );
+
+      expect(bound.lineHeight).toBe(
+        textStyleWithBoundVars.lineHeight.value / 100,
+      );
+      expect(bound.letterSpacing).toBe(
+        textStyleWithBoundVars.letterSpacing.value,
+      );
+    });
+
+    it('throws an error when lineHeight has unexpected unit', async () => {
+      const invalidTextStyle = {
+        ...textStyleWithBoundVars,
+        lineHeight: { unit: 'EM', value: 1.5 },
+      };
+      mockFigma.getLocalTextStylesAsync.mockResolvedValue([invalidTextStyle]);
+
+      await expect(triggerExtraction()).rejects.toThrow(
+        'LineHeight/LetterSpacing must be PERCENT, PX, or AUTO',
+      );
     });
   });
 });
