@@ -19,8 +19,9 @@
         "cwd": "tools/figma-token-sync"
       },
       "outputs": [
-        "{projectRoot}/build"
-      ]
+        "{projectRoot}/build", "{projectRoot}/plugin/build"
+      ],
+      "cache": true
     },
     "sync": {
       "executor": "nx:run-commands",
