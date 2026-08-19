@@ -1,3 +1,4 @@
+// ------ TYPES ---------
 interface AliasValue {
   type: 'VARIABLE_ALIAS';
   aliasName: string;
@@ -35,6 +36,8 @@ interface ExtractionContext {
   collectionMap: Map<string, VariableCollection>;
 }
 
+// ------- HELPERS --------
+
 // Helper to confirm if value follows expected VariableAlias format: { type: VARIABLE_ALIAS, id:<varId> }
 const isVariableAlias = (
   val: VariableValue | undefined,
@@ -43,7 +46,7 @@ const isVariableAlias = (
   val !== null &&
   (val as { type?: string }).type === 'VARIABLE_ALIAS';
 
-// Helper to retreive primitive value from Variable map - return null (to throw error in ensureValue for variables,
+// Helper to retreive primitive value from Variable map - return null (to throw error in ensureVariableValue for variables,
 // or force fallback to hardcoded value in text styles) if variable id is not included in Variable map, or the variable
 // does not belong to one of the expected collections
 const getAliasedVariable = (
@@ -56,6 +59,8 @@ const getAliasedVariable = (
 
   const aliasedVar = ctx.variableMap.get(aliasValue.id);
   if (!aliasedVar) {
+    // warn to allow visibility in logs - any variables will throw error when getAliasedVariable is called in ensureVariableValue().
+    // text styles provide a fallback value instead of throwing an error.
     console.warn(
       `Aliased variable ID ${aliasValue.id} not found in variable list`,
     );
@@ -70,7 +75,7 @@ const getAliasedVariable = (
 
 // Variable specific helper (not text stye). Confirm a non-null value, and if a semantic variable, that it
 // aliases a valid primitive variable and return original valuel with the primitive's name under aliasName
-const ensureValue = (
+const ensureVariableValue = (
   val: VariableValue | undefined,
   name: string,
   ctx: ExtractionContext,
@@ -95,7 +100,7 @@ const ensureValue = (
 // to return type { field: { type: 'VARIABLE_ALIAS, id: <varId> }}, as referenced in docs
 // https://developers.figma.com/docs/plugins/api/TextStyle/
 // If that variable NOT found, use the TextStyle's fallback hardcoded value for fontFamily/fontSize/fontWeight
-const resolveAlias = (
+const resolveStyleAlias = (
   val: VariableValue | undefined,
   name: string,
   fallback: string | number | undefined,
@@ -106,6 +111,9 @@ const resolveAlias = (
     return { type: 'VARIABLE_ALIAS', aliasName: resolved.name };
   }
   if (fallback !== undefined) {
+    console.warn(
+      `"${name} references an unresolved alias. Falling back to hardcoded value: ${fallback} `,
+    );
     return fallback;
   }
   throw new Error(
@@ -130,6 +138,10 @@ const processPercentValue = (
   // should never throw - but guard against an unexpected null / undefined
   throw new Error('LineHeight/LetterSpacing must be PERCENT, PX, or AUTO');
 };
+
+// ------- CALLS TO FIGMA PLUGIN API -----
+// figma is a global API object injected by the Figma plugin at runtime.
+// It's full API can be found at: https://developers.figma.com/docs/plugins/api/figma/
 
 async function extractAll(): Promise<ExtractionResult> {
   const THEME_ID = 'VariableCollectionId:7903:131';
@@ -202,12 +214,16 @@ async function extractAll(): Promise<ExtractionResult> {
       };
 
       if (collection.name === 'Theme') {
-        const homeownerValue = ensureValue(
+        const homeownerValue = ensureVariableValue(
           v.valuesByMode[homeownerModeId],
           v.name,
           ctx,
         );
-        const proValue = ensureValue(v.valuesByMode[proModeId], v.name, ctx);
+        const proValue = ensureVariableValue(
+          v.valuesByMode[proModeId],
+          v.name,
+          ctx,
+        );
 
         const includeProValue =
           typeof homeownerValue === 'object' &&
@@ -224,7 +240,7 @@ async function extractAll(): Promise<ExtractionResult> {
         const value = Object.values(v.valuesByMode)[0];
         acc.push({
           ...baseVar,
-          $value: ensureValue(value, v.name, ctx),
+          $value: ensureVariableValue(value, v.name, ctx),
         });
       }
       return acc;
@@ -232,16 +248,19 @@ async function extractAll(): Promise<ExtractionResult> {
     textVariables: textStyles.reduce<ExtractedTextVariable[]>((acc, t) => {
       if (/^text\//.test(t.name)) {
         const { fontFamily, fontSize, fontStyle } = t.boundVariables ?? {};
-        const fontSizeVar = resolveAlias(fontSize, t.name, t.fontSize, ctx) as
-          | AliasValue
-          | number;
-        const fontFamilyVar = resolveAlias(
+        const fontSizeVar = resolveStyleAlias(
+          fontSize,
+          t.name,
+          t.fontSize,
+          ctx,
+        ) as AliasValue | number;
+        const fontFamilyVar = resolveStyleAlias(
           fontFamily,
           t.name,
           t.fontName.family,
           ctx,
         ) as AliasValue | string;
-        const fontWeightVar = resolveAlias(
+        const fontWeightVar = resolveStyleAlias(
           fontStyle,
           t.name,
           t.fontName.style,
