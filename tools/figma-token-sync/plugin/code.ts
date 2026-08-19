@@ -139,6 +139,107 @@ const processPercentValue = (
   throw new Error('LineHeight/LetterSpacing must be PERCENT, PX, or AUTO');
 };
 
+// ----- BUILD FUNCTIONS -----
+
+const buildCollections = (
+  collections: VariableCollection[],
+): ExtractedCollection[] =>
+  collections.map((coll) => ({
+    id: coll.id,
+    name: coll.name,
+    modes: coll.modes.map((m) => ({ modeId: m.modeId, name: m.name })),
+  }));
+
+const buildVariables = (
+  varList: Variable[],
+  ctx: ExtractionContext,
+  homeownerModeId: string,
+  proModeId: string,
+): ExtractedVariable[] =>
+  varList.reduce<ExtractedVariable[]>((acc, v) => {
+    const collection = ctx.collectionMap.get(v.variableCollectionId);
+    if (!collection) return acc;
+
+    const baseVar = {
+      id: v.id,
+      name: v.name,
+      collectionName: collection.name,
+      ...(v.description && { $description: v.description }),
+    };
+
+    if (collection.name === 'Theme') {
+      const homeownerValue = ensureVariableValue(
+        v.valuesByMode[homeownerModeId],
+        v.name,
+        ctx,
+      );
+      const proValue = ensureVariableValue(
+        v.valuesByMode[proModeId],
+        v.name,
+        ctx,
+      );
+
+      const includeProValue =
+        typeof homeownerValue === 'object' &&
+        typeof proValue === 'object' &&
+        (homeownerValue as { id?: string }).id !==
+          (proValue as { id?: string }).id;
+
+      acc.push({
+        ...baseVar,
+        $value: homeownerValue,
+        ...(includeProValue && { $proValue: proValue }),
+      });
+    } else {
+      const value = Object.values(v.valuesByMode)[0];
+      acc.push({
+        ...baseVar,
+        $value: ensureVariableValue(value, v.name, ctx),
+      });
+    }
+    return acc;
+  }, []);
+
+const buildTextVariables = (textStyles: TextStyle[], ctx: ExtractionContext) =>
+  textStyles.reduce<ExtractedTextVariable[]>((acc, t) => {
+    if (/^text\//.test(t.name)) {
+      const { fontFamily, fontSize, fontStyle } = t.boundVariables ?? {};
+      const fontSizeVar = resolveStyleAlias(
+        fontSize,
+        t.name,
+        t.fontSize,
+        ctx,
+      ) as AliasValue | number;
+      const fontFamilyVar = resolveStyleAlias(
+        fontFamily,
+        t.name,
+        t.fontName.family,
+        ctx,
+      ) as AliasValue | string;
+      const fontWeightVar = resolveStyleAlias(
+        fontStyle,
+        t.name,
+        t.fontName.style,
+        ctx,
+      ) as AliasValue | string;
+
+      if (!fontFamilyVar || !fontSizeVar || !fontWeightVar) {
+        throw new Error(`Text style "${t.name}" is missing font metadata`);
+      }
+
+      acc.push({
+        id: t.id,
+        name: t.name,
+        fontFamily: fontFamilyVar,
+        fontWeight: fontWeightVar,
+        fontSize: fontSizeVar,
+        lineHeight: processPercentValue(t.lineHeight),
+        letterSpacing: processPercentValue(t.letterSpacing),
+      });
+    }
+    return acc;
+  }, []);
+
 // ------- CALLS TO FIGMA PLUGIN API -----
 // figma is a global API object injected by the Figma plugin at runtime.
 // It's full API can be found at: https://developers.figma.com/docs/plugins/api/figma/
@@ -197,92 +298,9 @@ async function extractAll(): Promise<ExtractionResult> {
   }
 
   return {
-    collections: filteredCollections.map((coll) => ({
-      id: coll.id,
-      name: coll.name,
-      modes: coll.modes.map((m) => ({ modeId: m.modeId, name: m.name })),
-    })),
-    variables: variables.reduce<ExtractedVariable[]>((acc, v) => {
-      const collection = collectionMap.get(v.variableCollectionId);
-      if (!collection) return acc;
-
-      const baseVar = {
-        id: v.id,
-        name: v.name,
-        collectionName: collection.name,
-        ...(v.description && { $description: v.description }),
-      };
-
-      if (collection.name === 'Theme') {
-        const homeownerValue = ensureVariableValue(
-          v.valuesByMode[homeownerModeId],
-          v.name,
-          ctx,
-        );
-        const proValue = ensureVariableValue(
-          v.valuesByMode[proModeId],
-          v.name,
-          ctx,
-        );
-
-        const includeProValue =
-          typeof homeownerValue === 'object' &&
-          typeof proValue === 'object' &&
-          (homeownerValue as { id?: string }).id !==
-            (proValue as { id?: string }).id;
-
-        acc.push({
-          ...baseVar,
-          $value: homeownerValue,
-          ...(includeProValue && { $proValue: proValue }),
-        });
-      } else {
-        const value = Object.values(v.valuesByMode)[0];
-        acc.push({
-          ...baseVar,
-          $value: ensureVariableValue(value, v.name, ctx),
-        });
-      }
-      return acc;
-    }, []),
-    textVariables: textStyles.reduce<ExtractedTextVariable[]>((acc, t) => {
-      if (/^text\//.test(t.name)) {
-        const { fontFamily, fontSize, fontStyle } = t.boundVariables ?? {};
-        const fontSizeVar = resolveStyleAlias(
-          fontSize,
-          t.name,
-          t.fontSize,
-          ctx,
-        ) as AliasValue | number;
-        const fontFamilyVar = resolveStyleAlias(
-          fontFamily,
-          t.name,
-          t.fontName.family,
-          ctx,
-        ) as AliasValue | string;
-        const fontWeightVar = resolveStyleAlias(
-          fontStyle,
-          t.name,
-          t.fontName.style,
-          ctx,
-        ) as AliasValue | string;
-
-        if (!fontFamilyVar || !fontSizeVar || !fontWeightVar) {
-          throw new Error(`Text style "${t.name}" is missing font metadata`);
-        }
-
-        acc.push({
-          id: t.id,
-          name: t.name,
-          fontFamily: fontFamilyVar,
-          fontWeight: fontWeightVar,
-          fontSize: fontSizeVar,
-          lineHeight: processPercentValue(t.lineHeight),
-          letterSpacing: processPercentValue(t.letterSpacing),
-        });
-      }
-      return acc;
-    }, []),
+    collections: buildCollections(filteredCollections),
+    variables: buildVariables(variables, ctx, homeownerModeId, proModeId),
+    textVariables: buildTextVariables(textStyles, ctx),
   };
 }
 
