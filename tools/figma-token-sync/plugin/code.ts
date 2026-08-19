@@ -1,3 +1,7 @@
+const THEME_ID = 'VariableCollectionId:7903:131';
+const PRIMITIVE_ID = 'VariableCollectionId:7902:2';
+const COMPONENT_ID = 'VariableCollectionId:10612:8446';
+
 // ------ TYPES ---------
 interface AliasValue {
   type: 'VARIABLE_ALIAS';
@@ -9,7 +13,7 @@ interface ExtractedVariable {
   name: string;
   collectionName: string;
   $value: VariableValue | AliasValue;
-  $proValue?: VariableValue | AliasValue;
+  [key: `$${string}Value`]: VariableValue | AliasValue;
   $description?: string;
 }
 
@@ -153,8 +157,7 @@ const buildCollections = (
 const buildVariables = (
   varList: Variable[],
   ctx: ExtractionContext,
-  homeownerModeId: string,
-  proModeId: string,
+  modes: { modeId: string; name: string }[],
 ): ExtractedVariable[] =>
   varList.reduce<ExtractedVariable[]>((acc, v) => {
     const collection = ctx.collectionMap.get(v.variableCollectionId);
@@ -168,27 +171,45 @@ const buildVariables = (
     };
 
     if (collection.name === 'Theme') {
-      const homeownerValue = ensureVariableValue(
-        v.valuesByMode[homeownerModeId],
-        v.name,
-        ctx,
-      );
-      const proValue = ensureVariableValue(
-        v.valuesByMode[proModeId],
+      const firstMode = modes[0];
+      if (!firstMode) {
+        throw new Error('Theme collection must have at least one mode');
+      }
+      // first mode is default, aka Homeowner
+      const defaultValue = ensureVariableValue(
+        v.valuesByMode[firstMode.modeId],
         v.name,
         ctx,
       );
 
-      const includeProValue =
-        typeof homeownerValue === 'object' &&
-        typeof proValue === 'object' &&
-        (homeownerValue as { id?: string }).id !==
-          (proValue as { id?: string }).id;
+      const modeVariables: Record<string, VariableValue | AliasValue> = {};
+
+      // iterate through all possible subsequent modes, added to final output if value does not
+      // match that of the default value
+      // expected output: mode: { name: 'Pro' } => $proValue: <value>
+      modes.slice(1).forEach((mode) => {
+        const value = ensureVariableValue(
+          v.valuesByMode[mode.modeId],
+          v.name,
+          ctx,
+        );
+
+        const isDifferent =
+          typeof defaultValue === 'object' &&
+          typeof value === 'object' &&
+          (defaultValue as { id?: string }).id !==
+            (value as { id?: string }).id;
+
+        if (isDifferent) {
+          const modePropName = `$${mode.name.toLowerCase()}Value`;
+          modeVariables[modePropName] = value;
+        }
+      });
 
       acc.push({
         ...baseVar,
-        $value: homeownerValue,
-        ...(includeProValue && { $proValue: proValue }),
+        $value: defaultValue,
+        ...modeVariables,
       });
     } else {
       const value = Object.values(v.valuesByMode)[0];
@@ -245,9 +266,6 @@ const buildTextVariables = (textStyles: TextStyle[], ctx: ExtractionContext) =>
 // It's full API can be found at: https://developers.figma.com/docs/plugins/api/figma/
 
 async function extractAll(): Promise<ExtractionResult> {
-  const THEME_ID = 'VariableCollectionId:7903:131';
-  const PRIMITIVE_ID = 'VariableCollectionId:7902:2';
-  const COMPONENT_ID = 'VariableCollectionId:10612:8446';
   const [
     variables,
     semanticColourCollection,
@@ -286,20 +304,16 @@ async function extractAll(): Promise<ExtractionResult> {
   // Context holding maps to pass to helper functions
   const ctx: ExtractionContext = { variableMap, collectionMap };
 
-  // Retrieve homeowner / pro mode id, which are keys in a returned Variable 'valuesByMode' value
+  // Retrieve modes from Theme collection
   const themeModes = collectionMap.get(THEME_ID)?.modes;
-  const modeMap = new Map(themeModes?.map((m) => [m.name, m.modeId]));
-  const homeownerModeId = modeMap.get('Homeowner');
-  const proModeId = modeMap.get('Pro');
 
-  // For Theme collection, both modes are required
-  if (!homeownerModeId || !proModeId) {
-    throw new Error('Could not find both Homeowner/Pro modes in collection');
+  if (!themeModes || themeModes.length === 0) {
+    throw new Error('Theme collection has no modes');
   }
 
   return {
     collections: buildCollections(filteredCollections),
-    variables: buildVariables(variables, ctx, homeownerModeId, proModeId),
+    variables: buildVariables(variables, ctx, themeModes),
     textVariables: buildTextVariables(textStyles, ctx),
   };
 }
