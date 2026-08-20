@@ -15,9 +15,6 @@ import {
   primitiveColourVar,
   spacingVar,
   orphanVar,
-  textStyleWithBoundVars,
-  textStyleWithoutBoundVars,
-  nonTextStyle,
   type TestCollection,
   type TestVariable,
 } from './fixtures.js';
@@ -29,21 +26,6 @@ interface ExtractedVariable {
   $value: unknown;
   $proValue?: unknown;
   $description?: string;
-}
-
-interface VariableAliasRef {
-  type: 'VARIABLE_ALIAS';
-  aliasName: string;
-}
-
-interface ExtractedText {
-  id: string;
-  name: string;
-  fontFamily: VariableAliasRef | string;
-  fontSize: VariableAliasRef | number;
-  fontWeight: VariableAliasRef | string;
-  lineHeight: number;
-  letterSpacing: number;
 }
 
 // --- Mock figma global (hoisted so it's available before code.ts top-level executes) ---
