@@ -11,6 +11,9 @@ import {
   COMPONENT_ID,
   HOMEOWNER_MODE_ID,
   PRO_MODE_ID,
+  textStyleWithBoundVars,
+  textStyleWithoutBoundVars,
+  nonTextStyle,
   semanticColourVar,
   primitiveColourVar,
   spacingVar,
@@ -26,6 +29,21 @@ interface ExtractedVariable {
   $value: unknown;
   $proValue?: unknown;
   $description?: string;
+}
+
+interface VariableAliasRef {
+  type: 'VARIABLE_ALIAS';
+  aliasName: string;
+}
+
+interface ExtractedText {
+  id: string;
+  name: string;
+  fontFamily: VariableAliasRef | string;
+  fontSize: VariableAliasRef | number;
+  fontWeight: VariableAliasRef | string;
+  lineHeight: number;
+  letterSpacing: number;
 }
 
 // --- Mock figma global (hoisted so it's available before code.ts top-level executes) ---
