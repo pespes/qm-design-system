@@ -19,6 +19,8 @@
 /libs/*/node_modules
 /tools/**/build
 !/tools/figma-token-sync/plugin/build
+!/tools/figma-token-sync/plugin/build/code.js
+/tools/figma-token-sync/plugin/build/tests
 /tools/**/node_modules
 
 storybook-static
