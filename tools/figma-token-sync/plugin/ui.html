@@ -100,7 +100,7 @@
         statusEl.className = status || '';
       }
 
-      function unlinkVarFile() {
+      function unlinkTokenFile() {
         const prev = downloadLink.getAttribute('href');
         if (prev) {
           URL.revokeObjectURL(prev);
@@ -109,17 +109,17 @@
         fileNameWarning.className = 'hidden';
       }
 
-      function createVarFile(obj) {
-        const file = new File([JSON.stringify(obj, null, 2)], 'figma-tokens.json', {
+      function createTokenFile(obj) {
+        const tokenFile = new File([JSON.stringify(obj, null, 2)], 'figma-tokens.json', {
           type: 'application/json',
         });
-        downloadLink.href = URL.createObjectURL(file);
+        downloadLink.href = URL.createObjectURL(tokenFile);
         fileNameWarning.className = ''; //remove hidden className
       }
 
       exportBtn.onclick = () => {
         exportBtn.disabled = true;
-        unlinkVarFile();
+        unlinkTokenFile();
         setStatus('Extracting variables from Figma…');
         parent.postMessage({ pluginMessage: { type: 'REQUEST_EXTRACTION' } }, '*');
       };
@@ -136,7 +136,7 @@
 
         if (msg.type === 'EXTRACTION_READY') {
           const { collections, variables, textVariables } = msg.extraction;
-          createVarFile({
+          createTokenFile({
             exportedAt: new Date().toISOString(),
             collections,
             variables,
