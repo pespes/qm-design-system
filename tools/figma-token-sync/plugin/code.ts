@@ -166,6 +166,7 @@ const buildVariables = (
     const baseVar = {
       id: v.id,
       name: v.name,
+      $type: v.resolvedType,
       collectionName: collection.name,
       ...(v.description && { $description: v.description }),
     };
