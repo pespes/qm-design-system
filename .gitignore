@@ -18,6 +18,7 @@
 /libs/*/dist
 /libs/*/node_modules
 /tools/**/build
+!/tools/figma-token-sync/plugin/build
 /tools/**/node_modules
 
 storybook-static

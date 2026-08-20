@@ -110,7 +110,7 @@ export default defineConfig([
       "tools/*/node_modules",
       "**/dist/**",
       "libs/*/build",
-      "tools/*/build"
+      "tools/**/build",
     ],
   },
 ]);
