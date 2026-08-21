@@ -72,6 +72,29 @@ const processPercentValue = (val) => {
     // should never throw - but guard against an unexpected null / undefined
     throw new Error('LineHeight/LetterSpacing must be PERCENT, PX, or AUTO');
 };
+// Figma API defines weight by fontStyle ('Bold'/'SemiBold'/...), does NOT include a
+// fontWeight variable to fallback on and does not allow the inclusion of fontWeight as a
+// bound variable. A hack to retrieve the proper value - fontStyle variables are currently
+// named by their numbered weight, so pull that from the aliasName (aka fontStyle/600 = weight of 600)
+const processFontWeight = (val, styleName, ctx) => {
+    // No variable bound to fontStyle at all, so no way to determine weight
+    if (!isVariableAlias(val)) {
+        throw new Error(`Text style "${styleName}" has no variable bound to fontStyle - bind a fontStyle variable named fontStyle/<weightNumber>.`);
+    }
+    // Bound, but the alias does not resolve
+    const style = getAliasedVariable(val, ctx);
+    if (!style) {
+        throw new Error(`Text style "${styleName}" binds fontStyle to an unresolved variable (id ${val.id}).`);
+    }
+    // Resolved, so the name must carry the numeric weight. Weight words
+    // ('Regular', 'SemiBold') are not accepted - the name must end in the number.
+    const styleSegment = style.name.split('/');
+    const weight = Number(styleSegment[styleSegment.length - 1]);
+    if (!Number.isInteger(weight)) {
+        throw new Error(`Text style "${styleName}" binds fontStyle to "${style.name}", which must follow naming convetion "fontStyle/<weight>".`);
+    }
+    return weight;
+};
 // ----- BUILD FUNCTIONS -----
 const buildCollections = (collections) => collections.map((coll) => ({
     id: coll.id,
@@ -131,10 +154,11 @@ const buildTextVariables = (textStyles, ctx) => textStyles.reduce((acc, t) => {
         const { fontFamily, fontSize, fontStyle } = t.boundVariables ?? {};
         const fontSizeVar = resolveStyleAlias(fontSize, t.name, t.fontSize, ctx);
         const fontFamilyVar = resolveStyleAlias(fontFamily, t.name, t.fontName.family, ctx);
-        const fontWeightVar = resolveStyleAlias(fontStyle, t.name, t.fontName.style, ctx);
-        if (!fontFamilyVar || !fontSizeVar || !fontWeightVar) {
+        if (!fontFamilyVar || !fontSizeVar) {
             throw new Error(`Text style "${t.name}" is missing font metadata`);
         }
+        // Throws with the specific cause - no fallback weight exists
+        const fontWeightVar = processFontWeight(fontStyle, t.name, ctx);
         acc.push({
             id: t.id,
             name: t.name,

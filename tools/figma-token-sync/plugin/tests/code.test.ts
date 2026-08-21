@@ -17,6 +17,7 @@ import {
   semanticColourVar,
   primitiveColourVar,
   spacingVar,
+  fontWeightVar,
   orphanVar,
   type TestCollection,
   type TestVariable,
@@ -331,10 +332,7 @@ describe('extractAll', () => {
         type: 'VARIABLE_ALIAS',
         aliasName: 'fontSize/md',
       });
-      expect(textVariableWithAlias.fontWeight).toEqual({
-        type: 'VARIABLE_ALIAS',
-        aliasName: 'fontWeight/regular',
-      });
+      expect(textVariableWithAlias.fontWeight).toBe(700);
     });
 
     it('falls back to hardcoded values when no boundVariables', async () => {
@@ -346,9 +344,7 @@ describe('extractAll', () => {
       expect(textVariableNoAlias.fontFamily).toBe(
         textStyleWithoutBoundVars.fontName.family,
       );
-      expect(textVariableNoAlias.fontWeight).toBe(
-        textStyleWithoutBoundVars.fontName.style,
-      );
+      expect(textVariableNoAlias.fontWeight).toBe(700);
       expect(textVariableNoAlias.fontSize).toBe(
         textStyleWithoutBoundVars.fontSize,
       );
@@ -358,6 +354,7 @@ describe('extractAll', () => {
       const unresolvedTextStyle = {
         ...textStyleWithoutBoundVars,
         boundVariables: {
+          ...textStyleWithoutBoundVars.boundVariables,
           fontFamily: { type: 'VARIABLE_ALIAS', id: 'var:fake' }, // use a variable that won't resolve to a value
         },
       };
@@ -372,10 +369,46 @@ describe('extractAll', () => {
       );
     });
 
+    it('throws an error when there is no fontStyle boundVariable', async () => {
+      const unresolvedTextStyle = {
+        ...textStyleWithoutBoundVars,
+        boundVariables: {},
+      };
+      mockFigma.getLocalTextStylesAsync.mockResolvedValue([
+        unresolvedTextStyle,
+      ]);
+
+      await expect(triggerExtraction()).rejects.toThrow(
+        `Text style "text/heading/lg" has no variable bound to fontStyle - bind a fontStyle variable named fontStyle/<weightNumber>.`,
+      );
+    });
+
+    it('throws an error fontStyle variable is incorrectly named', async () => {
+      // Text style is untouched and still binds fontStyle correctly - only the
+      // variable it points at is renamed to a weight word instead of a number
+      const misnamedFontStyle = {
+        ...fontWeightVar,
+        name: 'fontStyle/Regular',
+      };
+      mockFigma.variables.getLocalVariablesAsync.mockResolvedValue(
+        allVariables.map((v) =>
+          v.id === fontWeightVar.id ? misnamedFontStyle : v,
+        ),
+      );
+      mockFigma.getLocalTextStylesAsync.mockResolvedValue([
+        textStyleWithBoundVars,
+      ]);
+
+      await expect(triggerExtraction()).rejects.toThrow(
+        `Text style "text/body/md" binds fontStyle to "fontStyle/Regular", which must follow naming convetion "fontStyle/<weight>".`,
+      );
+    });
+
     it('throws an error when boundVariable resolves to null and no fallback', async () => {
       const unresolvedTextStyle = {
         ...textStyleWithoutBoundVars,
         boundVariables: {
+          ...textStyleWithoutBoundVars.boundVariables,
           fontSize: { type: 'VARIABLE_ALIAS', id: 'var:fake' }, // use a variable that won't resolve to a value
         },
         fontSize: undefined,

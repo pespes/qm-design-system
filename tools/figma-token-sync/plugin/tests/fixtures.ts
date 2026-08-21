@@ -90,7 +90,7 @@ export const fontSizeVar: TestVariable = {
 
 export const fontWeightVar: TestVariable = {
   id: 'var:font-weight-regular',
-  name: 'fontWeight/regular',
+  name: 'fontStyle/700',
   variableCollectionId: PRIMITIVE_ID,
   description: '',
   valuesByMode: { 'mode:default': 'Regular' },
@@ -151,7 +151,9 @@ export const textStyleWithoutBoundVars = {
   fontSize: 32,
   lineHeight: { unit: 'PERCENT', value: 120 },
   letterSpacing: { unit: 'PIXELS', value: 0.5 },
-  boundVariables: {},
+  boundVariables: {
+    fontStyle: { type: 'VARIABLE_ALIAS', id: 'var:font-weight-regular' },
+  },
 };
 
 // style to be filtered out - does not belong with standard "text/"
