@@ -28,12 +28,27 @@ interface ExtractedTextVariable {
   letterSpacing: number | string;
 }
 
+interface ExtractedShadowEffect {
+  color: AliasValue | RGBA;
+  offset: { x: AliasValue | number; y: AliasValue | number };
+  radius: AliasValue | number;
+  spread: AliasValue | number;
+}
+
+interface ExtractedEffectVariable {
+  id: string;
+  name: string;
+  $description?: string;
+  effects: ExtractedShadowEffect[];
+}
+
 type ExtractedCollection = Pick<VariableCollection, 'id' | 'name' | 'modes'>;
 
 interface ExtractionResult {
   collections: ExtractedCollection[];
   variables: ExtractedVariable[];
   textVariables: ExtractedTextVariable[];
+  effectVariables: ExtractedEffectVariable[];
 }
 
 interface ExtractionContext {
@@ -101,28 +116,28 @@ const ensureVariableValue = (
   return val;
 };
 
-// Text specific helper - called with any boundVariables attached to the textStyle, which are guaranteed
-// to return type { field: { type: 'VARIABLE_ALIAS, id: <varId> }}, as referenced in docs
-// https://developers.figma.com/docs/plugins/api/TextStyle/
-// If that variable NOT found, use the TextStyle's fallback hardcoded value for fontFamily/fontSize/fontWeight
+// Text / Shadow effect specific helper - called with any boundVariables attached to the textStyle, which are
+// guaranteed to return type { field: { type: 'VARIABLE_ALIAS, id: <varId> }}, as referenced in docs
+// https://developers.figma.com/docs/plugins/api/TextStyle/ & https://developers.figma.com/docs/plugins/api/Effect/
+// If that variable NOT found, use the style's / effect's fallback hardcoded value.
 const resolveStyleAlias = (
   val: VariableValue | undefined,
   name: string,
-  fallback: string | number | undefined,
+  fallback: string | number | RGBA | undefined,
   ctx: ExtractionContext,
-): AliasValue | string | number => {
+): AliasValue | string | number | RGBA => {
   const resolved = getAliasedVariable(val, ctx);
   if (resolved) {
     return { type: 'VARIABLE_ALIAS', aliasName: resolved.name };
   }
   if (fallback !== undefined) {
     console.warn(
-      `"${name} references an unresolved alias. Falling back to hardcoded value: ${fallback} `,
+      `"${name} references an unresolved alias. Falling back to hardcoded value: ${JSON.stringify(fallback)} `,
     );
     return fallback;
   }
   throw new Error(
-    `"${name}" references an unresolved alias. Update variable binding before syncing.`,
+    `"${name}" references an unresolved alias or style is undefined. Update variable binding before syncing.`,
   );
 };
 
@@ -297,6 +312,60 @@ const buildTextVariables = (textStyles: TextStyle[], ctx: ExtractionContext) =>
     return acc;
   }, []);
 
+// Effect styles named `shadow/*` become the shadow token scale. Only DROP_SHADOW
+// layers are taken — inner shadows (which need CSS `inset` and have no React
+// Native equivalent) and blurs have no token equivalent — and the layer order is
+// preserved, since CSS renders the first layer topmost.
+
+const buildEffectVariables = (
+  effectStyles: EffectStyle[],
+  ctx: ExtractionContext,
+) =>
+  effectStyles.reduce<ExtractedEffectVariable[]>((acc, style) => {
+    // Only effect styles named `shadow/*` are taken to prevent any unintended additions
+    if (!/^shadow\//.test(style.name)) return acc;
+
+    // Nested reduce because a shadow style's "effects" return an array of layers.
+    const shadowLayers = style.effects.reduce<ExtractedShadowEffect[]>(
+      (effects, layer) => {
+        if (layer.type !== 'DROP_SHADOW') return effects;
+
+        const { color, offsetX, offsetY, radius, spread } =
+          layer.boundVariables ?? {};
+
+        const resolved = {
+          color: resolveStyleAlias(color, style.name, layer.color, ctx),
+          offset: {
+            x: resolveStyleAlias(offsetX, style.name, layer.offset.x, ctx),
+            y: resolveStyleAlias(offsetY, style.name, layer.offset.y, ctx),
+          },
+          radius: resolveStyleAlias(radius, style.name, layer.radius, ctx),
+          spread: resolveStyleAlias(spread, style.name, layer.spread, ctx),
+        };
+
+        effects.push(resolved as ExtractedShadowEffect);
+        return effects;
+      },
+      [],
+    );
+
+    // Confirm that shadow is indeed a drop shadow - if variable shadow/ effect had type: BLUR,
+    // shadowLayers would return an empty array / create an empty token
+    if (shadowLayers.length === 0) {
+      throw new Error(
+        `Effect style "${style.name}" has no shadow layers to extract.`,
+      );
+    }
+
+    acc.push({
+      id: style.id,
+      name: style.name,
+      ...(style.description ? { $description: style.description } : {}),
+      effects: shadowLayers,
+    });
+    return acc;
+  }, []);
+
 // ------- CALLS TO FIGMA PLUGIN API -----
 // figma is a global API object injected by the Figma plugin at runtime.
 // It's full API can be found at: https://developers.figma.com/docs/plugins/api/figma/
@@ -308,12 +377,14 @@ async function extractAll(): Promise<ExtractionResult> {
     primitiveCollection,
     componentCollection,
     textStyles,
+    effectStyles,
   ] = await Promise.all([
     figma.variables.getLocalVariablesAsync(),
     figma.variables.getVariableCollectionByIdAsync(THEME_ID),
     figma.variables.getVariableCollectionByIdAsync(PRIMITIVE_ID),
     figma.variables.getVariableCollectionByIdAsync(COMPONENT_ID),
     figma.getLocalTextStylesAsync(),
+    figma.getLocalEffectStylesAsync(),
   ]);
 
   const returnedCollections = [
@@ -321,7 +392,6 @@ async function extractAll(): Promise<ExtractionResult> {
     semanticColourCollection,
     componentCollection,
   ];
-
   // API call returns null if VariableCollection not found (does not error out), throw Error to
   // inform that a collection was not found
   if (returnedCollections.some((c) => c === null)) {
@@ -351,6 +421,7 @@ async function extractAll(): Promise<ExtractionResult> {
     collections: buildCollections(filteredCollections),
     variables: buildVariables(variables, ctx, themeModes),
     textVariables: buildTextVariables(textStyles, ctx),
+    effectVariables: buildEffectVariables(effectStyles, ctx),
   };
 }
 

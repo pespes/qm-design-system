@@ -64,7 +64,7 @@ export const primitiveColourAltVar: TestVariable = {
 
 export const spacingVar: TestVariable = {
   id: 'var:prim-spacing',
-  name: 'spacing/md',
+  name: 'spacing/100',
   variableCollectionId: PRIMITIVE_ID,
   description: '',
   valuesByMode: {
@@ -172,3 +172,48 @@ export const allTextStyles = [
   textStyleWithoutBoundVars,
   nonTextStyle,
 ];
+
+export const shadowStyle = {
+  id: 'style:shadow-base',
+  name: 'shadow/100',
+  effects: [
+    {
+      boundVariables: {
+        color: { type: 'VARIABLE_ALIAS', id: 'var:prim-colour' },
+      },
+      color: { r: 0, g: 0, b: 0, a: 0.1 },
+      offset: { x: 2, y: 4 },
+      spread: 0,
+      radius: 5,
+      type: 'DROP_SHADOW',
+    },
+    {
+      boundVariables: {
+        radius: { type: 'VARIABLE_ALIAS', id: 'var:prim-spacing' },
+      },
+      color: { r: 0, g: 0, b: 0, a: 0.5 },
+      offset: { x: 2, y: 8 },
+      spread: 0,
+      radius: 10,
+      type: 'DROP_SHADOW',
+    },
+  ],
+};
+
+// style to be filtered out - does not belong with standard "shadow/"
+export const nonShadowStyle = {
+  id: 'style:blur',
+  name: 'blur/100',
+  effects: [
+    {
+      boundVariables: {},
+      color: { r: 0, g: 0, b: 0, a: 0.5 },
+      offset: { x: 2, y: 4 },
+      spread: 0,
+      radius: 10,
+      type: 'DROP_SHADOW',
+    },
+  ],
+};
+
+export const allShadowStyles = [shadowStyle, nonShadowStyle];
