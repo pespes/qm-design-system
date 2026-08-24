@@ -11,6 +11,7 @@ interface AliasValue {
 interface ExtractedVariable {
   id: string;
   name: string;
+  $type: string;
   collectionName: string;
   $value: VariableValue | AliasValue;
   [key: `$${string}Value`]: VariableValue | AliasValue;
@@ -21,7 +22,7 @@ interface ExtractedTextVariable {
   id: string;
   name: string;
   fontFamily: AliasValue | string;
-  fontWeight: AliasValue | string;
+  fontWeight: AliasValue | number;
   fontSize: AliasValue | number;
   lineHeight: number | string;
   letterSpacing: number | string;
@@ -143,6 +144,43 @@ const processPercentValue = (
   throw new Error('LineHeight/LetterSpacing must be PERCENT, PX, or AUTO');
 };
 
+// Figma API defines weight by fontStyle ('Bold'/'SemiBold'/...), does NOT include a
+// fontWeight variable to fallback on and does not allow the inclusion of fontWeight as a
+// bound variable. A hack to retrieve the proper value - fontStyle variables are currently
+// named by their numbered weight, so pull that from the aliasName (aka fontStyle/600 = weight of 600)
+const processFontWeight = (
+  val: VariableValue | undefined,
+  styleName: string,
+  ctx: ExtractionContext,
+): number => {
+  // No variable bound to fontStyle at all, so no way to determine weight
+  if (!isVariableAlias(val)) {
+    throw new Error(
+      `Text style "${styleName}" has no variable bound to fontStyle - bind a fontStyle variable named fontStyle/<weightNumber>.`,
+    );
+  }
+
+  // Bound, but the alias does not resolve
+  const style = getAliasedVariable(val, ctx);
+  if (!style) {
+    throw new Error(
+      `Text style "${styleName}" binds fontStyle to an unresolved variable (id ${val.id}).`,
+    );
+  }
+
+  // Resolved, so the name must carry the numeric weight. Weight words
+  // ('Regular', 'SemiBold') are not accepted - the name must end in the number.
+  const styleSegment = style.name.split('/');
+  const weight = Number(styleSegment[styleSegment.length - 1]);
+  if (!Number.isInteger(weight)) {
+    throw new Error(
+      `Text style "${styleName}" binds fontStyle to "${style.name}", which must follow naming convetion "fontStyle/<weight>".`,
+    );
+  }
+
+  return weight;
+};
+
 // ----- BUILD FUNCTIONS -----
 
 const buildCollections = (
@@ -238,16 +276,13 @@ const buildTextVariables = (textStyles: TextStyle[], ctx: ExtractionContext) =>
         t.fontName.family,
         ctx,
       ) as AliasValue | string;
-      const fontWeightVar = resolveStyleAlias(
-        fontStyle,
-        t.name,
-        t.fontName.style,
-        ctx,
-      ) as AliasValue | string;
 
-      if (!fontFamilyVar || !fontSizeVar || !fontWeightVar) {
+      if (!fontFamilyVar || !fontSizeVar) {
         throw new Error(`Text style "${t.name}" is missing font metadata`);
       }
+
+      // Throws with the specific cause - no fallback weight exists
+      const fontWeightVar = processFontWeight(fontStyle, t.name, ctx);
 
       acc.push({
         id: t.id,
