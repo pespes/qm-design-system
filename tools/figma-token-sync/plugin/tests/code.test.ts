@@ -503,7 +503,7 @@ describe('extractAll', () => {
       );
     });
 
-    it('throws an error if no shadow effects are of type DROP_SHADOW', async () => {
+    it('filters out shadow if no effects are of type DROP_SHADOW', async () => {
       const nonShadowStyle = {
         ...shadowStyle,
         effects: [
@@ -514,9 +514,11 @@ describe('extractAll', () => {
         ],
       };
       mockFigma.getLocalEffectStylesAsync.mockResolvedValue([nonShadowStyle]);
-      await expect(triggerExtraction()).rejects.toThrow(
-        'Effect style "shadow/100" has no shadow layers to extract.',
+      const result = await triggerExtraction();
+      const nonShadow = result.effectVariables.find(
+        (e: { id: string }) => e.id === nonShadowStyle.id,
       );
+      expect(nonShadow).toBeUndefined();
     });
   });
 });

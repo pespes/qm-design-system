@@ -351,9 +351,10 @@ const buildEffectVariables = (
     // Confirm that shadow is indeed a drop shadow - if variable shadow/ effect had type: BLUR,
     // shadowLayers would return an empty array / create an empty token
     if (shadowLayers.length === 0) {
-      throw new Error(
+      console.error(
         `Effect style "${style.name}" has no shadow layers to extract.`,
       );
+      return acc;
     }
 
     acc.push({
