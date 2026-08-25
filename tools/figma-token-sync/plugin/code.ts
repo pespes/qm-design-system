@@ -30,7 +30,8 @@ interface ExtractedTextVariable {
 
 interface ExtractedShadowEffect {
   color: AliasValue | RGBA;
-  offset: { x: AliasValue | number; y: AliasValue | number };
+  offsetX: AliasValue | number;
+  offsetY: AliasValue | number;
   radius: AliasValue | number;
   spread: AliasValue | number;
 }
@@ -330,15 +331,13 @@ const buildEffectVariables = (
       (effects, layer) => {
         if (layer.type !== 'DROP_SHADOW') return effects;
 
-        const { color, offsetX, offsetY, radius, spread } =
+        const { color, radius, spread, offsetX, offsetY } =
           layer.boundVariables ?? {};
 
         const resolved = {
           color: resolveStyleAlias(color, style.name, layer.color, ctx),
-          offset: {
-            x: resolveStyleAlias(offsetX, style.name, layer.offset.x, ctx),
-            y: resolveStyleAlias(offsetY, style.name, layer.offset.y, ctx),
-          },
+          offsetX: resolveStyleAlias(offsetX, style.name, layer.offset.x, ctx),
+          offsetY: resolveStyleAlias(offsetY, style.name, layer.offset.y, ctx),
           radius: resolveStyleAlias(radius, style.name, layer.radius, ctx),
           spread: resolveStyleAlias(spread, style.name, layer.spread, ctx),
         };

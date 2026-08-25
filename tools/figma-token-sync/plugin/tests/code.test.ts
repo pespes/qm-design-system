@@ -489,7 +489,8 @@ describe('extractAll', () => {
           {
             boundVariables: {},
             color: undefined,
-            offset: { x: 2, y: 4 },
+            offsetX: 2,
+            offsetY: 4,
             spread: 0,
             radius: 5,
             type: 'DROP_SHADOW',
