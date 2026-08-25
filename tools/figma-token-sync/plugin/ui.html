@@ -135,15 +135,18 @@
         }
 
         if (msg.type === 'EXTRACTION_READY') {
-          const { collections, variables, textVariables } = msg.extraction;
+          const { collections, variables, textVariables, effectVariables } = msg.extraction;
           createTokenFile({
             exportedAt: new Date().toISOString(),
             collections,
             variables,
             textVariables,
+            effectVariables,
           });
+
+          const totalVarCount = variables.length + textVariables.length + effectVariables.length;
           setStatus(
-            'Extracted ' + variables.length + ' variables in ' +
+            'Extracted ' + totalVarCount + ' variables in ' +
               collections.length + ' collections.',
             'ok'
           );

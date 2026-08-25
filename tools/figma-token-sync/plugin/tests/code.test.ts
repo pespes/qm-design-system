@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import {
   allVariables,
   allTextStyles,
+  allShadowStyles,
   primitiveCollection,
   themeCollection,
   componentCollection,
@@ -19,6 +20,8 @@ import {
   spacingVar,
   fontWeightVar,
   orphanVar,
+  shadowStyle,
+  nonShadowStyle,
   type TestCollection,
   type TestVariable,
 } from './fixtures.js';
@@ -57,6 +60,7 @@ const mockFigma = vi.hoisted(() => {
       getVariableCollectionByIdAsync: vi.fn(),
     },
     getLocalTextStylesAsync: vi.fn(),
+    getLocalEffectStylesAsync: vi.fn(),
     showUI: vi.fn(),
     ui: {
       onmessage: (() => Promise.resolve()) as (msg: {
@@ -84,6 +88,7 @@ function resetMocks() {
     (id: string) => Promise.resolve(collectionLookup[id] ?? null),
   );
   mockFigma.getLocalTextStylesAsync.mockResolvedValue(allTextStyles);
+  mockFigma.getLocalEffectStylesAsync.mockResolvedValue(allShadowStyles);
 }
 
 // Mock figma.ui.onMessage/figma.ui.postMessage communication to trigger the extractAll() call in code.ts via Figma's
@@ -447,6 +452,73 @@ describe('extractAll', () => {
       await expect(triggerExtraction()).rejects.toThrow(
         'LineHeight/LetterSpacing must be PERCENT, PX, or AUTO',
       );
+    });
+  });
+
+  describe('shadow effects', async () => {
+    it('filters out effects not startign with "shadow/"', async () => {
+      const result = await triggerExtraction();
+      const nonShadow = result.effectVariables.find(
+        (e: { id: string }) => e.id === nonShadowStyle.id,
+      );
+      expect(nonShadow).toBeUndefined();
+    });
+
+    it('resolves alias values and fallback values', async () => {
+      const result = await triggerExtraction();
+      const shadowVar = result.effectVariables.find(
+        (e: { id: string }) => e.id === shadowStyle.id,
+      );
+
+      expect(shadowVar.effects[0].spread).toBe(0);
+      expect(shadowVar.effects[0].color).toEqual({
+        type: 'VARIABLE_ALIAS',
+        aliasName: 'color/blue/500',
+      });
+
+      expect(shadowVar.effects[1].radius).toEqual({
+        type: 'VARIABLE_ALIAS',
+        aliasName: 'spacing/100',
+      });
+    });
+
+    it('throws an error if one value is undefined', async () => {
+      const invalidShadow = {
+        ...shadowStyle,
+        effects: [
+          {
+            boundVariables: {},
+            color: undefined,
+            offsetX: 2,
+            offsetY: 4,
+            spread: 0,
+            radius: 5,
+            type: 'DROP_SHADOW',
+          },
+        ],
+      };
+      mockFigma.getLocalEffectStylesAsync.mockResolvedValue([invalidShadow]);
+      await expect(triggerExtraction()).rejects.toThrow(
+        '"shadow/100" references an unresolved alias or style is undefined.',
+      );
+    });
+
+    it('filters out shadow if no effects are of type DROP_SHADOW', async () => {
+      const nonShadowStyle = {
+        ...shadowStyle,
+        effects: [
+          {
+            ...shadowStyle.effects[0],
+            type: 'BLUR',
+          },
+        ],
+      };
+      mockFigma.getLocalEffectStylesAsync.mockResolvedValue([nonShadowStyle]);
+      const result = await triggerExtraction();
+      const nonShadow = result.effectVariables.find(
+        (e: { id: string }) => e.id === nonShadowStyle.id,
+      );
+      expect(nonShadow).toBeUndefined();
     });
   });
 });
