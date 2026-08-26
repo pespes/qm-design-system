@@ -6,9 +6,10 @@ import type {
   FigmaVariable,
   FigmaTextVariable,
   FigmaEffectVariable,
+  FigmaExport,
 } from '../types.js';
 import { buildDtcgTrees } from '../buildTokenTree.js';
-import { basicFixture, withVariable } from './fixture.js';
+import { basicFixture } from './fixture.js';
 
 type allVariableTypes = FigmaVariable | FigmaTextVariable | FigmaEffectVariable;
 
@@ -20,6 +21,35 @@ describe('buildDtcgTrees', () => {
       return nextPathNode as DtcgToken;
     }
     return getToken(nextPathNode as TokenTree, rest.join('/'));
+  };
+
+  // Helper to append variables onto Figma export
+  const withVariable = (
+    fixture: FigmaExport,
+    variable: FigmaVariable | FigmaTextVariable | FigmaEffectVariable,
+    type?: string,
+  ): FigmaExport => {
+    if (type === 'text') {
+      return {
+        ...fixture,
+        textVariables: [
+          ...fixture.textVariables,
+          variable as FigmaTextVariable,
+        ],
+      };
+    } else if (type === 'shadow') {
+      return {
+        ...fixture,
+        effectVariables: [
+          ...(fixture.effectVariables ?? []),
+          variable as FigmaEffectVariable,
+        ],
+      };
+    }
+    return {
+      ...fixture,
+      variables: [...fixture.variables, variable as FigmaVariable],
+    };
   };
   const build = (variable: allVariableTypes, type?: string) => () =>
     buildDtcgTrees(withVariable(basicFixture, variable, type));
@@ -60,21 +90,27 @@ describe('buildDtcgTrees', () => {
       const baseTree = trees.base;
 
       // Primitives go to their group
-      expect(getToken(baseTree, 'color/white')).toBeDefined();
-      expect(getToken(baseTree, 'spacing/100')).toBeDefined();
-      expect(getToken(baseTree, 'opacity/100')).toBeDefined();
+      expect(getToken(baseTree, 'color/white').$value).toBe(
+        'rgba(255, 255, 255, 1)',
+      );
+      expect(getToken(baseTree, 'spacing/100').$value).toBe(4);
+      expect(getToken(baseTree, 'opacity/100').$value).toBe(0.2);
 
       // Typography
-      expect(getToken(baseTree, 'fontSize/400')).toBeDefined();
+      expect(getToken(baseTree, 'fontSize/400').$value).toBe(24);
 
       // Semantic: all colors (including collection) land in color tree
-      expect(getToken(baseTree, 'color/surface/page')).toBeDefined();
-      expect(getToken(baseTree, 'color/rating/filled')).toBeDefined();
+      expect(getToken(baseTree, 'color/surface/page').$value).toBe(
+        '{color.white}',
+      );
+      expect(getToken(baseTree, 'color/rating/filled').$value).toBe(
+        '{color.green.600}',
+      );
 
       // eslint-disable-next-line prettier/prettier
     // Non-color component variables land uncategorized in tree:
       // (cannot determine the exact purpose of variable if not 'color'):
-      expect(getToken(baseTree, 'avatar/small')).toBeDefined();
+      expect(getToken(baseTree, 'avatar/small').$value).toBe(10);
 
       // Mode values go to modes tree
       const proTree = trees.modes['pro'] as TokenTree | undefined;
@@ -86,7 +122,13 @@ describe('buildDtcgTrees', () => {
       }
 
       // Typography styles go to text
-      expect(getToken(baseTree, 'text/header/h1')).toBeDefined();
+      expect(getToken(baseTree, 'text/header/h1').$value).toEqual({
+        fontFamily: '{fontFamily.sans}',
+        fontWeight: 700,
+        fontSize: '{fontSize.400}',
+        lineHeight: 1.25,
+        letterSpacing: 0,
+      });
 
       // No cross-contamination
       const spacingSubTree = baseTree['spacing'] as TokenTree | undefined;
@@ -109,14 +151,6 @@ describe('buildDtcgTrees', () => {
       expect(getToken(colorTree, 'white').$value).toBe(
         'rgba(255, 255, 255, 1)',
       );
-    });
-
-    it('includes semantic colors in color tree at root', () => {
-      const semColor = colorTree;
-      expect(Object.keys(semColor).sort()).toContain('brand');
-      expect(Object.keys(semColor).sort()).toContain('rating');
-      expect(Object.keys(semColor).sort()).toContain('success');
-      expect(Object.keys(semColor).sort()).toContain('surface');
     });
 
     it('should throw when a token would be nested under an existing token', () => {
