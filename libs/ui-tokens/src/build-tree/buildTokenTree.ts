@@ -226,6 +226,69 @@ export const setNested = (
   target[lastKey] = value;
 };
 
+// ---------- Variable Transformation Flow ----------
+
+const transformVariables = (
+  variable: FigmaVariable,
+  themeModeNames: string[],
+  base: TokenTree,
+  modes: Record<string, TokenTree>,
+): void => {
+  const collection = variable.collectionName.toLowerCase();
+  const classification: Classification | undefined =
+    COLLECTION_CLASSIFICATION[collection];
+  // If no matching classification found, do not include variable
+  if (!classification) {
+    throw new Error(
+      `Not able to classify "${variable.name}" under "${variable.collectionName}" collection`,
+    );
+  }
+
+  const segments = variable.name.split('/');
+
+  // Semantic colours are named by role (surface/…, brand/…) rather than under
+  // a `color` root, so prepend 'color' for a consistent grouping.
+  const isSemanticColor = variable.$type === 'COLOR' && segments[0] !== 'color';
+
+  const cleanedSegments = isSemanticColor ? ['color', ...segments] : segments;
+  const group = cleanedSegments[0]?.toLowerCase();
+  if (!group) {
+    throw new Error(`Not able to determine style type of "${variable.name}"`);
+  }
+
+  const exposure = resolveGroupExposure(
+    group,
+    classification,
+    collection === 'component',
+  );
+  const tokenType = inferType(group, variable);
+
+  setNested(
+    base,
+    cleanedSegments,
+    convertValue(variable.$value, variable, tokenType, exposure),
+  );
+
+  // Theme-collection variables carry a `$<mode>Value` per additional mode;
+  // each lands in that mode's own tree at the same path.
+  if (collection === 'theme') {
+    for (const modeName of themeModeNames) {
+      const modeKey = `$${modeName}Value`; // matches Figma plugin output
+      const modeVal = variable[modeKey] as FigmaVariableValue | undefined;
+      if (modeVal !== undefined) {
+        setNested(
+          getModeTree(modes, modeName),
+          cleanedSegments,
+          convertValue(modeVal, variable, tokenType, {
+            ...exposure,
+            mode: modeName,
+          }),
+        );
+      }
+    }
+  }
+};
+
 // ---------- Finalized Build Function ----------
 
 // Transform raw Figma plugin export into DTCG token trees.
@@ -244,61 +307,8 @@ export const buildDtcgTrees = (parsedFile: FigmaExport): DtcgTrees => {
     : [];
 
   // ---------- Process variables ----------
-  for (const variable of parsedFile.variables){
-    const collection = variable.collectionName.toLowerCase();
-    const classification: Classification | undefined =
-      COLLECTION_CLASSIFICATION[collection];
-    // If no matching classification found, do not include variable
-    if (!classification) {
-      throw new Error(
-        `Not able to classify "${variable.name}" under "${variable.collectionName}" collection`,
-      );
-    }
-
-    const segments = variable.name.split('/');
-
-    // Semantic colours are named by role (surface/…, brand/…) rather than under
-    // a `color` root, so prepend 'color' for a consistent grouping.
-    const isSemanticColor =
-      variable.$type === 'COLOR' && segments[0] !== 'color';
-
-    const cleanedSegments = isSemanticColor ? ['color', ...segments] : segments;
-    const group = cleanedSegments[0]?.toLowerCase();
-    if (!group) {
-      throw new Error(`Not able to determine style type of "${variable.name}"`);
-    }
-
-    const exposure = resolveGroupExposure(
-      group,
-      classification,
-      collection === 'component',
-    );
-    const tokenType = inferType(group, variable);
-
-    setNested(
-      base,
-      cleanedSegments,
-      convertValue(variable.$value, variable, tokenType, exposure),
-    );
-
-    // Theme-collection variables carry a `$<mode>Value` per additional mode;
-    // each lands in that mode's own tree at the same path.
-    if (collection === 'theme') {
-      for (const modeName of themeModeNames) {
-        const modeKey = `$${modeName}Value`; // matches Figma plugin output
-        const modeVal = variable[modeKey] as FigmaVariableValue | undefined;
-        if (modeVal !== undefined) {
-          setNested(
-            getModeTree(modes, modeName),
-            cleanedSegments,
-            convertValue(modeVal, variable, tokenType, {
-              ...exposure,
-              mode: modeName,
-            }),
-          );
-        }
-      }
-    }
+  parsedFile.variables.forEach((variable) => {
+    transformVariables(variable, themeModeNames, base, modes);
   });
 
   // ---------- Process Text Styles ----------
