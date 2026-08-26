@@ -191,7 +191,7 @@ const getModeTree = (
 
 // Set a value in an object, creating intermediate objects if needed
 export const setNested = (
-  obj: TokenTree,
+  tree: TokenTree,
   path: string[],
   value: DtcgToken,
 ): void => {
@@ -203,30 +203,27 @@ export const setNested = (
     throw new Error(`Empty segment in path: ${path}`);
   }
 
-  let current = obj;
-  for (let i = 0; i < lastIdx; i++) {
-    const key = path[i] as string;
+  const target = path.reduce((acc, key, i) => {
+    if (i === lastIdx) return acc; // stop before the last segment
 
-    // Create or navigate through intermediate objects
-    if (current[key] === undefined) {
-      current[key] = {};
-    } else if (!isTokenTree(current[key])) {
-      // A token already sits here - nesting under it would silently drop it
+    if (acc[key] === undefined) {
+      acc[key] = {};
+    } else if (!isTokenTree(acc[key])) {
       throw new Error(
         `Path collision: "${path.join('/')}" nests under existing token "${path.slice(0, i + 1).join('/')}"`,
       );
     }
-    current = current[key] as TokenTree;
-  }
+    return acc[key] as TokenTree;
+  }, tree);
 
   // Set final value
   const lastKey = path.at(-1) as string;
-  if (isTokenTree(current[lastKey])) {
+  if (isTokenTree(target[lastKey])) {
     throw new Error(
       `Path collision: token "${path.join('/')}" would replace an existing token group`,
     );
   }
-  current[lastKey] = value;
+  target[lastKey] = value;
 };
 
 // ---------- Finalized Build Function ----------
@@ -247,7 +244,7 @@ export const buildDtcgTrees = (parsedFile: FigmaExport): DtcgTrees => {
     : [];
 
   // ---------- Process variables ----------
-  for (const variable of parsedFile.variables) {
+  for (const variable of parsedFile.variables){
     const collection = variable.collectionName.toLowerCase();
     const classification: Classification | undefined =
       COLLECTION_CLASSIFICATION[collection];
@@ -302,36 +299,36 @@ export const buildDtcgTrees = (parsedFile: FigmaExport): DtcgTrees => {
         }
       }
     }
-  }
+  });
 
   // ---------- Process Text Styles ----------
   const typographyExposure = resolveGroupExposure('type', 'semantic');
-  for (const tv of parsedFile.textVariables) {
+  parsedFile.textVariables.forEach((textVar) => {
     const typographyValue: TokenTypography = {
-      fontFamily: convertTypographyProp(tv.fontFamily) as string,
-      fontWeight: convertTypographyProp(tv.fontWeight),
-      fontSize: convertTypographyProp(tv.fontSize),
-      lineHeight: convertTypographyProp(tv.lineHeight),
-      letterSpacing: convertTypographyProp(tv.letterSpacing),
+      fontFamily: convertTypographyProp(textVar.fontFamily) as string,
+      fontWeight: convertTypographyProp(textVar.fontWeight),
+      fontSize: convertTypographyProp(textVar.fontSize),
+      lineHeight: convertTypographyProp(textVar.lineHeight),
+      letterSpacing: convertTypographyProp(textVar.letterSpacing),
     };
-    setNested(base, tv.name.split('/'), {
+    setNested(base, textVar.name.split('/'), {
       $type: 'typography',
       $value: typographyValue,
       $extensions: { [EXPOSURE_KEY]: typographyExposure },
     });
-  }
+  });
 
   // ---------- Process Effect Styles ----------
   const shadowExposure = resolveGroupExposure('shadow', 'primitive');
-  for (const ev of parsedFile.effectVariables ?? []) {
+  parsedFile.effectVariables?.forEach((shadowVar) => {
     const token: DtcgToken = {
       $type: 'shadow',
-      $value: convertShadowEffects(ev.effects),
+      $value: convertShadowEffects(shadowVar.effects),
       $extensions: { [EXPOSURE_KEY]: shadowExposure },
     };
-    if (ev.$description) token.$description = ev.$description;
-    setNested(base, ev.name.split('/'), token);
-  }
+    if (shadowVar.$description) token.$description = shadowVar.$description;
+    setNested(base, shadowVar.name.split('/'), token);
+  });
 
   return { base, modes };
 };
