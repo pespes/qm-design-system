@@ -6,7 +6,17 @@
   "tags": ["scope:shared"],
   "targets": {
     "typecheck": {},
-    "test": {},
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "pnpm jest --config=jest.config.ts",
+          "pnpm vitest run --config=vitest.config.ts"
+        ],
+        "parallel": false,
+        "cwd": "libs/ui-tokens"
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
