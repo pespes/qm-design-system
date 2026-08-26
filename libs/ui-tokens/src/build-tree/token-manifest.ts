@@ -1,5 +1,12 @@
 import type { Classification, TokenExposure } from './types.js';
 
+// Define how variables in Figma collection are classified
+export const COLLECTION_CLASSIFICATION: Record<string, Classification> = {
+  primitives: 'primitive',
+  theme: 'semantic',
+  component: 'semantic',
+};
+
 // Figma variables that are inluded in a Figma Text Style / outputted DTCG Typography Token
 // All these should live in the 'type' classification
 export const TYPOGRAPHY_STYLES = [

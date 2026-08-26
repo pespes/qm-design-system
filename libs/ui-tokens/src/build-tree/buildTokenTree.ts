@@ -15,6 +15,7 @@ import {
   type TokenTypography,
 } from './types.js';
 import {
+  COLLECTION_CLASSIFICATION,
   GROUP_MANIFEST,
   FALLBACK_EXPOSURE,
   TYPOGRAPHY_STYLES,
@@ -28,6 +29,9 @@ const isAlias = (v: FigmaVariableValue): v is FigmaAlias =>
   'type' in v &&
   v.type === 'VARIABLE_ALIAS' &&
   'aliasName' in v;
+
+const isRgba = (v: FigmaVariableValue): v is FigmaRgba =>
+  typeof v === 'object' && 'r' in v && 'g' in v && 'b' in v && 'a' in v;
 
 const isTokenTree = (v: unknown): v is TokenTree =>
   typeof v === 'object' && v !== null && !('$value' in v);
@@ -112,6 +116,36 @@ export const inferType = (group: string, variable: FigmaVariable): string => {
   return figmaType;
 };
 
+// Helper to convert Figma variable properties into DTCG style token
+// { $value, $type, $description?, $extensions? }
+const convertValue = (
+  value: FigmaVariableValue,
+  variable: FigmaVariable,
+  tokenType: string | undefined,
+  exposure: TokenExposure,
+): DtcgToken => {
+  const token: DtcgToken = { $value: '' };
+  if (tokenType) token.$type = tokenType;
+  if (variable.$description) token.$description = variable.$description;
+
+  // If alias, convert name from 'x/y/z' to '{x.y.z}'
+  if (isAlias(value)) {
+    token.$value = aliasToRef(value.aliasName, tokenType === 'color');
+    // If color value, convert object to rgba(r,g,b,a) string and create hex fallback
+  } else if (isRgba(value)) {
+    token.$value = normalizeToRgbaStr(value);
+    // Else return raw value
+  } else {
+    token.$value = value;
+  }
+
+  // Add "exposure" to the extension which helps Style Dictionary determine whether/where
+  // to include this value in final output or just used as a reference
+  token.$extensions = { [EXPOSURE_KEY]: exposure };
+
+  return token;
+};
+
 //  ---------- Tree Building Helpers ----------
 
 // Helper to resolve variable's "group" to define exposure in Style Dictionary output
@@ -140,6 +174,19 @@ export const resolveGroupExposure = (
   throw new Error(
     `No found group for "${group}" (classification "${classification}")`,
   );
+};
+
+// Build the base of the given mode tree
+const getModeTree = (
+  modes: Record<string, TokenTree>,
+  modeName: string,
+): TokenTree => {
+  let tree = modes[modeName];
+  if (!tree) {
+    tree = {};
+    modes[modeName] = tree;
+  }
+  return tree;
 };
 
 // Set a value in an object, creating intermediate objects if needed
@@ -179,12 +226,90 @@ export const setNested = (
   target[lastKey] = value;
 };
 
+// ---------- Variable Transformation Flow ----------
+
+const transformVariables = (
+  variable: FigmaVariable,
+  themeModeNames: string[],
+  base: TokenTree,
+  modes: Record<string, TokenTree>,
+): void => {
+  const collection = variable.collectionName.toLowerCase();
+  const classification: Classification | undefined =
+    COLLECTION_CLASSIFICATION[collection];
+  // If no matching classification found, do not include variable
+  if (!classification) {
+    throw new Error(
+      `Not able to classify "${variable.name}" under "${variable.collectionName}" collection`,
+    );
+  }
+
+  const segments = variable.name.split('/');
+
+  // Semantic colours are named by role (surface/…, brand/…) rather than under
+  // a `color` root, so prepend 'color' for a consistent grouping.
+  const isSemanticColor = variable.$type === 'COLOR' && segments[0] !== 'color';
+
+  const cleanedSegments = isSemanticColor ? ['color', ...segments] : segments;
+  const group = cleanedSegments[0]?.toLowerCase();
+  if (!group) {
+    throw new Error(`Not able to determine style type of "${variable.name}"`);
+  }
+
+  const exposure = resolveGroupExposure(
+    group,
+    classification,
+    collection === 'component',
+  );
+  const tokenType = inferType(group, variable);
+
+  setNested(
+    base,
+    cleanedSegments,
+    convertValue(variable.$value, variable, tokenType, exposure),
+  );
+
+  // Theme-collection variables carry a `$<mode>Value` per additional mode;
+  // each lands in that mode's own tree at the same path.
+  if (collection === 'theme') {
+    for (const modeName of themeModeNames) {
+      const modeKey = `$${modeName}Value`; // matches Figma plugin output
+      const modeVal = variable[modeKey] as FigmaVariableValue | undefined;
+      if (modeVal !== undefined) {
+        setNested(
+          getModeTree(modes, modeName),
+          cleanedSegments,
+          convertValue(modeVal, variable, tokenType, {
+            ...exposure,
+            mode: modeName,
+          }),
+        );
+      }
+    }
+  }
+};
+
 // ---------- Finalized Build Function ----------
 
 // Transform raw Figma plugin export into DTCG token trees.
+// Modes are separate trees rather than base to prevent overriding base values
 export const buildDtcgTrees = (parsedFile: FigmaExport): DtcgTrees => {
   const base: TokenTree = {};
   const modes: Record<string, TokenTree> = {};
+
+  const themeCollection = parsedFile.collections.find(
+    (coll) => coll.name.toLowerCase() === 'theme',
+  );
+  const themeModeNames = themeCollection
+    ? themeCollection.modes
+        .filter((m) => m.name.toLowerCase() !== 'homeowner')
+        .map((m) => m.name.toLowerCase())
+    : [];
+
+  // ---------- Process variables ----------
+  parsedFile.variables.forEach((variable) => {
+    transformVariables(variable, themeModeNames, base, modes);
+  });
 
   // ---------- Process Text Styles ----------
   const typographyExposure = resolveGroupExposure('type', 'semantic');
