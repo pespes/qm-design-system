@@ -1,9 +1,4 @@
-import type {
-  FigmaExport,
-  FigmaVariable,
-  FigmaTextVariable,
-  FigmaEffectVariable,
-} from '../types.js';
+import type { FigmaExport } from '../types.js';
 
 // Create a comprehensive fixture with variety of real token data
 export const basicFixture: FigmaExport = {
@@ -206,30 +201,4 @@ export const basicFixture: FigmaExport = {
       ],
     },
   ],
-};
-
-// Single helper function: append variable to fixture with optional error scenario
-export const withVariable = (
-  fixture: FigmaExport,
-  variable: FigmaVariable | FigmaTextVariable | FigmaEffectVariable,
-  type?: string,
-): FigmaExport => {
-  if (type === 'text') {
-    return {
-      ...fixture,
-      textVariables: [...fixture.textVariables, variable as FigmaTextVariable],
-    };
-  } else if (type === 'shadow') {
-    return {
-      ...fixture,
-      effectVariables: [
-        ...(fixture.effectVariables ?? []),
-        variable as FigmaEffectVariable,
-      ],
-    };
-  }
-  return {
-    ...fixture,
-    variables: [...fixture.variables, variable as FigmaVariable],
-  };
 };
