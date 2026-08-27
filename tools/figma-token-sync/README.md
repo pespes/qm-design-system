@@ -58,15 +58,6 @@ See [Figma Variables API](https://developers.figma.com/docs/plugins/api/figma-va
 
 The CLI pulls the exported JSON from Figma and syncs it to the repository.
 
-#### Workflow:
-1. Confirm working tree is clean
-2. Parse the Figma export file
-3. Checkout the `token-figma-sync` branch (a permanent branch living in the GH repo)
-4. Write the export file to `libs/ui-tokens/tokens/`
-5. Run `pnpm build:tokens` to validate the build
-6. Commit and push to `token-figma-sync` branch
-7. Return to the original branch (if beginning from a different branch)
-
 #### Usage:
 
 ```bash
@@ -79,6 +70,18 @@ pnpm sync:tokens --file=/path/to/figma-tokens.json
 # Dry-run: update tokens without committing
 pnpm sync:tokens --dry-run
 ```
+
+Running any of the above commands will trigger `cli.ts`, which runs a script that executes the following steps:
+
+1. Confirm working tree is clean
+2. Parse the Figma export file
+3. Checkout the `token-figma-sync` branch (a permanent branch living in the GH repo)
+4. Write the export file to `libs/ui-tokens/tokens/`
+5. Run `pnpm build:tokens` to validate the build
+6. Commit and push to `token-figma-sync` branch
+7. Return to the original branch (if beginning from a different branch)
+
+Creating / merging the PR off the pushed commits is all manual in GitHub at the moment.
 
 #### Requirements:
 In order for the CLI to work correctly, the following must be true:
