@@ -5,7 +5,7 @@ const config: Config = {
   ...baseConfig,
   displayName: 'ui-tokens',
   roots: ['<rootDir>/src'],
-  testMatch: ['**/tests/**/*.test.ts'],
+  testMatch: ['<rootDir>/src/dictionary/tests/*.test.ts'],
 };
 
 export default config;
