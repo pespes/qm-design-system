@@ -1,0 +1,3074 @@
+{
+  "exportedAt": "2026-08-25T13:38:53.236Z",
+  "collections": [
+    {
+      "id": "VariableCollectionId:7902:2",
+      "name": "Primitives",
+      "modes": [
+        {
+          "modeId": "7902:0",
+          "name": "Value"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:7903:131",
+      "name": "Theme",
+      "modes": [
+        {
+          "modeId": "7903:1",
+          "name": "Homeowner"
+        },
+        {
+          "modeId": "7903:2",
+          "name": "Pro"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:10612:8446",
+      "name": "Component",
+      "modes": [
+        {
+          "modeId": "10612:0",
+          "name": "Mode 1"
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "id": "VariableID:7902:3",
+      "name": "color/white",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:4",
+      "name": "color/black",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:5",
+      "name": "color/grey/050",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9333333373069763,
+        "g": 0.9333333373069763,
+        "b": 0.929411768913269,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:6",
+      "name": "color/grey/100",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.8666666746139526,
+        "g": 0.8666666746139526,
+        "b": 0.8588235378265381,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:7",
+      "name": "color/grey/200",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7490196228027344,
+        "g": 0.7490196228027344,
+        "b": 0.7372549176216125,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:8",
+      "name": "color/grey/300",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.6470588445663452,
+        "g": 0.6470588445663452,
+        "b": 0.6274510025978088,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:9",
+      "name": "color/grey/400",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.5490196347236633,
+        "g": 0.5490196347236633,
+        "b": 0.529411792755127,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:10",
+      "name": "color/grey/500",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.4627451002597809,
+        "g": 0.4627451002597809,
+        "b": 0.4431372582912445,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:11",
+      "name": "color/grey/600",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.3843137323856354,
+        "g": 0.3803921639919281,
+        "b": 0.3607843220233917,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:12",
+      "name": "color/grey/700",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.30588236451148987,
+        "g": 0.30588236451148987,
+        "b": 0.29019609093666077,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:13",
+      "name": "color/grey/800",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.22745098173618317,
+        "g": 0.22745098173618317,
+        "b": 0.21568627655506134,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:14",
+      "name": "color/grey/900",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.14509804546833038,
+        "g": 0.14509804546833038,
+        "b": 0.13725490868091583,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:15",
+      "name": "color/grey/950",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.09019608050584793,
+        "g": 0.09019608050584793,
+        "b": 0.08627451211214066,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:16",
+      "name": "color/green/050",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.8705882430076599,
+        "g": 0.9607843160629272,
+        "b": 0.8784313797950745,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:17",
+      "name": "color/green/100",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7529411911964417,
+        "g": 0.9176470637321472,
+        "b": 0.772549033164978,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:18",
+      "name": "color/green/200",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.5411764979362488,
+        "g": 0.8313725590705872,
+        "b": 0.5803921818733215,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:19",
+      "name": "color/green/300",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.3490196168422699,
+        "g": 0.7411764860153198,
+        "b": 0.4156862795352936,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:20",
+      "name": "color/green/400",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.16470588743686676,
+        "g": 0.6509804129600525,
+        "b": 0.27450981736183167,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:21",
+      "name": "color/green/500",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0,
+        "g": 0.5647059082984924,
+        "b": 0.1568627506494522,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:22",
+      "name": "color/green/600",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0,
+        "g": 0.47058823704719543,
+        "b": 0.054901961237192154,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:23",
+      "name": "color/green/700",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0,
+        "g": 0.3803921639919281,
+        "b": 0.007843137718737125,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:24",
+      "name": "color/green/800",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0,
+        "g": 0.2823529541492462,
+        "b": 0.0313725508749485,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:25",
+      "name": "color/green/900",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.04313725605607033,
+        "g": 0.1764705926179886,
+        "b": 0.05098039284348488,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:26",
+      "name": "color/green/950",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.04313725605607033,
+        "g": 0.10588235408067703,
+        "b": 0.0470588244497776,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:27",
+      "name": "color/blue/050",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.8823529481887817,
+        "g": 0.9333333373069763,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:28",
+      "name": "color/blue/100",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7764706015586853,
+        "g": 0.8666666746139526,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:29",
+      "name": "color/blue/200",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.5921568870544434,
+        "g": 0.7411764860153198,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:30",
+      "name": "color/blue/300",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.43529412150382996,
+        "g": 0.6235294342041016,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:31",
+      "name": "color/blue/400",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.30980393290519714,
+        "g": 0.5137255191802979,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:32",
+      "name": "color/blue/500",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.2078431397676468,
+        "g": 0.41960784792900085,
+        "b": 0.9137254953384399,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:33",
+      "name": "color/blue/600",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.13333334028720856,
+        "g": 0.3333333432674408,
+        "b": 0.800000011920929,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:34",
+      "name": "color/blue/700",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.08235294371843338,
+        "g": 0.26274511218070984,
+        "b": 0.658823549747467,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:35",
+      "name": "color/blue/800",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.062745101749897,
+        "g": 0.20392157137393951,
+        "b": 0.48627451062202454,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:36",
+      "name": "color/blue/900",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.05882352963089943,
+        "g": 0.13725490868091583,
+        "b": 0.2823529541492462,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:37",
+      "name": "color/blue/950",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.0470588244497776,
+        "g": 0.09019608050584793,
+        "b": 0.16470588743686676,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:38",
+      "name": "color/violet/050",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9607843160629272,
+        "g": 0.9058823585510254,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:39",
+      "name": "color/violet/100",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9176470637321472,
+        "g": 0.8196078538894653,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:40",
+      "name": "color/violet/200",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.8313725590705872,
+        "g": 0.6627451181411743,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:41",
+      "name": "color/violet/300",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7450980544090271,
+        "g": 0.5215686559677124,
+        "b": 0.9686274528503418,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:42",
+      "name": "color/violet/400",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.658823549747467,
+        "g": 0.4000000059604645,
+        "b": 0.9058823585510254,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:43",
+      "name": "color/violet/500",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.572549045085907,
+        "g": 0.2980392277240753,
+        "b": 0.8235294222831726,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:44",
+      "name": "color/violet/600",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.47843137383461,
+        "g": 0.21568627655506134,
+        "b": 0.7176470756530762,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:45",
+      "name": "color/violet/700",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.3843137323856354,
+        "g": 0.16470588743686676,
+        "b": 0.5882353186607361,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:46",
+      "name": "color/violet/800",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.2862745225429535,
+        "g": 0.13333334028720856,
+        "b": 0.43921568989753723,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:47",
+      "name": "color/violet/900",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.1725490242242813,
+        "g": 0.10196078568696976,
+        "b": 0.25882354378700256,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:48",
+      "name": "color/violet/950",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.10588235408067703,
+        "g": 0.07058823853731155,
+        "b": 0.14901961386203766,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:49",
+      "name": "color/red/050",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 1,
+        "g": 0.8980392217636108,
+        "b": 0.8745098114013672,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:50",
+      "name": "color/red/100",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 1,
+        "g": 0.800000011920929,
+        "b": 0.7607843279838562,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:51",
+      "name": "color/red/200",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 1,
+        "g": 0.6196078658103943,
+        "b": 0.5568627715110779,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:52",
+      "name": "color/red/300",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9882352948188782,
+        "g": 0.4588235318660736,
+        "b": 0.3960784375667572,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:53",
+      "name": "color/red/400",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9137254953384399,
+        "g": 0.3137255012989044,
+        "b": 0.26274511218070984,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:54",
+      "name": "color/red/500",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.8235294222831726,
+        "g": 0.18039216101169586,
+        "b": 0.1568627506494522,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:55",
+      "name": "color/red/600",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7098039388656616,
+        "g": 0.07450980693101883,
+        "b": 0.09019608050584793,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:56",
+      "name": "color/red/700",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.5803921818733215,
+        "g": 0.027450980618596077,
+        "b": 0.062745101749897,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:57",
+      "name": "color/red/800",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.4313725531101227,
+        "g": 0.05882352963089943,
+        "b": 0.06666667014360428,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:58",
+      "name": "color/red/900",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.2549019753932953,
+        "g": 0.07450980693101883,
+        "b": 0.06666667014360428,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:59",
+      "name": "color/red/950",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.14901961386203766,
+        "g": 0.05882352963089943,
+        "b": 0.054901961237192154,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:60",
+      "name": "color/yellow/050",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9960784316062927,
+        "g": 0.9254902005195618,
+        "b": 0.7882353067398071,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:61",
+      "name": "color/yellow/100",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9764705896377563,
+        "g": 0.8509804010391235,
+        "b": 0.6117647290229797,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:62",
+      "name": "color/yellow/200",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.929411768913269,
+        "g": 0.7098039388656616,
+        "b": 0.24705882370471954,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:63",
+      "name": "color/yellow/300",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.8666666746139526,
+        "g": 0.5803921818733215,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:64",
+      "name": "color/yellow/400",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7960784435272217,
+        "g": 0.46666666865348816,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:65",
+      "name": "color/yellow/500",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.7098039388656616,
+        "g": 0.364705890417099,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:66",
+      "name": "color/yellow/600",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.6117647290229797,
+        "g": 0.27843138575553894,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:67",
+      "name": "color/yellow/700",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.501960813999176,
+        "g": 0.21568627655506134,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:68",
+      "name": "color/yellow/800",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.3764705955982208,
+        "g": 0.16470588743686676,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:69",
+      "name": "color/yellow/900",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.22745098173618317,
+        "g": 0.11372549086809158,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:70",
+      "name": "color/yellow/950",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.13725490868091583,
+        "g": 0.07450980693101883,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:7902:82",
+      "name": "spacing/0",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 0
+    },
+    {
+      "id": "VariableID:7902:83",
+      "name": "spacing/050",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 2
+    },
+    {
+      "id": "VariableID:7902:84",
+      "name": "spacing/100",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 4
+    },
+    {
+      "id": "VariableID:7902:85",
+      "name": "spacing/150",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 6
+    },
+    {
+      "id": "VariableID:7902:86",
+      "name": "spacing/200",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 8
+    },
+    {
+      "id": "VariableID:7902:87",
+      "name": "spacing/250",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 10
+    },
+    {
+      "id": "VariableID:7902:88",
+      "name": "spacing/300",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 12
+    },
+    {
+      "id": "VariableID:7902:89",
+      "name": "spacing/350",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 14
+    },
+    {
+      "id": "VariableID:7902:90",
+      "name": "spacing/400",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 16
+    },
+    {
+      "id": "VariableID:7902:91",
+      "name": "spacing/500",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 20
+    },
+    {
+      "id": "VariableID:7902:92",
+      "name": "spacing/600",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 24
+    },
+    {
+      "id": "VariableID:7902:93",
+      "name": "spacing/800",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 32
+    },
+    {
+      "id": "VariableID:7902:94",
+      "name": "spacing/1000",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 40
+    },
+    {
+      "id": "VariableID:7902:95",
+      "name": "spacing/1200",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 48
+    },
+    {
+      "id": "VariableID:7902:96",
+      "name": "spacing/1600",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 64
+    },
+    {
+      "id": "VariableID:7902:97",
+      "name": "spacing/2000",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 80
+    },
+    {
+      "id": "VariableID:7902:98",
+      "name": "spacing/2400",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 96
+    },
+    {
+      "id": "VariableID:7902:99",
+      "name": "spacing/3200",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 128
+    },
+    {
+      "id": "VariableID:7902:100",
+      "name": "radius/none",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 0
+    },
+    {
+      "id": "VariableID:7902:101",
+      "name": "radius/100",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Matches Tailwind 'sm'",
+      "$value": 2
+    },
+    {
+      "id": "VariableID:7902:102",
+      "name": "radius/200",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Matches Tailwind 'base'",
+      "$value": 4
+    },
+    {
+      "id": "VariableID:7902:103",
+      "name": "radius/300",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Matches Tailwind 'md'",
+      "$value": 6
+    },
+    {
+      "id": "VariableID:7902:104",
+      "name": "radius/400",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "This is the default radius. Matches Tailwind 'lg'",
+      "$value": 8
+    },
+    {
+      "id": "VariableID:7902:105",
+      "name": "radius/500",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Matches Tailwind 'xl'",
+      "$value": 12
+    },
+    {
+      "id": "VariableID:7902:106",
+      "name": "radius/600",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Matches Tailwind '2xl'",
+      "$value": 16
+    },
+    {
+      "id": "VariableID:7902:107",
+      "name": "radius/700",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Matches Tailwind '3xl'",
+      "$value": 24
+    },
+    {
+      "id": "VariableID:7902:108",
+      "name": "radius/full",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Fully rounded for pills and circles",
+      "$value": 9999
+    },
+    {
+      "id": "VariableID:7902:109",
+      "name": "fontSize/025",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 1 of 13 (11px).",
+      "$value": 11
+    },
+    {
+      "id": "VariableID:7902:110",
+      "name": "fontSize/050",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 2 of 13 (12px).",
+      "$value": 12
+    },
+    {
+      "id": "VariableID:7902:111",
+      "name": "fontSize/075",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 3 of 13 (14px).",
+      "$value": 14
+    },
+    {
+      "id": "VariableID:7902:112",
+      "name": "fontSize/100",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 4 of 13 (16px).",
+      "$value": 16
+    },
+    {
+      "id": "VariableID:7902:113",
+      "name": "fontSize/200",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 5 of 13 (18px).",
+      "$value": 18
+    },
+    {
+      "id": "VariableID:7902:114",
+      "name": "fontSize/300",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 6 of 13 (20px).",
+      "$value": 20
+    },
+    {
+      "id": "VariableID:7902:115",
+      "name": "fontSize/400",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 7 of 13 (24px).",
+      "$value": 24
+    },
+    {
+      "id": "VariableID:7902:116",
+      "name": "fontSize/500",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 8 of 13 (28px).",
+      "$value": 28
+    },
+    {
+      "id": "VariableID:7902:117",
+      "name": "fontSize/600",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 9 of 13 (32px).",
+      "$value": 32
+    },
+    {
+      "id": "VariableID:7902:118",
+      "name": "fontSize/700",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 10 of 13 (36px).",
+      "$value": 36
+    },
+    {
+      "id": "VariableID:7902:119",
+      "name": "fontSize/800",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 11 of 13 (40px).",
+      "$value": 40
+    },
+    {
+      "id": "VariableID:7902:120",
+      "name": "fontSize/900",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 12 of 13 (48px).",
+      "$value": 48
+    },
+    {
+      "id": "VariableID:7902:121",
+      "name": "fontSize/1000",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Font size scale — step 13 of 13 (60px).",
+      "$value": 60
+    },
+    {
+      "id": "VariableID:7902:122",
+      "name": "fontWeight/400",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Regular weight (400).",
+      "$value": 400
+    },
+    {
+      "id": "VariableID:7902:123",
+      "name": "fontWeight/500",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Medium weight (500).",
+      "$value": 500
+    },
+    {
+      "id": "VariableID:7902:124",
+      "name": "fontWeight/600",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Semibold weight (600).",
+      "$value": 600
+    },
+    {
+      "id": "VariableID:7902:125",
+      "name": "fontWeight/700",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Bold weight (700).",
+      "$value": 700
+    },
+    {
+      "id": "VariableID:7902:126",
+      "name": "borderWidth/none",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "No border",
+      "$value": 0
+    },
+    {
+      "id": "VariableID:7902:127",
+      "name": "borderWidth/1",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Default structural border (cards, dividers)",
+      "$value": 1
+    },
+    {
+      "id": "VariableID:7902:128",
+      "name": "borderWidth/2",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Active states and medium emphasis",
+      "$value": 2
+    },
+    {
+      "id": "VariableID:7902:129",
+      "name": "borderWidth/4",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Focus rings and heavy emphasis",
+      "$value": 4
+    },
+    {
+      "id": "VariableID:7902:130",
+      "name": "borderWidth/8",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "Extra heavy structural accents",
+      "$value": 8
+    },
+    {
+      "id": "VariableID:7903:132",
+      "name": "surface/default",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Default page/body background — base canvas for all content",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:134",
+      "name": "surface/subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Raised surface (nested cards, table headers, sidebar bg)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:5",
+        "aliasName": "color/grey/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:135",
+      "name": "surface/sunken",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Recessed surface for inset areas (input wells, code blocks, empty states)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:6",
+        "aliasName": "color/grey/100"
+      }
+    },
+    {
+      "id": "VariableID:7903:136",
+      "name": "surface/overlay",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Semi-transparent backdrop behind dialogs, drawers, and bottom sheets",
+      "$value": {
+        "r": 0.14901961386203766,
+        "g": 0.1411764770746231,
+        "b": 0.13725490868091583,
+        "a": 0.5
+      }
+    },
+    {
+      "id": "VariableID:7903:137",
+      "name": "surface/inverse",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Dark surface for inverted contexts (tooltips, toasts, snackbars)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:15",
+        "aliasName": "color/grey/950"
+      }
+    },
+    {
+      "id": "VariableID:7903:138",
+      "name": "foreground/default",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Primary body text and high-emphasis content (headings, labels, values)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:14",
+        "aliasName": "color/grey/900"
+      }
+    },
+    {
+      "id": "VariableID:7903:139",
+      "name": "foreground/subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Tertiary text for captions, timestamps, and placeholder content",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:10",
+        "aliasName": "color/grey/500"
+      }
+    },
+    {
+      "id": "VariableID:7903:141",
+      "name": "foreground/inverse",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Text and icons on inverse/dark surfaces (tooltip content, toast messages)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:142",
+      "name": "border/default",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard neutral border (cards, inputs, dividers at rest)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:9",
+        "aliasName": "color/grey/400"
+      }
+    },
+    {
+      "id": "VariableID:7903:143",
+      "name": "border/strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast neutral border (hovered inputs, active separators)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:10",
+        "aliasName": "color/grey/500"
+      }
+    },
+    {
+      "id": "VariableID:7903:144",
+      "name": "border/subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast neutral border (faint separators, background dividers)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:6",
+        "aliasName": "color/grey/100"
+      }
+    },
+    {
+      "id": "VariableID:7903:145",
+      "name": "base/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Primary solid fill for high-emphasis controls (default buttons, active toggles)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:14",
+        "aliasName": "color/grey/900"
+      }
+    },
+    {
+      "id": "VariableID:7903:146",
+      "name": "base/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Text and icons on base/background (button labels, toggle icons)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:147",
+      "name": "base/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Subtle primary surface (toggle bg, selected table row)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:5",
+        "aliasName": "color/grey/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:148",
+      "name": "base/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Primary-hued text and icons on light surfaces (active nav items, emphasis links)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:14",
+        "aliasName": "color/grey/900"
+      }
+    },
+    {
+      "id": "VariableID:7903:149",
+      "name": "base/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard primary border (cards, dividers at rest)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:8",
+        "aliasName": "color/grey/300"
+      }
+    },
+    {
+      "id": "VariableID:7903:150",
+      "name": "accent/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Accent solid fill for secondary emphasis (accent buttons, highlighted badges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:44",
+        "aliasName": "color/violet/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:151",
+      "name": "accent/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Text and icons on accent/background (badge labels, chip content)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:152",
+      "name": "accent/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Accent tinted surface for subtle secondary backgrounds (selected chips, active filters)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:38",
+        "aliasName": "color/violet/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:153",
+      "name": "accent/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Secondary-hued text/icons on light surfaces (tags, badges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:45",
+        "aliasName": "color/violet/700"
+      }
+    },
+    {
+      "id": "VariableID:7903:154",
+      "name": "accent/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard accent border (tags, badges, chips at rest)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:40",
+        "aliasName": "color/violet/200"
+      }
+    },
+    {
+      "id": "VariableID:7903:155",
+      "name": "danger/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Danger tinted surface for error contexts (alert banners, inline validation backgrounds)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:49",
+        "aliasName": "color/red/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:156",
+      "name": "danger/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Danger text and icons (7.65:1 on red.050)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:56",
+        "aliasName": "color/red/700"
+      }
+    },
+    {
+      "id": "VariableID:7903:157",
+      "name": "danger/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard danger border (error inputs, alert card edges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:51",
+        "aliasName": "color/red/200"
+      }
+    },
+    {
+      "id": "VariableID:7903:158",
+      "name": "danger/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Danger solid fill for destructive actions (delete buttons, critical alerts)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:55",
+        "aliasName": "color/red/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:159",
+      "name": "danger/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Text on danger.background-strong (6.85:1)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:160",
+      "name": "warning/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Warning tinted surface for caution contexts (alert banners, notice backgrounds)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:60",
+        "aliasName": "color/yellow/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:161",
+      "name": "warning/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Warning text and icons (7.34:1 on yellow.050)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:67",
+        "aliasName": "color/yellow/700"
+      }
+    },
+    {
+      "id": "VariableID:7903:162",
+      "name": "warning/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard warning border (warning alerts, caution card edges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:62",
+        "aliasName": "color/yellow/200"
+      }
+    },
+    {
+      "id": "VariableID:7903:163",
+      "name": "warning/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Warning solid fill for caution states (warning badges, attention indicators)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:66",
+        "aliasName": "color/yellow/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:164",
+      "name": "warning/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Dark text on warning.background-strong (4.52:1)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:165",
+      "name": "success/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Success tinted surface for confirmation contexts (success banners, completion backgrounds)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:16",
+        "aliasName": "color/green/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:166",
+      "name": "success/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Success text and icons (6.74:1 on green.050)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:23",
+        "aliasName": "color/green/700"
+      }
+    },
+    {
+      "id": "VariableID:7903:167",
+      "name": "success/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard success border (success alerts, confirmation card edges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:18",
+        "aliasName": "color/green/200"
+      }
+    },
+    {
+      "id": "VariableID:7903:168",
+      "name": "success/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Success solid fill — lighter than brand.background to differentiate in Homeowner theme",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:22",
+        "aliasName": "color/green/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:169",
+      "name": "success/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Dark text on success.background-strong (6.68:1)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:170",
+      "name": "info/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Info tinted surface for informational contexts (info banners, tip backgrounds)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:27",
+        "aliasName": "color/blue/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:171",
+      "name": "info/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Info text and icons (7.42:1 on blue.050)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:34",
+        "aliasName": "color/blue/700"
+      }
+    },
+    {
+      "id": "VariableID:7903:172",
+      "name": "info/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard info border (info alerts, informational card edges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:29",
+        "aliasName": "color/blue/200"
+      }
+    },
+    {
+      "id": "VariableID:7903:173",
+      "name": "info/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Info solid fill for informational highlights (info badges, help indicators)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:33",
+        "aliasName": "color/blue/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:174",
+      "name": "info/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Text on info.background-strong (6.47:1)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:175",
+      "name": "focus/offset",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Transparent gap between the element edge and its focus ring (accessibility spacing)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7903:144",
+        "aliasName": "border/subtle"
+      }
+    },
+    {
+      "id": "VariableID:7903:180",
+      "name": "brand/background",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Brand solid fill for primary brand surfaces (CTAs, branded headers)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:22",
+        "aliasName": "color/green/600"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:33",
+        "aliasName": "color/blue/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:181",
+      "name": "brand/background-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Brand tinted surface (active sidebar item, selected chip)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:16",
+        "aliasName": "color/green/050"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:27",
+        "aliasName": "color/blue/050"
+      }
+    },
+    {
+      "id": "VariableID:7903:182",
+      "name": "brand/foreground",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Text and icons on brand/background (CTA labels, branded button content)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:7903:183",
+      "name": "brand/text",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Brand-hued text and icons on light surfaces (links, active breadcrumbs)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:23",
+        "aliasName": "color/green/700"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:34",
+        "aliasName": "color/blue/700"
+      }
+    },
+    {
+      "id": "VariableID:7903:184",
+      "name": "brand/border",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standard brand border (selected cards, active navigation)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:18",
+        "aliasName": "color/green/200"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:29",
+        "aliasName": "color/blue/200"
+      }
+    },
+    {
+      "id": "VariableID:7903:185",
+      "name": "brand/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast brand border (focus rings, active inputs)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:22",
+        "aliasName": "color/green/600"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:33",
+        "aliasName": "color/blue/600"
+      }
+    },
+    {
+      "id": "VariableID:7903:191",
+      "name": "focus/ring",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Focus ring stroke color — follows the active theme's brand hue",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7945:13149",
+        "aliasName": "base/border-strong"
+      }
+    },
+    {
+      "id": "VariableID:7945:13149",
+      "name": "base/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast primary border (outlined buttons, active controls)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:14",
+        "aliasName": "color/grey/900"
+      }
+    },
+    {
+      "id": "VariableID:8126:708",
+      "name": "danger/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast danger border (error focus rings, destructive button outlines)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:55",
+        "aliasName": "color/red/600"
+      }
+    },
+    {
+      "id": "VariableID:8514:1147",
+      "name": "accent/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast accent border (focused tags, active badges)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:44",
+        "aliasName": "color/violet/600"
+      }
+    },
+    {
+      "id": "VariableID:8514:1196",
+      "name": "warning/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast warning border (alert focus rings, active warning states)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:66",
+        "aliasName": "color/yellow/600"
+      }
+    },
+    {
+      "id": "VariableID:8514:1197",
+      "name": "success/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast success border (confirmation focus rings, active success states)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:21",
+        "aliasName": "color/green/500"
+      }
+    },
+    {
+      "id": "VariableID:8514:1198",
+      "name": "info/border-strong",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "High-contrast info border (info focus rings, active informational states)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:33",
+        "aliasName": "color/blue/600"
+      }
+    },
+    {
+      "id": "VariableID:9336:5752",
+      "name": "spacing/450",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 18
+    },
+    {
+      "id": "VariableID:9432:14909",
+      "name": "state/hover-on-light",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Hover state overlay on light surfaces (buttons, chips, menu items, table rows)",
+      "$value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.05999999865889549
+      }
+    },
+    {
+      "id": "VariableID:9432:14915",
+      "name": "state/pressed-on-light",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Pressed/active state overlay on light surfaces (buttons, chips, calendar days)",
+      "$value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.10000000149011612
+      }
+    },
+    {
+      "id": "VariableID:9432:14916",
+      "name": "state/hover-on-dark",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Hover state overlay on dark/filled surfaces (brand, base, danger buttons)",
+      "$value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.11999999731779099
+      }
+    },
+    {
+      "id": "VariableID:9432:14917",
+      "name": "state/pressed-on-dark",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Pressed/active state overlay on dark/filled surfaces (brand, base, danger buttons)",
+      "$value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.20000000298023224
+      }
+    },
+    {
+      "id": "VariableID:9432:14918",
+      "name": "state/disabled",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Foreground color for disabled text and icons across all components",
+      "$value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.3799999952316284
+      }
+    },
+    {
+      "id": "VariableID:9432:14919",
+      "name": "state/disabled-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Background fill for disabled controls (inputs, switches, buttons)",
+      "$value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.07999999821186066
+      }
+    },
+    {
+      "id": "VariableID:9432:14920",
+      "name": "state/dragged",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Overlay for elements in a dragged/grabbed state",
+      "$value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.11999999731779099
+      }
+    },
+    {
+      "id": "VariableID:9763:4144",
+      "name": "spacing/700",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 28
+    },
+    {
+      "id": "VariableID:9766:4299",
+      "name": "spacing/1400",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 56
+    },
+    {
+      "id": "VariableID:9766:4300",
+      "name": "spacing/1800",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 72
+    },
+    {
+      "id": "VariableID:9766:4301",
+      "name": "spacing/2800",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 112
+    },
+    {
+      "id": "VariableID:9766:4302",
+      "name": "spacing/4000",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$value": 160
+    },
+    {
+      "id": "VariableID:10612:8448",
+      "name": "rating/filled",
+      "$type": "COLOR",
+      "collectionName": "Component",
+      "$description": "Fill for selected/filled rating stars",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:64",
+        "aliasName": "color/yellow/400"
+      }
+    },
+    {
+      "id": "VariableID:10612:8449",
+      "name": "rating/empty",
+      "$type": "COLOR",
+      "collectionName": "Component",
+      "$description": "Fill for empty/unselected rating stars",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:7",
+        "aliasName": "color/grey/200"
+      }
+    },
+    {
+      "id": "VariableID:11048:8796",
+      "name": "border/inverse",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Neutral border on dark/inverse surfaces (avatar rings, stacked elements)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:3",
+        "aliasName": "color/white"
+      }
+    },
+    {
+      "id": "VariableID:11052:4511",
+      "name": "counter/background",
+      "$type": "COLOR",
+      "collectionName": "Component",
+      "$description": "Background fill for the Counter badge component",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:55",
+        "aliasName": "color/red/600"
+      }
+    },
+    {
+      "id": "VariableID:11324:624",
+      "name": "avatar/fallback-label-small",
+      "$type": "FLOAT",
+      "collectionName": "Component",
+      "$description": "Font size for avatar initials at the small size variant",
+      "$value": 10
+    },
+    {
+      "id": "VariableID:11602:1782",
+      "name": "foreground/secondary",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Muted body text, secondary labels and supporting copy",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:12",
+        "aliasName": "color/grey/700"
+      }
+    },
+    {
+      "id": "VariableID:11625:837",
+      "name": "foreground/link",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Standalone link text and underlined anchors",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:33",
+        "aliasName": "color/blue/600"
+      }
+    },
+    {
+      "id": "VariableID:11625:838",
+      "name": "foreground/danger",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Danger/error text and icons on neutral surfaces",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:55",
+        "aliasName": "color/red/600"
+      }
+    },
+    {
+      "id": "VariableID:11625:839",
+      "name": "foreground/success",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Success text and icons on neutral surfaces",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:22",
+        "aliasName": "color/green/600"
+      }
+    },
+    {
+      "id": "VariableID:11625:840",
+      "name": "foreground/warning",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Warning text and icons on neutral surfaces",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:66",
+        "aliasName": "color/yellow/600"
+      }
+    },
+    {
+      "id": "VariableID:11625:841",
+      "name": "foreground/accent",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Accent-colored text and icons on neutral surfaces",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:44",
+        "aliasName": "color/violet/600"
+      }
+    },
+    {
+      "id": "VariableID:11625:2350",
+      "name": "foreground/brand",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Brand-colored text and icons for emphasis outside of solid brand fills",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7903:183",
+        "aliasName": "brand/text"
+      }
+    },
+    {
+      "id": "VariableID:11973:189",
+      "name": "color/grey/025",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9647058844566345,
+        "g": 0.9647058844566345,
+        "b": 0.9647058844566345,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:190",
+      "name": "color/grey/975",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.054901961237192154,
+        "g": 0.054901961237192154,
+        "b": 0.05098039284348488,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:191",
+      "name": "color/green/025",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9450980424880981,
+        "g": 0.9764705896377563,
+        "b": 0.9450980424880981,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:192",
+      "name": "color/green/975",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.027450980618596077,
+        "g": 0.062745101749897,
+        "b": 0.0235294122248888,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:193",
+      "name": "color/blue/025",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9490196108818054,
+        "g": 0.9647058844566345,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:194",
+      "name": "color/blue/975",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.0235294122248888,
+        "g": 0.05098039284348488,
+        "b": 0.10588235408067703,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:195",
+      "name": "color/violet/025",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.9764705896377563,
+        "g": 0.95686274766922,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:196",
+      "name": "color/violet/975",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.062745101749897,
+        "g": 0.03921568766236305,
+        "b": 0.09803921729326248,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:197",
+      "name": "color/red/025",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 1,
+        "g": 0.9529411792755127,
+        "b": 0.9450980424880981,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:198",
+      "name": "color/red/975",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.10196078568696976,
+        "g": 0.027450980618596077,
+        "b": 0.0235294122248888,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:199",
+      "name": "color/yellow/025",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 1,
+        "g": 0.9607843160629272,
+        "b": 0.8901960849761963,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:200",
+      "name": "color/yellow/975",
+      "$type": "COLOR",
+      "collectionName": "Primitives",
+      "$value": {
+        "r": 0.08235294371843338,
+        "g": 0.04313725605607033,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "id": "VariableID:11973:201",
+      "name": "surface/subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest surface tint for default alerts and neutral toasts",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:189",
+        "aliasName": "color/grey/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:202",
+      "name": "base/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest primary tint — subtle hover states and very faint backgrounds",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:189",
+        "aliasName": "color/grey/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:203",
+      "name": "brand/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest brand tint — subtle hover states and very faint backgrounds",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:191",
+        "aliasName": "color/green/025"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:193",
+        "aliasName": "color/blue/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:204",
+      "name": "accent/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest accent tint — subtle hover states and very faint backgrounds",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:195",
+        "aliasName": "color/violet/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:205",
+      "name": "danger/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest danger tint for destructive menu items and danger alert backgrounds",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:197",
+        "aliasName": "color/red/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:206",
+      "name": "warning/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest warning tint for subtle caution backgrounds (toast fills, inline hints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:199",
+        "aliasName": "color/yellow/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:207",
+      "name": "success/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest success tint for subtle confirmation backgrounds (toast fills, inline hints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:191",
+        "aliasName": "color/green/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:208",
+      "name": "info/background-subtlest",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Lightest info tint for subtle informational backgrounds (toast fills, inline hints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:11973:193",
+        "aliasName": "color/blue/025"
+      }
+    },
+    {
+      "id": "VariableID:11973:209",
+      "name": "base/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast primary border (faint separators, inactive states)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:6",
+        "aliasName": "color/grey/100"
+      }
+    },
+    {
+      "id": "VariableID:11973:210",
+      "name": "brand/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast brand border (faint selection indicators, inactive brand elements)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:17",
+        "aliasName": "color/green/100"
+      },
+      "$proValue": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:28",
+        "aliasName": "color/blue/100"
+      }
+    },
+    {
+      "id": "VariableID:11973:211",
+      "name": "accent/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast accent border (faint accent separators, inactive elements)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:39",
+        "aliasName": "color/violet/100"
+      }
+    },
+    {
+      "id": "VariableID:11973:212",
+      "name": "danger/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast danger border (faint error backgrounds, inline validation hints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:50",
+        "aliasName": "color/red/100"
+      }
+    },
+    {
+      "id": "VariableID:11973:213",
+      "name": "warning/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast warning border (faint caution backgrounds, subtle alert tints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:61",
+        "aliasName": "color/yellow/100"
+      }
+    },
+    {
+      "id": "VariableID:11973:214",
+      "name": "success/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast success border (faint confirmation backgrounds, subtle success tints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:17",
+        "aliasName": "color/green/100"
+      }
+    },
+    {
+      "id": "VariableID:11973:215",
+      "name": "info/border-subtle",
+      "$type": "COLOR",
+      "collectionName": "Theme",
+      "$description": "Low-contrast info border (faint informational backgrounds, subtle info tints)",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:28",
+        "aliasName": "color/blue/100"
+      }
+    },
+    {
+      "id": "VariableID:12310:5752",
+      "name": "calendar/calendar-title-large",
+      "$type": "FLOAT",
+      "collectionName": "Component",
+      "$description": "Font size for the calendar month/year title at large size",
+      "$value": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:7902:115",
+        "aliasName": "fontSize/400"
+      }
+    },
+    {
+      "id": "VariableID:12728:2726",
+      "name": "fontFamily/sans",
+      "$type": "STRING",
+      "collectionName": "Primitives",
+      "$description": "Primary sans-serif typeface used across the type system.",
+      "$value": "DM Sans"
+    },
+    {
+      "id": "VariableID:12728:2727",
+      "name": "fontStyle/400",
+      "$type": "STRING",
+      "collectionName": "Primitives",
+      "$description": "Regular style name, mapped to fontWeight/400 — bound to Figma's fontStyle field since this typeface has no variable weight axis.",
+      "$value": "Regular"
+    },
+    {
+      "id": "VariableID:12728:2728",
+      "name": "fontStyle/500",
+      "$type": "STRING",
+      "collectionName": "Primitives",
+      "$description": "Medium style name, mapped to fontWeight/500 — bound to Figma's fontStyle field since this typeface has no variable weight axis.",
+      "$value": "Medium"
+    },
+    {
+      "id": "VariableID:12728:2729",
+      "name": "fontStyle/600",
+      "$type": "STRING",
+      "collectionName": "Primitives",
+      "$description": "SemiBold style name, mapped to fontWeight/600 — bound to Figma's fontStyle field since this typeface has no variable weight axis.",
+      "$value": "SemiBold"
+    },
+    {
+      "id": "VariableID:12728:2730",
+      "name": "fontStyle/700",
+      "$type": "STRING",
+      "collectionName": "Primitives",
+      "$description": "Bold style name, mapped to fontWeight/700 — bound to Figma's fontStyle field since this typeface has no variable weight axis.",
+      "$value": "Bold"
+    },
+    {
+      "id": "VariableID:12728:2731",
+      "name": "lineHeight/125",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "1.25× line height — tighter vertical rhythm.",
+      "$value": 125
+    },
+    {
+      "id": "VariableID:12728:2732",
+      "name": "lineHeight/150",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "1.5× line height — relaxed vertical rhythm for readable running text.",
+      "$value": 150
+    },
+    {
+      "id": "VariableID:12728:2733",
+      "name": "letterSpacing/n050",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "-0.05em tracking (Tailwind 'tighter').",
+      "$value": -5
+    },
+    {
+      "id": "VariableID:12728:2734",
+      "name": "letterSpacing/n025",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "-0.025em tracking (Tailwind 'tight').",
+      "$value": -2.5
+    },
+    {
+      "id": "VariableID:12728:2735",
+      "name": "letterSpacing/000",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "0em tracking (Tailwind 'normal').",
+      "$value": 0
+    },
+    {
+      "id": "VariableID:12728:2736",
+      "name": "letterSpacing/025",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "0.025em tracking (Tailwind 'wide').",
+      "$value": 2.5
+    },
+    {
+      "id": "VariableID:12728:2737",
+      "name": "letterSpacing/050",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "0.05em tracking (Tailwind 'wider').",
+      "$value": 5
+    },
+    {
+      "id": "VariableID:12728:2738",
+      "name": "letterSpacing/100",
+      "$type": "FLOAT",
+      "collectionName": "Primitives",
+      "$description": "0.1em tracking (Tailwind 'widest').",
+      "$value": 10
+    }
+  ],
+  "textVariables": [
+    {
+      "id": "S:b5cc5dd2e13fe21a02a44eb629f01603cd682cb2,",
+      "name": "text/header/display1",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/800"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:b8692195e7278e3cfbcbbd3abed137db91ac033b,",
+      "name": "text/header/display2",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/600"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:faec8befed099758982a92a5427a06496078f313,",
+      "name": "text/header/display3",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/500"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:3bf7399bfabfc1dc9be2260ed98c9692a2cc0d8f,",
+      "name": "text/header/h1",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/400"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:20eaaf2005f9edca6f1126efe67d009ff6a3d494,",
+      "name": "text/header/h2",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/300"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:5518b8e101a3a9b7fce819ba88f4bb914fcb64d5,",
+      "name": "text/header/h3",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/100"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:636499256bd49f7f0a9db605bdd78724695f92b4,",
+      "name": "text/header/h4",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/075"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:253bf3e8b8c2ea2247bb6a82a272006112b99c35,",
+      "name": "text/header/caption",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/050"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:304f272562cc0eab30c05555f8cacdc1d2682286,",
+      "name": "text/header/fine",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 700,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/025"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:e052fc9b694c089fe611f140f80a41564cfa5ea0,",
+      "name": "text/body/lead",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 400,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/100"
+      },
+      "lineHeight": 1.5,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:90a79734c018361a9627d8440f9f23c0ba672f29,",
+      "name": "text/body/default",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 400,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/075"
+      },
+      "lineHeight": 1.5,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:dfde307a47e2c74a232690bca412808e184e9ca3,",
+      "name": "text/body/caption",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 400,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/050"
+      },
+      "lineHeight": 1.5,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:bbdf1086abef8c88084c991d77e1e4847abc9ba8,",
+      "name": "text/body/fine",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 400,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/025"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:6f851c425707378eb3eda57a4942483968a06b4f,",
+      "name": "text/ui/lead",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 500,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/100"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:bf82c103e7145455004152dbba44b02a3c822437,",
+      "name": "text/ui/default",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 500,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/075"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:d30c1200a0bba05ba6f1156982b47409b3c4e41a,",
+      "name": "text/ui/default-emphasis",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 600,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/075"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:c2ced9007637f6067735d724fd446cadcc6b5a0b,",
+      "name": "text/ui/caption",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 500,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/050"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:8fd671dfc8ae8d37616df09aeaa6103c7482d2df,",
+      "name": "text/ui/fine",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 500,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/025"
+      },
+      "lineHeight": 1.25,
+      "letterSpacing": 0
+    },
+    {
+      "id": "S:a7a8448dd0a5fd0be83e220df6199ae0c91164d4,",
+      "name": "text/link/default",
+      "fontFamily": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontFamily/sans"
+      },
+      "fontWeight": 600,
+      "fontSize": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "fontSize/075"
+      },
+      "lineHeight": 1.5,
+      "letterSpacing": {
+        "type": "VARIABLE_ALIAS",
+        "aliasName": "letterSpacing/025"
+      }
+    }
+  ],
+  "effectVariables": [
+    {
+      "id": "S:cff9e8d5ae210a2ffb61584bd2413667513d8790,",
+      "name": "shadow/100",
+      "$description": "Subtle lift — cards, buttons at rest",
+      "effects": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.05000000074505806
+          },
+          "offsetX": 0,
+          "offsetY": 1,
+          "radius": 2,
+          "spread": 0
+        }
+      ]
+    },
+    {
+      "id": "S:de12baf0a8351de18ad0a983d7b621ab4dde2e9b,",
+      "name": "shadow/200",
+      "$description": "Low elevation — hovering cards, raised sections",
+      "effects": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.10000000149011612
+          },
+          "offsetX": 0,
+          "offsetY": 1,
+          "radius": 3,
+          "spread": 0
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.05999999865889549
+          },
+          "offsetX": 0,
+          "offsetY": 1,
+          "radius": 2,
+          "spread": -1
+        }
+      ]
+    },
+    {
+      "id": "S:ce306ea74ac220d93dbef77d68ecd5d9a6efac6f,",
+      "name": "shadow/300",
+      "$description": "Medium elevation — dropdowns, popovers",
+      "effects": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.10000000149011612
+          },
+          "offsetX": 0,
+          "offsetY": 4,
+          "radius": 6,
+          "spread": -1
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.05999999865889549
+          },
+          "offsetX": 0,
+          "offsetY": 2,
+          "radius": 4,
+          "spread": -2
+        }
+      ]
+    },
+    {
+      "id": "S:9e9e8a311d86a1c9dd7c7aceb313f00a8472fdea,",
+      "name": "shadow/400",
+      "$description": "High elevation — modals, dialogs",
+      "effects": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.10000000149011612
+          },
+          "offsetX": 0,
+          "offsetY": 10,
+          "radius": 15,
+          "spread": -3
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.05000000074505806
+          },
+          "offsetX": 0,
+          "offsetY": 4,
+          "radius": 6,
+          "spread": -4
+        }
+      ]
+    },
+    {
+      "id": "S:793c3829fa574a959bb5aec12a7e8616464112ff,",
+      "name": "shadow/500",
+      "$description": "Highest elevation — toasts, command palettes",
+      "effects": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.10000000149011612
+          },
+          "offsetX": 0,
+          "offsetY": 20,
+          "radius": 25,
+          "spread": -5
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offsetX": 0,
+          "offsetY": 8,
+          "radius": 10,
+          "spread": -6
+        }
+      ]
+    }
+  ]
+}

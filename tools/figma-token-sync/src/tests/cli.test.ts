@@ -1,6 +1,13 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import {
   git,
@@ -11,8 +18,10 @@ import {
   checkoutSyncBranch,
   rebaseOntoBase,
   commitAndPushTokens,
+  writeExportFile,
 } from '../cli.js';
 import { loadConfig } from '../sync-config.js';
+import type { FigmaExport, SyncConfig } from '../types.js';
 
 describe('CLI testing', () => {
   let repoDir: string;
@@ -20,7 +29,6 @@ describe('CLI testing', () => {
     .spyOn(console, 'error')
     .mockImplementation(() => undefined);
 
-  const TOKEN_FILE_NAME = 'test.tokens.json';
   const TOKEN_FILE_CONTENT = { color: { primary: '#FF0000' } };
   const TOKEN_FILE_CONTENT_UPDATED = { color: { primary: '#00FF00' } };
   const TOKEN_FILE_CONTENT_CONFLICT = { color: { primary: '#0000FF' } };
@@ -106,6 +114,36 @@ describe('CLI testing', () => {
     });
   });
 
+  describe('writeExportFile', () => {
+    afterAll(() => {
+      rmSync(repoDir, { recursive: true, force: true });
+    });
+
+    const mockExport: FigmaExport = {
+      exportedAt: '2026-01-01T00:00:00Z',
+      collections: [],
+      variables: [],
+      textVariables: [],
+    };
+
+    it('creates intermediate directories and writes JSON file', () => {
+      repoDir = mkdtempSync(join(tmpdir(), 'write-export-dir'));
+      const baseConfig = loadConfig();
+      const config: SyncConfig = {
+        ...baseConfig,
+        repoPath: repoDir,
+      };
+
+      writeExportFile(config, mockExport);
+
+      const outPath = join(repoDir, config.tokenFilePath);
+      expect(existsSync(outPath)).toBe(true);
+
+      const written = JSON.parse(readFileSync(outPath, 'utf-8'));
+      expect(written).toEqual(mockExport);
+    });
+  });
+
   describe('verifyRemote', () => {
     // helper to set remote url prior to firing a get-url
     const setRemoteUrl = (url: string) =>
@@ -171,9 +209,9 @@ describe('CLI testing', () => {
     const tempDirs: string[] = []; // track dirs created to remove at end of tests
 
     // pull config used to for github workflow (minus repoPath which resolves to real qm-design-system root - creating temp directories instead)
-    const { tokensRoot, git: gitConfig } = loadConfig();
+    const { tokenFilePath, git: gitConfig } = loadConfig();
     const { baseBranch, branchName } = gitConfig;
-    const tokenFilePath = join(tokensRoot, TOKEN_FILE_NAME);
+    const tokenFileDir = dirname(tokenFilePath);
 
     let remoteRepoDir: string; // GitHub remote directory
     let localRepoDir: string; // dev's local that script runs in
@@ -211,7 +249,7 @@ describe('CLI testing', () => {
       git(localRepoDir, ['remote', 'add', 'origin', remoteRepoDir]);
 
       // create empty commit to push to base branch so remote has a commit history
-      mkdirSync(join(localRepoDir, tokensRoot), { recursive: true });
+      mkdirSync(join(localRepoDir, tokenFileDir), { recursive: true });
       commitFile(localRepoDir, tokenFilePath, '{}');
       // push to base 'development' branch and newly created feature branch ('token-figma-sync') in remote
       git(localRepoDir, [
@@ -231,7 +269,7 @@ describe('CLI testing', () => {
       checkoutSyncBranch(localRepoDir, baseBranch, branchName);
       rebaseOntoBase(localRepoDir, baseBranch, branchName);
       writeTokenFile(localRepoDir, TOKEN_FILE_CONTENT);
-      commitAndPushTokens(localRepoDir, tokensRoot, branchName);
+      commitAndPushTokens(localRepoDir, tokenFilePath, branchName);
 
       // confirm local creates / checks-out new feature branch
       expect(git(localRepoDir, ['branch', '--show-current'])).toBe(branchName);
@@ -267,7 +305,7 @@ describe('CLI testing', () => {
       checkoutSyncBranch(localRepoDir, baseBranch, branchName);
       rebaseOntoBase(localRepoDir, baseBranch, branchName);
       writeTokenFile(localRepoDir, TOKEN_FILE_CONTENT_UPDATED);
-      commitAndPushTokens(localRepoDir, tokensRoot, branchName);
+      commitAndPushTokens(localRepoDir, tokenFilePath, branchName);
 
       // checkoutSyncBranch pulled teammate machine's new commits on base
       expect(git(localRepoDir, ['rev-parse', `origin/${baseBranch}`])).toBe(
