@@ -3,7 +3,6 @@ import { type TransformedToken } from 'style-dictionary/types';
 import {
   spacingToEm,
   typeConversion,
-  nativeColorFallback,
   typeConversionRN,
 } from '../transforms.js';
 
@@ -28,24 +27,24 @@ describe('Custom Transforms', () => {
       name: 'letterSpacing-050',
       path: ['letterSpacing', '050'],
       original: {
-        $value: 50,
+        $value: 5,
         $type: 'number',
       },
-      $value: 50,
+      $value: 5,
       isSource: true,
       filePath: 'fake/filepath.json',
     };
 
     describe('transforming tokens', () => {
-      it('should convert unitless tracking (base 1000) to em string', () => {
+      it('should convert unitless tracking (base 100) to em string', () => {
         expect(spacingToEm.transform(token, {}, {})).toBe('0.05em');
       });
 
       it('should handle negative tracking values', () => {
         const updatedToken = {
           ...token,
-          $value: -25,
-          original: { ...token.original, value: -25 },
+          $value: -2.5,
+          original: { ...token.original, value: -2.5 },
         };
         expect(spacingToEm.transform(updatedToken, {}, {})).toBe('-0.025em');
       });
@@ -53,8 +52,8 @@ describe('Custom Transforms', () => {
       it('should handle unitless string numbers correctly', () => {
         const updatedToken = {
           ...token,
-          $value: '100',
-          original: { ...token.original, $value: '100' },
+          $value: '10',
+          original: { ...token.original, $value: '10' },
         };
         expect(spacingToEm.transform(updatedToken, {}, {})).toBe('0.1em');
       });
@@ -152,72 +151,16 @@ describe('Custom Transforms', () => {
     });
   });
 
-  describe('nativeColorFallback', () => {
-    const token: TransformedToken = {
-      name: 'color-base-background',
-      path: ['color', 'base', 'background'],
-      original: {},
-      $value: 'oklch(26.24% 0.0036 78.30)',
-      $extensions: {
-        'hex-fallback': '#262423',
-      },
-      $type: 'color',
-      isSource: true,
-      filePath: 'fake/filepath.json',
-    };
-
-    describe('transforming tokens', () => {
-      it('should return the hex-fallback value for color tokens when provided', () => {
-        expect(nativeColorFallback.transform(token, {}, {})).toBe('#262423');
-      });
-
-      it('should return the rgba-fallback value for color tokens when provided', () => {
-        const updatedToken = {
-          ...token,
-          original: {},
-          $extensions: {
-            'rgba-fallback': 'rgba(255,255,255, 0.1)',
-          },
-        };
-        expect(nativeColorFallback.transform(updatedToken, {}, {})).toBe(
-          'rgba(255,255,255, 0.1)',
-        );
-      });
-
-      it('should return undefined if missing the fallback (to be caught by validation/formatter)', () => {
-        const updatedToken = {
-          ...token,
-          original: {},
-          $extensions: {},
-        };
-        expect(nativeColorFallback.transform(updatedToken, {}, {})).toBe(
-          undefined,
-        );
-      });
-    });
-
-    describe('filtering tokens', () => {
-      it('should filter any tokens that shold be converted', () => {
-        expect(nativeColorFallback.filter?.(token, {})).toBe(true);
-      });
-
-      it('should filter out any tokens that should not be converted', () => {
-        const updatedToken = { ...token, $type: 'typography' };
-        expect(nativeColorFallback.filter?.(updatedToken, {})).toBe(false);
-      });
-    });
-  });
-
   describe('typeConversionRN', () => {
     const token: TransformedToken = {
       name: 'header-h1',
       $type: 'typography',
       $value: {
         fontFamily: 'DM Sans',
-        fontSize: 16,
+        fontSize: '16px',
         fontWeight: 700,
         lineHeight: 1.25,
-        letterSpacing: 25,
+        letterSpacing: 0.025,
       },
       original: {},
       path: ['header, h1'],
@@ -232,14 +175,17 @@ describe('Custom Transforms', () => {
           string,
           NativeTypographyType,
         ];
-        const spacingConversion =
-          (token.$value.letterSpacing / 1000) * token.$value.fontSize;
-        const lineHeightConversion =
-          token.$value.lineHeight * token.$value.fontSize;
-        expect(result[0]).toBe('16');
+        const fontSizeNum = parseFloat(token.$value.fontSize);
+        const lineHeightConversion = token.$value.lineHeight * fontSizeNum;
+
+        expect(result[0]).toBe('16px');
         expect(result[1].fontWeight).toBe('700');
-        expect(result[1].lineHeight).toBe(lineHeightConversion.toString());
-        expect(result[1].letterSpacing).toBe(spacingConversion.toString());
+        expect(result[1].lineHeight).toBe(
+          lineHeightConversion.toString() + 'px',
+        );
+        expect(result[1].letterSpacing).toBe(
+          token.$value.letterSpacing.toString() + 'em',
+        );
         expect(result[1]).not.toHaveProperty('fontFamily');
       });
 

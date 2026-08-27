@@ -91,19 +91,6 @@ export const typeConversion: Transform = {
   },
 };
 
-// switch to hex / rgba fallbacks for RN
-export const nativeColorFallback: Transform = {
-  name: 'native-color-fallback',
-  type: 'value',
-  filter: (token) => token.$type === 'color' || token.type === 'color',
-  transform: (token) => {
-    const fallback =
-      token.$extensions?.['hex-fallback'] ??
-      token.$extensions?.['rgba-fallback'];
-    return fallback;
-  },
-};
-
 // clean typography token to remove fontFamily, which TWRNC does not use in fontSize config:
 // https://github.com/jaredh159/tailwind-react-native-classnames/blob/6b7a0903b8ced433760e61dc118c4989a1802db4/src/tw-config.ts
 export const typeConversionRN: Transform = {
@@ -144,11 +131,6 @@ export const typeConversionRN: Transform = {
   },
 };
 
-const transforms = [
-  spacingToEm,
-  typeConversion,
-  nativeColorFallback,
-  typeConversionRN,
-];
+const transforms = [spacingToEm, typeConversion, typeConversionRN];
 
 export default transforms;

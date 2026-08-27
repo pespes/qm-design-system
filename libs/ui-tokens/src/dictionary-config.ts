@@ -20,11 +20,7 @@ type modeType = {
   rnExportName: string;
 };
 
-// -------- Helpers --------
-const calculateFilePath = (fileName: string) =>
-  resolve(import.meta.dirname, '../../tokens/', fileName);
-
-const parseFigmaFile = <T>(path: string): T => {
+const parseFigmaFile = (path: string): FigmaExport => {
   try {
     return JSON.parse(readFileSync(path, 'utf-8'));
   } catch {
@@ -35,9 +31,12 @@ const parseFigmaFile = <T>(path: string): T => {
 // ------- Style Dictionary Builds -------
 
 const buildDictionary = async () => {
-  const parsedExport = parseFigmaFile<FigmaExport>(
-    calculateFilePath('figma-tokens.json'),
+  const tokenFilePath = resolve(
+    import.meta.dirname,
+    '../../tokens/figma-tokens.json',
   );
+  const parsedExport = parseFigmaFile(tokenFilePath);
+
   const { base, modes: modeTrees } = buildDtcgTrees(parsedExport);
 
   const hooks = {
