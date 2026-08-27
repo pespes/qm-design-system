@@ -71,14 +71,24 @@ const convertTypographyProp = (
 // https://styledictionary.com/reference/hooks/transforms/predefined/#shadowcssshorthand
 export const convertShadowEffects = (
   effects: FigmaEffectVariable['effects'],
+  name: string,
 ): TokenShadowLayer[] =>
-  effects.map((effect) => ({
-    offsetX: toPx(effect.offsetX),
-    offsetY: toPx(effect.offsetY),
-    blur: toPx(effect.radius),
-    spread: toPx(effect.spread),
-    color: normalizeToRgbaStr(effect.color),
-  }));
+  effects.map((effect) => {
+    const { offsetX, offsetY, radius, spread, color } = effect;
+    const invalidValue = [offsetX, offsetY, radius, spread, color].some(
+      (value) => value === undefined || value === null,
+    );
+    if (invalidValue) {
+      throw new Error(`Shadow effect ${name} has undefined values`);
+    }
+    return {
+      offsetX: toPx(effect.offsetX),
+      offsetY: toPx(effect.offsetY),
+      blur: toPx(effect.radius),
+      spread: toPx(effect.spread),
+      color: normalizeToRgbaStr(effect.color),
+    };
+  });
 
 // ---------- Token Creation Helpers ----------
 
@@ -333,7 +343,7 @@ export const buildDtcgTrees = (parsedFile: FigmaExport): DtcgTrees => {
   parsedFile.effectVariables?.forEach((shadowVar) => {
     const token: DtcgToken = {
       $type: 'shadow',
-      $value: convertShadowEffects(shadowVar.effects),
+      $value: convertShadowEffects(shadowVar.effects, shadowVar.name),
       $extensions: { [EXPOSURE_KEY]: shadowExposure },
     };
     if (shadowVar.$description) token.$description = shadowVar.$description;
