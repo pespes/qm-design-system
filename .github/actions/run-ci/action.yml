@@ -24,3 +24,12 @@ runs:
     - name: Build Components
       shell: bash
       run: pnpm exec nx build ui-components
+
+    - name: Install Playwright
+      working-directory: libs/ui-components
+      shell: bash
+      run: npx playwright install
+
+    - name: Test
+      shell: bash
+      run: pnpm test

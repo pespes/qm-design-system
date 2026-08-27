@@ -82,6 +82,9 @@ export const defaultTests = async ({
 
     await step('Renders the selected item label', async () => {
       await userEvent.click(trigger);
+      await waitFor(() => {
+        expect(trigger).toHaveAttribute('aria-expanded', 'true');
+      });
       const items = screen.getAllByRole('option');
       if (!items[0]) throw new Error('no options found');
       const itemLabel = items[0].textContent;
