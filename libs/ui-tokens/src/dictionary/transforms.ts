@@ -44,7 +44,8 @@ export const spacingToEm: Transform = {
       return val;
     }
     const num = new BigNumber(val);
-    return `${num.dividedBy(1000).dp(3).toString()}em`;
+    // divided by 100 because figma export already divides numeric value by 100
+    return `${num.dividedBy(100).dp(3).toString()}em`;
   },
 };
 
@@ -113,6 +114,7 @@ export const typeConversionRN: Transform = {
     token.$type === 'typography' || token.type === 'typography',
   transform: (token) => {
     const value = findTokenValue(token);
+
     // fontSize is a mandatory value, so return undefined if the value is invalid,
     // OR if value.fontSize is invalid - to be caught in formatter & action
     if (!isTypographyToken(value, ['fontSize'])) {
@@ -122,25 +124,22 @@ export const typeConversionRN: Transform = {
 
     const { fontSize, fontWeight, lineHeight, letterSpacing } = value;
     const config: Record<string, string> = {};
-    const size = new BigNumber(fontSize);
+    const size = new BigNumber(parseFloat(fontSize)); // fontSize comes in as string '<number>px'
 
     if (fontWeight !== undefined || fontWeight !== null) {
       config.fontWeight = fontWeight.toString();
     }
 
     if (isNumericToken(lineHeight)) {
-      config.lineHeight = size.multipliedBy(lineHeight).dp(2).toString();
+      const height = size.multipliedBy(lineHeight).dp(2).toString();
+      config.lineHeight = height + 'px';
     }
 
+    // Figma plugin processes it as a percent value, and typography styles divide that value by 100,
+    // so already reduced down to the em size needed
     if (isNumericToken(letterSpacing)) {
-      const spacing = new BigNumber(letterSpacing);
-      config.letterSpacing = spacing
-        .dividedBy(1000)
-        .multipliedBy(size)
-        .dp(3)
-        .toString();
+      config.letterSpacing = letterSpacing.toString() + 'em';
     }
-
     return [`${fontSize}`, config];
   },
 };

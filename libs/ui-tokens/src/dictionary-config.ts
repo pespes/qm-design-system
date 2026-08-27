@@ -1,25 +1,18 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import StyleDictionary from 'style-dictionary';
 import type { TransformedToken, Config } from 'style-dictionary/types';
 import transforms from './dictionary/transforms.js';
 import groups from './dictionary/transformGroups.js';
 import formats from './dictionary/formats.js';
 import { validateTokens } from './dictionary/actions.js';
-
-const HIDDEN_PRIMITIVES = [
-  'tokens/primitives/color.tokens.json',
-  'tokens/primitives/type.tokens.json',
-];
-const PRIMITIVES = [
-  'tokens/primitives/borderWidth.tokens.json',
-  'tokens/primitives/breakpoints.tokens.json',
-  'tokens/primitives/opacity.tokens.json',
-  'tokens/primitives/radius.tokens.json',
-  'tokens/primitives/spacing.tokens.json',
-  'tokens/primitives/zIndex.tokens.json',
-];
-const SEMANTICS = ['tokens/semantic/**/*.tokens.json'];
-const CSS_SHADOW = 'tokens/primitives/shadow.tokens.json';
-const NATIVE_SHADOW = 'tokens/primitives/shadowNative.tokens.json';
+import { buildDtcgTrees } from './build-tree/buildTokenTree.js';
+import {
+  getExposure,
+  shouldEmit,
+  tokensFor,
+} from './utilities/dictionary-helpers.js';
+import type { FigmaExport } from './build-tree/types.js';
 
 type modeType = {
   name: string;
@@ -27,7 +20,26 @@ type modeType = {
   rnExportName: string;
 };
 
+// -------- Helpers --------
+const calculateFilePath = (fileName: string) =>
+  resolve(import.meta.dirname, '../../tokens/', fileName);
+
+const parseFigmaFile = <T>(path: string): T => {
+  try {
+    return JSON.parse(readFileSync(path, 'utf-8'));
+  } catch {
+    throw new Error(`Could not retrieve or parse file at ${path}`);
+  }
+};
+
+// ------- Style Dictionary Builds -------
+
 const buildDictionary = async () => {
+  const parsedExport = parseFigmaFile<FigmaExport>(
+    calculateFilePath('figma-tokens.json'),
+  );
+  const { base, modes: modeTrees } = buildDtcgTrees(parsedExport);
+
   const hooks = {
     transforms: Object.fromEntries(transforms.map((t) => [t.name, t])),
     formats: Object.fromEntries(formats.map((f) => [f.name, f.format])),
@@ -47,15 +59,7 @@ const buildDictionary = async () => {
     log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
-    // Include tokens are for reference, not emitted
-    include: mode
-      ? [...PRIMITIVES, ...HIDDEN_PRIMITIVES, ...SEMANTICS, CSS_SHADOW]
-      : HIDDEN_PRIMITIVES,
-    // For override mode, only needs to surface override values for selector
-    // Default @theme block renders all variables
-    source: mode
-      ? [`tokens/modes/${mode.name}.tokens.json`]
-      : [...PRIMITIVES, ...SEMANTICS, CSS_SHADOW],
+    tokens: tokensFor(base, modeTrees, mode),
     platforms: {
       css: {
         transformGroup: 'css/tokens',
@@ -65,7 +69,12 @@ const buildDictionary = async () => {
           {
             destination: `tokens.${mode ? mode.name + '.' : ''}css`,
             format: mode ? 'css/variables' : 'css/tailwind-theme',
-            filter: (token: TransformedToken) => token.isSource,
+            // Base build emits every published token; a mode build emits only
+            // the tokens that mode actually overrides.
+            filter: (token: TransformedToken) =>
+              mode
+                ? getExposure(token).mode === mode.name
+                : shouldEmit(token, 'css'),
             options: {
               fileHeader: 'qm-header',
               selector: mode?.cssSelector,
@@ -79,7 +88,7 @@ const buildDictionary = async () => {
                 {
                   destination: '../json/tokenKeys.ts',
                   format: 'json/tw-merge',
-                  filter: (token: TransformedToken) => token.isSource,
+                  filter: (token: TransformedToken) => shouldEmit(token, 'css'),
                   options: { fileHeader: 'qm-header' },
                 },
               ]
@@ -96,13 +105,7 @@ const buildDictionary = async () => {
     log: { verbosity: 'silent' },
     usesDtcg: true,
     hooks,
-    include: HIDDEN_PRIMITIVES,
-    source: [
-      ...PRIMITIVES,
-      ...SEMANTICS,
-      NATIVE_SHADOW,
-      mode ? `tokens/modes/${mode.name}.tokens.json` : '',
-    ],
+    tokens: tokensFor(base, modeTrees, mode),
     platforms: {
       // Object to be used in TWRNC create()
       native: {
@@ -113,7 +116,9 @@ const buildDictionary = async () => {
           {
             destination: `native.${mode ? mode.name + '.' : ''}ts`,
             format: 'js/tw-react-native',
-            filter: (token: TransformedToken) => token.isSource,
+            // RN consumers take a whole theme object per mode instead of
+            // just overriden values, so this filter ignores `mode`.
+            filter: (token: TransformedToken) => shouldEmit(token, 'native'),
             options: {
               fileHeader: 'qm-header',
             },
