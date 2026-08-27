@@ -1,9 +1,10 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { homedir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { loadConfig } from './sync-config.js';
+import type { FigmaExport, SyncConfig } from './types.js';
 
 const DEFAULT_EXPORT_FILENAME = 'figma-tokens.json';
 const COMMIT_MESSAGE = 'fix(ui-tokens): update token values';
@@ -100,19 +101,16 @@ export const rebaseOntoBase = (
   }
 };
 
-const writeTokenFile = (
-  repoPath: string,
-  tokensRoot: string,
-  parsedFile: unknown,
+// The exported figma-tokens.json file from the Figma plugin is committed in ui-tokens.
+// Transformation of the tokens in the file is handled in the build command.
+export const writeExportFile = (
+  config: SyncConfig,
+  parsedFile: FigmaExport,
 ): void => {
-  // (Currently just dumping JSON files into a test json file)
-  const outPath = resolve(
-    repoPath,
-    tokensRoot,
-    'primitives',
-    'test.tokens.json',
-  );
+  const outPath = resolve(config.repoPath, config.tokenFilePath);
+  mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, JSON.stringify(parsedFile, null, 2), 'utf-8');
+  console.log(`  complete: ${config.tokenFilePath}`);
 };
 
 const buildTokens = (cwd: string): void => {
@@ -123,11 +121,11 @@ const buildTokens = (cwd: string): void => {
 
 export const commitAndPushTokens = (
   cwd: string,
-  tokensRoot: string,
+  tokenFilePath: string,
   branchName: string,
 ): void => {
   try {
-    git(cwd, ['add', tokensRoot]);
+    git(cwd, ['add', tokenFilePath]);
     git(cwd, ['commit', '-m', COMMIT_MESSAGE]);
     git(cwd, ['push', '--force', 'origin', branchName]);
   } catch (error) {
@@ -163,12 +161,13 @@ export const runScript = (): void => {
   // 2. Locate + parse the exported file.
   const parsedFile = resolveAndParseTokenFile(args);
 
-  // 3. Build DTCG trees (dry-run stops after reporting the would-be writes).
-  //  TBD for building tokens, for now just confirm dry run returns at this point.
-
+  // 3. Dry-run stops runs build command to view outputted files without commit / push.
   if (args.dryRun) {
+    writeExportFile(config, parsedFile as FigmaExport);
+    console.log(`\n Building ui-tokens…`);
+    // buildTokens(cwd);
     console.log(
-      'nothing to show yet, but will iterate through lines of DTCG tokens when converted',
+      `\n Complete: review ui-tokens/figma-tokens.json folder for expected updates.`,
     );
     return;
   }
@@ -184,8 +183,8 @@ export const runScript = (): void => {
     checkoutSyncBranch(cwd, gitConfig.baseBranch, gitConfig.branchName);
     rebaseOntoBase(cwd, gitConfig.baseBranch, gitConfig.branchName);
 
-    // 7. Write tokens. (Currently just dumping JSON files into a test json file)
-    writeTokenFile(config.repoPath, config.tokensRoot, parsedFile);
+    // 7. Write the raw Figma export.
+    writeExportFile(config, parsedFile as FigmaExport);
 
     // 8. Confirm a broken build does not get pushed
     buildTokens(cwd);
@@ -196,7 +195,7 @@ export const runScript = (): void => {
     }
 
     // 9. Git add / commit / push.
-    commitAndPushTokens(cwd, config.tokensRoot, gitConfig.branchName);
+    commitAndPushTokens(cwd, config.tokenFilePath, gitConfig.branchName);
 
     console.log(`\n✔ Pushed ${gitConfig.branchName}.`);
   } finally {

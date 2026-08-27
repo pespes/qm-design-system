@@ -1,7 +1,7 @@
 {
   "name": "figma-token-sync",
   "version": "0.0.1",
-  "description": "Reads Figma variables exported by a custom plugin and writes values into libs/ui-tokens/tokens/ as DTCG token files",
+  "description": "Reads Figma variables exported by a custom plugin and commits the export file to libs/ui-tokens/figma-tokens.json",
   "private": true,
   "author": {
     "name": "Quartermaster",
@@ -20,7 +20,7 @@
   "scripts": {
     "clean": "rm -rf build plugin/build",
     "build": "pnpm run clean && pnpm tsc --build && pnpm tsc --project plugin/tsconfig.json",
-    "sync": "pnpm run build && node build/src/cli.js",
+    "sync": "pnpm run build && node build/src/main.js",
     "test": "vitest run"
   },
   "dependencies": {

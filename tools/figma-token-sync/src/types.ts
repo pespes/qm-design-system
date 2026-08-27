@@ -9,6 +9,15 @@ export interface GitConfig {
 
 export interface SyncConfig {
   repoPath: string;
-  tokensRoot: string;
+  tokenFilePath: string;
   git: GitConfig;
+}
+
+// Just determine the shape of the parsed Figma file for cli.ts - ui-tokens handles values
+export interface FigmaExport {
+  exportedAt: string;
+  collections: unknown[];
+  variables: unknown[];
+  textVariables: unknown[];
+  effectVariables?: unknown[];
 }
