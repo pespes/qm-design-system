@@ -1,59 +1,10 @@
 import { describe, it, beforeEach, expect } from 'vitest';
-import type {
-  TokenTree,
-  DtcgTrees,
-  DtcgToken,
-  FigmaVariable,
-  FigmaTextVariable,
-  FigmaEffectVariable,
-  FigmaExport,
-} from '../types.js';
+import type { TokenTree, DtcgTrees, FigmaVariable } from '../types.js';
 import { buildDtcgTrees } from '../buildTokenTree.js';
 import { basicFixture } from './fixture.js';
-
-type allVariableTypes = FigmaVariable | FigmaTextVariable | FigmaEffectVariable;
+import { getToken, build } from './tokenTestHelpers.js';
 
 describe('buildDtcgTrees', () => {
-  const getToken = (tree: TokenTree, path: string): DtcgToken => {
-    const [next, ...rest] = path.split('/');
-    const nextPathNode = tree[next as string];
-    if (rest.length === 0) {
-      return nextPathNode as DtcgToken;
-    }
-    return getToken(nextPathNode as TokenTree, rest.join('/'));
-  };
-
-  // Helper to append variables onto Figma export
-  const withVariable = (
-    fixture: FigmaExport,
-    variable: FigmaVariable | FigmaTextVariable | FigmaEffectVariable,
-    type?: string,
-  ): FigmaExport => {
-    if (type === 'text') {
-      return {
-        ...fixture,
-        textVariables: [
-          ...fixture.textVariables,
-          variable as FigmaTextVariable,
-        ],
-      };
-    } else if (type === 'shadow') {
-      return {
-        ...fixture,
-        effectVariables: [
-          ...(fixture.effectVariables ?? []),
-          variable as FigmaEffectVariable,
-        ],
-      };
-    }
-    return {
-      ...fixture,
-      variables: [...fixture.variables, variable as FigmaVariable],
-    };
-  };
-  const build = (variable: allVariableTypes, type?: string) => () =>
-    buildDtcgTrees(withVariable(basicFixture, variable, type));
-
   it('should preserve descriptions on tokens', () => {
     const trees = buildDtcgTrees(basicFixture);
     const colorTree = trees.base['color'] as TokenTree;
