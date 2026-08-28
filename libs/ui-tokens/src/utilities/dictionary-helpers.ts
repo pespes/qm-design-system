@@ -27,6 +27,9 @@ export const shouldEmit = (
   platform: TokenExposure['platforms'][number],
 ): boolean => {
   const exposure = getExposure(token);
+  if (exposure.platforms === null || exposure.platforms === undefined) {
+    throw new Error(`Token "${token.name}" is missing platforms array`);
+  }
   return exposure.emit && exposure.platforms.includes(platform);
 };
 
