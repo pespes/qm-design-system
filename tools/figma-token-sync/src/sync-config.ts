@@ -10,7 +10,7 @@ export const loadConfig = (): SyncConfig => {
     tokenFilePath: 'libs/ui-tokens/tokens/figma-tokens.json',
     git: {
       baseBranch: 'development',
-      branchName: 'test-token-figma-sync',
+      branchName: 'token-figma-sync',
       repoRemoteUrl: 'git@github.com:Quartermaster-Inc/qm-design-system.git',
     },
   };

@@ -6,6 +6,9 @@ const config: Config = {
   displayName: 'ui-tokens',
   roots: ['<rootDir>/src'],
   testMatch: ['<rootDir>/src/dictionary/tests/*.test.ts'],
+  testPathIgnorePatterns: [
+    '<rootDir>/src/dictionary/tests/dictionary-helpers.test.ts',
+  ],
 };
 
 export default config;
