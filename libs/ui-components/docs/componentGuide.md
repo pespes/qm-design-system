@@ -83,6 +83,7 @@ All components are located under `ui-components/src/components`, in one of two d
 - Examples of standard Tailwind categories to use Tailwind utilities(no tokens):
 Layout (flex, grid, inline-flex), alignment (justify-*, items-*), display, overflow, cursor, pointer-events, transitions.
 - Prefer less complex selectors for easier consumer overrides. Confirm styles still apply correctly.
+- When arbitrary utility values are necessary (no token matches value, and received confirmation that using an arbitrary value is acceptable), always prefer explict absolute value over calculated value (ie. spacing-[30px] over spacing-[calc(var(--spacing-200) / 2)])
 
 ### Class application
 - `className` prop applied to the visible parent element. Exception for *Field components which apply className to the nested form element, not the FieldWrapper (see [SelectField](../src/components/composed/selectField/SelectField.tsx)).
