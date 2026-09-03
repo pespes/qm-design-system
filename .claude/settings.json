@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:base-ui.com)",
+      "Bash(pnpm nx build*)",
+      "Bash(pnpm nx test*)",
+      "Bash(pnpm nx lint*)",
+      "Bash(pnpm nx typecheck*)",
+      "Bash(pnpm lint*)",
+      "Bash(pnpm test*)",
+      "Bash(pnpm build*)",
+      "Bash(pnpm typecheck*)",
+      "Bash(pnpm install*)",
+      "Bash(pnpm storybook*)", 
+      "Bash(pnpm sync:tokens --dry-run*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git checkout -b *)",
+      "Bash(git checkout [a-zA-Z]*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(find *)",
+      "Bash(grep * libs/ui-tokens/dist/*)",
+      "Bash(grep * libs/ui-tokens/tokens/figma-tokens.json)"
+    ],
+    "deny": [
+      "Bash(git checkout .)",
+      "Bash(git checkout -- *)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)",
+      "Bash(git rebase*)",
+      "Bash(git clean*)",
+      "Bash(git stash*)",
+      "Bash(git branch -D*)",
+      "Bash(git branch -d*)",
+      "Bash(rm -rf *)",
+      "Bash(pnpm remove*)",
+      "Bash(pnpm update*)",
+      "Bash(pnpm nx deploy*)",
+      "Bash(pnpm sync:tokens)",
+      "Bash(pnpm sync:tokens -*)"
+    ]
+  }
+}
