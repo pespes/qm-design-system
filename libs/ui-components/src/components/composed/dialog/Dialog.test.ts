@@ -20,6 +20,7 @@ export const defaultTests = async ({
     'Render an element with role=dialog and closeBtn by default',
     async () => {
       expect(dialog).toBeInTheDocument();
+      expect(screen.getByText(/This is a basic Dialog/)).toBeInTheDocument();
       const closeBtn = within(dialog).getByRole('button');
       expect(closeBtn).toBeInTheDocument();
       expect(closeBtn).toHaveAccessibleName('close dialog');
