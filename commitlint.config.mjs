@@ -4,8 +4,8 @@ const Configuration = {
     {
       rules: {
         'subject-includes-ticket': ({subject}) => [
-          subject !== null && /QP-\d+/.test(subject),
-          'subject must reference ticket number, eg. "QP-20001"',
+          subject !== null && /\b(QP|PL)-\d+/.test(subject),
+          'subject must reference ticket number, eg. "QP-20001" or "PL-532"',
         ],
       },
     },

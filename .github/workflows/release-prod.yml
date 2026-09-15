@@ -29,7 +29,7 @@ concurrency:
 jobs:
   release:
     name: Production Release
-    runs-on: [self-hosted, qm-dev]
+    runs-on: [self-hosted, qm-dev-ubuntu]
   
     permissions:
       contents: write

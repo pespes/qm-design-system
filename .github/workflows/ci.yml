@@ -15,7 +15,7 @@ concurrency:
 jobs:
   checks:
     name: CI checks
-    runs-on: [self-hosted, qm-dev]
+    runs-on: [self-hosted, qm-dev-ubuntu]
     environment: continuous-integration
     steps:
       - name: Checkout
