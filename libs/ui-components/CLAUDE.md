@@ -48,9 +48,30 @@ pnpm dlx shadcn@latest add <name>   # Auto-scaffolds to primitives/
 Before opening a PR for a new component, ensure all criteria listed in [componentChecklist.md](./docs/componentChecklist.md) are met.
 Root CLAUDE.md covers lint, typecheck, tests, commit format and screenshots.
 
+### Breaking Changes
+
+A change to an existing component is **breaking** if a consumer's code breaks without them changing anything. Treat any of these as breaking:
+- A prop is removed / renamed, or becomes required
+- A prop's default value changes
+- An export is removed or renamed in `src/index.ts`
+
+New optional props, new exports or new stories are **not** breaking.
+
+If a PR contains one, mark the commit as breaking by appending `!` directly after the type/scope, or use a `BREAKING CHANGE:` footer when the reason needs more than a subject line:
+```bash
+feat(ui-components)!: <ticketNumber> <message>
+```
+
+``` bash
+feat(ui-components): <ticketNumber> <message>
+
+BREAKING CHANGE: <what is breaking>
+```
+Scope is required and must be the affected package to prevent major bumps on unaffected packages.
+
 ### PR Splitting (New Components)
 
-If changes exceed 300 lines of code, it must be split into several PRs:
+If changes exceed 300 lines of code, it must be split into multiple PRs:
 
 1. **Core PR** (always first):
    - `ComponentName.tsx`, `ComponentName.types.ts`, `index.ts`, barrel export in `src/index.ts`
