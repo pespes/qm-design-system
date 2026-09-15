@@ -26,7 +26,7 @@ concurrency:
 jobs:
   release:
     name: Development Release
-    runs-on: [self-hosted, qm-dev]
+    runs-on: [self-hosted, qm-dev-ubuntu]
 
     permissions:
       contents: read
