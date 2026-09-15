@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { InfoIcon, LockIcon } from 'lucide-react';
 import { fn } from 'storybook/test';
 import { Input } from '../Input.js';
+/** Import test functions from the test file to attach to stories via play().
+ * This co-locates interaction tests with their visual stories. */
 import {
   defaultTests,
   sizesTest,
@@ -13,9 +15,13 @@ import {
   passwordDisabledTests,
 } from '../Input.test.js';
 
+/** Stories use render() functions with local useState for value management.
+ * This simulates real-world component usage better than static args alone. */
 const meta = {
   title: 'Components/Input',
   component: Input,
+  /** Default args apply to all stories unless overridden. Include empty className overrides
+   * so designers/developers can see they exist and are customizable. */
   args: {
     size: 'default',
     value: '',
@@ -23,6 +29,8 @@ const meta = {
     placeholder: 'This is a placeholder...',
     classes: { root: '', icon: '' },
   },
+  /** ArgTypes control Storybook Props control panel. For props with constrained values (variants,
+   * icons, select options), define mappings instead of leaving them as free text. */
   argTypes: {
     startAdornment: {
       control: { type: 'select' },
@@ -88,6 +96,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** Story pattern: render function with useState manages mutable value prop.
+ * play() function runs interaction tests after the story renders. */
 export const Default: Story = {
   args: {
     testId: 'default-input',
@@ -159,6 +169,8 @@ export const Invalid: Story = {
   play: invalidTests,
 };
 
+/** Multi-variant story pattern: render multiple component instances in one story to show
+ * related variants (start adornment, end adornment) together. Each instance gets unique testId for testing. */
 export const WithAdornments: Story = {
   render: function AdornmentStory(args) {
     const [value1, setValue1] = useState('');
@@ -249,6 +261,8 @@ export const AllSizes: Story = {
   play: sizesTest,
 };
 
+/** Story-only render (no play tests): use for visual reference stories where interaction testing
+is covered elsewhere (e.g., AllTypes shows all input type variants for visual inspection only). */
 export const AllTypes: Story = {
   render: () => (
     <div className='flex flex-col gap-400'>

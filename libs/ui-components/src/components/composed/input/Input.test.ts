@@ -4,6 +4,9 @@ import type { InputProps } from './Input.types.js';
 
 type InputPlayContext = StoryContext<InputProps>;
 
+/** Test functions exported as named exports, each testing a specific feature set.
+ * Attached to stories via play() to run automatically in Storybook.
+ * Use step() to organize assertions; use within(canvasElement) to scope queries. */
 // ---  Default Input Tests ---
 export const defaultTests = async ({
   args,
@@ -13,13 +16,13 @@ export const defaultTests = async ({
   const canvas = within(canvasElement);
 
   await step('Input correctly renders placeholder', async () => {
+    /** Query preference: getByRole > getByText > getByTestId (last resort). */
     const input = canvas.getByRole('textbox');
     expect(input).toHaveAttribute('placeholder', args.placeholder);
   });
 
   await step('Correctly passes the testId to the input', () => {
-    // Required in order to allow passing of args.testId to 'getByTestId' without
-    // typescript complaint, even though we deliberately pass a testId in the args
+    /** This test explicitly verifies testId prop is forwarded correctly. */
     if (!args.testId) throw new Error('testId arg is required for this story');
     const input = canvas.getByTestId(args.testId);
     expect(input.tagName).toBe('INPUT');
