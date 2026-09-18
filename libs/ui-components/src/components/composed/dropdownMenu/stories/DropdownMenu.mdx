@@ -1,0 +1,95 @@
+import { Canvas, Meta, Story, Controls, Description, Title, Primary } from '@storybook/addon-docs/blocks';
+import * as DropdownMenuStories from './DropdownMenu.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={DropdownMenuStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+<Controls />
+
+## Usage
+The rows rendered by the `<DropdownMenu/>` are passed via the `items` prop, either as a flat array or grouped under labels:
+
+```
+// As a flat array
+items = [{ value: string | number, label: string }, ...]
+
+// As a grouped array
+items = [
+  {
+    groupLabel: string;
+    items = [{ value: string | number, label: string }, ...]
+  }
+]
+```
+
+Each item accepts optional decoration and state:
+
+```
+{
+  value: string | number;   // required, also used as the React key and test id suffix
+  label: string;            // required, the visible row text
+  icon?: ReactNode;         // leading 20x20 decoration slot
+  shortcut?: string;        // trailing key command text
+  variant?: 'default' | 'destructive';
+  disabled?: boolean;
+  checked?: boolean;        // only honoured when type="checkbox"
+  separatorAfter?: boolean; // draws a divider beneath the row
+  onClick?: (event) => void;
+}
+```
+
+The `type` prop selects the interaction model and is a discriminated union, so the handlers cannot be mixed:
+
+- `type="menu"` (default) — plain action rows. Use each item's `onClick`.
+- `type="radio"` — single selection. Use `value` / `defaultValue` and `onValueChange`.
+- `type="checkbox"` — multiple selection. Use each item's `checked` and the menu's `onCheckedChange(value, checked)`. Checkbox rows deliberately keep the menu open so several boxes can be toggled in one pass.
+
+Prefer a `<Select/>` when the control is a form field that captures a value. Use `<DropdownMenu/>` for actions and view options.
+
+## Accessibility
+- **Trigger name** — The `triggerLabel` prop supplies the button's accessible name. If you render an icon-only trigger, pass an `aria-label` as well.
+- **Roles** — Base UI applies `role="menu"` to the popup and `menuitem` / `menuitemradio` / `menuitemcheckbox` to the rows; do not add them by hand.
+- **Keyboard** — `Enter`, `Space` and the arrow keys open the menu, arrows move between rows, `Escape` closes and returns focus to the trigger. This is handled by Base UI.
+- **Group labels** — A `groupLabel` names its group for assistive technology, so keep the text meaningful rather than decorative.
+- **Destructive rows** — Colour alone should not carry the warning. Keep the label explicit (for example "Delete project") so the consequence is announced.
+- **Scrolling** — Long menus scroll natively and are capped to the available viewport height; no scroll-arrow affordance is rendered.
+
+## Examples
+
+### Default
+<Canvas of={DropdownMenuStories.Default} />
+
+### With Icons and Key Commands
+<Canvas of={DropdownMenuStories.WithIconsAndKeyCommands} />
+
+### Disabled
+<Canvas of={DropdownMenuStories.Disabled} />
+
+### Item States
+<Canvas of={DropdownMenuStories.ItemStates} />
+
+### Grouped
+<Canvas of={DropdownMenuStories.Grouped} />
+
+### Radio Items
+<Canvas of={DropdownMenuStories.RadioItems} />
+
+### Checkbox Items
+<Canvas of={DropdownMenuStories.CheckboxItems} />
+
+### Forwarded Ref
+<Canvas of={DropdownMenuStories.ForwardedRef} />
+
+
+#### Additional Documentation
+- Shadcn: [Learn More](https://ui.shadcn.com/docs/components/base/dropdown-menu)
+- BaseUI: [Learn More](https://base-ui.com/react/components/menu)

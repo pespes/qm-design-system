@@ -79,7 +79,6 @@
     "vitest": "^2.1.5"
   },
   "dependencies": {
-    "@quartermaster/eslint-plugin-quartermaster": "^2.2.0",
     "tslib": "^2.3.0"
   }
 }
