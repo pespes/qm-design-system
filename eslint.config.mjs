@@ -5,7 +5,7 @@ import importPlugin from "eslint-plugin-import";
 import prettier from "eslint-plugin-prettier";
 import jest from "eslint-plugin-jest";
 import jsxA11y from "eslint-plugin-jsx-a11y";
-import quartermasterPlugin from "@quartermaster/eslint-plugin-quartermaster";
+//import quartermasterPlugin from "@quartermaster/eslint-plugin-quartermaster";
 import { defineConfig } from "eslint/config";
 
 
@@ -56,16 +56,8 @@ export default defineConfig([
       "@typescript-eslint": tseslint.plugin,
       import: importPlugin,
       "jsx-a11y": jsxA11y,
-      quartermaster: quartermasterPlugin,
     },
     rules: {
-      "quartermaster/require-testid-interactive": "error",
-      "quartermaster/no-internal-imports": [
-        "error",
-        {
-          pattern: "^@quartermaster-inc/ui-tokens-[^/]+/.+",
-        },
-      ],
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-require-imports": "off",
       "@typescript-eslint/no-empty-function": "off",

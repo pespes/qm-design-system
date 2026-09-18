@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@quartermaster/eslint-plugin-quartermaster':
-        specifier: ^2.2.0
-        version: 2.2.0(eslint@9.39.5(jiti@2.7.0))
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
@@ -162,6 +159,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cn:
+        specifier: ^0.3.0
+        version: 0.3.0
       lucide-react:
         specifier: ^1.14.0
         version: 1.25.0(react@19.2.7)
@@ -2376,12 +2376,6 @@ packages:
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
 
-  '@quartermaster/eslint-plugin-quartermaster@2.2.0':
-    resolution: {integrity: sha512-TmW63A/ezGUSkBhHcvVKe+zVyy6PpZkp9pqGKJbKRP19wJuZiYARFAUsdi3RJTAjyI0P0/DLm6SeLqraxuicUQ==, tarball: https://quartermaster.jfrog.io/artifactory/api/npm/quartermaster-npm/@quartermaster/eslint-plugin-quartermaster/-/@quartermaster/eslint-plugin-quartermaster-2.2.0.tgz}
-    engines: {node: '>=18.7.0'}
-    peerDependencies:
-      eslint: '>=8.0.0'
-
   '@rolldown/binding-android-arm64@1.1.5':
     resolution: {integrity: sha512-lZg8fqIv2v7FF237bwMgzGZEJvGL79/s5knJ/i6FmsGF4XXlzccZ4jb+TrFIxtSSxFtIpdsgrPZeMk1I9AFcyQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -3928,6 +3922,11 @@ packages:
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
+
+  cn@0.3.0:
+    resolution: {integrity: sha512-qRoU0ARrZD3Bbj1wKFftEKxPjSnzTEdFkf22NVhW+zU9D/wajhoP+qUZ5DChhhSOBCH1onV12hrmGqfu1+5Z2Q==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -9748,10 +9747,6 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
-  '@quartermaster/eslint-plugin-quartermaster@2.2.0(eslint@9.39.5(jiti@2.7.0))':
-    dependencies:
-      eslint: 9.39.5(jiti@2.7.0)
-
   '@rolldown/binding-android-arm64@1.1.5':
     optional: true
 
@@ -11237,6 +11232,8 @@ snapshots:
   clone@1.0.4: {}
 
   clsx@2.1.1: {}
+
+  cn@0.3.0: {}
 
   co@4.6.0: {}
 

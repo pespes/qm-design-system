@@ -19,3 +19,4 @@ export * from './components/composed/dialog/index.js';
 export * from './components/composed/selectField/index.js';
 export * from './components/composed/radioField/index.js';
 export * from './components/composed/checkboxField/index.js';
+export * from './components/composed/dropdownMenu/index.js';
