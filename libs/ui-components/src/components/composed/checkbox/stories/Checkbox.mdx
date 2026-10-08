@@ -16,7 +16,32 @@ import { MarkdownBlock } from '@/../.storybook/configs/docBlocks.jsx';
 <Controls />
 
 ## Usage
-TBD from Design
+A `<Checkbox/>` lets users make a binary choice, such as accepting terms or opting into a setting, where the selection takes effect once
+the user submits or confirms. Use a single checkbox for a standalone yes/no choice, and group multiple checkboxes with a
+`<CheckboxGroup/>` or `<CheckboxField/>` when users can select any number of options from a list.
+
+#### When to use
+- Agreeing to terms, consent, or confirmation prompts (e.g. "I agree to the Terms of Service").
+- Selecting zero, one, or many options from a related set.
+- Toggling a setting that is applied on form submission rather than immediately.
+
+#### When not to use
+- When the change takes effect immediately, prefer a `<Switch/>`.
+- When only one option may be selected from a set, prefer a `<RadioGroup/>`.
+- When choosing from a long list of options (roughly 7+), consider a `<Select/>` to reduce visual noise.
+
+#### Content guidelines
+- Write labels as short, positive statements that describe what happens when checked (e.g. "Send me product updates", not "Don't send me product updates").
+- Use sentence case and avoid ending punctuation in labels.
+- Use the `description` prop for supporting context instead of making the label longer.
+- Use the `invalid` state only to show a validation error, such as a required checkbox left unchecked on submit. When the checkbox
+is part of a group, pass errors to `<CheckboxField/>` so the error message renders alongside it.
+
+## Accessibility
+- A `label` is *required* and is linked to the checkbox, so clicking the label toggles the checkbox. The label should never change when the checked state changes.
+- The `description` is linked to the checkbox via `aria-describedby` and is announced by screen readers.
+- The checkbox is focusable with `Tab` and toggled with `Space`.
+- Avoid disabling checkboxes without explanation; if an option is unavailable, use the `description` to tell users why.
 
 ## Examples
 

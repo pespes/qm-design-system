@@ -81,7 +81,6 @@ function SelectField({
     >
       {(controlProps) => (
         // data-testid is already handled in the <Select> component with the triggerTestId
-        // eslint-disable-next-line quartermaster/require-testid-interactive
         <Select
           {...props}
           {...controlProps}
