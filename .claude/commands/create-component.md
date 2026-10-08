@@ -18,8 +18,12 @@ Refer to the the ui-components [CLAUDE.md](../../libs/ui-components/CLAUDE.md);
 
 ### Step 2: Check Existing Components
 
-- Check if the component already exists in `libs/ui-components/src/components/primitives/` or `composed/`
-- If it exists, proceed to Step 3 & 4 to understand the Base UI api and Figma spec, then skip to Step 7 (no scaffolding needed).
+- Check if the component already exists in `libs/ui-components/src/components/primitives/` or `composed/`, and whether it is exported from `src/index.ts`.
+- **If it exists, STOP and ask the user.** Report what you found (file paths, primitive or composed, published or internal-only), then ask which route to take:
+    1. **Update the existing component** — switch to the `/update-component` workflow ([update-component.md](./update-component.md)).
+    2. **Continue creating** — e.g. a new composed component built on an existing internal primitive. Skip scaffolding for anything that already exists (Steps 5–6) and do not overwrite existing files.
+    3. **Cancel.**
+- Do not proceed until the user chooses.
 
 ### Step 3: Read Base UI Docs
 
@@ -50,21 +54,30 @@ From the Figma spec, extract:
 
 If a Figma style/color value doesn't have a matching token, follow the "Token Not Found" workflow in `figmaVariables.md`. Do not use arbitrary values without permission.
 
-**STOP:** Present the "Figma Spec Summary" from `figmaReading.md` (including which connection tier was used and anything that couldn't be read) and wait for the user to confirm or correct it. Do not scaffold or write any code until the user approves the summary.
+Before the stop, check proposed prop names and values against existing components (see `componentGuide.md` "Props" and `figmaReading.md` section 8) so naming is decided at the stop, not later.
+
+**STOP:** Present the "Figma Spec Summary" from `figmaReading.md` (including which connection tier was used, anything that couldn't be read, and any naming differences) and wait for the user to confirm or correct it. Do not scaffold or write any code until the user approves the summary.
 
 ### Step 5: Scaffold the Shadcn Component
 
-To generate the **new** primitive component (step 2 asserted that the primitive Shadcn component does not already exist), first preview what will be written:
+To generate the **new** primitive component (step 2 asserted that the primitive Shadcn component does not already exist), first preview what will be written. Use the shadcn version installed in `ui-components` (not `@latest`) so results are consistent:
 ```bash
-pnpm dlx shadcn@latest add <component-name> -c libs/ui-components --dry-run
+pnpm -C libs/ui-components exec shadcn add <component-name> --dry-run
 ```
 
-Shadcn writes flat files to `src/components/primitives/<component-name>.tsx` (kebab-case). Because this repo keeps components in folders (e.g. `primitives/button/Button.tsx`), shadcn does not recognize existing components and lists their dependencies as `create`, not overwrite. Any listed file other than the target component is a dependency that will be duplicated. Note these before running the command without `--dry-run`:
+Check both sections of the dry-run output:
+
+- **Files:** shadcn writes flat files to `src/components/primitives/<component-name>.tsx` (kebab-case). Because this repo keeps components in folders (e.g. `primitives/button/Button.tsx`), shadcn does not recognize existing components and lists their dependencies as `create`, not overwrite. Any listed file other than the target component is a dependency that will be duplicated.
+- **Dependencies:** these are **npm packages that will be added** to `libs/ui-components/package.json`. Adding a dependency requires the user's approval. In particular, shadcn lists `cn` — this repo already provides `cn()` from `@/utils/utils.js`, so the `cn` package is not needed.
+
+Note these before running the command without `--dry-run`:
 ```bash
-pnpm dlx shadcn@latest add <component-name> -c libs/ui-components
+pnpm -C libs/ui-components exec shadcn add <component-name>
 ```
 
 **Never use the `--overwrite` (`-o`) flag.** If adding a component triggers the scaffolding of an existing component, we do not want to overwrite it.
+
+After scaffolding, run `git diff libs/ui-components/package.json pnpm-lock.yaml`. Remove any dependency the user hasn't approved (including `cn`) from `package.json` and run `pnpm install` to update the lockfile. In the scaffolded file, replace `import { cn } from "cn"` with `import { cn } from '@/utils/utils.js'`.
 
 This will generate a `<component-name>.tsx` file. Move that file under a `componentName` folder (camelCase) in `src/components/primitives/`, keeping the kebab-case filename for now (it is renamed in Step 8 only if it becomes a publishable primitive). Do not create any additional files.
 
@@ -88,7 +101,7 @@ Refer to [componentGuide.md "Primitive vs Composed"](../../libs/ui-components/do
 
 If determined to be **composed**, create a new folder under `src/components/composed/componentName` (camelCase). This will also mean that any newly scaffolded Shadcn primitive files will not be publishable.
 
-Estimate the size of the change now. If it is likely to exceed 300 changed lines, plan the PR split described in Step 11 (core PR first, then stories + tests) and build in that order.
+Estimate the size of the change now. If it is likely to exceed 300 changed lines, plan the PR split described in Step 12 (core PR first, then stories + tests) and build in that order.
 
 ### Step 8: Implement Component
 
@@ -108,12 +121,26 @@ Under the publishable component folder, create these files following `componentG
 
 ### Step 9: Implement Stories & Tests
 
-1. **`ComponentName.stories.tsx`** — populate basic meta with title/component/docs, `fn()` for action mocks, `argTypes` matching variants, and examples as per `componentGuide.md`. 
+Story and docs files go in a `stories/` subfolder of the publishable component folder; the test file stays at the component root, next to `ComponentName.tsx` (see `componentGuide.md` "Published Components"):
+
+```text
+componentName/
+  ├── ComponentName.test.ts
+  └── stories/
+       ├── ComponentName.stories.tsx
+       └── ComponentName.mdx
+```
+
+1. **`stories/ComponentName.stories.tsx`** — populate basic meta with title/component/docs, `fn()` for action mocks, `argTypes` matching variants, and examples as per `componentGuide.md`. 
 2. **`ComponentName.test.ts`** - populate with test functions using `StoryContext` pattern per `componentTesting.md` guidelines.
 3. Attach tests via the `play` property. If a test visibly changes the story (opens a popup/dialog/menu, toggles a control, types text), put `play` on a hidden `<Name>Test` copy of the story tagged `['!dev', '!autodocs']` instead of the visible story, so browsing Storybook doesn't auto-run it. See `componentGuide.md` "Example Stories".
-4. Create and populate the `ComponentName.mdx` documentation page.
+4. Create and populate the `stories/ComponentName.mdx` documentation page.
 
-### Step 10: Verify
+### Step 10: Visual Check in Storybook
+
+Follow [storybookVisualCheck.md](../../libs/ui-components/docs/storybookVisualCheck.md): compare every visible story against a fresh Figma screenshot, check computed token values, interactive states, both brands, load behaviour (nothing auto-plays when a story is opened), and console errors. Fix in-scope mismatches, flag design issues, and report the results table. Storybook screenshots are saved to `.playwright-mcp/<componentName>/` for the PR.
+
+### Step 11: Verify
 
 Run through every item in `componentChecklist.md`. Verify all items across these categories: Design & Props, Styling & Tokens, Type Safety & Structure, Component Implementation, Accessibility, Testing, Storybook Documentation, Code Quality, Publishing & Export, Final Review.
 
@@ -126,9 +153,9 @@ pnpm nx typecheck ui-components
 pnpm nx test ui-components
 ```
 
-### Step 11: PR Readiness
+### Step 12: PR Readiness
 
 Follow Pre-PR rules in `libs/ui-components/CLAUDE.md`:
 - If over 300 changed lines, split into sequential PRs (core first, then stories+tests)
 - Branch naming: `<componentName>`, with follow-up PRs suffixed `<componentName>-stories` (or `<componentName>-<type>-stories` if stories are split further)
-- Include screenshots of Storybook stories in every PR
+- Include screenshots of Storybook stories in every PR (from Step 10's `.playwright-mcp/<componentName>/`)

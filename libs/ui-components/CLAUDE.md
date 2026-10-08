@@ -40,7 +40,7 @@ nx lint ui-components               # ESLint check
 nx typecheck ui-components          # TypeScript check
 
 # Adding Shadcn components
-pnpm dlx shadcn@latest add <name>   # Auto-scaffolds to primitives/
+pnpm -C libs/ui-components exec shadcn add <name>   # Auto-scaffolds to primitives/ (uses the installed shadcn version)
 ```
 
 ## Pre-PR Checklist
