@@ -23,7 +23,7 @@ const buttonVariants = cva(
         brand:
           'bg-brand-background text-brand-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled aria-disabled:bg-state-disabled',
         ghost:
-          'text-base-text hover:bg-muted hover-overlay-light pressed-overlay-light disabled:text-state-disabled aria-disabled:text-state-disabled',
+          'text-base-text hover-overlay-light pressed-overlay-light disabled:text-state-disabled aria-disabled:text-state-disabled',
         danger:
           'bg-danger-background text-danger-foreground hover-overlay-dark pressed-overlay-dark disabled:bg-state-disabled-subtle disabled:text-state-disabled aria-disabled:bg-state-disabled-subtle aria-disabled:text-state-disabled',
       },

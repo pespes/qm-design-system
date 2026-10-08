@@ -32,7 +32,7 @@ function Switch({
       id={id}
       className={cn(
         'peer group/switch relative align-self inline-flex shrink-0 items-center rounded-full px-050 border-2 border-transparent transition-transform transition-colors',
-        'after:absolute after:-inset-x-3 after:-inset-y-2',
+        'after:absolute after:-inset-x-300 after:-inset-y-200',
         'data-checked:bg-brand-background data-unchecked:bg-transparent data-unchecked:border-base-border-strong',
         'data-[size=md]:h-500 data-[size=md]:w-[34px] data-[size=sm]:h-400 data-[size=sm]:w-700 data-[size=lg]:h-600 data-[size=lg]:w-[42px]',
         'focus-visible:ring-2 focus-visible:outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:ring-border-subtle',

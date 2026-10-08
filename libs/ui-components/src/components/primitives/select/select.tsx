@@ -158,7 +158,7 @@ function SelectItem({
       )}
       {...props}
     >
-      <SelectPrimitive.ItemText className='min-w-0 truncate gap-2'>
+      <SelectPrimitive.ItemText className='min-w-0 truncate gap-200'>
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator
@@ -186,7 +186,7 @@ function SelectScrollUpButton({
     <SelectPrimitive.ScrollUpArrow
       data-slot='select-scroll-up-button'
       className={cn(
-        "sticky top-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-default py-1 [&_svg:not([class*='size-'])]:size-4",
+        "sticky top-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-default py-100 [&_svg:not([class*='size-'])]:size-400",
         className,
       )}
       {...props}
@@ -204,7 +204,7 @@ function SelectScrollDownButton({
     <SelectPrimitive.ScrollDownArrow
       data-slot='select-scroll-down-button'
       className={cn(
-        "sticky bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-default py-1 [&_svg:not([class*='size-'])]:size-4",
+        "sticky bottom-0 z-10 flex w-full cursor-default items-center justify-center bg-surface-default py-100 [&_svg:not([class*='size-'])]:size-400",
         className,
       )}
       {...props}
