@@ -13,9 +13,10 @@ function Avatar({
       data-slot='avatar'
       data-size={size}
       className={cn(
-        // Stroke drawn as an overlay so it sits inside the circle without shrinking the image
-        'group/avatar relative flex size-800 shrink-0 overflow-hidden rounded-full bg-brand-background select-none',
-        'after:pointer-events-none after:absolute after:inset-0 after:rounded-full after:border-1 after:border-border-inverse',
+        // Figma strokes the avatar OUTSIDE its edge (separates overlapping avatars), so use a ring rather than a border.
+        // The root has no fill of its own; the fallback carries the brand background.
+        'group/avatar relative flex size-800 shrink-0 overflow-hidden rounded-full select-none',
+        'ring-(length:--border-width-1) ring-border-inverse',
         'data-[size=sm]:size-600 data-[size=lg]:size-1000',
         className,
       )}
