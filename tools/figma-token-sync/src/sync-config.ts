@@ -11,7 +11,7 @@ export const loadConfig = (): SyncConfig => {
     git: {
       baseBranch: 'development',
       branchName: 'token-figma-sync',
-      repoRemoteUrl: 'git@github.com:Quartermaster-Inc/qm-design-system.git',
+      repoRemoteUrl: 'https://github.com/pespes/qm-design-system.git',
     },
   };
 };
