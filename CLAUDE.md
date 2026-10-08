@@ -135,6 +135,7 @@ chore(repo): update dependencies
 
 - Component patterns & structure: Read [componentGuide.md](libs/ui-components/docs/componentGuide.md)
 - Available tokens & Figma mappings: Read [figmaVariables.md](libs/ui-components/docs/figmaVariables.md)
+- Reading Figma specs (connection, fallbacks, token mapping): Read [figmaReading.md](libs/ui-components/docs/figmaReading.md)
 - Token pipeline & DTCG format: Read [ui-tokens/README.md](libs/ui-tokens/README.md)
 - Token sync workflow: Read [figma-token-sync/README.md](tools/figma-token-sync/README.md)
 - Architecture & design decisions: Read [README.md](README.md)

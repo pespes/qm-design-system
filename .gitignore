@@ -21,3 +21,7 @@
 /tools/**/node_modules
 
 storybook-static
+
+# Local design / browser tooling output
+.playwright-mcp/
+.design-refs/

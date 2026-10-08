@@ -2,6 +2,7 @@
 
 ### Quick References
 - [figmaVariables.md](./figmaVariables.md)
+- [figmaReading.md](./figmaReading.md) — how to read a component spec from Figma
 - [componentChecklist.md](./componentChecklist.md)
 - ui-tokens [output files](../../ui-tokens/dist/css/)
 
