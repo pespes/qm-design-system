@@ -30,7 +30,7 @@ export default defineConfig([
             {
               sourceTag: "scope:shared",
               onlyDependOnLibsWithTags: ["scope:shared"],
-              bannedExternalImports: ["@pespes/ui-components"],
+              bannedExternalImports: ["@level/ui-components"],
             },
             {
               sourceTag: "scope:ui",

@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { extendTailwindMerge } from 'tailwind-merge';
-import { tokens } from '@pespes/ui-tokens/json/token-keys';
+import { tokens } from '@level/ui-tokens/json/token-keys';
 
 // Helps tailwind-merge recognize custom QM token keys as members of right conflict
 //  group. Without this, calls like `cn('rounded-md', 'rounded-400')` would fail to

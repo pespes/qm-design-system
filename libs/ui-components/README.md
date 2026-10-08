@@ -44,12 +44,12 @@ within components are expected to be arrow functions for consistency.
 
 Import the `ui-components` package with:
 ```
-pnpm add @pespes/ui-components
+pnpm add @level/ui-components
 ```
 
 All packages are built using typescript, and expose ES6-compatible javascript files, alongside typescript definition files (`*.d.ts`). 
 ```typescript jsx
-import { Button, ButtonProps } from '@pespes/ui-components';
+import { Button, ButtonProps } from '@level/ui-components';
 
 type MyComponentProps = ButtonProps & { label: string };
 

@@ -4,25 +4,25 @@ import { Meta, ColorPalette, ColorItem, Source } from '@storybook/addon-docs/blo
 
 # Quartermaster Design System
 
-`@pespes/ui-components` is the React component library that powers Quartermaster product UIs. Components are built on
+`@level/ui-components` is the React component library that powers Quartermaster product UIs. Components are built on
 [BaseUI](https://base-ui.com) and [Shadcn](https://ui.shadcn.com), and styled with Tailwind v4 using design tokens from
-`@pespes/ui-tokens`, which are synced directly from Figma.
+`@level/ui-tokens`, which are synced directly from Figma.
 
 ## Getting Started
 
 Install the package:
 
-<Source language='bash' dark code={`pnpm add @pespes/ui-components`} />
+<Source language='bash' dark code={`pnpm add @level/ui-components`} />
 
 Import the token and component stylesheets into your app's main stylesheet, in this order:
 
 <Source
   language='css'
   dark
-  code={`@import '@pespes/ui-tokens/css/tokens';
-@import '@pespes/ui-tokens/css/tokens-pro';
+  code={`@import '@level/ui-tokens/css/tokens';
+@import '@level/ui-tokens/css/tokens-pro';
 @import 'tailwindcss';
-@import '@pespes/ui-components/styles.css';`}
+@import '@level/ui-components/styles.css';`}
 />
 
 Then import components by name:
@@ -30,7 +30,7 @@ Then import components by name:
 <Source
   language='tsx'
   dark
-  code={`import { Button } from '@pespes/ui-components';
+  code={`import { Button } from '@level/ui-components';
 
 <Button variant="brand">Get started</Button>`}
 />

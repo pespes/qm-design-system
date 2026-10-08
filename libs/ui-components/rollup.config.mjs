@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import dts from 'rollup-plugin-dts';
 
-const externalDeps = ['react', 'react-dom', '@pespes/ui-tokens', '@base-ui/react', 'lucide-react'];
+const externalDeps = ['react', 'react-dom', '@level/ui-tokens', '@base-ui/react', 'lucide-react'];
 const isExternal = (id) =>
   externalDeps.some((name) => id === name || id.startsWith(`${name}/`));
 

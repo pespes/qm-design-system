@@ -9,7 +9,7 @@
 
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@pespes/ui-tokens/css/tokens";
-@import "@pespes/ui-tokens/css/tokens-pro";
+@import "@level/ui-tokens/css/tokens";
+@import "@level/ui-tokens/css/tokens-pro";
 
 @import "./styles.css";

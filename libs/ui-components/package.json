@@ -1,5 +1,5 @@
 {
-  "name": "@pespes/ui-components",
+  "name": "@level/ui-components",
   "version": "1.0.4",
   "description": "Quartermaster Component Library",
   "author": {
@@ -50,7 +50,7 @@
     "test:watch": "vitest"
   },
   "peerDependencies": {
-    "@pespes/ui-tokens": "workspace:^",
+    "@level/ui-tokens": "workspace:^",
     "clsx": "^2.1.1",
     "react": "^19",
     "react-dom": "^19"
