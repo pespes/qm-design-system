@@ -97,6 +97,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -117,6 +123,12 @@ export const GeneratedId: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to GeneratedId doesn't auto-play the test
+export const GeneratedIdTest: Story = {
+  ...GeneratedId,
+  tags: ['!dev', '!autodocs'],
   play: generatedIdTests,
 };
 
@@ -158,6 +170,12 @@ export const WithDescription: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to WithDescription doesn't auto-play the test
+export const WithDescriptionTest: Story = {
+  ...WithDescription,
+  tags: ['!dev', '!autodocs'],
   play: descriptionTests,
 };
 

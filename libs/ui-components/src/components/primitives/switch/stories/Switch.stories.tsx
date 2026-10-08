@@ -76,6 +76,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -174,6 +180,12 @@ export const Polymorphism: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Polymorphism doesn't auto-play the test
+export const PolymorphismTest: Story = {
+  ...Polymorphism,
+  tags: ['!dev', '!autodocs'],
   play: polymorphicTests,
 };
 
@@ -199,5 +211,11 @@ export const Invalid: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Invalid doesn't auto-play the test
+export const InvalidTest: Story = {
+  ...Invalid,
+  tags: ['!dev', '!autodocs'],
   play: invalidTests,
 };

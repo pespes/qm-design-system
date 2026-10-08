@@ -75,6 +75,12 @@ export const Default: Story = {
       </div>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -146,6 +152,12 @@ export const DisabledOptions: Story = {
       </CheckboxGroup>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to DisabledOptions doesn't auto-play the test
+export const DisabledOptionsTest: Story = {
+  ...DisabledOptions,
+  tags: ['!dev', '!autodocs'],
   play: disabledOptionsTest,
 };
 
