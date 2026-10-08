@@ -1,15 +1,5 @@
 const Configuration = {
   extends: ["@commitlint/config-conventional"],
-  plugins: [
-    {
-      rules: {
-        'subject-includes-ticket': ({subject}) => [
-          subject !== null && /\b(QP|PL)-\d+/.test(subject),
-          'subject must reference ticket number, eg. "QP-20001" or "PL-532"',
-        ],
-      },
-    },
-  ],
   ignores: [
     (commitMsg) => /^chore\(release\): publish versions \[skip ci\]/.test(commitMsg),
     (commitMsg) => /^chore: merge main into development \[skip ci\]/.test(commitMsg),
@@ -52,10 +42,9 @@ const Configuration = {
     ],
     'scope-case': [2, 'always', 'lower-case'],
     'scope-empty': [2, 'never'],
-    'subject-case': [0, 'always', []], // Disabled to allow ticket numbers and capitals
+    'subject-case': [0, 'always', []], // Disabled to allow capitals
     'subject-empty': [2, 'never'],
     'subject-full-stop': [2, 'never', '.'],
-    'subject-includes-ticket': [2, 'always'],
     'header-max-length': [2, 'always', 100],
     'body-leading-blank': [2, 'always'],
     'footer-leading-blank': [2, 'always']

@@ -119,5 +119,5 @@ pnpm nx test ui-components
 
 Follow Pre-PR rules in `libs/ui-components/CLAUDE.md`:
 - If over 300 changed lines, split into sequential PRs (core first, then stories+tests)
-- Branch naming: `QP-<ticketNumber>-<componentName>`
+- Branch naming: `<componentName>`
 - Include screenshots of Storybook stories in every PR
