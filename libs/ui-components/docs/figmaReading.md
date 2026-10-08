@@ -74,12 +74,16 @@ Ask the user for screenshots of each variant/state and the token names or values
 
 ## 8. Output: Figma Spec Summary
 
+Before presenting, **check proposed prop names and values against existing components** (`componentGuide.md` "Props"): e.g. sizes are `'sm' | 'md' | 'lg'` in Button, IconButton, and Switch (`grep -rn "SIZE_TYPES\|size?:" libs/ui-components/src/components`). Propose the existing convention, and list any Figma names that differ so the user decides once, at the stop.
+
 Present this to the user and **stop until they confirm or correct it**. Do not write code based on an unapproved summary:
 
 ```text
 Source: Tier <1|2|3> — <tools used>; file "<name>" (<fileKey>), node <nodeId>
 Figma → code mapping: <Figma set> → <code component> ...
 Props: <prop>: <values> (default <value>) ...
+Naming: <Figma name → proposed name, following <existing component>; or "matches existing conventions">
+Base UI/shadcn API: <relevant props, data-* attributes, callbacks from Step 3>
 States: <state> → <selector> ...
 Anatomy / ClassMap keys: <layer> → <key> ...
 Tokens: <layer>.<property>: <figma variable> → <css variable> ✅ | ⚠️ unresolved | ❌ missing

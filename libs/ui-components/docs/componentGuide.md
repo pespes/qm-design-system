@@ -3,12 +3,13 @@
 ### Quick References
 - [figmaVariables.md](./figmaVariables.md)
 - [figmaReading.md](./figmaReading.md) — how to read a component spec from Figma
+- [storybookVisualCheck.md](./storybookVisualCheck.md) — how to verify a component in Storybook against Figma
 - [componentChecklist.md](./componentChecklist.md)
 - ui-tokens [output files](../../ui-tokens/dist/css/)
 
 ### Rules
 1. **Ask, don't assume.** If anything is ambiguous - prop names, default variants, mutual exclusivity, styling variants - ask for clarification before proceeding.
-2. **Check before scaffolding.** Before importing a Shadcn component, confirm it does not already exist under `primitives/`. If it doesn't exist, run `pnpm dlx shadcn@latest add <component>`.
+2. **Check before scaffolding.** Before importing a Shadcn component, confirm it does not already exist under `primitives/`. If it doesn't exist, run `pnpm -C libs/ui-components exec shadcn add <component>` from the repo root (see the create-component workflow for the dry-run and dependency checks).
 3. **Tokens are mandatory.** Use design tokens from `ui-tokens/dist/css/tokens.css` for color, spacing, radius, shadow, border-width, and typography. See [figmaVariables.md](./figmaVariables.md) for better understanding. If no matching token exists, surface the discrepancy — do not fall back to arbitrary Tailwind values.
 4. **Follow established patterns.** Refer to existing components in the codebase ([Button.tsx](../src/components/primitives/button/Button.tsx) for primitives, [Select.tsx](../src/components/composed/select/Select.tsx) for composed) when in doubt about structure, naming, or implementation.
 

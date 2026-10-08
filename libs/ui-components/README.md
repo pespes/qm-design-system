@@ -15,7 +15,7 @@ Found in `src/components/primitives`, these are low-level components generated f
 New additions from Shadcn can be added via
 
 ```
-pnpm dlx shadcn@latest add <component>
+pnpm -C libs/ui-components exec shadcn add <component>   # run from the repo root
 ```
 
 ### Composed

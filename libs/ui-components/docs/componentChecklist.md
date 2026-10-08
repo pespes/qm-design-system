@@ -47,6 +47,7 @@ Use this checklist to verify a component is complete and ready for publication. 
 
 ## Storybook Documentation
 
+- [ ] Visual check done per [storybookVisualCheck.md](./storybookVisualCheck.md): stories match Figma, computed tokens resolve, states and both brands checked, nothing auto-plays on load, no console errors
 - [ ] `ComponentName.stories.tsx` story file exists with examples demonstrating different component props
 - [ ] Story meta has correct title — Starts with `'Components/'` for proper nesting
 - [ ] Story args include defaults — `args` object has default props, mocked handlers, and classes prop
