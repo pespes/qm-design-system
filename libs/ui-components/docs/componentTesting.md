@@ -26,4 +26,5 @@ A11y testing is configured in the [preview.ts file](../.storybook/preview.ts), s
 - Testing blocks should define variables needed across multiple tests outside of step blocks to prevent cluttering step blocks.
 - Prefer using `await waitFor()` after a user event and waiting for a component to render / unmount
 - When possible in assertions, use props over hardcoded values. ie.`toHaveAccessibleDescription(expect.stringContaining(errorText))` vs `toHaveAccessibleDescription("error: a description")`
+- When two elements can share a role and accessible name (e.g. an Avatar's fallback has `role="img"` with the same name as the `<img>` it replaces while the image loads), `getByRole` / `findByRole` may match the wrong one. Wait for the specific element first (e.g. `waitFor(() => expect(canvasElement.querySelector('img')).toBeInTheDocument())`), then assert its accessible name with `toHaveAccessibleName` (see [Avatar tests](../src/components/composed/avatar/Avatar.test.ts)).
 - When testing components that require portals, require using screen over canvas (ie. [Dialog tests](../src/components/composed/dialog/Dialog.test.ts))

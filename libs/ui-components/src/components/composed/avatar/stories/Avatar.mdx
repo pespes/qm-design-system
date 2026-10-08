@@ -1,0 +1,64 @@
+import {
+  Canvas,
+  Meta,
+  Controls,
+  Description,
+  Title,
+  Primary,
+} from '@storybook/addon-docs/blocks';
+import * as AvatarStories from './Avatar.stories';
+import { MarkdownBlock } from '@sb/configs/docBlocks';
+
+<Meta of={AvatarStories} />
+
+<Title />
+
+<Description />
+
+<Primary />
+
+<MarkdownBlock />
+
+## Props
+
+<Controls />
+
+## Usage
+
+An `<Avatar/>` represents a person or entity with their profile photo. When no `src` is provided, or the image fails to load,
+the `fallback` initials are shown instead, so always provide both. Keep `fallback` to one or two characters.
+
+Use `onLoadingStatusChange` to react to the image's loading status (`idle`, `loading`, `loaded` or `error`), for example to log
+broken profile images.
+
+## Accessibility
+
+- `alt` is required. It is used as the image's alt text, and as the accessible name of the fallback, so screen readers announce
+  the person's name rather than spelling out the initials.
+- The avatar is not interactive. If it acts as a link or button (e.g. opening a profile), wrap it in a `<Button/>` or link that
+  has its own accessible name.
+
+## Examples
+
+### Default (Photo)
+
+<Canvas of={AvatarStories.Default} />
+
+### Fallback (No Photo)
+
+<Canvas of={AvatarStories.Fallback} />
+
+### Broken Image
+
+The image fails to load, so the fallback is shown.
+
+<Canvas of={AvatarStories.BrokenImage} />
+
+### All Sizes
+
+<Canvas of={AvatarStories.AllSizes} />
+
+#### Additional Documentation
+
+- BaseUI Avatar: [Learn More](https://base-ui.com/react/components/avatar)
+- Shadcn Avatar: [Learn More](https://ui.shadcn.com/docs/components/base/avatar)
