@@ -206,8 +206,11 @@ for (const file of sourceFiles) {
       .replace(/^\s*(\/\/|\*|\/\*).*$/, '')
       .replace(/\s\/\/\s.*$/, ''); // skip comments
     for (const match of code.matchAll(/(['"`])((?:(?!\1).)*)\1/g)) {
-      if (/(test-?id)\s*[=:]\s*\{?\s*$/i.test(code.slice(0, match.index)))
-        continue; // test ids aren't classes
+      const before = code.slice(0, match.index);
+      if (/(test-?id)\s*[=:]\s*\{?\s*$/i.test(before)) continue; // test ids aren't classes
+      // In MDX, backticks are inline code in prose; only className values are real classes
+      if (file.endsWith('.mdx') && !/className\s*=\s*\{?\s*$/.test(before))
+        continue;
       for (const token of match[2].split(/\s+/)) {
         const outsideBrackets = token.replace(/\[[^\]]*\]|\([^)]*\)/g, '');
         if (

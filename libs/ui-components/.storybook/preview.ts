@@ -36,9 +36,18 @@ const preview: Preview = {
       exclude: /^(className|style)$/g,
     },
     options: {
-      // Pin the Introduction page above the component stories
-      storySort: {
-        order: ['Introduction', 'Components'],
+      // Welcome, then the Foundations and Components sections, each A–Z (case-insensitive). Stories within a
+      // component keep their authored order (Default first), which the built-in 'alphabetical' method would
+      // reorder. Storybook parses this function as plain JavaScript: keep it self-contained, with no TS
+      // annotations (the default parameter values give TypeScript the types instead).
+      storySort: (a = { title: '' }, b = { title: '' }) => {
+        const sections = ['Welcome', 'Foundations', 'Components'];
+        const rank = (title = '') =>
+          sections.indexOf(title.split('/')[0] ?? '');
+        return (
+          rank(a.title) - rank(b.title) ||
+          a.title.localeCompare(b.title, undefined, { sensitivity: 'base' })
+        );
       },
     },
     docs: {

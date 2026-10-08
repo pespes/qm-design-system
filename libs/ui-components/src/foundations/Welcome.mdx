@@ -1,0 +1,67 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+<Meta title='Welcome' />
+
+# Level design system
+
+`@level/ui-components` is the React component library that powers Quartermaster product UIs. Components are built on
+[BaseUI](https://base-ui.com) and [Shadcn](https://ui.shadcn.com), and styled with Tailwind v4 using design tokens from
+`@level/ui-tokens`, which are synced directly from Figma.
+
+## Getting Started
+
+Install the package:
+
+<Source language='bash' dark code={`pnpm add @level/ui-components`} />
+
+Import the token and component stylesheets into your app's main stylesheet, in this order:
+
+<Source
+  language='css'
+  dark
+  code={`@import '@level/ui-tokens/css/tokens';
+@import '@level/ui-tokens/css/tokens-pro';
+@import 'tailwindcss';
+@import '@level/ui-components/styles.css';`}
+/>
+
+Then import components by name:
+
+<Source
+  language='tsx'
+  dark
+  code={`import { Button } from '@level/ui-components';
+
+<Button variant="brand">Get started</Button>`}
+/>
+
+## Brand Themes
+
+The Homeowner brand is applied by default. Wrap any part of the tree in `data-theme="pro"` to switch its children to Pro brand colours,
+with no extra classes needed. Use the **Brand** select in the toolbar to preview stories in either theme.
+
+<Source
+  language='tsx'
+  dark
+  code={`<Button variant="brand">I am a green button</Button>
+
+<div data-theme="pro">
+  <Button variant="brand">I am a blue button</Button>
+</div>`}
+/>
+
+## Foundations
+
+The design tokens and guidelines every component is built on:
+
+- [Accessibility](?path=/docs/foundations-accessibility--docs) — standards, automated checks and component requirements
+- [Colors](?path=/docs/foundations-colors--docs) — semantic colour tokens for both brands
+- [Corner radius](?path=/docs/foundations-corner-radius--docs) — radius tokens
+- [Spacing](?path=/docs/foundations-spacing--docs) — spacing tokens for padding, gaps and sizes
+- [Typography](?path=/docs/foundations-typography--docs) — text styles
+
+## Resources
+
+- [GitHub repository](https://github.com/pespes/qm-design-system)
+- [BaseUI documentation](https://base-ui.com/react/overview/quick-start)
+- [Shadcn documentation](https://ui.shadcn.com/docs)

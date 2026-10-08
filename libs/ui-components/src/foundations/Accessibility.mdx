@@ -1,0 +1,41 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+<Meta title='Foundations/Accessibility' />
+
+# Accessibility
+
+Components aim to meet WCAG 2.2 AA and follow the [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/) for their
+component type. Base UI provides the roles, ARIA attributes and keyboard behaviour for most primitives; components build on it
+rather than re-implementing it.
+
+## Automated checks
+
+Every story is checked with `@storybook/addon-a11y` (axe) when `pnpm test` runs, and **violations fail the test run**. On top of the
+default rules, this library also enables:
+
+- **Target size** (WCAG 2.2, 2.5.8): interactive targets must be large enough to activate reliably.
+- **Test IDs on interactive elements**: buttons, links, inputs, selects, textareas and forms need a `data-testid`.
+
+You can also open the **Accessibility** panel on any story to see its results.
+
+Automated checks can't catch everything. Check keyboard navigation and screen reader output by hand for new or changed components.
+
+## Component requirements
+
+- **Labels:** form fields have a visible label linked to the control; `*Field` components require one. Labels don't change when the
+  control's state changes.
+- **Descriptions and errors:** helper text and error messages are linked with `aria-describedby`, and invalid fields set `aria-invalid`.
+  Errors are always shown as text, never by colour alone.
+- **Keyboard:** everything that works with a mouse works with a keyboard, in the order expected for that component type.
+- **Focus:** focus is always visible, using the shared focus ring:
+
+<Source
+  language='html'
+  dark
+  code={`focus-visible:ring-2 focus-visible:ring-border-subtle
+focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2`}
+/>
+
+- **Colour contrast:** use the paired colour tokens (see [Colors](?path=/docs/foundations-colors--docs)) rather than mixing colours
+  ad hoc, so text keeps sufficient contrast in both brands.
+- **Images:** meaningful images have alt text; components such as `Avatar` require it.

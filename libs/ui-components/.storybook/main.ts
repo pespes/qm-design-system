@@ -4,7 +4,10 @@ import { dirname } from 'node:path';
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
-  stories: ['../src/components/**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
+  stories: [
+    '../src/foundations/*.mdx',
+    '../src/components/**/*.@(mdx|stories.@(js|jsx|ts|tsx))',
+  ],
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-a11y',

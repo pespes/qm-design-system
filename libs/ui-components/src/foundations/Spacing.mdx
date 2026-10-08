@@ -1,0 +1,14 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { SpacingTokens } from '@sb/configs/foundations';
+
+<Meta title='Foundations/Spacing' />
+
+# Spacing
+
+Spacing tokens set padding, margins, gaps and fixed sizes. Token names are the spacing value × 100 in quarter-rem steps:
+`spacing-400` is `1rem` (16px), `spacing-200` is `0.5rem` (8px).
+
+Use them with any spacing utility, e.g. `p-400`, `gap-200`, `size-800`. Only use the named tokens below: a plain number that
+isn't a token (e.g. `size-475`) fails the build.
+
+<SpacingTokens />

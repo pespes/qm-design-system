@@ -1,0 +1,18 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ColorTokens } from '@sb/configs/foundations';
+
+<Meta title='Foundations/Colors' />
+
+# Colors
+
+Colours are semantic tokens synced from Figma. Use them through Tailwind utilities, e.g. `bg-brand-background`, `text-foreground-secondary`
+or `border-border-default`. Never use raw hex or rgb values in components.
+
+- **Brand** colours change with the brand theme. Where the Pro value differs, both are shown.
+- **Base** and **accent** are brand-neutral and look the same in both themes.
+- **Danger, warning, success and info** communicate status. Pair `*-foreground` with `*-background`, and use `*-text` on light surfaces
+  such as `*-background-subtle`.
+
+Values below are read from `@level/ui-tokens`, so this page always reflects the current tokens.
+
+<ColorTokens />
