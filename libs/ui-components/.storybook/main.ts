@@ -48,7 +48,11 @@ const config: StorybookConfig = {
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
-    />`,
+    />
+    <style>
+      /* The theme API has no brand title size; the title is the only link inside a div in the sidebar header */
+      .sidebar-header > div > a { font-size: 1.125rem; /* 18px */ }
+    </style>`,
 };
 
 function getAbsolutePath(value: string): string {
