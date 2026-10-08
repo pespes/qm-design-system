@@ -17,7 +17,7 @@ function Checkbox({
         'data-checked:border-brand-background data-checked:bg-brand-background data-checked:text-brand-foreground',
         'data-disabled:border-state-disabled data-disabled:bg-state-disabled-subtle data-disabled:data-checked:bg-state-disabled data-disabled:data-checked:border-none',
         'group-has-data-disabled/field:border-state-disabled group-has-data-disabled/field:bg-state-disabled-subtle group-has-data-disabled/field:data-checked:bg-state-disabled group-has-data-disabled/field:data-checked:border-none',
-        'aria-invalid:border-2 aria-invalid:border-status-danger-border-strong aria-invalid:aria-checked:bg-status-danger-background aria-invalid:aria-checked:border-status-danger-background',
+        'aria-invalid:border-2 aria-invalid:border-danger-border-strong aria-invalid:aria-checked:bg-danger-background aria-invalid:aria-checked:border-danger-background',
         className,
       )}
       {...props}

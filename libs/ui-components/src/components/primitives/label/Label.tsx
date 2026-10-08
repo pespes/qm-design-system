@@ -6,7 +6,7 @@ const labelBaseClassName =
   'flex items-center gap-200 w-full select-none text-foreground-default ' +
   'group-data-disabled:pointer-events-none group-data-[disabled=true]/field:text-state-disabled ' +
   'peer-data-disabled:cursor-default peer-data-disabled:text-state-disabled group-has-[>[aria-disabled]]/field:text-state-disabled ' +
-  'peer-aria-invalid:text-status-danger-text ';
+  'peer-aria-invalid:text-danger-text ';
 
 function Label({ type = 'default', className, ...props }: LabelProps) {
   return (

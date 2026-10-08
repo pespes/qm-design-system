@@ -27,7 +27,7 @@ function CheckboxField({
   const wrapperClasses = {
     ...fieldWrapperClasses,
     label: cn(
-      'group-data-invalid/field:text-status-danger-text',
+      'group-data-invalid/field:text-danger-text',
       fieldWrapperClasses?.label,
     ),
   };

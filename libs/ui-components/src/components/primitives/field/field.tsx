@@ -145,7 +145,7 @@ function FieldError({
       role='alert'
       data-slot='field-error'
       className={cn(
-        'type-header-caption text-status-danger-text group-data-horizontal/field:[grid-area:error] flex flex-col gap-050',
+        'type-header-caption text-danger-text group-data-horizontal/field:[grid-area:error] flex flex-col gap-050',
         className,
       )}
       {...props}

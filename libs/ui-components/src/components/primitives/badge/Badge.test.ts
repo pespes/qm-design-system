@@ -38,9 +38,7 @@ export const variantTests = async ({
     const brandBadge = canvas.getByText(/brand badge/i).parentElement;
     expect(brandBadge?.classList).toContain('bg-brand-background');
     const dangerBadge = canvas.getByText(/danger badge/i).parentElement;
-    expect(dangerBadge?.classList).toContain(
-      'bg-status-danger-background-subtle',
-    );
+    expect(dangerBadge?.classList).toContain('bg-danger-background-subtle');
   });
 };
 

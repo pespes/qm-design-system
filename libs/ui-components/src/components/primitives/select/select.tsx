@@ -36,7 +36,7 @@ function SelectTrigger({
       data-slot='select-trigger'
       className={cn(
         'flex min-w-[320px] w-[320px] justify-between bg-transparent type-ui-default h-1000 gap-150 px-300 py-250 rounded-400 border-base-border border-1 text-base-text',
-        'disabled:border-border-subtle disabled:text-state-disabled disabled:[&_svg]:text-state-disabled aria-invalid:border-2 aria-invalid:border-status-danger-border-strong',
+        'disabled:border-border-subtle disabled:text-state-disabled disabled:[&_svg]:text-state-disabled aria-invalid:border-2 aria-invalid:border-danger-border-strong',
         'focus-visible:outline-2 focus-visible:outline-focus-ring focus-visible:outline-offset-2 select-none focus-visible:ring-2 focus-visible:ring-border-subtle',
         'enabled:hover:bg-state-hover-on-light enabled:active:bg-state-pressed-on-light data-placeholder:text-foreground-subtle disabled:data-placeholder:text-state-disabled',
         className,

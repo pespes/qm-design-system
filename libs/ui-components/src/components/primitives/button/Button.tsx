@@ -26,7 +26,7 @@ const buttonVariants = cva(
         ghost:
           'text-base-text hover:bg-muted hover-overlay-light pressed-overlay-light disabled:text-state-disabled aria-disabled:text-state-disabled',
         danger:
-          'bg-status-danger-background text-status-danger-foreground hover-overlay-light pressed-overlay-light disabled:bg-state-disabled aria-disabled:bg-state-disabled',
+          'bg-danger-background text-danger-foreground hover-overlay-light pressed-overlay-light disabled:bg-state-disabled aria-disabled:bg-state-disabled',
       },
       size: {
         md: 'type-ui-default h-1000 gap-150 px-400 py-250',
