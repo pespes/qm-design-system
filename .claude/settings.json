@@ -12,7 +12,7 @@
       "Bash(pnpm build*)",
       "Bash(pnpm typecheck*)",
       "Bash(pnpm install*)",
-      "Bash(pnpm storybook*)", 
+      "Bash(pnpm storybook*)",
       "Bash(pnpm sync:tokens --dry-run*)",
       "Bash(git status*)",
       "Bash(git diff*)",
@@ -27,7 +27,8 @@
       "Bash(mkdir *)",
       "Bash(find *)",
       "Bash(grep * libs/ui-tokens/dist/*)",
-      "Bash(grep * libs/ui-tokens/tokens/figma-tokens.json)"
+      "Bash(grep * libs/ui-tokens/tokens/figma-tokens.json)",
+      "mcp__claude-in-chrome__tabs_context_mcp"
     ],
     "deny": [
       "Bash(git checkout .)",

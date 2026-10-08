@@ -85,7 +85,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Default: Story = {};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -139,6 +144,12 @@ export const ItemStates: Story = {
       },
     ],
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to ItemStates doesn't auto-play the test
+export const ItemStatesTest: Story = {
+  ...ItemStates,
+  tags: ['!dev', '!autodocs'],
   play: itemStateTests,
 };
 
@@ -172,6 +183,12 @@ export const Grouped: Story = {
       },
     ],
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Grouped doesn't auto-play the test
+export const GroupedTest: Story = {
+  ...Grouped,
+  tags: ['!dev', '!autodocs'],
   play: groupedTests,
 };
 
@@ -203,6 +220,12 @@ export const RadioItems: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to RadioItems doesn't auto-play the test
+export const RadioItemsTest: Story = {
+  ...RadioItems,
+  tags: ['!dev', '!autodocs'],
   play: radioTests,
 };
 
@@ -240,6 +263,12 @@ export const CheckboxItems: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to CheckboxItems doesn't auto-play the test
+export const CheckboxItemsTest: Story = {
+  ...CheckboxItems,
+  tags: ['!dev', '!autodocs'],
   play: checkboxTests,
 };
 

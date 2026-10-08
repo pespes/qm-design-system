@@ -72,6 +72,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -108,6 +114,12 @@ export const DisabledItems: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to DisabledItems doesn't auto-play the test
+export const DisabledItemsTest: Story = {
+  ...DisabledItems,
+  tags: ['!dev', '!autodocs'],
   play: disabledItemsTests,
 };
 
@@ -142,6 +154,12 @@ export const Invalid: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Invalid doesn't auto-play the test
+export const InvalidTest: Story = {
+  ...Invalid,
+  tags: ['!dev', '!autodocs'],
   play: invalidTests,
 };
 
@@ -189,5 +207,11 @@ export const Grouped: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Grouped doesn't auto-play the test
+export const GroupedTest: Story = {
+  ...Grouped,
+  tags: ['!dev', '!autodocs'],
   play: groupedTests,
 };

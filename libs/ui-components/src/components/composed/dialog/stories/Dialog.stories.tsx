@@ -150,6 +150,12 @@ export const Default: Story = {
       </div>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -181,6 +187,12 @@ export const IntegratedTrigger: Story = {
       </Dialog>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to IntegratedTrigger doesn't auto-play the test
+export const IntegratedTriggerTest: Story = {
+  ...IntegratedTrigger,
+  tags: ['!dev', '!autodocs'],
   play: integratedTriggerTests,
 };
 
@@ -332,6 +344,12 @@ export const AsyncPrimarySubmission = {
       </div>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to AsyncPrimarySubmission doesn't auto-play the test
+export const AsyncPrimarySubmissionTest = {
+  ...AsyncPrimarySubmission,
+  tags: ['!dev', '!autodocs'],
   play: footerBtnTests,
 };
 
@@ -401,6 +419,12 @@ export const HeaderActionTrigger: Story = {
       </Dialog>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to HeaderActionTrigger doesn't auto-play the test
+export const HeaderActionTriggerTest: Story = {
+  ...HeaderActionTrigger,
+  tags: ['!dev', '!autodocs'],
   play: headerActionTests,
 };
 
@@ -449,6 +473,12 @@ export const LifecycleCallback: Story = {
       </div>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to LifecycleCallback doesn't auto-play the test
+export const LifecycleCallbackTest: Story = {
+  ...LifecycleCallback,
+  tags: ['!dev', '!autodocs'],
   play: lifecycleCallbackTests,
 };
 

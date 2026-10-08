@@ -94,6 +94,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 

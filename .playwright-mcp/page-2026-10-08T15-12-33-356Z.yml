@@ -1,0 +1,35 @@
+- table [aria-hidden] [ref=e10]:
+  - rowgroup [ref=e11]:
+    - row [ref=e12]:
+      - columnheader [ref=e13]: Name
+      - columnheader [ref=e14]: Description
+      - columnheader [ref=e15]: Default
+      - columnheader [ref=e16]: Control
+  - rowgroup [ref=e17]:
+    - row [ref=e18]:
+      - cell [ref=e19]: propertyName*
+      - cell [ref=e20]:
+        - generic [ref=e21]: This is a short description
+        - generic [ref=e22]: summary
+      - cell [ref=e24]:
+        - generic [ref=e25]: defaultValue
+      - cell [ref=e26]:
+        - button [ref=e27] [cursor=pointer]: Set string
+    - row [ref=e28]:
+      - cell [ref=e29]: propertyName*
+      - cell [ref=e30]:
+        - generic [ref=e31]: This is a short description
+        - generic [ref=e32]: summary
+      - cell [ref=e34]:
+        - generic [ref=e35]: defaultValue
+      - cell [ref=e36]:
+        - button [ref=e37] [cursor=pointer]: Set string
+    - row [ref=e38]:
+      - cell [ref=e39]: propertyName*
+      - cell [ref=e40]:
+        - generic [ref=e41]: This is a short description
+        - generic [ref=e42]: summary
+      - cell [ref=e44]:
+        - generic [ref=e45]: defaultValue
+      - cell [ref=e46]:
+        - button [ref=e47] [cursor=pointer]: Set string

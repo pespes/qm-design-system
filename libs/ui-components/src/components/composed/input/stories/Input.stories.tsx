@@ -118,6 +118,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -218,6 +224,12 @@ export const Password: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Password doesn't auto-play the test
+export const PasswordTest: Story = {
+  ...Password,
+  tags: ['!dev', '!autodocs'],
   play: passwordTests,
 };
 

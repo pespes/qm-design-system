@@ -84,6 +84,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -139,5 +145,11 @@ export const Invalid: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Invalid doesn't auto-play the test
+export const InvalidTest: Story = {
+  ...Invalid,
+  tags: ['!dev', '!autodocs'],
   play: invalidTests,
 };

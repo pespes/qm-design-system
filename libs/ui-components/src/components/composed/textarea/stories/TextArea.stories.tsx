@@ -86,6 +86,12 @@ export const Default: Story = {
       />
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to Default doesn't auto-play the test
+export const DefaultTest: Story = {
+  ...Default,
+  tags: ['!dev', '!autodocs'],
   play: defaultTests,
 };
 
@@ -128,6 +134,12 @@ export const WithMaxLength: Story = {
       </div>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to WithMaxLength doesn't auto-play the test
+export const WithMaxLengthTest: Story = {
+  ...WithMaxLength,
+  tags: ['!dev', '!autodocs'],
   play: maxLengthTests,
 };
 
@@ -231,5 +243,11 @@ export const AutoGrow: Story = {
       </div>
     );
   },
+};
+
+// Hidden from the sidebar and docs (still run by Vitest) so browsing to AutoGrow doesn't auto-play the test
+export const AutoGrowTest: Story = {
+  ...AutoGrow,
+  tags: ['!dev', '!autodocs'],
   play: autoGrowTests,
 };

@@ -54,6 +54,7 @@ Use this checklist to verify a component is complete and ready for publication. 
 - [ ] Story render uses function declaration, not arrow function
 - [ ] Interactive components have mocked interactions to demonstrate behaviour
 - [ ] If story is tested, test blocks are imported from `*.test.ts` and attached via `play` property
+- [ ] Tests that visibly change the story (popups, toggles, typing) live on a hidden `<Name>Test` story tagged `['!dev', '!autodocs']`, not the visible one
 - [ ] `ComponentName.mdx` exists — Documentation page with:
   - Meta referencing `*.stories.tsx`
   - Title and Description

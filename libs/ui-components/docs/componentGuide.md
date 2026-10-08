@@ -136,6 +136,18 @@ Within the Storybook meta object:
 - Interactive stories use `render` with a function declaration (not an arrow function - this breaks rendered code block in the Storybook code panel). This function is passed `args` in order to have args/argTypes from the meta object (and any custom assigned args within the story) to apply to the rendered component.
 - Use useState/useEffect as needed to create interactions for users. Any component that is interactive in nature must be interactive in documentation.
 - Attach test functions from *.test.ts to stories via the `play` proeprty.
+- If a test visibly changes the story (opens a popup/dialog/menu, toggles a control, types text), don't put `play` on the visible story: Storybook runs it every time the story is opened from the sidebar. Instead, add a hidden copy that Vitest still runs:
+  ```tsx
+  export const Default: Story = { args: { ... }, render: DefaultStory };
+
+  // Hidden from the sidebar and docs (still run by Vitest)
+  export const DefaultTest: Story = {
+    ...Default,
+    tags: ['!dev', '!autodocs'],
+    play: defaultTests,
+  };
+  ```
+  Tests that only assert (no user events) can stay on the visible story.
 - Story example naming should reflect its purpose, after the `default` example (ie. Disabled, Invalid, WithMaxLength ... )
 - The stories should demonstrate the use of all Figma defined props, and any expected state (ie. disabled, invalid, loading). Each story should address a single prop / state for separation of concerns.
 - If demonstrating different styling of a given prop, rendering multiple components in a single story is acceptable. Otherwise one story contains one component.
