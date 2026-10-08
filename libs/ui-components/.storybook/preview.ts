@@ -56,16 +56,11 @@ const preview: Preview = {
     },
   },
   tags: ['autodocs'],
-  //globalTypes helps render toolbar options applicable to all stories - in this case default brand colours
+  // Brand theme global read by themeDecorator. Its toolbar control is the custom
+  // select registered in manager.ts (keep the brand list in sync there).
   globalTypes: {
     brand: {
       description: 'Brand Themes',
-      toolbar: {
-        title: 'Select Brand',
-        icon: 'user',
-        items: ['Homeowner', 'Pro'],
-        dynamicTitle: false,
-      },
     },
   },
   initialGlobals: {
