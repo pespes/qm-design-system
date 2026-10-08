@@ -4,7 +4,7 @@ import { create } from 'storybook/theming';
 // Colour values mirror the Homeowner ui-tokens (--color-brand-background), as the default brand.
 export const qmTheme = create({
   base: 'light',
-  brandTitle: 'Quartermaster Design System',
+  brandTitle: 'Level design system',
   brandUrl: 'https://github.com/pespes/qm-design-system',
   brandTarget: '_self',
 
