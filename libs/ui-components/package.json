@@ -46,7 +46,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "rm -rf dist && tsc --noEmit && rollup -c && node scripts/build-css.mjs",
+    "build": "node scripts/check-classes.mjs && rm -rf dist && tsc --noEmit && rollup -c && node scripts/build-css.mjs",
+    "check:classes": "node scripts/check-classes.mjs",
     "test:watch": "vitest"
   },
   "peerDependencies": {

@@ -32,6 +32,17 @@
         "command": "pnpm run build",
         "cwd": "libs/ui-components"
       }
+    },
+    "check-classes": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/check-classes.mjs",
+        "cwd": "libs/ui-components"
+      },
+      "dependsOn": ["^build"],
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "outputs": []
     }
   }
 }

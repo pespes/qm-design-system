@@ -12,6 +12,7 @@ Use this checklist to verify a component is complete and ready for publication. 
 ## Styling & Tokens
 
 - [ ] All tokens match finalized output — Every color, spacing, radius, shadow, and border value corresponds to a token in `libs/ui-tokens/dist/css/tokens.css` (verify via `grep`)
+- [ ] **[auto]** `pnpm check:classes` passes (runs as part of `pnpm build:components` and CI) — fails on classes Tailwind generates no CSS for, plain-number spacing with no `--spacing-N` token, and undefined CSS variables
 - [ ] Uses `cva` for variants — Style variants defined with cva for maintainability
 - [ ] Uses `cn()` for class merging
 - [ ] Theme variables resolve correctly with no conditional logic
