@@ -42,7 +42,7 @@ If a link is provided for the Base UI component being referenced by Shadcn, fetc
 
 Prerequisite: If `libs/ui-tokens/dist/css/tokens.css` does not exist, run `pnpm build:tokens` to generate the token file you will need to compare Figma variables to.
 
-Follow [figmaReading.md](../../libs/ui-components/docs/figmaReading.md) to connect to Figma (Desktop Bridge first, with fallbacks), locate the component set, extract the spec, and map tokens. Figma is read-only during this workflow.
+Follow [figmaReading.md](../../libs/ui-components/docs/figmaReading.md) to connect to Figma (Desktop Bridge first, with fallbacks), locate the component set, extract the spec, and map tokens. Run the read-only [figmaInspect.js](../../libs/ui-components/docs/figmaInspect.js) script on each set's default variant to confirm stroke alignment, which layer owns each fill, text styles, and variable names. Figma is read-only during this workflow.
 
 From the Figma spec, extract:
 - **Variants** — visual variants (e.g., base/brand/danger) and sizes (sm/md/lg)

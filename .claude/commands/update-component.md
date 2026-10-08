@@ -26,7 +26,7 @@ Map everything the change could touch:
 If the component doesn't exist, stop and suggest `/create-component` instead.
 
 ### Step 3: Read the Figma Spec (design-driven changes)
-Follow [figmaReading.md](../../libs/ui-components/docs/figmaReading.md). In addition to the Figma Spec Summary, list the **differences from the current implementation** (props, variants, states, tokens, anatomy).
+Follow [figmaReading.md](../../libs/ui-components/docs/figmaReading.md), including the read-only [figmaInspect.js](../../libs/ui-components/docs/figmaInspect.js) script. In addition to the Figma Spec Summary, list the **differences from the current implementation** (props, variants, states, tokens, anatomy).
 
 **STOP:** present the summary and the differences, and wait for the user to approve before changing code.
 

@@ -8,8 +8,10 @@ The preferred connection is **figma-console-mcp via the Figma Desktop Bridge plu
 
 Figma is the design team's source of truth. During component work, only use **read** tools. figma-console-mcp also exposes write tools (`figma_execute`, `figma_set_*`, `figma_create_*`, `figma_delete_*`, `figma_rename_*`, `figma_batch_*`, `figma_post_comment`, etc.) — never call them unless the user explicitly asks for a change in Figma.
 
+**One exception:** `figma_execute` may be used to run the repo's read-only inspection script, [figmaInspect.js](./figmaInspect.js), changing only its `NODE_ID` and `MAX_DEPTH` values. Always pass the linked file's `fileKey`. Do not run any other code through `figma_execute` without the user's explicit permission.
+
 Read tools used in this guide:
-- **Tier 1 (figma-console):** `figma_get_status`, `figma_reconnect`, `figma_search_components`, `figma_analyze_component_set`, `figma_get_component_for_development_deep`, `figma_get_component_for_development`, `figma_get_annotations`, `figma_get_variables`, `figma_take_screenshot`
+- **Tier 1 (figma-console):** `figma_get_status`, `figma_reconnect`, `figma_search_components`, `figma_analyze_component_set`, `figma_get_component_for_development_deep`, `figma_get_component_for_development`, `figma_get_annotations`, `figma_get_variables`, `figma_take_screenshot`, and `figma_execute` with `figmaInspect.js` only
 - **Tier 2 (official Figma MCP):** `get_metadata`, `get_design_context`, `get_variable_defs`, `get_screenshot`
 
 ## 1. Parse the Link
@@ -39,6 +41,7 @@ Links often point at a page or section, not the component itself.
 | Props, variants, states | `figma_analyze_component_set` on the component set **and each nested set** | `variantAxes` → variant props; `componentProps` → props (BOOLEAN → boolean, TEXT → string, INSTANCE_SWAP → ReactNode); `stateMachine.cssMapping` → state selectors (Focus → `:focus-visible`, Error → `[aria-invalid="true"]`, Disabled → `:disabled`). |
 | Per-state styling | Same call, each variant's `signature` | Compare `signature` (fill/stroke token, stroke weight, effects) across variants yourself. `diffFromDefault` can be `null` when the tool can't identify a default variant — don't rely on it. A composed set's root usually has an empty signature; read the nested set instead. |
 | Anatomy & layout | `figma_get_component_for_development_deep` on the default variant (depth 3–5 is usually enough) | Each distinctly styled layer → a `ClassMap` key. `layoutMode` → flex direction, `itemSpacing` → gap, `primaryAxisAlignItems`/`counterAxisAlignItems` → justify/align, `layoutSizing*` → fixed/fill/hug. `boundVariables` are resolved to token names. |
+| Stroke side, fill ownership, text styles, unresolved variables, raw values | `figma_execute` with [figmaInspect.js](./figmaInspect.js) on the default variant of each set (and on other variants whose `signature` differs) | The packaged tools omit these. Use the script's output as the source of truth for: **which layer owns each fill/stroke** (`figma_analyze_component_set` can attribute a child's fill to a composed root); **`strokeAlign`** (`INSIDE` → `border`, `OUTSIDE` → `ring`, `CENTER` → ask); **`text.textStyle`** (`text/header/caption` → `type-header-caption`); variable names the other tools leave as IDs; and **`raw: true`** paints with no variable. |
 | Designer specs | `figma_get_annotations` with `include_children: true` | Accessibility, interaction, and animation notes. Report "no annotations" explicitly if none exist. |
 | Visual reference | `figma_take_screenshot` on the component set | Don't save it to disk — re-fetch a fresh screenshot whenever comparing against Storybook, so the comparison reflects the current design. |
 
@@ -54,7 +57,8 @@ Map every bound variable to `libs/ui-tokens/dist/css/tokens.css` (run `pnpm buil
 | `borderWidth/1` | `--border-width-1` | `border-1` |
 
 Verify each CSS variable exists in `tokens.css`. Then handle the exceptions — **never guess a token from a matching value**:
-- **Unresolved ID** (e.g. `VariableID:7903:133` with no name): search for the ID in `libs/ui-tokens/tokens/figma-tokens.json`. If it isn't there and the official Figma MCP is available, its `get_variable_defs` / `get_design_context` output may name it (in testing, the Desktop Bridge left `7903:133` unresolved while the official MCP named it `surface/default`). If a name is found but its ID differs from the synced token's ID, use the token **and** flag the duplicate variable to the design team. If no name is found, report it as unresolved with its raw value.
+- **Unresolved ID** (e.g. `VariableID:7903:133` with no name): run `figmaInspect.js` — it resolves variables through the Plugin API, which names IDs the other tools can't (in testing it resolved `7903:133` as the local Theme variable `surface/default`). Without the Desktop Bridge, search for the ID in `libs/ui-tokens/tokens/figma-tokens.json`, or check the official MCP's `get_variable_defs` / `get_design_context` output. If the name is found but its ID differs from the one in `figma-tokens.json`, use the token **and** flag that the synced token file may be out of date (re-run `figma-token-sync`). If no name is found, report it as unresolved with its raw value.
+- **Text styles:** a text layer bound to a Figma text style maps to the matching `type-*` utility (`text/header/h4` → `type-header-h4`). Only fall back to individual font tokens when the script reports no `textStyle`.
 - **Raw value** (e.g. `strokeHex: #000000` with no token): follow the "Token Not Found" workflow in [figmaVariables.md](./figmaVariables.md) and flag it for the design team.
 
 ## 6. Fallback: Official Figma MCP (Tier 2)
