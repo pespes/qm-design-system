@@ -93,7 +93,7 @@ jobs:
         run: |
           umask 077
           {
-            echo "@quartermaster-inc:registry=https://npm.pkg.github.com"
+            echo "@pespes:registry=https://npm.pkg.github.com"
             echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
             echo "always-auth=true"
           } > "$NPM_CONFIG_USERCONFIG"

@@ -5,7 +5,7 @@ import { create } from 'storybook/theming';
 export const qmTheme = create({
   base: 'light',
   brandTitle: 'Quartermaster Design System',
-  brandUrl: 'https://github.com/Quartermaster-Inc/qm-design-system',
+  brandUrl: 'https://github.com/pespes/qm-design-system',
   brandTarget: '_self',
 
   colorPrimary: '#00780E',
