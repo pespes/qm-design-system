@@ -59,11 +59,11 @@ New optional props, new exports or new stories are **not** breaking.
 
 If a PR contains one, mark the commit as breaking by appending `!` directly after the type/scope, or use a `BREAKING CHANGE:` footer when the reason needs more than a subject line:
 ```bash
-feat(ui-components)!: <ticketNumber> <message>
+feat(ui-components)!: <message>
 ```
 
 ``` bash
-feat(ui-components): <ticketNumber> <message>
+feat(ui-components): <message>
 
 BREAKING CHANGE: <what is breaking>
 ```
@@ -85,10 +85,10 @@ If changes exceed 300 lines of code, it must be split into multiple PRs:
 ### Branch Naming
 The branch name should always follow the convention:
 ```bash
-QP-<ticketNumber>-<componentName>
+<componentName>
 ```
 If subsequent PRs / branches needed, they should be identified by scope:
 ```bash
-QP-<ticketNumber>-<componentName>-stories  # for all stories + tests added
-QP-<ticketNumber>-<componentName>-<type>-stories # if multiple story / test PRs, type of stories (ie. state)
+<componentName>-stories  # for all stories + tests added
+<componentName>-<type>-stories # if multiple story / test PRs, type of stories (ie. state)
 ```

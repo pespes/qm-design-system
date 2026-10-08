@@ -36,8 +36,8 @@ Because this is a mono-repo with both ui-tokens and ui-components packages, it i
 
 All commit messages must follow the following signature:
 ```
-<type>(scope): QP-<ticket-num> <subject>
-feat(scope): QP-21039 SelectComponent
+<type>(scope): <subject>
+feat(ui-components): add SelectComponent
 ```
 
 ## Libraries

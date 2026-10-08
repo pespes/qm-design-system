@@ -90,7 +90,7 @@ These files must not be changed without explicit human approval:
 - `tsconfig.base.json`, `*/tsconfig.json`, `*/tsconfig.lib.json` — TypeScript paths and compilation config
 - `eslint.config.mjs` — Lint rules and module boundary enforcement
 - `.github/workflows/` — CI/CD pipelines
-- `commitlint.config.js` — Commit message validation
+- `commitlint.config.mjs` — Commit message validation
 - `.claude/settings.json` — Claude Code permissions and guardrails
 - `.claude/commands/` — Slash command definitions
 - `dist/`, `build/` — Build outputs (regenerated on build)
@@ -119,17 +119,16 @@ These files must not be changed without explicit human approval:
 ## Commit Messages (Enforced by commitlint)
 
 ```text
-<type>(scope): QP-<ticket> <subject>
+<type>(scope): <subject>
 ```
 `type`: feat, fix, docs, style, refactor, test, chore, build, ci
-`scope`: Package name (ui-tokens, ui-components, figma-token-sync) or repo for root level changes
-`ticket`: Jira ticket number (e.g., QP-21039)
+`scope`: Package name (ui-tokens, ui-components, plugin for figma-token-sync) or repo for root level changes
 `subject`: Brief description of change
 
 ```bash
-feat(ui-components): QP-21039 add SelectComponent
-fix(ui-tokens): QP-22140 fix color token formatting
-chore(repo): QP-23088 update dependencies
+feat(ui-components): add SelectComponent
+fix(ui-tokens): fix color token formatting
+chore(repo): update dependencies
 ```
 
 ## When Uncertain
@@ -140,7 +139,7 @@ chore(repo): QP-23088 update dependencies
 - Token sync workflow: Read [figma-token-sync/README.md](tools/figma-token-sync/README.md)
 - Architecture & design decisions: Read [README.md](README.md)
 - Module boundaries & enforcement: Read [eslint.config.mjs](eslint.config.mjs)
-- Commit message format: Read [commitlint.config.js](commitlint.config.js)
+- Commit message format: Read [commitlint.config.mjs](commitlint.config.mjs)
 - Release process & versioning:  [nx.json](nx.json) (see release configuration)
 - CI/CD pipelines: Read [.github/workflows/](.github/workflows/)
 
@@ -151,7 +150,7 @@ Items marked **[auto]** are enforced by pre-commit hooks or CI. Items marked **[
 - [ ] **[auto]** TypeScript compiles (`pnpm typecheck`)
 - [ ] **[auto]** All tests pass (`pnpm test`)
 - [ ] **[auto]** Nx module boundaries respected (ESLint + Nx checks)
-- [ ] **[auto]** Commit message follows format detailed in `commitlint.config.js`
+- [ ] **[auto]** Commit message follows format detailed in `commitlint.config.mjs`
 - [ ] **[manual]** New components have colocated tests
 - [ ] **[manual]** PR includes screenshots for UI changes
 
