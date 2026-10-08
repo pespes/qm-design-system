@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
 import '../src/globals.css';
 import { themeDecorator } from '@sb/configs/decorators';
+import { qmTheme } from '@sb/configs/theme';
 
 const preview: Preview = {
   parameters: {
@@ -34,7 +35,14 @@ const preview: Preview = {
       // docgen automatically populates className & style from element prop types, remove
       exclude: /^(className|style)$/g,
     },
+    options: {
+      // Pin the Introduction page above the component stories
+      storySort: {
+        order: ['Introduction', 'Components'],
+      },
+    },
     docs: {
+      theme: qmTheme,
       codePanel: true,
       toc: {
         headingSelector: 'h1, h2, h3',
