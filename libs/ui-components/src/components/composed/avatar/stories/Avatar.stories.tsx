@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { createRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
@@ -10,10 +11,8 @@ import {
   sizeTests,
 } from '../Avatar.test.js';
 
-// Inline image so stories and tests never depend on the network
-const samplePhoto = `data:image/svg+xml,${encodeURIComponent(
-  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><rect width='80' height='80' fill='#c9b8a6'/><circle cx='40' cy='32' r='14' fill='#f3e3d3'/><path d='M14 80c2-16 13-24 26-24s24 8 26 24z' fill='#f3e3d3'/></svg>",
-)}`;
+// AI-generated portrait (not a real person), bundled locally so stories and tests never depend on the network
+import samplePhoto from './assets/sample-avatar.jpg';
 
 const meta = {
   title: 'Components/Avatar',
