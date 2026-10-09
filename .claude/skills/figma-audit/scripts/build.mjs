@@ -118,9 +118,9 @@ function buildFix(args) {
   let code = read(file);
   const stamp = new Date().toISOString().slice(0, 16).replace('T', ' ');
   code = replaceInput(code, /const SET_ID = '__SET_ID__';/, `const SET_ID = ${JSON.stringify(plan.setId)};`, file);
-  code = replaceInput(code, /const CHECKPOINT = '__CHECKPOINT__';/, `const CHECKPOINT = ${JSON.stringify(`figma-audit: before ${plan.fixes.length} fixes to ${plan.setName ?? plan.setId} (${stamp} UTC)`)};`, file);
+  code = replaceInput(code, /const CHECKPOINT = '__CHECKPOINT__';/, `const CHECKPOINT = ${JSON.stringify(`figma-audit: before ${plan.fixes.length} ${plan.fixes.length === 1 ? 'fix' : 'fixes'} to ${plan.setName ?? plan.setId} (${stamp} UTC)`)};`, file);
   code = replaceInput(code, /const FIXES = \[\];/, `const FIXES = ${JSON.stringify(plan.fixes)};`, file);
-  return `// figma-audit WRITE: ${plan.fixes.length} approved fixes to ${plan.setName ?? plan.setId}\n${stripComments(code)}`;
+  return `// figma-audit WRITE: ${plan.fixes.length} approved ${plan.fixes.length === 1 ? 'fix' : 'fixes'} to ${plan.setName ?? plan.setId}\n${stripComments(code)}`;
 }
 
 const [command, ...args] = process.argv.slice(2);

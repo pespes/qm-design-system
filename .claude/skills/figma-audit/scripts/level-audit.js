@@ -79,8 +79,8 @@ for (const v of localVars) {
 // ---- Roles: which tokens fit which property ----
 const COLOR_ROLES = {
   fill: { scopes: ['ALL_FILLS', 'FRAME_FILL', 'SHAPE_FILL'], names: /^(surface|state|counter|rating)\/|\/background(-|$)/ },
-  text: { scopes: ['ALL_FILLS', 'TEXT_FILL'], names: /^foreground\/|\/(text|foreground)$/ },
-  stroke: { scopes: ['STROKE_COLOR'], names: /^(border|focus)\/|\/border$/ },
+  text: { scopes: ['ALL_FILLS', 'TEXT_FILL'], names: /^foreground\/|\/(text|foreground)$|^state\/disabled$/ },
+  stroke: { scopes: ['STROKE_COLOR'], names: /^(border|focus)\/|\/border$|^state\/disabled$/ }, // state/disabled: "Color for disabled elements across components"
 };
 const NUMBER_ROLES = {
   spacing: { scopes: ['GAP'], names: /^spacing\// },

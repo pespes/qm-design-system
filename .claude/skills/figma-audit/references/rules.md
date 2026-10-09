@@ -23,7 +23,7 @@ An auto fix must satisfy all of these:
 - The token's resolved value **equals** the current value in **every mode** (Homeowner and Pro), so nothing changes visually in either brand.
 - The token **fits the role**:
   - its scopes allow the property
-  - its name matches the role: `border/*` for strokes, `foreground/*` or `*/text` for text, `surface/*` or `*/background*` for fills, `spacing/*` for gaps and padding
+  - its name matches the role: `border/*`, `focus/*` or `state/disabled` for strokes; `foreground/*`, `*/text` or `state/disabled` for text; `surface/*`, `state/*` or `*/background*` for fills; `spacing/*` for gaps and padding
 - There is exactly **one** such token.
 
 If any of these fail, it's **choose**, and the runner sees the candidates with their values in each mode. Auto still requires approval; it only means the fix is safe to suggest as the default.
