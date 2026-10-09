@@ -1,5 +1,5 @@
 {
-  "exportedAt": "2026-08-25T13:38:53.236Z",
+  "exportedAt": "2026-10-09T14:12:08.321Z",
   "collections": [
     {
       "id": "VariableCollectionId:7902:2",
@@ -1269,10 +1269,11 @@
       "collectionName": "Theme",
       "$description": "Semi-transparent backdrop behind dialogs, drawers, and bottom sheets",
       "$value": {
-        "r": 0.14901961386203766,
-        "g": 0.1411764770746231,
-        "b": 0.13725490868091583,
-        "a": 0.5
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:15"
+        },
+        "opacity": 50
       }
     },
     {
@@ -1926,10 +1927,11 @@
       "collectionName": "Theme",
       "$description": "Hover state overlay on light surfaces (buttons, chips, menu items, table rows)",
       "$value": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 0.05999999865889549
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:4"
+        },
+        "opacity": 6
       }
     },
     {
@@ -1939,10 +1941,11 @@
       "collectionName": "Theme",
       "$description": "Pressed/active state overlay on light surfaces (buttons, chips, calendar days)",
       "$value": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 0.10000000149011612
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:4"
+        },
+        "opacity": 10
       }
     },
     {
@@ -1952,10 +1955,11 @@
       "collectionName": "Theme",
       "$description": "Hover state overlay on dark/filled surfaces (brand, base, danger buttons)",
       "$value": {
-        "r": 1,
-        "g": 1,
-        "b": 1,
-        "a": 0.11999999731779099
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:3"
+        },
+        "opacity": 12
       }
     },
     {
@@ -1965,10 +1969,11 @@
       "collectionName": "Theme",
       "$description": "Pressed/active state overlay on dark/filled surfaces (brand, base, danger buttons)",
       "$value": {
-        "r": 1,
-        "g": 1,
-        "b": 1,
-        "a": 0.20000000298023224
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:3"
+        },
+        "opacity": 20
       }
     },
     {
@@ -1976,12 +1981,13 @@
       "name": "state/disabled",
       "$type": "COLOR",
       "collectionName": "Theme",
-      "$description": "Foreground color for disabled text and icons across all components",
+      "$description": "Color for disabled elements across components",
       "$value": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 0.3799999952316284
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:4"
+        },
+        "opacity": 38
       }
     },
     {
@@ -1991,10 +1997,11 @@
       "collectionName": "Theme",
       "$description": "Background fill for disabled controls (inputs, switches, buttons)",
       "$value": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 0.07999999821186066
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:4"
+        },
+        "opacity": 8
       }
     },
     {
@@ -2004,10 +2011,11 @@
       "collectionName": "Theme",
       "$description": "Overlay for elements in a dragged/grabbed state",
       "$value": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 0.11999999731779099
+        "color": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:7902:4"
+        },
+        "opacity": 12
       }
     },
     {
@@ -2638,7 +2646,7 @@
   ],
   "textVariables": [
     {
-      "id": "S:b5cc5dd2e13fe21a02a44eb629f01603cd682cb2,",
+      "id": "S:b02a791d388fe73ba33fe4ecec28c589ce85a634,",
       "name": "text/header/display1",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2653,7 +2661,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:b8692195e7278e3cfbcbbd3abed137db91ac033b,",
+      "id": "S:206e68ae5c6ff1a92cb9ac940abf283bea1618d1,",
       "name": "text/header/display2",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2668,7 +2676,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:faec8befed099758982a92a5427a06496078f313,",
+      "id": "S:4b224d9042eee2969c0438411f4c1e7ce8db0691,",
       "name": "text/header/display3",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2683,7 +2691,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:3bf7399bfabfc1dc9be2260ed98c9692a2cc0d8f,",
+      "id": "S:71b5f35df42cae333aafc6765927233184018a14,",
       "name": "text/header/h1",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2698,7 +2706,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:20eaaf2005f9edca6f1126efe67d009ff6a3d494,",
+      "id": "S:4648ac3db068a02626343ac4c6613c740821abbc,",
       "name": "text/header/h2",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2713,7 +2721,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:5518b8e101a3a9b7fce819ba88f4bb914fcb64d5,",
+      "id": "S:415ff1f73e9be1acec3e53e2422da7e4c34a0905,",
       "name": "text/header/h3",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2728,7 +2736,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:636499256bd49f7f0a9db605bdd78724695f92b4,",
+      "id": "S:b50ca011948c80a10ec482a6b0765b00dfc5b6ac,",
       "name": "text/header/h4",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2743,7 +2751,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:253bf3e8b8c2ea2247bb6a82a272006112b99c35,",
+      "id": "S:cb1c12f32ce63bec28d420b4b8f25691581727b5,",
       "name": "text/header/caption",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2758,7 +2766,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:304f272562cc0eab30c05555f8cacdc1d2682286,",
+      "id": "S:8fab66a17425ef812ab1b9f2d9ae2c152f988f18,",
       "name": "text/header/fine",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2773,7 +2781,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:e052fc9b694c089fe611f140f80a41564cfa5ea0,",
+      "id": "S:d5e721c4d1e4b0a03add8a115f0d55a9829ede71,",
       "name": "text/body/lead",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2788,7 +2796,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:90a79734c018361a9627d8440f9f23c0ba672f29,",
+      "id": "S:88f9760b0393422022d7c9b3dec48c6b95e7b9ac,",
       "name": "text/body/default",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2803,7 +2811,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:dfde307a47e2c74a232690bca412808e184e9ca3,",
+      "id": "S:6a5b0b259a0f7c0b4649272eb0e49dc5850014ff,",
       "name": "text/body/caption",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2818,7 +2826,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:bbdf1086abef8c88084c991d77e1e4847abc9ba8,",
+      "id": "S:ab2350b8dcdc23395ce94af776d549504bf2cd61,",
       "name": "text/body/fine",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2833,7 +2841,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:6f851c425707378eb3eda57a4942483968a06b4f,",
+      "id": "S:cfc86828a624a1a447366f435c41e104f88e1bb9,",
       "name": "text/ui/lead",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2848,7 +2856,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:bf82c103e7145455004152dbba44b02a3c822437,",
+      "id": "S:ed7824255a2767ce978a8e98fae8555f04f03e0b,",
       "name": "text/ui/default",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2863,7 +2871,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:d30c1200a0bba05ba6f1156982b47409b3c4e41a,",
+      "id": "S:bc9cce685ac5adfcb5a91b43cea126d4bcc08b5a,",
       "name": "text/ui/default-emphasis",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2878,7 +2886,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:c2ced9007637f6067735d724fd446cadcc6b5a0b,",
+      "id": "S:6891aac95dabef0c9f5e92e8b261e6f934065d73,",
       "name": "text/ui/caption",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2893,7 +2901,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:8fd671dfc8ae8d37616df09aeaa6103c7482d2df,",
+      "id": "S:bb21042e90236f21e0a4739fa9532191c9a133fb,",
       "name": "text/ui/fine",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2908,7 +2916,7 @@
       "letterSpacing": 0
     },
     {
-      "id": "S:a7a8448dd0a5fd0be83e220df6199ae0c91164d4,",
+      "id": "S:cf4779b2bfa8156478733c2dce2c21e5ba61cc9c,",
       "name": "text/link/default",
       "fontFamily": {
         "type": "VARIABLE_ALIAS",
@@ -2920,15 +2928,12 @@
         "aliasName": "fontSize/075"
       },
       "lineHeight": 1.5,
-      "letterSpacing": {
-        "type": "VARIABLE_ALIAS",
-        "aliasName": "letterSpacing/025"
-      }
+      "letterSpacing": 0
     }
   ],
   "effectVariables": [
     {
-      "id": "S:cff9e8d5ae210a2ffb61584bd2413667513d8790,",
+      "id": "S:cfea100ef597af6dbe707b7bfb38b6fca23daf97,",
       "name": "shadow/100",
       "$description": "Subtle lift — cards, buttons at rest",
       "effects": [
@@ -2947,7 +2952,7 @@
       ]
     },
     {
-      "id": "S:de12baf0a8351de18ad0a983d7b621ab4dde2e9b,",
+      "id": "S:9fd85f78bdd53b7004d042b10797af5c6fbb398b,",
       "name": "shadow/200",
       "$description": "Low elevation — hovering cards, raised sections",
       "effects": [
@@ -2978,7 +2983,7 @@
       ]
     },
     {
-      "id": "S:ce306ea74ac220d93dbef77d68ecd5d9a6efac6f,",
+      "id": "S:20a891bd51dbeba6fc685f5aa7c167b41a5356f4,",
       "name": "shadow/300",
       "$description": "Medium elevation — dropdowns, popovers",
       "effects": [
@@ -3009,7 +3014,7 @@
       ]
     },
     {
-      "id": "S:9e9e8a311d86a1c9dd7c7aceb313f00a8472fdea,",
+      "id": "S:5e4443f8e9f3a35191498276e582df6699e1dcee,",
       "name": "shadow/400",
       "$description": "High elevation — modals, dialogs",
       "effects": [
@@ -3040,7 +3045,7 @@
       ]
     },
     {
-      "id": "S:793c3829fa574a959bb5aec12a7e8616464112ff,",
+      "id": "S:4daaec8dc78eeff344e933fa1a057516e2bbaa8e,",
       "name": "shadow/500",
       "$description": "Highest elevation — toasts, command palettes",
       "effects": [
