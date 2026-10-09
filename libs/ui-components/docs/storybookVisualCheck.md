@@ -24,9 +24,13 @@ await page.locator('#storybook-root').screenshot({ path: '.playwright-mcp/<compo
 
 ## 1. Open Storybook
 
-1. Check whether Storybook is already running: `curl -s -o /dev/null -w "%{http_code}" http://localhost:6006/` returns `200`. If it isn't, start it in the background with `pnpm storybook --no-open` and wait for `200`. Don't stop a server you didn't start.
-2. Get the story list from `http://localhost:6006/index.json`: entries with `type: "story"` and `title: "Components/<ComponentName>"`. Skip hidden `<Name>Test` stories (their `tags` don't include `dev`) — they exist for Vitest only.
-3. Load each story on its own: `http://localhost:6006/iframe.html?id=<storyId>&viewMode=story`. The docs page is `?id=<docsId>&viewMode=docs`.
+1. Get a Storybook server with the `storybook-visual-check` skill's helper. It reuses a server already running on `:6006`; otherwise it starts a private one on `:6007` (nx blocks a second `pnpm storybook`) and prints the base URL to use below:
+   ```bash
+   node .claude/skills/storybook-visual-check/scripts/storybook.mjs start        # add --own if the :6006 server may be stale
+   ```
+   Run `storybook.mjs stop` when done. It only stops the private server, never one it didn't start.
+2. List the visible stories and the docs page: `storybook.mjs stories <ComponentName>`. It reads `<base>/index.json` and skips hidden `<Name>Test` stories, which exist for Vitest only.
+3. Load each story on its own, using the URLs the helper prints: `<base>/iframe.html?id=<storyId>&viewMode=story`. The docs page is `?id=<docsId>&viewMode=docs`.
 
 ## 2. Compare Against Figma
 

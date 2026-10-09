@@ -1,12 +1,15 @@
 // READ-ONLY Figma inspection script, run via figma-console `figma_execute` (Desktop Bridge).
 // See figmaReading.md. Do not add setters, create*/remove() calls, or anything that changes the document.
 //
-// Usage: copy this file's contents into `figma_execute` (pass the linked file's `fileKey`),
-// replacing NODE_ID and MAX_DEPTH below. Returns a per-layer tree with properties the packaged tools omit:
-// stroke alignment, which layer owns each fill/stroke, variable bindings resolved to names (including ones
-// the other tools leave as IDs), raw values with no variable, text styles, and instance references.
+// Usage: generate the code with the figma-inspect skill's helper, which fills in NODE_IDS and MAX_DEPTH:
+//   node .claude/skills/figma-inspect/scripts/build-inspect.mjs <figma-url-or-node-id>... [--depth N]
+// then pass its output to `figma_execute` along with the linked file's `fileKey`.
+//
+// Returns a per-layer tree for each node with properties the packaged tools omit: stroke alignment,
+// which layer owns each fill/stroke, variable bindings resolved to names (including ones the other
+// tools leave as IDs), raw values with no variable, text styles, and instance references.
 
-const NODE_ID = '__NODE_ID__'; // e.g. '10860:2573'
+const NODE_IDS = ['__NODE_ID__']; // e.g. ['10860:2573', '10834:2495']
 const MAX_DEPTH = 4;
 
 const MIXED = 'mixed';
@@ -124,6 +127,9 @@ async function readNode(node, depth) {
   });
 }
 
-const target = await figma.getNodeByIdAsync(NODE_ID);
-if (!target) return { error: `Node ${NODE_ID} not found in "${figma.root.name}"` };
-return { file: figma.root.name, node: await readNode(target, 0) };
+const nodes = [];
+for (const id of NODE_IDS) {
+  const target = await figma.getNodeByIdAsync(id);
+  nodes.push(target ? await readNode(target, 0) : { id, error: `Node not found in "${figma.root.name}"` });
+}
+return { file: figma.root.name, nodes };

@@ -8,7 +8,13 @@ The preferred connection is **figma-console-mcp via the Figma Desktop Bridge plu
 
 Figma is the design team's source of truth. During component work, only use **read** tools. figma-console-mcp also exposes write tools (`figma_execute`, `figma_set_*`, `figma_create_*`, `figma_delete_*`, `figma_rename_*`, `figma_batch_*`, `figma_post_comment`, etc.) — never call them unless the user explicitly asks for a change in Figma.
 
-**One exception:** `figma_execute` may be used to run the repo's read-only inspection script, [figmaInspect.js](./figmaInspect.js), changing only its `NODE_ID` and `MAX_DEPTH` values. Always pass the linked file's `fileKey`. Do not run any other code through `figma_execute` without the user's explicit permission.
+**One exception:** `figma_execute` may be used to run the repo's read-only inspection script, [figmaInspect.js](./figmaInspect.js), exactly as printed by the `figma-inspect` skill's helper, which fills in the node IDs and depth and refuses to run if the script contains write calls:
+
+```bash
+node .claude/skills/figma-inspect/scripts/build-inspect.mjs <figma-url-or-node-id>... [--depth N]
+```
+
+Always pass the linked file's `fileKey`. Do not hand-edit the printed code or run any other code through `figma_execute` without the user's explicit permission.
 
 Read tools used in this guide:
 - **Tier 1 (figma-console):** `figma_get_status`, `figma_reconnect`, `figma_search_components`, `figma_analyze_component_set`, `figma_get_component_for_development_deep`, `figma_get_component_for_development`, `figma_get_annotations`, `figma_get_variables`, `figma_take_screenshot`, and `figma_execute` with `figmaInspect.js` only

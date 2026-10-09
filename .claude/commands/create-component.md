@@ -42,7 +42,7 @@ If a link is provided for the Base UI component being referenced by Shadcn, fetc
 
 Prerequisite: If `libs/ui-tokens/dist/css/tokens.css` does not exist, run `pnpm build:tokens` to generate the token file you will need to compare Figma variables to.
 
-Follow [figmaReading.md](../../libs/ui-components/docs/figmaReading.md) to connect to Figma (Desktop Bridge first, with fallbacks), locate the component set, extract the spec, and map tokens. Run the read-only [figmaInspect.js](../../libs/ui-components/docs/figmaInspect.js) script on each set's default variant to confirm stroke alignment, which layer owns each fill, text styles, and variable names. Figma is read-only during this workflow.
+Use the `figma-inspect` skill, which follows [figmaReading.md](../../libs/ui-components/docs/figmaReading.md), to connect to Figma (Desktop Bridge first, with fallbacks), locate the component set, extract the spec, and map tokens. Run the read-only [figmaInspect.js](../../libs/ui-components/docs/figmaInspect.js) script through the skill's helper on each set's default variant to confirm stroke alignment, which layer owns each fill, text styles, and variable names. Figma is read-only during this workflow.
 
 From the Figma spec, extract:
 - **Variants** — visual variants (e.g., base/brand/danger) and sizes (sm/md/lg)
@@ -138,7 +138,7 @@ componentName/
 
 ### Step 10: Visual Check in Storybook
 
-Follow [storybookVisualCheck.md](../../libs/ui-components/docs/storybookVisualCheck.md): compare every visible story against a fresh Figma screenshot, check computed token values, interactive states, both brands, load behaviour (nothing auto-plays when a story is opened), and console errors. Fix in-scope mismatches, flag design issues, and report the results table. Storybook screenshots are saved to `.playwright-mcp/<componentName>/` for the PR.
+Use the `storybook-visual-check` skill, which follows [storybookVisualCheck.md](../../libs/ui-components/docs/storybookVisualCheck.md): compare every visible story against a fresh Figma screenshot, check computed token values, interactive states, both brands, load behaviour (nothing auto-plays when a story is opened), and console errors. Fix in-scope mismatches, flag design issues, and report the results table. Storybook screenshots are saved to `.playwright-mcp/<componentName>/` for the PR.
 
 ### Step 11: Verify
 

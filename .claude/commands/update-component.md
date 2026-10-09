@@ -26,7 +26,7 @@ Map everything the change could touch:
 If the component doesn't exist, stop and suggest `/create-component` instead.
 
 ### Step 3: Read the Figma Spec (design-driven changes)
-Follow [figmaReading.md](../../libs/ui-components/docs/figmaReading.md), including the read-only [figmaInspect.js](../../libs/ui-components/docs/figmaInspect.js) script. In addition to the Figma Spec Summary, list the **differences from the current implementation** (props, variants, states, tokens, anatomy).
+Use the `figma-inspect` skill, which follows [figmaReading.md](../../libs/ui-components/docs/figmaReading.md), including the read-only [figmaInspect.js](../../libs/ui-components/docs/figmaInspect.js) script. In addition to the Figma Spec Summary, list the **differences from the current implementation** (props, variants, states, tokens, anatomy).
 
 **STOP:** present the summary and the differences, and wait for the user to approve before changing code.
 
@@ -42,7 +42,7 @@ Follow [componentGuide.md](../../libs/ui-components/docs/componentGuide.md). Kee
 Update the existing stories, `.mdx`, and tests to cover the change (new props/states get stories and tests; removed ones are deleted). Tests that visibly change a story go on a hidden `<Name>Test` story (see `componentGuide.md` "Example Stories").
 
 ### Step 7: Visual Check in Storybook
-Follow [storybookVisualCheck.md](../../libs/ui-components/docs/storybookVisualCheck.md) for the updated component **and** any components that import it.
+Use the `storybook-visual-check` skill, which follows [storybookVisualCheck.md](../../libs/ui-components/docs/storybookVisualCheck.md), for the updated component **and** any components that import it.
 
 ### Step 8: Verify
 Run the relevant items in `componentChecklist.md`, then:
