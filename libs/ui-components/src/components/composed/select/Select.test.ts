@@ -57,8 +57,10 @@ export const defaultTests = async ({
     await step(
       'Calls onOpenChange, sets aria-expanded, and opens listbox when trigger is focused and Enter / Space hit',
       async () => {
+        // Focus returns to the trigger as the listbox closes; wait for it so the key reaches the trigger
         await waitFor(() => {
           expect(trigger).toHaveAttribute('aria-expanded', 'false');
+          expect(trigger).toHaveFocus();
         });
         await userEvent.keyboard('{enter}');
         await waitFor(() => {
@@ -70,6 +72,7 @@ export const defaultTests = async ({
         await userEvent.click(trigger); // close the listbox
         await waitFor(() => {
           expect(trigger).toHaveAttribute('aria-expanded', 'false');
+          expect(trigger).toHaveFocus();
         });
         await userEvent.keyboard(' ');
         await waitFor(() => {
@@ -110,7 +113,8 @@ export const defaultTests = async ({
     });
 
     await step('moves focus with arrow keys', async () => {
-      //listbox is open
+      // listbox is open; focus moves to the selected item (items[0], chosen above) once it has mounted
+      await waitFor(() => expect(items[0]).toHaveFocus());
       await userEvent.keyboard('[ArrowDown]');
       expect(items[1]).toHaveFocus();
       await userEvent.keyboard('[ArrowDown]');
