@@ -12,7 +12,19 @@ export interface FigmaAlias {
   aliasName: string;
 }
 
-export type FigmaVariableValue = FigmaAlias | FigmaRgba | string | number;
+// A colour alias with its own opacity (0–100), e.g. state/disabled = color/black at 38%.
+// The plugin exports the alias by id only (no aliasName).
+export interface FigmaAliasWithOpacity {
+  color: { type: 'VARIABLE_ALIAS'; id: string };
+  opacity: number;
+}
+
+export type FigmaVariableValue =
+  | FigmaAlias
+  | FigmaAliasWithOpacity
+  | FigmaRgba
+  | string
+  | number;
 
 export interface FigmaVariable {
   id: string;

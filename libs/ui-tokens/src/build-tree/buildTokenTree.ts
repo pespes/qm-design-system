@@ -4,6 +4,7 @@ import {
   type DtcgToken,
   type DtcgTrees,
   type FigmaAlias,
+  type FigmaAliasWithOpacity,
   type FigmaEffectVariable,
   type FigmaExport,
   type FigmaRgba,
@@ -33,6 +34,16 @@ const isAlias = (v: FigmaVariableValue): v is FigmaAlias =>
 const isRgba = (v: FigmaVariableValue): v is FigmaRgba =>
   typeof v === 'object' && 'r' in v && 'g' in v && 'b' in v && 'a' in v;
 
+// value is of type { color: { type: 'VARIABLE_ALIAS', id }, opacity: 0–100 }
+const isAliasWithOpacity = (
+  v: FigmaVariableValue,
+): v is FigmaAliasWithOpacity =>
+  typeof v === 'object' &&
+  'color' in v &&
+  'opacity' in v &&
+  typeof v.color === 'object' &&
+  v.color.type === 'VARIABLE_ALIAS';
+
 const isTokenTree = (v: unknown): v is TokenTree =>
   typeof v === 'object' && v !== null && !('$value' in v);
 
@@ -48,6 +59,28 @@ const normalizeToRgbaStr = ({ r, g, b, a }: FigmaRgba) => {
   const alpha = Number.parseFloat(a.toFixed(2));
 
   return `rgba(${r255}, ${g255}, ${b255}, ${alpha})`;
+};
+
+// Resolve a colour value (rgba, alias, or alias + opacity) to RGBA, following aliases by
+// variable id. Primitives have a single mode, so each aliased variable's default $value is used.
+export const resolveColorValue = (
+  value: FigmaVariableValue,
+  variablesById: Map<string, FigmaVariable>,
+  name: string,
+  depth = 0,
+): FigmaRgba => {
+  if (isRgba(value)) return value;
+  let aliasId: string | undefined;
+  if (isAliasWithOpacity(value)) aliasId = value.color.id;
+  else if (isAlias(value)) aliasId = value.id;
+  const target = aliasId ? variablesById.get(aliasId) : undefined;
+  if (!target || depth > 10) {
+    throw new Error(`"${name}" has a colour alias that cannot be resolved`);
+  }
+  const base = resolveColorValue(target.$value, variablesById, name, depth + 1);
+  return isAliasWithOpacity(value)
+    ? { ...base, a: base.a * (value.opacity / 100) }
+    : base;
 };
 
 // convert aliasName 'x/y/z' --> '{x.y.z}'
@@ -133,6 +166,7 @@ const convertValue = (
   variable: FigmaVariable,
   tokenType: string | undefined,
   exposure: TokenExposure,
+  variablesById: Map<string, FigmaVariable>,
 ): DtcgToken => {
   const token: DtcgToken = { $value: '' };
   if (tokenType) token.$type = tokenType;
@@ -144,6 +178,12 @@ const convertValue = (
     // If color value, convert object to rgba(r,g,b,a) string and create hex fallback
   } else if (isRgba(value)) {
     token.$value = normalizeToRgbaStr(value);
+    // If alias + opacity (e.g. color/black at 38%), resolve the alias and apply the opacity.
+    // A reference can't carry its own alpha, so this is emitted as a resolved rgba() string.
+  } else if (isAliasWithOpacity(value)) {
+    token.$value = normalizeToRgbaStr(
+      resolveColorValue(value, variablesById, variable.name),
+    );
     // Else return raw value
   } else {
     token.$value = value;
@@ -243,6 +283,7 @@ const transformVariables = (
   themeModeNames: string[],
   base: TokenTree,
   modes: Record<string, TokenTree>,
+  variablesById: Map<string, FigmaVariable>,
 ): void => {
   const collection = variable.collectionName.toLowerCase();
   const classification: Classification | undefined =
@@ -276,7 +317,7 @@ const transformVariables = (
   setNested(
     base,
     cleanedSegments,
-    convertValue(variable.$value, variable, tokenType, exposure),
+    convertValue(variable.$value, variable, tokenType, exposure, variablesById),
   );
 
   // Theme-collection variables carry a `$<mode>Value` per additional mode;
@@ -289,10 +330,13 @@ const transformVariables = (
         setNested(
           getModeTree(modes, modeName),
           cleanedSegments,
-          convertValue(modeVal, variable, tokenType, {
-            ...exposure,
-            mode: modeName,
-          }),
+          convertValue(
+            modeVal,
+            variable,
+            tokenType,
+            { ...exposure, mode: modeName },
+            variablesById,
+          ),
         );
       }
     }
@@ -317,8 +361,9 @@ export const buildDtcgTrees = (parsedFile: FigmaExport): DtcgTrees => {
     : [];
 
   // ---------- Process variables ----------
+  const variablesById = new Map(parsedFile.variables.map((v) => [v.id, v]));
   parsedFile.variables.forEach((variable) => {
-    transformVariables(variable, themeModeNames, base, modes);
+    transformVariables(variable, themeModeNames, base, modes, variablesById);
   });
 
   // ---------- Process Text Styles ----------

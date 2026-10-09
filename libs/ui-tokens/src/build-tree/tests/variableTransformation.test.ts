@@ -82,6 +82,65 @@ describe('Semantic Color variables', () => {
     expect(successToken.$value).toBe('{color.brand.background}');
   });
 
+  describe('Aliases with opacity', () => {
+    const stateDisabled = {
+      id: 'var:state:disabled',
+      name: 'state/disabled',
+      $type: 'COLOR',
+      collectionName: 'Theme',
+      $value: {
+        color: { type: 'VARIABLE_ALIAS', id: 'var:white' },
+        opacity: 38,
+      },
+    } as const;
+
+    it('should resolve the alias and apply the opacity as an rgba() string', () => {
+      const trees = build(stateDisabled)();
+      expect(getToken(trees.base, 'color/state/disabled').$value).toBe(
+        'rgba(255, 255, 255, 0.38)',
+      );
+    });
+
+    it('should multiply the opacity with an already transparent primitive', () => {
+      const trees = build({
+        ...stateDisabled,
+        $value: {
+          color: { type: 'VARIABLE_ALIAS', id: 'var:green-transparent' },
+          opacity: 50,
+        },
+      })();
+      expect(getToken(trees.base, 'color/state/disabled').$value).toBe(
+        'rgba(0, 120, 13, 0.25)',
+      );
+    });
+
+    it('should resolve theme mode values', () => {
+      const trees = build({
+        ...stateDisabled,
+        $proValue: {
+          color: { type: 'VARIABLE_ALIAS', id: 'var:blue' },
+          opacity: 38,
+        },
+      })();
+      const proTree = trees.modes['pro'] as TokenTree;
+      expect(getToken(proTree, 'color/state/disabled').$value).toBe(
+        'rgba(33, 84, 204, 0.38)',
+      );
+    });
+
+    it('should throw when the aliased variable is missing', () => {
+      expect(
+        build({
+          ...stateDisabled,
+          $value: {
+            color: { type: 'VARIABLE_ALIAS', id: 'var:missing' },
+            opacity: 38,
+          },
+        }),
+      ).toThrow('"state/disabled" has a colour alias that cannot be resolved');
+    });
+  });
+
   describe('Theme Modes', () => {
     it('should render any $proValue into modes.pro tree', () => {
       const trees = buildDtcgTrees(basicFixture);
