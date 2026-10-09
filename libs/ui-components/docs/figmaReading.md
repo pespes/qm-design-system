@@ -8,6 +8,8 @@ The preferred connection is **figma-console-mcp via the Figma Desktop Bridge plu
 
 Figma is the design team's source of truth. During component work, only use **read** tools. figma-console-mcp also exposes write tools (`figma_execute`, `figma_set_*`, `figma_create_*`, `figma_delete_*`, `figma_rename_*`, `figma_batch_*`, `figma_post_comment`, etc.) — never call them unless the user explicitly asks for a change in Figma.
 
+To change the design to match the design system, use the **`figma-audit` skill** — the only sanctioned write path. It audits one component set read-only, writes only the fixes the person running it approves, and saves a version-history checkpoint first.
+
 **One exception:** `figma_execute` may be used to run the repo's read-only inspection script, [figmaInspect.js](./figmaInspect.js), exactly as printed by the `figma-inspect` skill's helper, which fills in the node IDs and depth and refuses to run if the script contains write calls:
 
 ```bash

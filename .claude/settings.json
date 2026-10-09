@@ -30,6 +30,7 @@
       "Bash(grep * libs/ui-tokens/tokens/figma-tokens.json)",
       "Bash(node .claude/skills/figma-inspect/scripts/build-inspect.mjs*)",
       "Bash(node .claude/skills/storybook-visual-check/scripts/storybook.mjs*)",
+      "Bash(node .claude/skills/figma-audit/scripts/build.mjs*)",
       "mcp__claude-in-chrome__tabs_context_mcp"
     ],
     "deny": [

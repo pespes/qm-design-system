@@ -9,7 +9,7 @@ Full guide: [figmaReading.md](../../../libs/ui-components/docs/figmaReading.md).
 
 ## Rules
 
-- **Figma is read-only.** Use only the read tools listed in figmaReading.md. Never call figma-console write tools (`figma_set_*`, `figma_create_*`, `figma_delete_*`, `figma_rename_*`, `figma_batch_*`, `figma_post_comment`, …) unless the user explicitly asks for a change in Figma.
+- **Figma is read-only.** Use only the read tools listed in figmaReading.md. Never call figma-console write tools (`figma_set_*`, `figma_create_*`, `figma_delete_*`, `figma_rename_*`, `figma_batch_*`, `figma_post_comment`, …). If the user wants the design fixed, switch to the `figma-audit` skill.
 - `figma_execute` may **only** run the code printed by this skill's helper, and always with `fileKey`. Never hand-edit that code or run anything else through `figma_execute` without the user's permission.
 
 ## Steps
