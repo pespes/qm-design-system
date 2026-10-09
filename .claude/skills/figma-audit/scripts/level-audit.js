@@ -42,6 +42,12 @@ async function resolve(v, modeId, depth = 0) {
     if (!target || depth > 10) return null;
     return resolve(target, collectionById.get(target.variableCollectionId)?.defaultModeId, depth + 1);
   }
+  // Alias + opacity (e.g. state/disabled = color/black at 38%, surface/overlay = color/grey/950 at 50%)
+  if (value && typeof value === 'object' && value.color?.type === 'VARIABLE_ALIAS') {
+    const target = await getVar(value.color.id);
+    const base = target && depth <= 10 ? await resolve(target, collectionById.get(target.variableCollectionId)?.defaultModeId, depth + 1) : null;
+    return base && 'r' in base ? { ...base, a: (base.a ?? 1) * ((value.opacity ?? 100) / 100) } : null;
+  }
   return value;
 }
 // { Homeowner: '#00780e', Pro: '#1f5fbf' } — every mode of the variable's collection

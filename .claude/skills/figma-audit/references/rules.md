@@ -33,6 +33,7 @@ If any of these fail, it's **choose**, and the runner sees the candidates with t
 - **Instances aren't walked.** Layers inside an instance belong to their main component. Fixing them here would only add an override, so audit their set instead (`nestedComponentSets`).
 - **Spacing on empty frames is skipped:** gap needs two or more children, padding needs one.
 - **Colour matching is exact**, including alpha. Near-matches are left for a designer to decide.
+- **Alias + opacity values are resolved.** Some Theme variables store a colour alias plus an opacity rather than a plain colour: `state/*` (e.g. `state/disabled` = `color/black` at 38%) and `surface/overlay` (`color/grey/950` at 50%). They're flattened to hex with alpha before matching, so a raw `#000000` at 38% matches `state/disabled`.
 
 ## Southleft checks (figma-console built-in tools)
 
